@@ -22,6 +22,7 @@ class ListBuilder extends Controller{
     private $_current_tab = 0; //当前Tab
     private $_field_list = array(); //表格标题字段
     private $_data_list = array(); //表格数据列表
+    private $_data_list_primary_key = 'id'; //表格数据列表主键字段名
     private $_right_button_list = array(); //表格右侧操作按钮组
     private $_page; //分页
     private $_extra_html; //额外功能代码
@@ -152,6 +153,12 @@ class ListBuilder extends Controller{
         return $this;
     }
 
+    //表格数据列表的主键名称
+    public function setDataListPrimaryKey($data_list_primary_key){
+        $this->_data_list_primary_key = $data_list_primary_key;
+        return $this;
+    }
+
     /**加入一个按钮
      * @param $title
      * @param $attr
@@ -209,32 +216,32 @@ class ListBuilder extends Controller{
             foreach($this->_right_button_list as $right_button){
                 switch($right_button['type']){
                     case 'edit':
-                        $right_button['link'] = '<a href="'.U($right_button['url'], array('id' => $data['id'])).'">编辑</a> ';
+                        $right_button['link'] = '<a href="'.U($right_button['url'], array('id' => $data[$this->_data_list_primary_key])).'">编辑</a> ';
                         break;
                     case 'forbid':
                         switch($data['status']){
                             case '1':
-                                $right_button['link'] = ' <a href="'.U(CONTROLLER_NAME.'/setStatus', array('status'=>'forbid', 'model' => $right_button['model'], 'ids' => $data['id'])).'" class="ajax-get confirm">禁用</a> ';
+                                $right_button['link'] = ' <a href="'.U(CONTROLLER_NAME.'/setStatus', array('status'=>'forbid', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">禁用</a> ';
                                 break;
                             case '0':
-                                $right_button['link'] = ' <a href="'.U(CONTROLLER_NAME.'/setStatus', array('status'=>'resume', 'model' => $right_button['model'], 'ids' => $data['id'])).'" class="ajax-get confirm">启用</a> ';
+                                $right_button['link'] = ' <a href="'.U(CONTROLLER_NAME.'/setStatus', array('status'=>'resume', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">启用</a> ';
                                 break;
                             case '-1':
-                                $right_button['link'] = ' <a href="'.U(CONTROLLER_NAME.'/setStatus', array('status'=>'restore', 'model' => $right_button['model'], 'ids' => $data['id'])).'" class="ajax-get confirm">还原</a> ';
+                                $right_button['link'] = ' <a href="'.U(CONTROLLER_NAME.'/setStatus', array('status'=>'restore', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">还原</a> ';
                                 break;
                         }
                         break;
                     case 'delete':
-                        $right_button['link'] = '<a href="'.U(CONTROLLER_NAME.'/setStatus', array('status'=>'delete', 'model' => $right_button['model'], 'ids' => $data['id'])).'" class="ajax-get confirm">删除</a> ';
+                        $right_button['link'] = '<a href="'.U(CONTROLLER_NAME.'/setStatus', array('status'=>'delete', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">删除</a> ';
                         break;
                     case 'recycle':
-                        $right_button['link'] = '<a href="'.U(CONTROLLER_NAME.'/setStatus', array('status'=>'recycle', 'ids' => $data['id'])).'" class="ajax-get confirm">回收</a> ';
+                        $right_button['link'] = '<a href="'.U(CONTROLLER_NAME.'/setStatus', array('status'=>'recycle', 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">回收</a> ';
                         break;
                     case 'self':
                         if(!$right_button['attr']['addon']){
-                            $right_button['attr']['href'] = U($right_button['attr']['href'].$data['id']);
+                            $right_button['attr']['href'] = U($right_button['attr']['href'].$data[$this->_data_list_primary_key]);
                         }else{
-                            $right_button['attr']['href'] = addons_url($right_button['attr']['href'].'/id/'.$data['id']);
+                            $right_button['attr']['href'] = addons_url($right_button['attr']['href'].'/id/'.$data[$this->_data_list_primary_key]);
                         }
                         $attr = $this->compileHtmlAttr($right_button['attr']);
                         $right_button['link'] = '<a '.$attr .'>'.$right_button['attr']['title'].'</a> ';
