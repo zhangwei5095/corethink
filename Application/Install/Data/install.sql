@@ -510,6 +510,7 @@ DROP TABLE IF EXISTS `ct_upload`;
 
 CREATE TABLE `ct_upload` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '上传ID',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '文件名',
   `path` varchar(255) NOT NULL DEFAULT '' COMMENT '文件路径',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '文件链接',
   `ext` char(4) NOT NULL DEFAULT '' COMMENT '文件类型',

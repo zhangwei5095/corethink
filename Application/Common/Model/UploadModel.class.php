@@ -18,6 +18,7 @@ class UploadModel extends Model{
      * @author jry <598821125@qq.com>
      */
     protected $_validate = array(
+        array('name', 'require', '文件名不能为空', self::EXISTS_VALIDATE, 'regex', self::MODEL_BOTH),
         array('path', 'require', '文件不能为空', self::EXISTS_VALIDATE, 'regex', self::MODEL_BOTH),
         array('size', 'require', '文件大小不能为空', self::EXISTS_VALIDATE, 'regex', self::MODEL_BOTH),
         array('md5', 'require', '文件Md5编码不能为空', self::EXISTS_VALIDATE, 'regex', self::MODEL_BOTH),
@@ -79,34 +80,52 @@ class UploadModel extends Model{
             'file'  => array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'htm', 'html', 'txt', 'zip', 'rar', 'gz', 'bz2', '7z'),
         );
 
-        $upload_config = C('UPLOAD_CONFIG');
-        $upload_driver  = C('UPLOAD_DRIVER');
-        $upload_config['removeTrash'] = array($this, 'removeTrash');
-        $upload = new \Think\Upload($upload_config, $upload_driver, C("UPLOAD_{$upload_driver}_CONFIG")); // 实例化上传类
-        $upload->exts = $ext_arr[$dir]; //设置附件上传类型
-        $info = $upload->upload($_FILES); //上传文件
-        $info = $info['imgFile'];
-
-        //获取上传数据
-        $upload_data['type'] = $info["type"];
-        $upload_data['path'] = '/Uploads/' . $info['savepath'] . $info['savename'];
-        $upload_data['url'] = $info["url"] ? : '';
-        $upload_data['ext'] = $info["ext"];
-        $upload_data['size'] = $info["size"];
-        $upload_data['md5']  = $info['md5'];
-        $upload_data['sha1']  = $info['sha1'];
-        $result = $this->create($upload_data);
-        $result = $this->add($result);
-        if($result){
-            if($info["url"]){
-                $return['url'] = $upload_data['url'];
+        //计算文件散列以查看是否已有相同文件上传过
+        $con['md5']  = md5_file($_FILES['imgFile']['tmp_name']);
+        $con['sha1'] = sha1_file($_FILES['imgFile']['tmp_name']);
+        $upload = $this->where($con)->find();
+        if($upload){ //发现相同文件直接返回
+            $return['name'] = $upload['name'];
+            $return['id'] = $upload['id'];
+            if($upload["url"]){
+                $return['url'] = $upload['url'];
             }else{
-                $return['url'] = __ROOT__ . $upload_data['path'];
+                $return['url'] = __ROOT__ . $upload['path'];
             }
-            $return['id'] = $result;
         }else{
-            $return['error'] = 1;
-            $return['message'] = $upload->getError();
+            //上传文件
+            $upload_config = C('UPLOAD_CONFIG');
+            $upload_driver  = C('UPLOAD_DRIVER');
+            $upload_config['removeTrash'] = array($this, 'removeTrash');
+            $upload = new \Think\Upload($upload_config, $upload_driver, C("UPLOAD_{$upload_driver}_CONFIG")); //实例化上传类
+            $upload->exts = $ext_arr[$dir]; //设置附件上传类型
+            $info = $upload->upload($_FILES); //上传文件
+            $info = $info['imgFile'];
+
+            //获取上传数据
+            $upload_data['type'] = $info["type"];
+            $upload_data['name'] = $info["name"];
+            $upload_data['path'] = '/Uploads/' . $info['savepath'] . $info['savename'];
+            $upload_data['url'] = $info["url"] ? : '';
+            $upload_data['ext'] = $info["ext"];
+            $upload_data['size'] = $info["size"];
+            $upload_data['md5']  = $info['md5'];
+            $upload_data['sha1']  = $info['sha1'];
+
+            $result = $this->create($upload_data);
+            $result = $this->add($result);
+            if($result){
+                if($info["url"]){
+                    $return['url'] = $upload_data['url'];
+                }else{
+                    $return['url'] = __ROOT__ . $upload_data['path'];
+                }
+                $return['name'] = $upload_data['name'];
+                $return['id'] = $result;
+            }else{
+                $return['error'] = 1;
+                $return['message'] = $upload->getError();
+            }
         }
         return json_encode($return);
     }

@@ -60,12 +60,26 @@ class LoginController extends AddonController{
      * 第三方帐号集成 - 注册新账号
      */
     public function doregister(){
+        //获取用户名、密码
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $upload_data['url'] = $_POST['avatar'];
-        $upload_data['ext'] = 'png';
-        $upload_data['status'] = 1;
-        $_POST['avatar'] = M('Upload')->add($upload_data);
+
+        //上传头像，发现相同文件直接返回
+        $con['url'] = $_POST['avatar'];
+        $upload = $this->where($con)->find();
+        if($upload){
+            $_POST['avatar'] = $upload['id'];
+        }else{
+            $upload_data['name']   = '第三方头像';
+            $upload_data['url']    = $_POST['avatar'];
+            $upload_data['ext']    = 'png';
+            $upload_data['md5']    = md5_file($_POST['avatar']);
+            $upload_data['sha1']   = sha1_file($_POST['avatar']);
+            $upload_data['status'] = 1;
+            $_POST['avatar'] = M('Upload')->add($upload_data);
+        }
+
+        //注册用户
         $user = D('User');
         $data = $user->create();
         if($data){
