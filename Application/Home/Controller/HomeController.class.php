@@ -24,17 +24,18 @@ class HomeController extends Controller{
         if(!$config){
             $config = D('SystemConfig')->lists();
 
-            //Home模块有模板主题
-            if(MODULE_NAME !== 'Home'){
-                $config['DEFAULT_THEME'] = '';
-            }
-
             //模板相关配置
             $config['TMPL_PARSE_STRING']['__PUBLIC__'] = __ROOT__.'/Public';
             $config['TMPL_PARSE_STRING']['__IMG__'] = __ROOT__.'/Application/Home/View/'.$config['DEFAULT_THEME'].'/Public/img';
             $config['TMPL_PARSE_STRING']['__CSS__'] = __ROOT__.'/Application/Home/View/'.$config['DEFAULT_THEME'].'/Public/css';
             $config['TMPL_PARSE_STRING']['__JS__']  = __ROOT__.'/Application/Home/View/'.$config['DEFAULT_THEME'].'/Public/js';
             $config['HOME_PAGE'] = 'http://'.$_SERVER['HTTP_HOST'].__ROOT__;
+
+            //Home模块有模板主题
+            if(MODULE_NAME !== 'Home'){
+                $config['DEFAULT_THEME'] = '';
+            }
+
             S('DB_CONFIG_DATA',$config);
         }
         C($config); //添加配置
