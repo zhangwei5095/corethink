@@ -76,8 +76,8 @@ class UploadModel extends Model{
         $ext_arr = array(
             'image' => array('gif', 'jpg', 'jpeg', 'png', 'bmp'),
             'flash' => array('swf', 'flv'),
-            'media' => array('swf', 'flv', 'mp3', 'wav', 'wma', 'wmv', 'mid', 'avi', 'mpg', 'asf', 'rm', 'rmvb'),
-            'file'  => array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'htm', 'html', 'txt', 'zip', 'rar', 'gz', 'bz2', '7z'),
+            'media' => array('swf', 'flv', 'mp3', 'wav', 'wma', 'wmv', 'mid', 'avi', 'mpg', 'asf', 'rm', 'rmvb', 'mp4'),
+            'file'  => array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'wps', 'txt', 'zip', 'rar', 'gz', 'bz2', '7z'),
         );
 
         //计算文件散列以查看是否已有相同文件上传过

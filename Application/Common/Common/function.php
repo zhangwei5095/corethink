@@ -141,6 +141,20 @@ function get_cover($id, $type){
 }
 
 /**
+ * 获取上传文件信息
+ * @param  int $id 文件ID
+ * @return string
+ * @author jry <598821125@qq.com>
+ */
+function get_upload_info($id, $field){
+    $upload_info = D('Upload')->where('status = 1')->find($id);
+    if($field){
+        return $upload_info[$field];
+    }
+    return $upload_info;
+}
+
+/**
  * 系统邮件发送函数
  * @param string $receiver 收件人
  * @param string $subject 邮件主题

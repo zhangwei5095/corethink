@@ -58,6 +58,8 @@ return array(
         'datetime'   => '时间',
         'picture'    => '图片',
         'pictures'   => '图片(多图)',
+        'file'       => '文件',
+        'files'      => '多文件',
         'kindeditor' => '编辑器',
         'tags'       => '标签',
         'board  '    => '拖动排序',
