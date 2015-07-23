@@ -25,33 +25,13 @@ class AdminController extends Controller{
     protected function _initialize(){
         //登录检测
         if(!is_login()){ //还没登录跳转到登录页面
-            $this->redirect('Public/login');
+            $this->redirect('Admin/Public/login');
         }
 
         //权限检测
         if(!D('UserGroup')->checkAuth()){
             $this->error('权限不足！');
         }
-
-        //读取数据库中的配置
-        $config = S('DB_CONFIG_DATA');
-        if(!$config){
-            //获取所有系统配置
-            $config = D('SystemConfig')->lists();
-
-            //后台无模板主题
-            $config['DEFAULT_THEME'] = '';
-
-            //模板相关配置
-            $config['TMPL_PARSE_STRING']['__PUBLIC__'] = __ROOT__.'/Public';
-            $config['TMPL_PARSE_STRING']['__IMG__'] = __ROOT__.'/Application/Admin/View/Public/img';
-            $config['TMPL_PARSE_STRING']['__CSS__'] = __ROOT__.'/Application/Admin/View/Public/css';
-            $config['TMPL_PARSE_STRING']['__JS__']  = __ROOT__.'/Application/Admin/View/Public/js';
-
-            //缓存配置
-            S('DB_CONFIG_DATA', $config, 3600);
-        }
-        C($config); //添加配置
 
         //获取系统菜单导航
         $map['status'] = array('eq', 1);

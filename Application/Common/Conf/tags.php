@@ -7,6 +7,7 @@
 // | Author: jry <598821125@qq.com> <http://www.corethink.cn>
 // +----------------------------------------------------------------------
 return array(
-    'app_init'=>array('Common\Behavior\InitModuleBehavior'),
-    'action_begin'=>array('Common\Behavior\InitHookBehavior')
+    'app_init'     => array('Common\Behavior\InitModuleBehavior'),
+    'app_begin'    => array('Common\Behavior\InitConfigBehavior'),
+    'action_begin' => array('Common\Behavior\InitHookBehavior')
 );

@@ -149,7 +149,11 @@ function get_cover($id, $type){
 function get_upload_info($id, $field){
     $upload_info = D('Upload')->where('status = 1')->find($id);
     if($field){
-        return $upload_info[$field];
+        if(!$upload_info[$field]){
+            return $upload_info['id'];
+        }else{
+            return $upload_info[$field];
+        }
     }
     return $upload_info;
 }
