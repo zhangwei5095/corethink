@@ -34,18 +34,18 @@
         .login-panel {
             box-shadow: 0px 10px 60px rgba(0,0,0,0.4);
             background: rgba(255,255,255,0.9);
-            margin-top: 100px;
+            margin-top: 10%;
         }
         .login-panel .panel-heading{
             height: 150px;
             background: #6699cc url('__IMG__/login.png');
         }
         .login-panel .panel-heading .panel-title{
-            color:#fff;
+            color: #fff;
             font-size: 32px;
             padding-top: 30px;
             padding-bottom: 5px;
-            font-weight:lighter;
+            font-weight: lighter;
             -webkit-box-reflect: below -4px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(255, 255, 255, 0.2)));
         }
         .login-panel .panel-heading .panel-title i{
@@ -53,13 +53,21 @@
             font-weight: 400;
         }
         .login-panel .panel-heading .info{
-            color:#aaddff;
-            margin-top:40px;
+            color: #aaddff;
+            margin-top: 40px;
+        }
+        .login-panel .panel-body{
+            padding: 38px;
         }
         .bottom {
             color: #eee;
             font-size: 13px;
             background: rgba(0,0,0,0.3);
+        }
+        @media (max-width: 768px) {
+            .login-panel .panel-body{
+                padding: 18px;
+            }
         }
     </style>
 </head>
@@ -71,7 +79,7 @@
                 <h3 class="panel-title text-center"><i class="fa fa-cloud"></i> {:C('WEB_SITE_TITLE')}</h3>
                 <div class="info text-right">————{:C('WEB_SITE_SLOGAN')}</div>
             </div>
-            <div class="panel-body" style="padding:38px;">
+            <div class="panel-body">
                 <form class="login-form" action="{:U('Public/login')}" method="post">
                     <div class="form-group">
                         <div class="input-group">

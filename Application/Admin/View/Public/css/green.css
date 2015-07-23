@@ -34,7 +34,7 @@
 /*
 主导航border为0时保持高度
  */
- @media (min-width: 768) {
+ @media (min-width: 768px) {
     .navbar-nav>li>a {
         padding-top: 16px;
         padding-bottom: 16px;
@@ -161,7 +161,7 @@ TAB切换
 /*
  小屏幕特殊样式
  */
-@media (max-width: 768) {
+@media (max-width: 768px) {
     .navbar-inverse .navbar-toggle {
         border-color: #fff;
     }
