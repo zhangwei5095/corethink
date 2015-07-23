@@ -133,4 +133,7 @@ return array(
         'hash'     => true, //是否生成hash编码
         'callback' => false, //检测文件是否存在回调函数，如果存在返回文件信息数组
     ),
+
+    //如果数据表字段名采用大小写混合需配置此项
+    'DB_PARAMS'  =>  array(\PDO::ATTR_CASE => \PDO::CASE_NATURAL),
 );
