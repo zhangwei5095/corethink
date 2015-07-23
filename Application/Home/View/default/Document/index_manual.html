@@ -2,20 +2,112 @@
 
 <block name="script">
     <style type="text/css">
-        .ztree-manual{min-height: 500px;}
-        .manual-left{
-            top: 100px;
-            bottom: 50px;
-            position: absolute;
-            padding-right: 0px;
-            overflow: auto;
+        /* 文档页面结构样式
+        -------------------------------------------------- */
+        .manual-box {
+            margin-top: 15px;
+            padding-bottom: 80px;
         }
-        .manual-right{
-            top: 100px;
-            right: 0px;
-            bottom: 50px;
-            position: absolute;
-            overflow: auto;
+        .manual-box .manual-right header .copylink {
+            position: relative;
+            float: left;
+            margin: 10px 0 0 10px;
+        }
+        .manual-box .manual-right .copylink a {
+            color: #008000;
+            text-decoration: none;
+            left: 0px;
+            top: 0px;
+            position: relative;
+            float: left;
+            margin: 20px 0 0 10px;
+        }
+        .manual-box .manual-right header .title-link{
+            font-size: 12px;
+            line-height: 1.8;
+            background-color: #C3E1FF;
+            border-top: 1px solid #4E6B33;
+            clear: both;
+            padding: 2px 6px;
+        }
+        .manual-box .search input[type=search] {
+            height: 28px;
+            line-height: 18px;
+            width: 100%;
+            border: 1px solid #CCC;
+            padding: 0 8px;
+            font-size: 12px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075) inset;
+            border-radius: 14px;
+            transition: all 0.15s ease-in;
+            box-sizing: border-box;
+        }
+
+        /* 文档内容样式
+        -------------------------------------------------- */
+        .manual-box .manual-right .h1, h1 {
+            font-size: 25px;
+            font-family: 微软雅黑;
+            float: left;
+            color: #0382AD;
+            text-shadow: 1px 1px 0 #FFFFFF, 1px 1px 2px rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+        }
+        .manual-box .manual-right h2 {
+            font-size: 20px;
+            font-family: 微软雅黑;
+            margin-top: 16px;
+            border-bottom: 1px solid #EEE;
+            font-weight: bold;
+        }
+        .manual-box .manual-right h4 {
+            font-size: 16px;
+            margin-top: 14px;
+        }
+        .manual-box .manual-right blockquote {
+            font-size: 17.5px;
+            border-left: 5px solid #D0E3F0;
+            margin: 8px 0;
+            padding: 8px 16px;
+            background-color: #F0F7FD;
+            color: #0382AD;
+        }
+
+        /* 小屏幕设备不启用绝对定位
+        -------------------------------------------------- */
+        @media (min-width: 768px) {
+            .manual-box .ztree-manual {
+                min-height: 500px;
+            }
+            .manual-box .search {
+                left: 1%;
+                top: 60px;
+                position: absolute;
+                padding: 6px;
+                background-color: #F9F9F9;
+                border: 1px solid #CCC;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            }
+            .manual-box .manual-left {
+                left: 1%;
+                top: 110px;
+                bottom: 45px;
+                position: absolute;
+                overflow: auto;
+                border: 1px solid #CCC;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            }
+            .manual-box .manual-right {
+                left: 18.66666667%;
+                width: 80.33333333%;
+                right: 1%;
+                top: 60px;
+                bottom: 45px;
+                position: absolute;
+                overflow: auto;
+                border: 1px solid #CCC;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            }
         }
     </style>
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/ztree/css/zTreeStyle/zTreeStyle.css">
@@ -41,7 +133,8 @@
                     if(data.status == 1){
                         var node = data.data;
                         node = eval('('+node+')');
-                        $('#ztree-manual-content').html(node.content);
+                        $('#manual-title').text(node.title); //设置右侧标题
+                        $('#ztree-manual-content').html(node.content); //设置右侧文档主题内容
                     }else{
                         alertMessager(data.info, 'danger');
                     }
@@ -57,7 +150,6 @@
                     alertMessager(data.info, 'danger');
                 }
             });
-
         });
     </script>
 </block>
@@ -115,27 +207,34 @@
     </nav>
 </block>
 
-<block name="breadcrumb">
-    <div class="container-fluid">
-        <div class="row">
-            <ul class="breadcrumb">
-                <li><i class="icon-location-arrow"></i></li>
-                <li><a href="__ROOT__/">首页</a></li>
-                <corethink:breadcrumb name="_breadcrumb" cid="$__CURRENT_CATEGORY__" group="$__CURRENT_CATEGORY_GROUP__">
-                    <li><a href="{:U('Document/index', array('cid' => $_breadcrumb['id']))}">{$_breadcrumb.title}</a></li>
-                </corethink:breadcrumb>
-            </ul>
-        </div>
-    </div>
-</block>
+<block name="breadcrumb"></block>
 
 <block name="body">
-    <div class="manual-box">
-        <div class="col-xs-12 col-sm-2 manual-left">
-            <div class="ztree ztree-manual box" id="ztree-manual"></div>
+    <div class="manual-box container-fluid clearfix">
+        <!-- 文档搜索 -->
+        <div class="col-xs-12 col-sm-2 search margin-bottom">
+            <input class="form-control" id="search" type="search" placeholder=" 这个搜索是假的...">
         </div>
+        <!-- 文档左侧树状目录结构 -->
+        <div class="col-xs-12 col-sm-2 manual-left">
+            <div class="ztree ztree-manual" id="ztree-manual"></div>
+        </div>
+        <!-- 文档右侧正文 -->
         <div class="col-xs-12 col-sm-10 manual-right">
-            <div class="ztree-manual box" id="ztree-manual-content">{$info.content}</div>
+            <!-- 文档右侧正文标题 -->
+            <header class="margin-bottom">
+                <h1 id="manual-title">序言</h1>
+                <div class="copylink">
+                    <a href="javascript:;" class=""><span class="glyphicon glyphicon-copy"></span>复制本页链接</a>
+                    <div class="zclip" id="zclip-ZeroClipboardMovie_1" style="position: absolute; left: 0px; top: 5px; width: 114px; height: 21px; z-index: 99;">
+                    </div>
+                </div>
+                <div class="title-link"></div>
+            </header>
+            <!-- 文档右侧正文内容 -->
+            <div class="ztree-manual box" id="ztree-manual-content">
+                {$info.content}
+            </div>
         </div>
     </div>
 </block>

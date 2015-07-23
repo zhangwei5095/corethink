@@ -18,6 +18,7 @@ class IndexController extends HomeController{
      * @author jry <598821125@qq.com>
      */
     public function index(){
+        Cookie('__forward__', $_SERVER['REQUEST_URI']);
         $this->assign('meta_title', "首页");
         $this->display('Public/index');
     }
