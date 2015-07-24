@@ -42,7 +42,7 @@ class HomeController extends Controller{
             return $uid;
         }else{
             $data['login'] = 1;
-            $this->error('请先登陆', U('User/login'), $data);
+            $this->error('请先登陆', U('Home/User/login'), $data);
         }
     }
 

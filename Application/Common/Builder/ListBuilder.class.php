@@ -50,7 +50,7 @@ class ListBuilder extends Controller{
     //加一个新增按钮
     public function AddNewButton($url){
         if(!$url){
-            $url = CONTROLLER_NAME.'/add';
+            $url = MODULE_NAME.'/'.CONTROLLER_NAME.'/add';
         }
         $attr['class'] = 'btn btn-primary';
         $attr['href'] =  U($url);
@@ -61,7 +61,7 @@ class ListBuilder extends Controller{
     //加一个启用按钮
     public function addResumeButton($model = CONTROLLER_NAME){
         $attr['class'] = 'btn btn-success ajax-post confirm';
-        $attr['href'] = U(CONTROLLER_NAME.'/setStatus', array('status' => 'resume', 'model' =>$model));
+        $attr['href'] = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'resume', 'model' =>$model));
         $attr['target-form'] = 'ids';
         $this->addButton('启 用', $attr);
         return $this;
@@ -70,7 +70,7 @@ class ListBuilder extends Controller{
     //加一个禁用按钮
     public function addForbidButton($model = CONTROLLER_NAME){
         $attr['class'] = 'btn btn-warning ajax-post confirm';
-        $attr['href'] = U(CONTROLLER_NAME.'/setStatus', array('status' => 'forbid', 'model' =>$model));
+        $attr['href'] = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'forbid', 'model' =>$model));
         $attr['target-form'] = 'ids';
         $this->addButton('禁 用', $attr);
         return $this;
@@ -79,7 +79,7 @@ class ListBuilder extends Controller{
     //加一个删除按钮
     public function addDeleteButton($model = CONTROLLER_NAME){
         $attr['class'] = 'btn btn-danger ajax-post confirm';
-        $attr['href'] = U(CONTROLLER_NAME.'/setStatus', array('status' => 'delete', 'model' =>$model));
+        $attr['href'] = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'delete', 'model' =>$model));
         $attr['target-form'] = 'ids';
         $this->addButton('删 除', $attr);
         return $this;
@@ -88,7 +88,7 @@ class ListBuilder extends Controller{
     //加一个回收按钮
     public function addRecycleButton($model = CONTROLLER_NAME){
         $attr['class'] = 'btn btn-danger ajax-post confirm';
-        $attr['href'] = U(CONTROLLER_NAME.'/setStatus', array('status' => 'recycle', 'model' =>$model));
+        $attr['href'] = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'recycle', 'model' =>$model));
         $attr['target-form'] = 'ids';
         $this->addButton('回 收', $attr);
         return $this;
@@ -97,7 +97,7 @@ class ListBuilder extends Controller{
     //加一个还原按钮
     public function addRestoreButton($model = CONTROLLER_NAME){
         $attr['class'] = 'btn btn-success ajax-post confirm';
-        $attr['href'] = U(CONTROLLER_NAME.'/setStatus', array('status' => 'restore', 'model' =>$model));
+        $attr['href'] = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'restore', 'model' =>$model));
         $attr['target-form'] = 'ids';
         $this->addButton('还 原', $attr);
         return $this;
@@ -169,7 +169,7 @@ class ListBuilder extends Controller{
             $this->_right_button_list[] = array('type' => $type, 'attr' => $attr);
         }else{
             if(!$url){
-                $url = CONTROLLER_NAME.'/edit';
+                $url = MODULE_NAME.'/'.CONTROLLER_NAME.'/edit';
             }
             $this->_right_button_list[] = array('type' => $type, 'model' => $attr, 'url' => $url);
         }
@@ -221,21 +221,21 @@ class ListBuilder extends Controller{
                     case 'forbid':
                         switch($data['status']){
                             case '1':
-                                $right_button['link'] = ' <a href="'.U(CONTROLLER_NAME.'/setStatus', array('status'=>'forbid', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">禁用</a> ';
+                                $right_button['link'] = ' <a href="'.U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status'=>'forbid', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">禁用</a> ';
                                 break;
                             case '0':
-                                $right_button['link'] = ' <a href="'.U(CONTROLLER_NAME.'/setStatus', array('status'=>'resume', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">启用</a> ';
+                                $right_button['link'] = ' <a href="'.U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status'=>'resume', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">启用</a> ';
                                 break;
                             case '-1':
-                                $right_button['link'] = ' <a href="'.U(CONTROLLER_NAME.'/setStatus', array('status'=>'restore', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">还原</a> ';
+                                $right_button['link'] = ' <a href="'.U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status'=>'restore', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">还原</a> ';
                                 break;
                         }
                         break;
                     case 'delete':
-                        $right_button['link'] = '<a href="'.U(CONTROLLER_NAME.'/setStatus', array('status'=>'delete', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">删除</a> ';
+                        $right_button['link'] = '<a href="'.U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status'=>'delete', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">删除</a> ';
                         break;
                     case 'recycle':
-                        $right_button['link'] = '<a href="'.U(CONTROLLER_NAME.'/setStatus', array('status'=>'recycle', 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">回收</a> ';
+                        $right_button['link'] = '<a href="'.U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status'=>'recycle', 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">回收</a> ';
                         break;
                     case 'self':
                         if(!$right_button['attr']['addon']){
