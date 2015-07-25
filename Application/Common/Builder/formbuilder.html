@@ -133,7 +133,7 @@
                                     <input type="text" id="date_{$k}" class="form-control input date" name="{$form.name}" value="<notempty name='form.value'>{$form.value|time_format='Y-m-d'}</notempty>" {$form.extra_attr}>
                                     <script type="text/javascript">
                                         $(function(){
-                                            $("#date_{$l}").daterangepicker({
+                                            $("#date_{$k}").daterangepicker({
                                                 showDropdowns: true,
                                                 singleDatePicker: true,
                                                 startDate: moment().subtract(0, 'days'),
@@ -176,8 +176,12 @@
                                                 buttonText:'上 传 图 片',
                                                 onUploadComplete:function(file, data){
                                                     var data = $.parseJSON(data);
-                                                    $('#preview_{$k} img').attr('src', data.url);
-                                                    $('#preview_{$k} input').attr('value', data.id);
+                                                    if(data.error == 1){
+                                                        alertMessager(data.message);
+                                                    }else{
+                                                        $('#preview_{$k} img').attr('src', data.url);
+                                                        $('#preview_{$k} input').attr('value', data.id);
+                                                    }
                                                 }
                                             });
                                         });
@@ -204,13 +208,17 @@
                                                 buttonText:'上 传 图 片',
                                                 onUploadComplete:function(file, data){
                                                     var data = $.parseJSON(data);
-                                                    var input = $('#preview_{$k} input');
-                                                    var new_img = '<span class="img-box"><img class="img" src="' + data.url + '"><i class="glyphicon glyphicon-remove-sign remove-picture"></i></span>';
-                                                    $('#preview_{$k}').append(new_img);
-                                                    if(input.val()){
-                                                        input.val(input.val() + ',' + data.id);
+                                                    if(data.error == 1){
+                                                        alertMessager(data.message);
                                                     }else{
-                                                        input.val(data.id);
+                                                        var input = $('#preview_{$k} input');
+                                                        var new_img = '<span class="img-box"><img class="img" src="' + data.url + '"><i class="glyphicon glyphicon-remove-sign remove-picture"></i></span>';
+                                                        $('#preview_{$k}').append(new_img);
+                                                        if(input.val()){
+                                                            input.val(input.val() + ',' + data.id);
+                                                        }else{
+                                                            input.val(data.id);
+                                                        }
                                                     }
                                                 }
                                             });
@@ -248,8 +256,12 @@
                                                 buttonText:'上 传 文 件',
                                                 onUploadComplete:function(file, data){
                                                     var data = $.parseJSON(data);
-                                                    $('#preview_{$k} .list-group').html('<li class="list-group-item"><i class="glyphicon glyphicon-file"></i> '+data.name+'</li>');
-                                                    $('#preview_{$k} input').attr('value', data.id);
+                                                    if(data.error == 1){
+                                                        alertMessager(data.message);
+                                                    }else{
+                                                        $('#preview_{$k} .list-group').html('<li class="list-group-item"><i class="glyphicon glyphicon-file"></i> '+data.name+'</li>');
+                                                        $('#preview_{$k} input').attr('value', data.id);
+                                                    }
                                                 }
                                             });
                                         });
@@ -280,12 +292,16 @@
                                                 buttonText:'添 加 文 件',
                                                 onUploadComplete:function(file, data){
                                                     var data = $.parseJSON(data);
-                                                    $('#preview_{$k} .list-group').append('<li class="list-group-item file-item"><i class="glyphicon glyphicon-file remove-file"></i> '+data.name+'</li>');
-                                                    var input = $('#preview_{$k} input');
-                                                    if(input.val() != ''){
-                                                        input.val(input.val() + ',' + data.id);
+                                                    if(data.error == 1){
+                                                        alertMessager(data.message);
                                                     }else{
-                                                        input.val(data.id);
+                                                        $('#preview_{$k} .list-group').append('<li class="list-group-item file-item"><i class="glyphicon glyphicon-file remove-file"></i> '+data.name+'</li>');
+                                                        var input = $('#preview_{$k} input');
+                                                        if(input.val() != ''){
+                                                            input.val(input.val() + ',' + data.id);
+                                                        }else{
+                                                            input.val(data.id);
+                                                        }
                                                     }
                                                 }
                                             });
@@ -532,8 +548,12 @@
                                                                                     buttonText:'上 传 图 片',
                                                                                     onUploadComplete:function(file, data){
                                                                                         var data = $.parseJSON(data);
-                                                                                        $('#tab_{$group_k}_preview_{$tab_k} img').attr('src', data.url);
-                                                                                        $('#tab_{$group_k}_preview_{$tab_k} input').attr('value', data.id);
+                                                                                        if(data.error == 1){
+                                                                                            alertMessager(data.message);
+                                                                                        }else{
+                                                                                            $('#tab_{$group_k}_preview_{$tab_k} img').attr('src', data.url);
+                                                                                            $('#tab_{$group_k}_preview_{$tab_k} input').attr('value', data.id);
+                                                                                        }
                                                                                     }
                                                                                 });
                                                                             });
@@ -560,13 +580,17 @@
                                                                                     buttonText:'上 传 图 片',
                                                                                     onUploadComplete:function(file, data){
                                                                                         var data = $.parseJSON(data);
-                                                                                        var input = $('#tab_{$group_k}_preview_{$tab_k} input');
-                                                                                        var new_img = '<span class="img-box"><img class="img" src="' + data.url + '" data-id="'+data.id+'"><i class="glyphicon glyphicon-remove-sign remove-picture"></i></span>';
-                                                                                        $('#tab_{$group_k}_preview_{$tab_k}').append(new_img);
-                                                                                        if(input.val()){
-                                                                                            input.val(input.val() + ',' + data.id);
+                                                                                        if(data.error == 1){
+                                                                                            alertMessager(data.message);
                                                                                         }else{
-                                                                                            input.val(data.id);
+                                                                                            var input = $('#tab_{$group_k}_preview_{$tab_k} input');
+                                                                                            var new_img = '<span class="img-box"><img class="img" src="' + data.url + '" data-id="'+data.id+'"><i class="glyphicon glyphicon-remove-sign remove-picture"></i></span>';
+                                                                                            $('#tab_{$group_k}_preview_{$tab_k}').append(new_img);
+                                                                                            if(input.val()){
+                                                                                                input.val(input.val() + ',' + data.id);
+                                                                                            }else{
+                                                                                                input.val(data.id);
+                                                                                            }
                                                                                         }
                                                                                     }
                                                                                 });
@@ -604,8 +628,12 @@
                                                                                     buttonText:'上 传 文 件',
                                                                                     onUploadComplete:function(file, data){
                                                                                         var data = $.parseJSON(data);
-                                                                                        $('#tab_{$group_k}_preview_{$tab_k} .list-group').html('<li class="list-group-item"><i class="glyphicon glyphicon-file"></i> '+data.name+'</li>');
-                                                                                        $('#tab_{$group_k}_preview_{$tab_k} input').attr('value', data.id);
+                                                                                        if(data.error == 1){
+                                                                                            alertMessager(data.message);
+                                                                                        }else{
+                                                                                            $('#tab_{$group_k}_preview_{$tab_k} .list-group').html('<li class="list-group-item"><i class="glyphicon glyphicon-file"></i> '+data.name+'</li>');
+                                                                                            $('#tab_{$group_k}_preview_{$tab_k} input').attr('value', data.id);
+                                                                                        }
                                                                                     }
                                                                                 });
                                                                             });
@@ -636,14 +664,18 @@
                                                                                     buttonText:'添 加 文 件',
                                                                                     onUploadComplete:function(file, data){
                                                                                         var data = $.parseJSON(data);
-                                                                                        var new_file = '<li class="list-group-item file-item" data-id="'+data.id+'"><i class="glyphicon glyphicon-file"></i> '
-                                                                                                       +data.name+' <i class="glyphicon glyphicon-remove-sign remove-file"></i></li>'
-                                                                                        $('#tab_{$group_k}_preview_{$tab_k} .list-group').append(new_file);
-                                                                                        var input = $('#tab_{$group_k}_preview_{$tab_k} input');
-                                                                                        if(input.val() != ''){
-                                                                                            input.val(input.val() + ',' + data.id);
+                                                                                        if(data.error == 1){
+                                                                                            alertMessager(data.message);
                                                                                         }else{
-                                                                                            input.val(data.id);
+                                                                                            var new_file = '<li class="list-group-item file-item" data-id="'+data.id+'"><i class="glyphicon glyphicon-file"></i> '
+                                                                                                           +data.name+' <i class="glyphicon glyphicon-remove-sign remove-file"></i></li>'
+                                                                                            $('#tab_{$group_k}_preview_{$tab_k} .list-group').append(new_file);
+                                                                                            var input = $('#tab_{$group_k}_preview_{$tab_k} input');
+                                                                                            if(input.val() != ''){
+                                                                                                input.val(input.val() + ',' + data.id);
+                                                                                            }else{
+                                                                                                input.val(data.id);
+                                                                                            }
                                                                                         }
                                                                                     }
                                                                                 });

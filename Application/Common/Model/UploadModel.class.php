@@ -100,31 +100,35 @@ class UploadModel extends Model{
             $upload = new \Think\Upload($upload_config, $upload_driver, C("UPLOAD_{$upload_driver}_CONFIG")); //实例化上传类
             $upload->exts = $ext_arr[$dir]; //设置附件上传类型
             $info = $upload->upload($_FILES); //上传文件
-            $info = $info['imgFile'];
-
-            //获取上传数据
-            $upload_data['type'] = $info["type"];
-            $upload_data['name'] = $info["name"];
-            $upload_data['path'] = '/Uploads/' . $info['savepath'] . $info['savename'];
-            $upload_data['url'] = $info["url"] ? : '';
-            $upload_data['ext'] = $info["ext"];
-            $upload_data['size'] = $info["size"];
-            $upload_data['md5']  = $info['md5'];
-            $upload_data['sha1']  = $info['sha1'];
-
-            $result = $this->create($upload_data);
-            $result = $this->add($result);
-            if($result){
-                if($info["url"]){
-                    $return['url'] = $upload_data['url'];
-                }else{
-                    $return['url'] = __ROOT__ . $upload_data['path'];
-                }
-                $return['name'] = $upload_data['name'];
-                $return['id'] = $result;
-            }else{
+            if(!$info){
                 $return['error'] = 1;
-                $return['message'] = $upload->getError();
+                $return['message']  = '上传出错'.$upload->getError();
+            }else{
+                //获取上传数据
+                $info = $info['imgFile'];
+                $upload_data['type'] = $info["type"];
+                $upload_data['name'] = $info["name"];
+                $upload_data['path'] = '/Uploads/' . $info['savepath'] . $info['savename'];
+                $upload_data['url'] = $info["url"] ? : '';
+                $upload_data['ext'] = $info["ext"];
+                $upload_data['size'] = $info["size"];
+                $upload_data['md5']  = $info['md5'];
+                $upload_data['sha1']  = $info['sha1'];
+
+                $result = $this->create($upload_data);
+                $result = $this->add($result);
+                if($result){
+                    if($info["url"]){
+                        $return['url'] = $upload_data['url'];
+                    }else{
+                        $return['url'] = __ROOT__ . $upload_data['path'];
+                    }
+                    $return['name'] = $upload_data['name'];
+                    $return['id'] = $result;
+                }else{
+                    $return['error'] = 1;
+                    $return['message'] = '上传出错'.$this->error;
+                }
             }
         }
         return json_encode($return);
