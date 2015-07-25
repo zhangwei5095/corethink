@@ -108,19 +108,4 @@ class TagController extends AdminController{
                     ->display();
         }
     }
-
-    /**
-     * 搜索相关标签
-     * @param string 搜索关键字
-     * @return array 相关标签
-     * @author jry <598821125@qq.com>
-     */
-    public function searchTags(){
-        $map["title"] = array("like", "%".I('get.q')."%");
-        $tags = D('Tag')->field('id,title')->where($map)->select();
-        foreach($tags as $value){
-            $data[] = array('id' => $value['title'], 'title'=> $value['title']);
-        }
-        echo json_encode($data);
-    }
 }

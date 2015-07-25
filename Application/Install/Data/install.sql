@@ -266,8 +266,8 @@ LOCK TABLES `ct_document_type` WRITE;
 
 INSERT INTO `ct_document_type` (`id`, `name`, `title`, `icon`, `field_sort`, `field_group`, `system`, `ctime`, `utime`, `sort`, `status`)
 VALUES
-	(1,'Link','链接','icon-link','','',1426580628,1426580628,1,0,1),
-	(2,'Page','单页','icon-file','','',1426580628,1426580628,1,0,1),
+	(1,'Link','链接','icon-link','','',1,1426580628,1426580628,0,1),
+	(2,'Page','单页','icon-file','','',1,1426580628,1426580628,0,1),
 	(3,'Article','文章','icon-edit','{\"1\":[\"1\",\"3\",\"12\",\"13\",\"14\",\"15\"],\"2\":[\"10\",\"8\"]}','1:基础\n2:扩展',0,1426580628,1426580628,0,1);
 
 /*!40000 ALTER TABLE `ct_document_type` ENABLE KEYS */;
@@ -494,6 +494,7 @@ CREATE TABLE `ct_tag` (
   `title` varchar(32) NOT NULL COMMENT '标签',
   `count` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '数量',
   `group` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '分组',
+  `cover` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '图标',
   `ctime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `utime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '修改时间',
   `sort` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',

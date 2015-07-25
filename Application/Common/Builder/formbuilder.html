@@ -170,7 +170,7 @@
                                     <script type="text/javascript">
                                         $(function(){
                                             $('#upload_{$k}').Huploadify({
-                                                uploader:'{:U("Upload/upload")}',
+                                                uploader:'{:U("Home/Upload/upload")}',
                                                 fileTypeExts:'*.gif;*.jpg;*.jpeg;*.png;*.bmp',
                                                 fileSizeLimit:{:C('UPLOAD_IMAGE_SIZE')}*1024,
                                                 buttonText:'上 传 图 片',
@@ -198,7 +198,7 @@
                                     <script type="text/javascript">
                                         $(function(){
                                             $('#upload_{$k}').Huploadify({
-                                                uploader:'{:U("Upload/upload")}',
+                                                uploader:'{:U("Home/Upload/upload")}',
                                                 fileTypeExts:'*.gif;*.jpg;*.jpeg;*.png;*.bmp',
                                                 fileSizeLimit:{:C('UPLOAD_IMAGE_SIZE')}*1024,
                                                 buttonText:'上 传 图 片',
@@ -240,7 +240,7 @@
                                     <script type="text/javascript">
                                         $(function(){
                                             $('#upload_{$k}').Huploadify({
-                                                uploader:'{:U("Upload/upload")}',
+                                                uploader:'{:U("Home/Upload/upload")}',
                                                 fileTypeExts:'*.gif;*.jpg;*.jpeg;*.png;'+
                                                              '*.swf;*.flv;*.mp3;*.wav;*.wma;*.wmv;*.mid;*.avi;*.mpg;*.asf;*.rm;*.rmvb;*.mp4;'+
                                                              '*.doc;*.docx;*.xls;*.xlsx;*.ppt;*.pptx;*.wps;*.txt;*.zip;*.rar;*.gz;*.bz2;*.7z',
@@ -272,7 +272,7 @@
                                     <script type="text/javascript">
                                         $(function(){
                                             $('#upload_{$k}').Huploadify({
-                                                uploader:'{:U("Upload/upload")}',
+                                                uploader:'{:U("Home/Upload/upload")}',
                                                 fileTypeExts:'*.gif;*.jpg;*.jpeg;*.png;'+
                                                              '*.swf;*.flv;*.mp3;*.wav;*.wma;*.wmv;*.mid;*.avi;*.mpg;*.asf;*.rm;*.rmvb;*.mp4;'+
                                                              '*.doc;*.docx;*.xls;*.xlsx;*.ppt;*.pptx;*.wps;*.txt;*.zip;*.rar;*.gz;*.bz2;*.7z',
@@ -318,9 +318,9 @@
                                                     resizeType: 1,
                                                     pasteType : 2,
                                                     urlType : 'absolute',
-                                                    fileManagerJson : '{:U("Upload/fileManager")}',
-                                                    uploadJson : '{:U("Upload/upload")}',
-                                                    remoteImgSaveUrl: '{:U("Upload/downremoteimg")}',
+                                                    fileManagerJson : '{:U("Home/Upload/fileManager")}',
+                                                    uploadJson : '{:U("Home/Upload/upload")}',
+                                                    remoteImgSaveUrl: '{:U("Home/Upload/downremoteimg")}',
                                                     extraFileUploadParams: {
                                                         session_id : '{:session_id()}'
                                                     },
@@ -355,7 +355,7 @@
                                                     });
                                                 }
                                             }
-                                            tags.tokenInput('{:U("Tag/searchTags")}',{
+                                            tags.tokenInput('{:U("Home/Tag/searchTags")}',{
                                                 propertyToSearch    :   'title',
                                                 tokenValue          :   'title',
                                                 searchDelay         :   0,
@@ -368,7 +368,7 @@
                                                 searchingText       :   "查找中...",
                                                 prePopulate         :   tagsPre,
                                                 onAdd: function (item){ //新增系统没有的标签时提交到数据库
-                                                    $.post('{:U("Tag/add")}', {'title': item.title});
+                                                    $.post('{:U("Home/Tag/add")}', {'title': item.title});
                                                 }
                                             });
                                         });
@@ -526,7 +526,7 @@
                                                                         <script type="text/javascript">
                                                                             $(function(){
                                                                                 $('#tab_{$group_k}_upload_{$tab_k}').Huploadify({
-                                                                                    uploader:'{:U("Upload/upload")}',
+                                                                                    uploader:'{:U("Home/Upload/upload")}',
                                                                                     fileTypeExts:'*.gif;*.jpg;*.jpeg;*.png;*.bmp',
                                                                                     fileSizeLimit:{:C('UPLOAD_IMAGE_SIZE')}*1024,
                                                                                     buttonText:'上 传 图 片',
@@ -554,7 +554,7 @@
                                                                         <script type="text/javascript">
                                                                             $(function(){
                                                                                 $('#tab_{$group_k}_upload_{$tab_k}').Huploadify({
-                                                                                    uploader:'{:U("Upload/upload")}',
+                                                                                    uploader:'{:U("Home/Upload/upload")}',
                                                                                     fileTypeExts:'*.gif;*.jpg;*.jpeg;*.png;*.bmp',
                                                                                     fileSizeLimit:{:C('UPLOAD_IMAGE_SIZE')}*1024,
                                                                                     buttonText:'上 传 图 片',
@@ -596,7 +596,7 @@
                                                                         <script type="text/javascript">
                                                                             $(function(){
                                                                                 $('#tab_{$group_k}_upload_{$tab_k}').Huploadify({
-                                                                                    uploader:'{:U("Upload/upload")}',
+                                                                                    uploader:'{:U("Home/Upload/upload")}',
                                                                                     fileTypeExts:'*.gif;*.jpg;*.jpeg;*.png;'+
                                                                                                  '*.swf;*.flv;*.mp3;*.wav;*.wma;*.wmv;*.mid;*.avi;*.mpg;*.asf;*.rm;*.rmvb;*.mp4;'+
                                                                                                  '*.doc;*.docx;*.xls;*.xlsx;*.ppt;*.pptx;*.wps;*.txt;*.zip;*.rar;*.gz;*.bz2;*.7z',
@@ -628,7 +628,7 @@
                                                                         <script type="text/javascript">
                                                                             $(function(){
                                                                                 $('#tab_{$group_k}_upload_{$tab_k}').Huploadify({
-                                                                                    uploader:'{:U("Upload/upload")}',
+                                                                                    uploader:'{:U("Home/Upload/upload")}',
                                                                                     fileTypeExts:'*.gif;*.jpg;*.jpeg;*.png;'+
                                                                                                  '*.swf;*.flv;*.mp3;*.wav;*.wma;*.wmv;*.mid;*.avi;*.mpg;*.asf;*.rm;*.rmvb;*.mp4;'+
                                                                                                  '*.doc;*.docx;*.xls;*.xlsx;*.ppt;*.pptx;*.wps;*.txt;*.zip;*.rar;*.gz;*.bz2;*.7z',
@@ -676,9 +676,9 @@
                                                                                         resizeType: 1,
                                                                                         pasteType : 2,
                                                                                         urlType : 'absolute',
-                                                                                        fileManagerJson : '{:U("Upload/fileManager")}',
-                                                                                        uploadJson : '{:U("Upload/upload")}',
-                                                                                        remoteImgSaveUrl: '{:U("Upload/downremoteimg")}',
+                                                                                        fileManagerJson : '{:U("Home/Upload/fileManager")}',
+                                                                                        uploadJson : '{:U("Home/Upload/upload")}',
+                                                                                        remoteImgSaveUrl: '{:U("Home/Upload/downremoteimg")}',
                                                                                         extraFileUploadParams: {
                                                                                             session_id : '{:session_id()}'
                                                                                         },
@@ -713,7 +713,7 @@
                                                                                         });
                                                                                     }
                                                                                 }
-                                                                                tags.tokenInput('{:U("Tag/searchTags")}',{
+                                                                                tags.tokenInput('{:U("Home/Tag/searchTags")}',{
                                                                                     propertyToSearch    :   'title',
                                                                                     tokenValue          :   'title',
                                                                                     searchDelay         :   0,
@@ -726,7 +726,7 @@
                                                                                     searchingText       :   "查找中...",
                                                                                     prePopulate         :   tagsPre,
                                                                                     onAdd: function (item){ //新增系统没有的标签时提交到数据库
-                                                                                        $.post('{:U("Tag/add")}', {'title': item.title});
+                                                                                        $.post('{:U("Home/Tag/add")}', {'title': item.title});
                                                                                     }
                                                                                 });
                                                                             });
