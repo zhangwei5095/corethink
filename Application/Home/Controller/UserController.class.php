@@ -18,7 +18,7 @@ class UserController extends HomeController{
      * 用户列表
      * @author jry <598821125@qq.com>
      */
-    public function lists(){
+    public function index(){
         $usertype = I('get.usertype');
         if($usertype){
             $map['usertype'] = $usertype;
@@ -36,18 +36,22 @@ class UserController extends HomeController{
      * 用户个人主页
      * @author jry <598821125@qq.com>
      */
-    public function index(){
+    public function home(){
         $uid = I('get.uid');
         if(!$uid){
             $uid  = is_login();
         }
-        $userinfo = D('User')->find($uid);
-        $date = new Date((int)$userinfo['birthday']);
-        $userinfo['gz'] = $date->magicInfo('GZ');
-        $userinfo['xz'] = $date->magicInfo('XZ');
-        $userinfo['sx'] = $date->magicInfo('SX');
-        $this->assign('meta_title', $userinfo['username'].'的主页');
-        $this->assign('info', $userinfo);
+        $con['status'] = 1;
+        $user_info = D('User')->where($con)->find($uid);
+        if(!$user_info){
+            $this->error('该用户不存在或已禁用');
+        }
+        $date = new Date((int)$user_info['birthday']);
+        $user_info['gz'] = $date->magicInfo('GZ');
+        $user_info['xz'] = $date->magicInfo('XZ');
+        $user_info['sx'] = $date->magicInfo('SX');
+        $this->assign('meta_title', $user_info['username'].'的主页');
+        $this->assign('info', $user_info);
         $this->display();
     }
 
@@ -75,23 +79,23 @@ class UserController extends HomeController{
                 $this->error($user_object->getError());
             }
         }else{
-            $userinfo = D('User')->find($this->is_login());
-            $date = new Date((int)$userinfo['birthday']);
-            $userinfo['gz'] = $date->magicInfo('GZ');
-            $userinfo['xz'] = $date->magicInfo('XZ');
-            $userinfo['sx'] = $date->magicInfo('SX');
+            $user_info = D('User')->find($this->is_login());
+            $date = new Date((int)$user_info['birthday']);
+            $user_info['gz'] = $date->magicInfo('GZ');
+            $user_info['xz'] = $date->magicInfo('XZ');
+            $user_info['sx'] = $date->magicInfo('SX');
 
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->title('修改'.$userinfo['username'].'的信息')  //设置页面标题
+            $builder->title('修改'.$user_info['username'].'的信息')  //设置页面标题
                     ->setUrl(U('')) //设置表单提交地址
                     ->addItem('username', 'text', '用户名', '')
                     ->addItem('avatar', 'picture', '头像', '')
                     ->addItem('sex', 'radio', '性别', '', C('USER_SEX_LIST'))
                     ->addItem('age', 'num', '年龄', '')
-                    ->addItem('birthday', 'date', '生日', '自动计算：'.$userinfo['gz'].' '.$userinfo['xz'].' '.$userinfo['sx'])
+                    ->addItem('birthday', 'date', '生日', '自动计算：'.$user_info['gz'].' '.$user_info['xz'].' '.$user_info['sx'])
                     ->addItem('summary', 'text', '签名', '一句话介绍')
-                    ->setFormData($userinfo)
+                    ->setFormData($user_info)
                     ->setTemplate('Builder/formbuilder_user')
                     ->display();
         }

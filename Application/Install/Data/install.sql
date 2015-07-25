@@ -129,7 +129,7 @@ LOCK TABLES `ct_category` WRITE;
 INSERT INTO `ct_category` (`id`, `pid`, `group`, `doc_type`, `title`, `url`, `content`, `index_template`, `detail_template`, `post_auth`, `icon`, `ctime`, `utime`, `sort`, `status`)
 VALUES
 	(1, 0, 1, 3, '文章', '', '', 'index_default', 'detail_default', 1, 'fa fa-send-o', 1431926468, 1435895071, 1, 1),
-	(9, 0, 1, 1, '会员', 'User/lists', '', '', '', 0, 'fa fa-users', 1435894071, 1435895080, 9, 0),
+	(9, 0, 1, 1, '会员', 'User/index', '', '', '', 0, 'fa fa-users', 1435894071, 1435895080, 9, 0),
 	(10, 0, 1, 1, '标签', 'Tag/index', '', '', '', 0, 'fa fa-tags', 1435896603, 1435896603, 11, 0),
 	(15, 0, 3, 1, '底部导航', '', '', '', '', 1, 'fa fa-navicon', 1435896768, 1435896768, 1, 1),
 	(16, 15, 3, 1, '关于', '', '', '', '', 0, '', 1435896839, 1435896839, 0, 1),
