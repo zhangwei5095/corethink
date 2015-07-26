@@ -40,7 +40,7 @@
                     <tbody>
                         <volist name="data_list" id="data">
                             <tr>
-                                <td><input class="ids" type="checkbox" value="{$data['id']}" name="ids[]"></td>
+                                <td><input class="ids" type="checkbox" value="{$data[$data_list_primary_key]}" name="ids[]"></td>
                                 <volist name="field_list" id="field">
                                     <td>{$data[$field['name']]}</td>
                                 </volist>

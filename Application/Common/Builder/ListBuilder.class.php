@@ -294,6 +294,7 @@ class ListBuilder extends Controller{
         $this->assign('current_tab', $this->_current_tab);
         $this->assign('field_list', $this->_field_list);
         $this->assign('data_list', $this->_data_list);
+        $this->assign('data_list_primary_key', $this->_data_list_primary_key);
         $this->assign('right_button_list', $this->_right_button_list);
         $this->assign('page', $this->_page);
         $this->assign('extra_html', $this->_extra_html);
