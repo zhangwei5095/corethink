@@ -505,7 +505,7 @@
                                                                         <input type="text" id="tab_{$group_k}_date_{$tab_k}" class="form-control input date" name="{$tab_form.name}" value="<notempty name='tab_form.value'>{$tab_form.value|time_format='Y-m-d'}</notempty>" {$tab_form.extra_attr}>
                                                                         <script type="text/javascript">
                                                                             $(function(){
-                                                                                $("tab_{$group_k}_date_{$tab_k}").daterangepicker({
+                                                                                $("#tab_{$group_k}_date_{$tab_k}").daterangepicker({
                                                                                     showDropdowns: true,
                                                                                     singleDatePicker: true,
                                                                                     startDate: moment().subtract(0, 'days'),

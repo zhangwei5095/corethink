@@ -1,5 +1,15 @@
 <div class="builder">
     <div class="row">
+        <notempty name="tab_list">
+            <div class="col-xs-12">
+                <ul class="nav nav-tabs">
+                    <volist name="tab_list" id="tab">
+                        <li class="<php>if($current_tab == $key) echo 'active';</php>"><a href="{:U($tab_url, array('tab' => $key))}">{$tab}</a></li>
+                    </volist>
+                </ul>
+                <div class="blank"></div>
+            </div>
+        </notempty>
         <notempty name="button_list">
             <div class="col-xs-12 col-sm-9 margin-bottom">
                 <volist name="button_list" id="button">
@@ -13,16 +23,6 @@
                     <input type="text" name="keyword" class="search-input form-control" value="{$_GET.keyword}" placeholder="{$search.title}">
                     <span class="input-group-btn"><a class="btn btn-default" href="javascript:;" id="search" url="{$search.url}"><i class="glyphicon glyphicon-search"></i></a></span>
                 </div>
-            </div>
-        </notempty>
-        <notempty name="tab_list">
-            <div class="col-xs-12">
-                <ul class="nav nav-tabs">
-                    <volist name="tab_list" id="tab">
-                        <li class="<php>if($current_tab == $key) echo 'active';</php>"><a href="{:U($tab_url, array('tab' => $key))}">{$tab}</a></li>
-                    </volist>
-                </ul>
-                <div class="blank"></div>
             </div>
         </notempty>
         <!-- 数据列表 -->
