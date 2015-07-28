@@ -134,10 +134,13 @@ class DocumentTypeController extends AdminController{
                 $field[$key]['field'] = $temp;
             }
 
+            //计算未排序字段分组的key
+            $unsort_key = array_pop(array_keys($field)) + 1;
+
             //未排序字段
             if($new_attribute_list){
-                $field[99]['title'] = "未排序";
-                $field[99]['field'] = $new_attribute_list;
+                $field[$unsort_key]['title'] = "未排序";
+                $field[$unsort_key]['field'] = $new_attribute_list;
             }
 
             //使用FormBuilder快速建立表单页面。

@@ -49,8 +49,8 @@ class UserController extends AdminController{
                 ->addField('sort', '排序', 'text')
                 ->addField('status', '状态', 'status')
                 ->addField('right_button', '操作', 'btn')
-                ->dataList($data_list)    //数据列表
-                ->addRightButton('edit')   //添加编辑按钮
+                ->dataList($data_list) //数据列表
+                ->addRightButton('edit') //添加编辑按钮
                 ->addRightButton('forbid') //添加禁用/启用按钮
                 ->addRightButton('delete') //添加删除按钮
                 ->setPage($page->show())
@@ -78,7 +78,7 @@ class UserController extends AdminController{
         }else{
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->title('新增用户')  //设置页面标题
+            $builder->title('新增用户') //设置页面标题
                     ->setUrl(U('add')) //设置表单提交地址
                     ->addItem('reg_type', 'hidden', '注册方式', '注册方式')
                     ->addItem('usertype', 'radio', '用户类型', '用户类型', C('USER_TYPE_LIST'))
@@ -89,7 +89,7 @@ class UserController extends AdminController{
                     ->addItem('password', 'password', '密码', '密码')
                     ->addItem('avatar', 'picture', '用户头像', '用户头像')
                     ->addItem('vip', 'radio', 'VIP等级', 'VIP等级', C('USER_VIP_LEVEL'))
-                    ->setFormData(array('reg_type' => 4))
+                    ->setFormData(array('reg_type' => 1)) //注册方式为后台添加
                     ->display();
         }
     }
@@ -126,7 +126,7 @@ class UserController extends AdminController{
             $info = D('User')->find($id);
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->title('编辑用户')  //设置页面标题
+            $builder->title('编辑用户') //设置页面标题
                     ->setUrl(U('edit')) //设置表单提交地址
                     ->addItem('id', 'hidden', 'ID', 'ID')
                     ->addItem('usertype', 'radio', '用户类型', '用户类型', C('USER_TYPE_LIST'))

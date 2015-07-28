@@ -180,6 +180,8 @@ class DocumentController extends HomeController{
         $builder = new \Common\Builder\FormBuilder();
         $builder->title('新增文章')  //设置页面标题
                 ->setUrl(U('update')) //设置表单提交地址
+                ->addItem('doc_type', 'hidden')
+                ->setFormData(array('doc_type' => $category_info['doc_type']))
                 ->setExtraItems($new_attribute_list)
                 ->setTemplate('Builder/formbuilder_user')
                 ->display();
