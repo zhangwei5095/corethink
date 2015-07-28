@@ -134,6 +134,7 @@ function get_cover($id, $type){
                 $url = C('TMPL_PARSE_STRING.__IMG__').'/avatar'.rand(1,7).'.png';
                 break;
             default: //文档列表默认图片
+                $url = C('TMPL_PARSE_STRING.__IMG__').'/default1.png';
                 break;
         }
     }
