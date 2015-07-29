@@ -249,7 +249,7 @@ class UserController extends HomeController{
         if(!$result){
             $this->error($user_object->getError());
         }
-        $reg_verify = randString(); //生成验证码
+        $reg_verify = \Org\Util\String::randString(6,1); //生成验证码
         session('reg_verify', user_md5($reg_verify, $receiver));
         $body = '少侠/女侠好：<br>听闻您正使用该邮箱【注册/修改密码】，请在验证码输入框中输入：
         <span style="color:red;font-weight:bold;">'.$reg_verify.'</span>，以完成操作。<br>
@@ -273,7 +273,7 @@ class UserController extends HomeController{
         if(!$result){
             $this->error($user_object->getError());
         }
-        $reg_verify = randString(); //生成验证码
+        $reg_verify = \Org\Util\String::randString(6,1); //生成验证码
         session('reg_verify', user_md5($reg_verify, $receiver));
         $body = $title.'验证码：'.$reg_verify;
         if(send_mobile_message($receiver, $title, $body)){
