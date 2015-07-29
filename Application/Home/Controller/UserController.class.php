@@ -251,7 +251,7 @@ class UserController extends HomeController{
         }
         $reg_verify = \Org\Util\String::randString(6,1); //生成验证码
         session('reg_verify', user_md5($reg_verify, $receiver));
-        $body = '少侠/女侠好：<br>听闻您正使用该邮箱【注册/修改密码】，请在验证码输入框中输入：
+        $body = '少侠/女侠好：<br>听闻您正使用该邮箱'.$receiver.'【注册/修改密码】，请在验证码输入框中输入：
         <span style="color:red;font-weight:bold;">'.$reg_verify.'</span>，以完成操作。<br>
         注意：此操作可能会修改您的密码、登录邮箱或绑定手机。如非本人操作，请及时登录并修改
         密码以保证帐户安全 （工作人员不会向您索取此验证码，请勿泄漏！)';
