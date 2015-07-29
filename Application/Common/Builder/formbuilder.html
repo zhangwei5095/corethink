@@ -165,7 +165,7 @@
                                     <div id="upload_{$k}" {$form.extra_attr}></div>
                                     <div id="preview_{$k}">
                                         <input type="hidden" name="{$form.name}" value="{$form.value}">
-                                        <img style="margin-top:8px;max-height:60px;" src="{$form.value|get_cover}">
+                                        <img class="img-responsive" style="margin-top:8px;max-height:60px;" src="{$form.value|get_cover}">
                                     </div>
                                     <script type="text/javascript">
                                         $(function(){
@@ -195,7 +195,7 @@
                                         <notempty name="form.value">
                                             <?php $images = explode(',',$form['value']); ?>
                                             <foreach name="images" item="img">
-                                                <span class="img-box"><img src="{$img|get_cover}" data-id="{$img}"><i class="glyphicon glyphicon-remove-sign remove-picture"></i></span>
+                                                <span class="img-box"><img class="img img-responsive" src="{$img|get_cover}" data-id="{$img}"><i class="glyphicon glyphicon-remove-sign remove-picture"></i></span>
                                             </foreach>
                                         </notempty>
                                     </div>
@@ -212,7 +212,7 @@
                                                         alertMessager(data.message);
                                                     }else{
                                                         var input = $('#preview_{$k} input');
-                                                        var new_img = '<span class="img-box"><img class="img" src="' + data.url + '"><i class="glyphicon glyphicon-remove-sign remove-picture"></i></span>';
+                                                        var new_img = '<span class="img-box"><img class="img img-responsive" src="' + data.url + '"><i class="glyphicon glyphicon-remove-sign remove-picture"></i></span>';
                                                         $('#preview_{$k}').append(new_img);
                                                         if(input.val()){
                                                             input.val(input.val() + ',' + data.id);
@@ -537,7 +537,7 @@
                                                                         <div id="tab_{$group_k}_upload_{$tab_k}" {$form.extra_attr}></div>
                                                                         <div id="tab_{$group_k}_preview_{$tab_k}">
                                                                             <input type="hidden" name="{$tab_form.name}" value="{$tab_form.value}">
-                                                                            <img style="margin-top:8px;max-height:60px;" src="{$tab_form.value|get_cover}">
+                                                                            <img class="img-responsive" style="margin-top:8px;max-height:60px;" src="{$tab_form.value|get_cover}">
                                                                         </div>
                                                                         <script type="text/javascript">
                                                                             $(function(){
@@ -567,7 +567,7 @@
                                                                             <notempty name="tab_form.value">
                                                                                 <?php $images = explode(',',$tab_form['value']); ?>
                                                                                 <foreach name="images" item="img">
-                                                                                    <span class="img-box"><img src="{$img|get_cover}" data-id="{$img}"><i class="glyphicon glyphicon-remove-sign remove-picture"></i></span>
+                                                                                    <span class="img-box"><img class="img img-responsive" src="{$img|get_cover}" data-id="{$img}"><i class="glyphicon glyphicon-remove-sign remove-picture"></i></span>
                                                                                 </foreach>
                                                                             </notempty>
                                                                         </div>
@@ -584,7 +584,7 @@
                                                                                             alertMessager(data.message);
                                                                                         }else{
                                                                                             var input = $('#tab_{$group_k}_preview_{$tab_k} input');
-                                                                                            var new_img = '<span class="img-box"><img class="img" src="' + data.url + '" data-id="'+data.id+'"><i class="glyphicon glyphicon-remove-sign remove-picture"></i></span>';
+                                                                                            var new_img = '<span class="img-box"><img class="img img-responsive" src="' + data.url + '" data-id="'+data.id+'"><i class="glyphicon glyphicon-remove-sign remove-picture"></i></span>';
                                                                                             $('#tab_{$group_k}_preview_{$tab_k}').append(new_img);
                                                                                             if(input.val()){
                                                                                                 input.val(input.val() + ',' + data.id);

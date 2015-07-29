@@ -5,7 +5,7 @@
             <div class="media border-bottom padding-bottom">
                 <div class="media-left">
                     <a href="{:U('User/home/uid/'.$vo['uid'])}" class="avatar">
-                        <img src="{$vo.avatar|get_cover='avatar'}" style="width:40px;height:40px;">
+                        <img class="img-responsive" src="{$vo.avatar|get_cover='avatar'}" style="width:40px;height:40px;">
                     </a>
                 </div>
                 <div class="media-body">
@@ -25,7 +25,7 @@
                     <div class="text">{$vo.content}</div>
                     <div class="pictures">
                         <foreach name="vo.pictures" item="img">
-                            <a href="#"><img src="{$img|get_cover}" style="width:50px;height:50px;margin:5px 5px 5px 0px;border:1px solid #eee;"></a>
+                            <a href="#"><img class="img-responsive" src="{$img|get_cover}" style="width:50px;height:50px;margin:5px 5px 5px 0px;border:1px solid #eee;"></a>
                         </foreach>
                     </div>
                     <div class="small">
