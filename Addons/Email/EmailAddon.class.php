@@ -13,6 +13,10 @@ use Common\Controller\Addon;
  * @author jry <598821125@qq.com>
  */
 class EmailAddon extends Addon{
+    /**
+     * 插件信息
+     * @author jry <598821125@qq.com>
+     */
     public $info = array(
         'name' => 'Email',
         'title' => '邮件插件',
@@ -22,16 +26,19 @@ class EmailAddon extends Addon{
         'version' => '1.0'
     );
 
+    /**
+     * 插件安装方法
+     * @author jry <598821125@qq.com>
+     */
     public function install(){
-        $prefix = C("DB_PREFIX");
-        $model = D();
-        $model->execute("DROP TABLE IF EXISTS {$prefix}email;");
         return true;
     }
 
+    /**
+     * 插件卸载方法
+     * @author jry <598821125@qq.com>
+     */
     public function uninstall(){
-        $prefix = C("DB_PREFIX");
-        $model->execute("DROP TABLE IF EXISTS {$prefix}email;");
         return true;
     }
 }

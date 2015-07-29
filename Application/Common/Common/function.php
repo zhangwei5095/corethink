@@ -292,7 +292,7 @@ function execute_sql_from_file($file){
     $sql_data = file_get_contents($file);
     $sql_format = sql_split($sql_data, C('DB_PREFIX'));
     $counts = count($sql_format);
-    for ($i = 0; $i < $counts; $i++) {
+    for($i = 0; $i < $counts; $i++){
         $sql = trim($sql_format[$i]);
         D()->execute($sql);
     }

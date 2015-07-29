@@ -129,6 +129,16 @@ class AddonController extends AdminController {
         if(!$install_flag){
             $this->error('执行插件预安装操作失败'.session('addons_install_error'));
         }
+
+        //安装数据库
+        $sql_file = realpath(THINK_ADDON_PATH.$addon_name).'/Sql/install.sql';
+        if(file_exists($sql_file)){
+            $sql_status = execute_sql_from_file($sql_file);
+            if(!$sql_status){
+                $this->error('执行插件SQL安装语句失败'.session('addons_install_error'));
+            }
+        }
+
         $addon_object = D('Addon');
         $data = $addon_object->create($info);
         if(is_array($addons->admin_list) && $addons->admin_list !== array()){
@@ -177,6 +187,16 @@ class AddonController extends AdminController {
         }
         S('hooks', null);
         $delete = $addon_object->where("name='{$db_addons['name']}'")->delete();
+
+        //卸载数据库
+        $sql_file = realpath(THINK_ADDON_PATH.$db_addons['name']).'/Sql/uninstall.sql';
+        if(file_exists($sql_file)){
+            $sql_status = execute_sql_from_file($sql_file);
+            if(!$sql_status){
+                $this->error('执行插件SQL卸载语句失败'.session('addons_uninstall_error'));
+            }
+        }
+
         if($delete === false){
             $this->error('卸载插件失败');
         }else{
