@@ -59,17 +59,20 @@
                     $('.menu-title').addClass('hidden');
                     $('#left').css('width', '5%');
                     $('#right').css('width', '95%');
+                    $('#left .panel-group').addClass('text-center');
                 }
                 $('#menu-toggle').click(function(){
                     if($.cookie('menu-title-hide') !== ''){
                         $('.menu-title').removeClass('hidden');
                         $('#left').css('width', '16.66666667%');
                         $('#right').css('width', '83.33333333%');
+                        $('#left .panel-group').removeClass('text-center');
                         $.cookie('menu-title-hide', '');
                     }else{
                         $('.menu-title').addClass('hidden');
                         $('#left').css('width', '5%');
                         $('#right').css('width', '95%');
+                        $('#left .panel-group').addClass('text-center');
                         $.cookie('menu-title-hide', 'true');
                     }
                 });
