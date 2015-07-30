@@ -45,6 +45,10 @@ ul.token-input-list{overflow:hidden;height:31px;width:100%;border:1px solid #999
 .border-radius-none {
     border-radius: 0px !important;
 }
+.navbar-brand .logo {
+    height: 40px;
+    margin: -10px 0px;
+}
 
 /* 字体颜色
 -------------------------------------------------- */

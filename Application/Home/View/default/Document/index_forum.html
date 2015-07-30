@@ -20,7 +20,7 @@
                                     <div class="media-body">
                                         <h5 class="media-heading">
                                             <strong><a href="{:U('Document/index', array('cid' => $vo_child['id']))}">{$vo_child.title}</a></strong> 
-                                            <notempty name="vo_child.count_new_document"><span class="badge badge-dot bg-red pull-right">{$vo_child.count_new_document}</span></notempty>
+                                            <notempty name="vo_child.count_new_document"><span class="badge badge-dot bg-red">{$vo_child.count_new_document}</span></notempty>
                                         </h5>
                                         <div class="text">
                                             <span class="margin-right small">帖数 {$vo_child.count_sum_document|default=0}</span>
