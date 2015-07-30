@@ -31,8 +31,9 @@ ul.token-input-list{overflow:hidden;height:31px;width:100%;border:1px solid #999
 .btn-pills {
     border-radius: 20px
 }
-.badge-dot {
-    padding: 3px 5px 3px 6px;
+.badge-sm {
+    vertical-align: top;
+    padding: 1px 5px;
 }
 .text-shadow-none {
     text-shadow: none;

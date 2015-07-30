@@ -95,7 +95,7 @@ CREATE TABLE `ct_addon_sync_login` (
   `sort` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='第三方登陆插件表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='第三方登陆插件表';
 
 
 

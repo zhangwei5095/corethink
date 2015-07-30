@@ -18,13 +18,13 @@
                                         </a>
                                     </div>
                                     <div class="media-body">
-                                        <h5 class="media-heading">
+                                        <h5 class="media-heading" style="height: 20px;">
                                             <strong><a href="{:U('Document/index', array('cid' => $vo_child['id']))}">{$vo_child.title}</a></strong> 
-                                            <notempty name="vo_child.count_new_document"><span class="badge badge-dot bg-red">{$vo_child.count_new_document}</span></notempty>
+                                            <notempty name="vo_child.count_new_document"><span class="badge badge-sm bg-red">{$vo_child.count_new_document}</span></notempty>
                                         </h5>
                                         <div class="text">
-                                            <span class="margin-right small">帖数 {$vo_child.count_sum_document|default=0}</span>
-                                            <span class="small">回复数 {$vo_child.count_sum_comment|default=0}</span>
+                                            <span class="margin-right small text-danger">帖数 {$vo_child.count_sum_document|default=0}</span>
+                                            <span class="small text-muted">回复数 {$vo_child.count_sum_comment|default=0}</span>
                                         </div>
                                     </div>
                                 </div>
