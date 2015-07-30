@@ -1,5 +1,22 @@
 <extend name="Public/layout"/>
 
+<block name="style">
+    <style type="text/css">
+        .user-list .avatar {
+            width: 100%;
+        }
+    </style>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(function(){
+            //设置头像的高度与宽度保持一致
+            $('.user-list .avatar').height($(".user-list .avatar").width());
+        })
+    </script>
+</block>
+
 <block name="breadcrumb">
     <div class="container">
         <ul class="breadcrumb">
@@ -12,12 +29,12 @@
 
 <block name="body">
     <div class="container">
-        <div class="cards cards-borderless">
+        <div class="cards cards-borderless user-list">
             <volist name="user_list" id="vo">
-                <div class="col-xs-12 col-sm-2">
-                    <div class="card">
-                        <a href="{:U('User/home', array('uid' => $vo['id']))}">
-                            <img class="img-responsive" src="{$vo.avatar|get_cover='avatar'}" alt="{$vo.username}">
+                <div class="col-xs-6 col-sm-3 col-md-2">
+                    <div class="card margin-bottom">
+                        <a class="img-circle" href="{:U('User/home', array('uid' => $vo['id']))}">
+                            <img class="img-responsive avatar" src="{$vo.avatar|get_cover='avatar'}" alt="{$vo.username}">
                         </a>
                         <div class="card-heading">
                             <span class="pull-right"><a href="###"><i class="icon-heart-empty"></i> {$vo.good}</a></span>
