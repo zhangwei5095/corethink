@@ -84,9 +84,26 @@
                                                     <notempty name="vo3._child">
                                                         <div class="auth{$vo3.id}" style="padding-left: 25px;">
                                                             <volist name="vo3._child" id="vo4">
-                                                                <label class="checkbox-inline">
-                                                                    <input type="checkbox" name="auth[]" <php>if(in_array($vo4['id'], $info['auth'])) echo "checked";</php> value="{$vo4.id}">{$vo4.title}
-                                                                </label>
+                                                                <notempty name="vo4._child">
+                                                                    <div style="padding-top: 10px;">
+                                                                    <label class="checkbox-inline">
+                                                                        <input type="checkbox" name="auth[]" <php>if(in_array($vo4['id'], $info['auth'])) echo "checked";</php> value="{$vo4.id}">{$vo4.title}
+                                                                    </label>
+                                                                    </div>
+                                                                <else />
+                                                                     <label class="checkbox-inline">
+                                                                        <input type="checkbox" name="auth[]" <php>if(in_array($vo4['id'], $info['auth'])) echo "checked";</php> value="{$vo4.id}">{$vo4.title}
+                                                                    </label>
+                                                                </notempty>
+                                                                <notempty name="vo4._child">
+                                                                    <div class="auth{$vo4.id}" style="padding-left: 25px;">
+                                                                        <foreach name="vo4._child" item="vo5">
+                                                                            <label class="checkbox-inline">
+                                                                                <input type="checkbox" name="auth[]" <php>if(in_array($vo5['id'], $info['auth'])) echo "checked";</php> value="{$vo5.id}">{$vo5.title}
+                                                                            </label>
+                                                                        </foreach>
+                                                                    </div>
+                                                                </notempty>
                                                             </volist>
                                                         </div>
                                                     </notempty>

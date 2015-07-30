@@ -30,6 +30,7 @@
     <script type="text/javascript" src="__PUBLIC__/bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="__PUBLIC__/bootstrapextend/js/bootstrap.extend.js" charset="utf-8"></script>
     <block name="script"></block>
+    {:C('WEB_SITE_STATISTICS')} <!-- 站点统计代码 -->
 </head>
 <body>
     <block name="wrap">
@@ -197,7 +198,6 @@
         </div>
 
         {:hook('PageFooter')} <!-- 文档末尾钩子 -->
-        {:C('WEB_SITE_STATISTICS')} <!-- 站点统计代码 -->
     </block>
 </body>
 </html>
