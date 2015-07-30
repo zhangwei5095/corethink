@@ -48,9 +48,34 @@
             float: left;
             height: 40px;
             margin-top: -10px;
-
         }
     </style>
+    <script type="text/javascript">
+        //切换左侧菜单
+        $(function(){
+            var result = window.matchMedia("(min-width: 768px)");
+            if (result.matches){
+                if($.cookie('menu-title-hide') == 'true'){
+                    $('.menu-title').addClass('hidden');
+                    $('#left').css('width', '5%');
+                    $('#right').css('width', '95%');
+                }
+                $('#menu-toggle').click(function(){
+                    if($.cookie('menu-title-hide') !== ''){
+                        $('.menu-title').removeClass('hidden');
+                        $('#left').css('width', '16.66666667%');
+                        $('#right').css('width', '83.33333333%');
+                        $.cookie('menu-title-hide', '');
+                    }else{
+                        $('.menu-title').addClass('hidden');
+                        $('#left').css('width', '5%');
+                        $('#right').css('width', '95%');
+                        $.cookie('menu-title-hide', 'true');
+                    }
+                });
+            }
+        });
+    </script>
     <block name="script"></block>
 </head>
 <body>
@@ -98,19 +123,26 @@
     </nav>
     <div class="wrap">
         <block name="wrap">
-            <div class="col-xs-12 col-sm-2 left">
+            <div id="left" class="col-xs-12 col-sm-2 left">
+                <!-- 切换左侧菜单 -->
+                <button id="menu-toggle" class="btn btn-default btn-block hidden-xs border-radius-none border-bottom-none" title="切换左侧菜单">
+                    <i class="fa fa-bars"></i>
+                </button>
                 <!-- 侧边导航 -->
                 <div class="panel-group margin-none" role="tablist">
                     <volist name="__SIDE_MENU_LIST__" id="vo">
                         <div class="panel panel-default margin-none border-radius-none border-bottom-none">
                             <div class="panel-heading" role="tab">
-                                <h4 class="panel-title"><a data-toggle="collapse" href="#side-menu{$key}"><i class="{$vo.icon}"></i> {$vo.title}</a></h4>
+                                <h4 class="panel-title"><a data-toggle="collapse" href="#side-menu{$key}">
+                                    <i class="{$vo.icon}"></i> 
+                                    <span class="menu-title">{$vo.title}</a></span>
+                                </h4>
                             </div>
                             <div id="side-menu{$key}" class="panel-collapse collapse in" role="tabpanel">
                                 <div class="list-group">
                                     <volist name="vo._child" id="vo_child">
                                         <a class="list-group-item border-radius-none <php>if(in_array($vo_child['id'], $__PARENT_MENU_ID__)) echo 'active';</php>"
-                                        href="{:U($vo_child['url'])}"><i class="{$vo_child.icon}"></i> {$vo_child.title}</a>
+                                        href="{:U($vo_child['url'])}"><i class="{$vo_child.icon}"></i> <span class="menu-title">{$vo_child.title}</span></a>
                                     </volist>
                                 </div>
                             </div>
@@ -118,7 +150,7 @@
                     </volist>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-10 right">
+            <div  id="right" class="col-xs-12 col-sm-10 right">
                 <ul class="breadcrumb margin-bottom border-radius-none" style="margin-left:-15px;margin-right:-15px;">
                     <li><i class="icon-location-arrow"></i></li>
                     <volist name="__PARENT_MENU__" id="vo">
