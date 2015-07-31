@@ -5,7 +5,7 @@
             <div class="media border-bottom padding-bottom">
                 <div class="media-left">
                     <a href="{:U('User/home/uid/'.$vo['uid'])}" class="avatar">
-                        <img class="img-responsive" src="{$vo.avatar|get_cover='avatar'}" style="width:40px;height:40px;">
+                        <img class="img-circle" src="{$vo.avatar|get_cover='avatar'}" style="width:48px;height:48px;">
                     </a>
                 </div>
                 <div class="media-body">
@@ -97,7 +97,7 @@
                 </div>
             </form>
         <else />
-            <div>
+            <div class="margin-top">
                 <a class="btn btn-success" href="{:U('User/register')}">注 册</a>
                 <a class="btn btn-primary" data-toggle="modal" data-target="#login-modal">登 录</a>
             </div>
