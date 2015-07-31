@@ -18,6 +18,7 @@ class IndexController extends AdminController{
      * @author jry <598821125@qq.com>
      */
     public function index(){
+        //计算统计图日期
         $today = strtotime(date('Y-m-d', time())); //今天
         $start_date = I('get.start_date') ? I('get.start_date')/1000 : $today-14*86400;
         $end_date   = I('get.end_date') ? (I('get.end_date')+1)/1000 : $today+86400;

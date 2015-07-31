@@ -12,8 +12,24 @@
  */
 const THINK_ADDON_PATH = './Addons/';
 return array(
-    //CoreThink当前版本
-    'CORETHINK_VERSION' => '1.0Beta',
+    /**
+     * 产品配置
+     * 系统升级需要此配置
+     * 免费版不允许更改，授权版可更改产品名称及公司名称
+     */
+    'PRODUCT_NAME'    => 'CoreThink',                  //产品名称
+    'CURRENT_VERSION' => '1.0.0',             //当前版本
+    'WEBSITE_DOMAIN'  => 'http://www.corethink.cn',    //官方网址
+    'UPDATE_URL'      => '/appstore/home/core/update', //官方更新网址
+    'COMPANY_NAME'    => '南京科斯克网络科技有限公司',   //公司名称
+    'COMPANY_EMAIL'   => 'admin@corethink.cn',         //公司邮箱
+    'COMPANY_TEL'     => '15005173785',         //公司电话
+
+    //产品简介
+    'PRODUCT_INFO'    => 'CoreThink是一套的互联网+解决方案云框架。致力于搭建一个完善的企业级应用生态环境以适应不同行业用户的需求,第三方开发者可以将自己的功能模块发布到官方的应用商城，最终达到“Enterprise One Solution”的目标。',
+
+    //公司简介
+    'COMPANY_INFO'    => '南京科斯克网络科技有限公司(CoreThink)是一家新兴的互联网+项目 技术解决方案提供商。我们用敏锐的视角洞察IT市场的每一次变革,我们顶着时代变迁的浪潮站在了前沿,以开拓互联网行业新渠道为己任。',
 
     //数据库配置
     'DB_TYPE'   => $_SERVER[ENV_PRE.'DB_TYPE'] ? : '[DB_TYPE]', // 数据库类型
