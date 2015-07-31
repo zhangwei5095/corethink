@@ -242,7 +242,12 @@ EOF;
         if(!$result){
             $this->error($document_object->getError());
         }else{
-            $this->success($result['id']?'更新成功':'新增成功', U('Document/index', array('cid' => I('post.cid'))));
+            if(is_array($result)){
+                $message = '更新成功';
+            }else{
+                $message = '新增成功';
+            }
+            $this->success($message, U('Document/index', array('cid' => I('post.cid'))));
         }
     }
 

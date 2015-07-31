@@ -262,7 +262,12 @@ class DocumentController extends HomeController{
         if(!$result){
             $this->error($document_object->getError());
         }else{
-            $this->success($result['id']?'更新成功':'新增成功', Cookie('__forward__') ? : C('HOME_PAGE'));
+            if(is_array($result)){
+                $message = '更新成功';
+            }else{
+                $message = '新增成功';
+            }
+            $this->success($message, Cookie('__forward__') ? : C('HOME_PAGE'));
         }
     }
 
