@@ -73,7 +73,7 @@ class DocumentModel extends Model{
             $cid = I('post.cid');
             $category_info = D('Category')->find($cid);
             $doc_type = D('DocumentType')->where(array('id' => $category_info['doc_type']))->getField('name');
-            $document_extend_object = D('DocumentExtend'.$doc_type);
+            $document_extend_object = D('DocumentExtend'.ucfirst($doc_type));
             $extend_data = $document_extend_object->create(); //子模型数据验证
             if(!$extend_data){
                 $this->error = $document_extend_object->getError();
@@ -125,7 +125,7 @@ class DocumentModel extends Model{
         }
         $category_info = D('Category')->find($info['cid']);
         $doc_type = D('DocumentType')->where(array('id' => $category_info['doc_type']))->getField('name');
-        $document_extend_object = D('DocumentExtend'.$doc_type);
+        $document_extend_object = D('DocumentExtend'.ucfirst($doc_type));
         $extend_data = $document_extend_object->find($id);
         if(is_array($extend_data)){
             $info = array_merge($info, $extend_data);

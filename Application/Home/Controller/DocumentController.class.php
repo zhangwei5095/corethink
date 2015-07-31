@@ -54,7 +54,7 @@ class DocumentController extends HomeController{
                 foreach($document_list as &$doc){
                     $doc_type_name = D('DocumentType')->getFieldById($doc['doc_type'], 'name');
                     $temp = array();
-                    $temp = D('DocumentExtend'.$doc_type_name)->find($doc['id']);
+                    $temp = D('DocumentExtend'.ucfirst($doc_type_name))->find($doc['id']);
                     $doc = array_merge($doc, $temp);
                 }
 

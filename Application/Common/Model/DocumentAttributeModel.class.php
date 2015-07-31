@@ -97,14 +97,14 @@ class DocumentAttributeModel extends Model{
         if($table_exist){
             $sql = <<<sql
                 ALTER TABLE `{$this->table_name}`
-ADD COLUMN `{$field['name']}`  {$field['field']} {$default} COMMENT '{$field['title']}';
+ADD COLUMN `{$field['name']}` {$field['field']} {$default} COMMENT '{$field['title']}';
 sql;
         }else{
         //新建表
         $sql = <<<sql
             CREATE TABLE IF NOT EXISTS `{$this->table_name}` (
             `id`  int(10) UNSIGNED NOT NULL COMMENT 'ID' ,
-            `{$field['name']}`  {$field['field']} {$default} COMMENT '{$field['title']}' ,
+            `{$field['name']}` {$field['field']} {$default} COMMENT '{$field['title']}' ,
             PRIMARY KEY (`id`)
             )
             ENGINE=MyISAM
@@ -137,7 +137,7 @@ sql;
 
         $sql = <<<sql
             ALTER TABLE `{$this->table_name}`
-CHANGE COLUMN `{$last_field}` `{$field['name']}`  {$field['field']} {$default} COMMENT '{$field['title']}' ;
+CHANGE COLUMN `{$last_field}` `{$field['name']}` {$field['field']} {$default} COMMENT '{$field['title']}' ;
 sql;
         $res = M()->execute($sql);
         return $res !== false;
