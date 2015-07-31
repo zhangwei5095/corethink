@@ -30,7 +30,7 @@ class DatebaseController extends AdminController{
         //取得所有表
         $tables = M()->query('show tables');
         foreach($tables as $key => $val){
-            $tables_result[$val['tables_in_'.$database]]['name'] = $val['tables_in_'.$database];
+            $tables_result[$val['Tables_in_'.$database]]['name'] = $val['Tables_in_'.$database];
         }
 
         //获取表信息
@@ -41,8 +41,8 @@ class DatebaseController extends AdminController{
             $sql .= 'WHERE ';
             $sql .= "table_name = '{$val['name']}' AND table_schema = '{$database}'";
             $table_result = M()->query($sql);
-            $tables_result[$key]['title'] = $table_result[0]['table_comment'];
-            $tabs[$key] = $table_result[0]['table_comment'].'('.$key.')';
+            $tables_result[$key]['title'] = $table_result[0]['TABLE_COMMENT'];
+            $tabs[$key] = $table_result[0]['TABLE_COMMENT'].'('.$key.')';
 
             //获取所有表的字段信息
             $sql  = 'SELECT * FROM ';
@@ -58,12 +58,12 @@ class DatebaseController extends AdminController{
         $builder->title('数据字典')  //设置页面标题
                 ->SetTablist($tabs) //设置Tab按钮列表
                 ->SetCurrentTab($tab) //设置当前Tab
-                ->addField('column_name', '字段名', 'text')
-                ->addField('column_type', '数据类型', 'text')
-                ->addField('column_default', '默认值', 'text')
-                ->addField('is_nullable', '允许非空', 'text')
-                ->addField('extra', '自动递增', 'text')
-                ->addField('column_comment', '备注', 'text')
+                ->addField('COLUMN_NAME', '字段名', 'text')
+                ->addField('COLUMN_TYPE', '数据类型', 'text')
+                ->addField('COLUMN_DEFAULT', '默认值', 'text')
+                ->addField('IS_NULLABLE', '允许非空', 'text')
+                ->addField('EXTRA', '自动递增', 'text')
+                ->addField('COLUMN_COMMENT', '备注', 'text')
                 ->dataList($tables_result[$tab]['fields'])    //数据列表
                 ->display();
     }
