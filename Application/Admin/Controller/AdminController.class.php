@@ -166,8 +166,11 @@ class AdminController extends Controller{
      */
     public function selectListAsTree($model, $map = null, $extra = null){
         //获取列表
-        $map['status'] = array('eq', 1);
-        $list = D($model)->where($map)->select();
+        $con['status'] = array('eq', 1);
+        if($map){
+            $con = array_merge($con, $map);
+        }
+        $list = D($model)->where($con)->select();
 
         //转换成树状列表
         $tree = new \Common\Util\Tree();

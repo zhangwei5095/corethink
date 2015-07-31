@@ -142,6 +142,7 @@ EOF;
             if($attr['name'] == 'cid'){
                 $con['group'] = $category_info['group'];
                 $con['doc_type'] = $category_info['doc_type'];
+                $con['status'] = array('egt', 0);
                 $attr['value'] = $cid;
                 $attr['options'] = $this->selectListAsTree('Category', $con);
             }else{
@@ -199,6 +200,7 @@ EOF;
             if($attr['name'] == 'cid'){
                 $con['group'] = $category_info['group'];
                 $con['doc_type'] = $category_info['doc_type'];
+                $con['status'] = array('egt', 0);
                 $attr['options'] = $this->selectListAsTree('Category', $con);
             }else{
                 $attr['options'] = parse_attr($attr['options']);
