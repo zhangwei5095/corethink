@@ -1,7 +1,7 @@
 <extend name="Public/layout"/>
 
 <block name="body">
-    <div class="toolbar">
+    <div class="toolbar margin-bottom">
         <a id="export" class="btn btn-primary" href="javascript:;" autocomplete="off">立即备份</a>
         <a id="optimize" class="btn btn-success" href="{:U('optimize')}">优化表</a>
         <a id="repair" class="btn btn-success" href="{:U('repair')}">修复表</a>
@@ -29,7 +29,7 @@
                             <td class="hidden-xs">{$table.rows}</td>
                             <td class="hidden-xs">{$table.data_length}</td>
                             <td class="hidden-xs">{$table.create_time}</td>
-                            <td class="info">未备份</td>
+                            <td class="back-status">未备份</td>
                             <td class="action">
                                 <a class="ajax-get no-refresh" href="{:U('optimize?tables='.$table['name'])}">优化表</a>&nbsp;
                                 <a class="ajax-get no-refresh" href="{:U('repair?tables='.$table['name'])}">修复表</a>
@@ -109,7 +109,7 @@
             }
 
             function showmsg(id, msg){
-                $form.find("input[value=" + tables[id] + "]").closest("tr").find(".info").html(msg);
+                $form.find("input[value=" + tables[id] + "]").closest("tr").find(".back-status").html(msg);
             }
         });
     </script>
