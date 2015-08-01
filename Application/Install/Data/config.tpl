@@ -18,12 +18,12 @@ return array(
      * 免费版不允许更改，授权版可更改产品名称及公司名称
      */
     'PRODUCT_NAME'    => 'CoreThink',                  //产品名称
-    'CURRENT_VERSION' => '1.0.0',             //当前版本
+    'CURRENT_VERSION' => '1.0.0',                      //当前版本
     'WEBSITE_DOMAIN'  => 'http://www.corethink.cn',    //官方网址
     'UPDATE_URL'      => '/appstore/home/core/update', //官方更新网址
     'COMPANY_NAME'    => '南京科斯克网络科技有限公司',   //公司名称
     'COMPANY_EMAIL'   => 'admin@corethink.cn',         //公司邮箱
-    'COMPANY_TEL'     => '15005173785',         //公司电话
+    'COMPANY_TEL'     => '15005173785',                //公司电话
 
     //产品简介
     'PRODUCT_INFO'    => 'CoreThink是一套的互联网+解决方案云框架。致力于搭建一个完善的企业级应用生态环境以适应不同行业用户的需求,第三方开发者可以将自己的功能模块发布到官方的应用商城，最终达到“Enterprise One Solution”的目标。',
@@ -60,25 +60,25 @@ return array(
 
     //表单类型
     'FORM_ITEM_TYPE' => array(
-        'hidden'     => '隐藏',
-        'num'        => '数字',
-        'text'       => '字符串',
-        'textarea'   => '文本',
-        'array'      => '数组',
-        'password'   => '密码',
-        'radio'      => '单选按钮',
-        'checkbox'   => '复选框',
-        'select'     => '下拉框',
-        'icon'       => '图标',
-        'date'       => '日期',
-        'time'       => '时间',
-        'picture'    => '图片',
-        'pictures'   => '图片(多图)',
-        'file'       => '文件',
-        'files'      => '多文件',
-        'kindeditor' => '编辑器',
-        'tags'       => '标签',
-        'board  '    => '拖动排序',
+        'hidden'     => array('隐藏', 'varchar(32) NOT NULL'),
+        'num'        => array('数字', 'int(11) UNSIGNED NOT NULL'),
+        'text'       => array('字符串', 'varchar(128) NOT NULL'),
+        'textarea'   => array('文本', 'varchar(256) NOT NULL'),
+        'array'      => array('数组', 'varchar(32) NOT NULL'),
+        'password'   => array('密码', 'varchar(64) NOT NULL'),
+        'radio'      => array('单选按钮', 'varchar(32) NOT NULL'),
+        'checkbox'   => array('复选框', 'varchar(32) NOT NULL'),
+        'select'     => array('下拉框', 'varchar(32) NOT NULL'),
+        'icon'       => array('图标', 'varchar(32) NOT NULL'),
+        'date'       => array('日期', 'int(11) UNSIGNED NOT NULL'),
+        'time'       => array('时间', 'int(11) UNSIGNED NOT NULL'),
+        'picture'    => array('图片', 'int(11) UNSIGNED NOT NULL'),
+        'pictures'   => array('图片(多图)', 'varchar(32) NOT NULL'),
+        'file'       => array('文件', 'varchar(32) NOT NULL'),
+        'files'      => array('多文件', 'varchar(32) NOT NULL'),
+        'kindeditor' => array('编辑器', 'text'),
+        'tags'       => array('标签', 'varchar(128) NOT NULL'),
+        'board  '    => array('拖动排序', 'varchar(256) NOT NULL'),
     ),
 
     //栏目分类前台用户投稿权限

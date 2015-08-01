@@ -81,8 +81,16 @@ class DocumentAttributeController extends AdminController{
                 $this->error($document_attribute_object->getError());
             }
         }else{
+            //表单默认值
             $info['doc_type'] = $doc_type;
             $info['show'] = 1;
+
+            //获取Builder表单类型转换成一维数组
+            $form_item_type = C('FORM_ITEM_TYPE');
+            foreach($form_item_type as $key => $val){
+                $form_item_type[$key] = $val[0];
+            }
+
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
             $builder->title('新增字段')  //设置页面标题
@@ -90,7 +98,7 @@ class DocumentAttributeController extends AdminController{
                     ->addItem('doc_type', 'select', '文档类型', '文档类型', $this->selectListAsTree('DocumentType'))
                     ->addItem('name', 'text', '字段名称', '字段名称，如“title”')
                     ->addItem('title', 'text', '字段标题', '字段标题，如“标题”')
-                    ->addItem('type', 'select', '字段类型', '字段类型', C('FORM_ITEM_TYPE'))
+                    ->addItem('type', 'select', '字段类型', '字段类型', $form_item_type)
                     ->addItem('field', 'text', '字段定义', '字段定义，如：int(11) unsigned NOT NULL ')
                     ->addItem('value', 'text', '字段默认值', '字段默认值')
                     ->addItem('show', 'radio', '是否显示', '是否显示', array('1' => '显示', '0' => '不显示'))
@@ -125,6 +133,12 @@ class DocumentAttributeController extends AdminController{
                 $this->error($document_attribute_object->getError());
             }
         }else{
+            //获取Builder表单类型转换成一维数组
+            $form_item_type = C('FORM_ITEM_TYPE');
+            foreach($form_item_type as $key => $val){
+                $form_item_type[$key] = $val[0];
+            }
+
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
             $builder->title('编辑字段')  //设置页面标题
@@ -133,7 +147,7 @@ class DocumentAttributeController extends AdminController{
                     ->addItem('doc_type', 'select', '文档类型', '文档类型', $this->selectListAsTree('DocumentType'))
                     ->addItem('name', 'text', '字段名称', '字段名称，如“title”')
                     ->addItem('title', 'text', '字段标题', '字段标题，如“标题”')
-                    ->addItem('type', 'select', '字段类型', '字段类型', C('FORM_ITEM_TYPE'))
+                    ->addItem('type', 'select', '字段类型', '字段类型', $form_item_type)
                     ->addItem('field', 'text', '字段定义', '字段定义，如：int(11) unsigned NOT NULL ')
                     ->addItem('value', 'text', '字段默认值', '字段默认值')
                     ->addItem('show', 'radio', '是否显示', '是否显示', array('1' => '显示', '0' => '不显示'))

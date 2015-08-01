@@ -280,7 +280,7 @@ class ListBuilder extends Controller{
                         break;
                     case 'type':
                         $form_item_type = C('FORM_ITEM_TYPE');
-                        $data[$field['name']] = $form_item_type[$data[$field['name']]];
+                        $data[$field['name']] = $form_item_type[$data[$field['name']]][0];
                         break;
                 }
             }

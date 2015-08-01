@@ -73,12 +73,18 @@ class SystemConfigController extends AdminController{
                 $this->error($config_object->getError());
             }
         }else{
+            //获取Builder表单类型转换成一维数组
+            $form_item_type = C('FORM_ITEM_TYPE');
+            foreach($form_item_type as $key => $val){
+                $form_item_type[$key] = $val[0];
+            }
+
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
             $builder->title('新增配置')  //设置页面标题
                     ->setUrl(U('add')) //设置表单提交地址
                     ->addItem('group', 'select', '配置分组', '配置所属的分组', C('CONFIG_GROUP_LIST'))
-                    ->addItem('type', 'select', '配置类型', '配置类型的分组', C('FORM_ITEM_TYPE'))
+                    ->addItem('type', 'select', '配置类型', '配置类型的分组', $form_item_type)
                     ->addItem('name', 'text', '配置名称', '配置名称')
                     ->addItem('title', 'text', '配置标题', '配置标题')
                     ->addItem('value', 'textarea', '配置值', '配置值')
@@ -108,13 +114,19 @@ class SystemConfigController extends AdminController{
                 $this->error($config_object->getError());
             }
         }else{
+            //获取Builder表单类型转换成一维数组
+            $form_item_type = C('FORM_ITEM_TYPE');
+            foreach($form_item_type as $key => $val){
+                $form_item_type[$key] = $val[0];
+            }
+
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
             $builder->title('编辑配置')  //设置页面标题
                     ->setUrl(U('edit')) //设置表单提交地址
                     ->addItem('id', 'hidden', 'ID', 'ID')
                     ->addItem('group', 'select', '配置分组', '配置所属的分组', C('CONFIG_GROUP_LIST'))
-                    ->addItem('type', 'select', '配置类型', '配置类型的分组', C('FORM_ITEM_TYPE'))
+                    ->addItem('type', 'select', '配置类型', '配置类型的分组', $form_item_type)
                     ->addItem('name', 'text', '配置名称', '配置名称')
                     ->addItem('title', 'text', '配置标题', '配置标题')
                     ->addItem('value', 'textarea', '配置值', '配置值')
