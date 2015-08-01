@@ -25,38 +25,55 @@ class DatebaseController extends AdminController{
      * 数据字典
      * @author jry <598821125@qq.com>
      */
-    public function index($tab = 'ct_addon'){
-        $database   = C('DB_NAME'); //数据库名
+    public function index($tab = 0){
         //取得所有表
-        $tables = M()->query('show tables');
-        foreach($tables as $key => $val){
-            $tables_result[$val['Tables_in_'.$database]]['name'] = $val['Tables_in_'.$database];
-        }
+        $database   = C('DB_NAME'); //数据库名
+        $table_list = M()->query('show tables'); //获取所有数据表名称
 
-        //获取表信息
-        foreach ($tables_result as $key => $val){
-            //获取所有表的备注
+        //构造Tab列表
+        $tab_list   = array();
+        foreach($table_list as $key => $val){
+            //获取数据表名称
+            $tab_list[$key] = $table_title.$val['Tables_in_'.$database];
+
+            //获取当前表的详细信息
             $sql  = 'SELECT * FROM ';
             $sql .= 'INFORMATION_SCHEMA.TABLES ';
             $sql .= 'WHERE ';
-            $sql .= "table_name = '{$val['name']}' AND table_schema = '{$database}'";
-            $table_result = M()->query($sql);
-            $tables_result[$key]['title'] = $table_result[0]['TABLE_COMMENT'];
-            $tabs[$key] = $table_result[0]['TABLE_COMMENT'].'('.$key.')';
+            $sql .= "table_name = '{$tab_list[$key]}' AND table_schema = '{$database}'";
+            $table_info = M()->query($sql);
 
-            //获取所有表的字段信息
-            $sql  = 'SELECT * FROM ';
-            $sql .= 'INFORMATION_SCHEMA.COLUMNS ';
-            $sql .= 'WHERE ';
-            $sql .= "table_name = '{$val['name']}' AND table_schema = '{$database}'";
-            $field_result = M()->query($sql);
-            $tables_result[$key]['fields'] = $field_result;
+            //获取数据表标题
+            $tab_list[$key] = $table_info[0]['TABLE_COMMENT'].'('.$tab_list[$key].')';
         }
+
+        //获取当前数据表名称
+        $current_table['table_name'] = $table_list[$tab]['Tables_in_'.$database];
+
+        //获取当前表的详细信息
+        $sql  = 'SELECT * FROM ';
+        $sql .= 'INFORMATION_SCHEMA.TABLES ';
+        $sql .= 'WHERE ';
+        $sql .= "table_name = '{$current_table['table_name']}' AND table_schema = '{$database}'";
+        $current_table_info = M()->query($sql);
+
+        //获取当前表的备注
+        $current_table['table_comment'] = $current_table_info[0]['TABLE_COMMENT'];
+
+        //获取当前表的字段详细信息
+        $sql  = 'SELECT * FROM ';
+        $sql .= 'INFORMATION_SCHEMA.COLUMNS ';
+        $sql .= 'WHERE ';
+        $sql .= "table_name = '{$current_table['table_name']}' AND table_schema = '{$database}'";
+        $current_table_columns_info = M()->query($sql);
+
+        //获取当前表的字段信息
+        $current_table['fields'] = $current_table_columns_info;
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->title('数据字典')  //设置页面标题
-                ->SetTablist($tabs) //设置Tab按钮列表
+        $builder->title($current_table['table_name'].'｜数据字典')  //设置页面标题
+                ->SetTablist($tab_list) //设置Tab按钮列表
                 ->SetCurrentTab($tab) //设置当前Tab
                 ->addField('COLUMN_NAME', '字段名', 'text')
                 ->addField('COLUMN_TYPE', '数据类型', 'text')
@@ -64,7 +81,7 @@ class DatebaseController extends AdminController{
                 ->addField('IS_NULLABLE', '允许非空', 'text')
                 ->addField('EXTRA', '自动递增', 'text')
                 ->addField('COLUMN_COMMENT', '备注', 'text')
-                ->dataList($tables_result[$tab]['fields'])    //数据列表
+                ->dataList($current_table['fields']) //数据列表
                 ->display();
     }
 
