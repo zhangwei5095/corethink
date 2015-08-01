@@ -29,23 +29,25 @@
 
 <block name="body">
     <div class="container">
-        <div class="cards cards-borderless user-list clearfix">
-            <volist name="user_list" id="vo">
-                <div class="col-xs-6 col-sm-3 col-md-2">
-                    <div class="card margin-bottom">
-                        <a class="img-circle" href="{:U('User/home', array('uid' => $vo['id']))}">
-                            <img class="img-responsive avatar" src="{$vo.avatar|get_cover='avatar'}" alt="{$vo.username}">
-                        </a>
-                        <div class="card-heading">
-                            <span class="pull-right"><a href="###"><i class="icon-heart-empty"></i> {$vo.good}</a></span>
-                            <a href="{:U('User/home', array('uid' => $vo['id']))}"><strong>{$vo.username}</strong></a>
-                          </div>
-                          <div class="card-actions">
-                            <span class="text-muted">加入时间：{$vo.ctime|time_format='Y-m-d'}</span>
+        <div class="row">
+            <div class="cards cards-borderless user-list clearfix">
+                <volist name="user_list" id="vo">
+                    <div class="col-xs-6 col-sm-3 col-md-2">
+                        <div class="card margin-bottom">
+                            <a class="img-circle" href="{:U('User/home', array('uid' => $vo['id']))}">
+                                <img class="img-responsive avatar" src="{$vo.avatar|get_cover='avatar'}" alt="{$vo.username}">
+                            </a>
+                            <div class="card-heading">
+                                <span class="pull-right"><a href="###"><i class="icon-heart-empty"></i> {$vo.good}</a></span>
+                                <a href="{:U('User/home', array('uid' => $vo['id']))}"><strong>{$vo.username}</strong></a>
+                              </div>
+                              <div class="card-actions">
+                                <span class="text-muted">加入时间：{$vo.ctime|time_format='Y-m-d'}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </volist>
+                </volist>
+            </div>
         </div>
         <ul class="pagination"><notempty name="page">{$page}</notempty></ul>
     </div>

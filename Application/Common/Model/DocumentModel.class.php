@@ -118,18 +118,27 @@ class DocumentModel extends Model{
      * @author jry <598821125@qq.com>
      */
     public function detail($id){
+        //获取基础表信息
         $info = $this->find($id);
         if(!(is_array($info) || 1 !== $info['status'])){
             $this->error = '文档被禁用或已删除！';
             return false;
         }
+
+        //根据文档模型获取扩展表的息
         $category_info = D('Category')->find($info['cid']);
         $doc_type = D('DocumentType')->where(array('id' => $category_info['doc_type']))->getField('name');
         $document_extend_object = D('DocumentExtend'.ucfirst($doc_type));
         $extend_data = $document_extend_object->find($id);
+
+        //基础信息与扩展信息合并
         if(is_array($extend_data)){
             $info = array_merge($info, $extend_data);
         }
+
+        //获取上一篇和下一篇文档信息
+        $info['previous'] = $this->getPreviousDocument($info);
+        $info['next']     = $this->getNextDocument($info);
         return $info;
     }
 
@@ -137,17 +146,16 @@ class DocumentModel extends Model{
      * 获取当前分类上一篇文档
      * @author jry <598821125@qq.com>
      */
-    public function getPreviousDocument($info){
+    private function getPreviousDocument($info){
         $map['status'] = array('eq', 1);
-        $map['id'] = array('gt', $info['id']);
+        $map['id'] = array('lt', $info['id']);
         $map['cid'] = array('eq', $info['cid']);
-        $previous = $this->where($map)->order('id asc')->find();
+        $previous = $this->where($map)->order('id desc')->find();
         if(!$previous){
             $previous['title'] = '没有了';
-            $previous['disabled'] = "disabled";
-            $previous['link'] = '#';
+            $previous['href'] = '#';
         }else{
-            $previous['link'] = U('Document/detail', array('id' => $previous['id']));
+            $previous['href'] = U('Home/Document/detail', array('id' => $previous['id']));
         }
         return $previous;
     }
@@ -156,17 +164,16 @@ class DocumentModel extends Model{
      * 获取当前分类下一篇文档
      * @author jry <598821125@qq.com>
      */
-    public function getNextDocument($info){
+    private function getNextDocument($info){
         $map['status'] = array('eq', 1);
-        $map['id'] = array('lt', $info['id']);
+        $map['id'] = array('gt', $info['id']);
         $map['cid'] = array('eq', $info['cid']);
-        $next = $this->where($map)->order('id desc')->find();
+        $next = $this->where($map)->order('id asc')->find();
         if(!$next){
             $next['title'] = '没有了';
-            $next['disabled'] = "disabled";
-            $next['link'] = '#';
+            $next['href'] = '#';
         }else{
-            $next['link'] = U('Document/detail', array('id' => $next['id']));
+            $next['href'] = U('Home/Document/detail', array('id' => $next['id']));
         }
         return $next;
     }
