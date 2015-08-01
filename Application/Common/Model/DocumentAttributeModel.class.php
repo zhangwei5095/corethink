@@ -133,7 +133,7 @@ sql;
         $last_field = $this->getFieldById($field['id'], 'name');
 
         //获取默认值
-        $default = $field['value']!='' ? ' DEFAULT '.$field['value'] : '';
+        $default = $field['value'] !='' ? ' DEFAULT \''.$field['value'].'\'' : '';
 
         $sql = <<<sql
             ALTER TABLE `{$this->table_name}`

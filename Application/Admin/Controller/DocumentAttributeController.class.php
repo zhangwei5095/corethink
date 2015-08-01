@@ -13,6 +13,20 @@ use Think\Controller;
  * @author jry <598821125@qq.com>
  */
 class DocumentAttributeController extends AdminController{
+    //改变表单类型的时候同时改变字段定义
+    private $extra_html = <<<EOF
+        <script type="text/javascript">
+            //改变表单类型的时候同时改变字段定义
+            $(function(){
+                $('.item_type select').change(function(){
+                    var curren_name = $(this).find('option:selected').attr('value');
+                    var data_field  = $(this).find('option:selected').attr('data-field');
+                    $('.item_field input').val(data_field);
+                });
+            });
+        </script>
+EOF;
+
     /**
      * 默认方法
      * @author jry <598821125@qq.com>
@@ -88,7 +102,8 @@ class DocumentAttributeController extends AdminController{
             //获取Builder表单类型转换成一维数组
             $form_item_type = C('FORM_ITEM_TYPE');
             foreach($form_item_type as $key => $val){
-                $form_item_type[$key] = $val[0];
+                $new_form_item_type[$key]['title']      = $val[0];
+                $new_form_item_type[$key]['data-field'] = $val[1];
             }
 
             //使用FormBuilder快速建立表单页面。
@@ -98,13 +113,14 @@ class DocumentAttributeController extends AdminController{
                     ->addItem('doc_type', 'select', '文档类型', '文档类型', $this->selectListAsTree('DocumentType'))
                     ->addItem('name', 'text', '字段名称', '字段名称，如“title”')
                     ->addItem('title', 'text', '字段标题', '字段标题，如“标题”')
-                    ->addItem('type', 'select', '字段类型', '字段类型', $form_item_type)
+                    ->addItem('type', 'select', '字段类型', '字段类型', $new_form_item_type)
                     ->addItem('field', 'text', '字段定义', '字段定义，如：int(11) unsigned NOT NULL ')
                     ->addItem('value', 'text', '字段默认值', '字段默认值')
                     ->addItem('show', 'radio', '是否显示', '是否显示', array('1' => '显示', '0' => '不显示'))
                     ->addItem('options', 'textarea', '额外选项', '额外选项radio/select等需要配置此项')
                     ->addItem('tip', 'textarea', '字段补充说明', '字段补充说明')
                     ->setFormData($info)
+                    ->setExtraHtml($this->extra_html)
                     ->display();
         }
     }
@@ -136,7 +152,8 @@ class DocumentAttributeController extends AdminController{
             //获取Builder表单类型转换成一维数组
             $form_item_type = C('FORM_ITEM_TYPE');
             foreach($form_item_type as $key => $val){
-                $form_item_type[$key] = $val[0];
+                $new_form_item_type[$key]['title']      = $val[0];
+                $new_form_item_type[$key]['data-field'] = $val[1];
             }
 
             //使用FormBuilder快速建立表单页面。
@@ -147,13 +164,14 @@ class DocumentAttributeController extends AdminController{
                     ->addItem('doc_type', 'select', '文档类型', '文档类型', $this->selectListAsTree('DocumentType'))
                     ->addItem('name', 'text', '字段名称', '字段名称，如“title”')
                     ->addItem('title', 'text', '字段标题', '字段标题，如“标题”')
-                    ->addItem('type', 'select', '字段类型', '字段类型', $form_item_type)
-                    ->addItem('field', 'text', '字段定义', '字段定义，如：int(11) unsigned NOT NULL ')
+                    ->addItem('type', 'select', '字段类型', '字段类型', $new_form_item_type)
+                    ->addItem('field', 'text', '字段定义', '字段定义，如：int(11) NOT NULL ')
                     ->addItem('value', 'text', '字段默认值', '字段默认值')
                     ->addItem('show', 'radio', '是否显示', '是否显示', array('1' => '显示', '0' => '不显示'))
                     ->addItem('options', 'textarea', '额外选项', '额外选项radio/select等需要配置此项')
                     ->addItem('tip', 'textarea', '字段补充说明', '字段补充说明')
                     ->setFormData(D('DocumentAttribute')->find($id))
+                    ->setExtraHtml($this->extra_html)
                     ->display();
         }
     }
@@ -183,6 +201,19 @@ class DocumentAttributeController extends AdminController{
             default :
                 parent::setStatus($model);
                 break;
+        }
+    }
+
+    /**
+     * 根据表单类型名称获取字段定义
+     * @author jry <598821125@qq.com>
+     */
+    public function getFieldByName($name){
+        $form_item_type = C('FORM_ITEM_TYPE');
+        if($name){
+             $this->success($form_item_type[$name][1]);
+        }else{
+            $this->error('获取字段定义失败');
         }
     }
 }

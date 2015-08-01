@@ -266,9 +266,9 @@ LOCK TABLES `ct_document_type` WRITE;
 
 INSERT INTO `ct_document_type` (`id`, `name`, `title`, `icon`, `field_sort`, `field_group`, `system`, `ctime`, `utime`, `sort`, `status`)
 VALUES
-	(1,'Link','链接','icon-link','','',1,1426580628,1426580628,0,1),
-	(2,'Page','单页','icon-file','','',1,1426580628,1426580628,0,1),
-	(3,'Article','文章','icon-edit','{\"1\":[\"1\",\"3\",\"12\",\"13\",\"14\",\"15\"],\"2\":[\"10\",\"8\"]}','1:基础\n2:扩展',0,1426580628,1426580628,0,1);
+	(1,'link','链接','icon-link','','',1,1426580628,1426580628,0,1),
+	(2,'page','单页','icon-file','','',1,1426580628,1426580628,0,1),
+	(3,'article','文章','icon-edit','{\"1\":[\"1\",\"3\",\"12\",\"13\",\"14\",\"15\"],\"2\":[\"10\",\"8\"]}','1:基础\n2:扩展',0,1426580628,1426580628,0,1);
 
 /*!40000 ALTER TABLE `ct_document_type` ENABLE KEYS */;
 UNLOCK TABLES;

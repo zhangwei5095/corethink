@@ -24,7 +24,6 @@ class StoreModuleController extends AdminController{
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
         $builder->title('模块列表')  //设置页面标题
-                ->AddNewButton()    //添加新增按钮
                 ->addResumeButton() //添加启用按钮
                 ->addForbidButton() //添加禁用按钮
                 ->setSearch('请输入ID/标题', U('index'))
