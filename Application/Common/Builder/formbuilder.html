@@ -96,26 +96,66 @@
                                 </case>
                                 <!-- 单选按钮 -->
                                 <case value="radio">
+                                    <!--
+                                        如果选项的值是自定义数组(必须定义key为title的元素)需要解析，如果选项的值是常规字符串直接显示
+                                        此处主要是用来给option定义更多的属性，比如data-ia=1，那么option应为
+                                        $option = array('title' => 标题, 'data-id' => 1);
+                                    -->
                                     <foreach name="form.options" item="option" key="option_key">
                                         <label class="radio-inline" for="{$form.name}{$option_key}">
-                                            <input type="radio" id="{$form.name}{$option_key}" class="checkbox" name="{$form.name}" value="{$option_key}" <eq name="form.value" value="$option_key"> checked</eq> {$form.extra_attr}> {$option}
+                                            <php>if(is_array($option)):</php>
+                                                <input type="radio" id="{$form.name}{$option_key}" class="radio" name="{$form.name}" value="{$option}" <eq name="form.value" value="$option_key"> checked</eq> {$form.extra_attr}
+                                                    <foreach name="option" item="option2" key="option_key2">
+                                                        {$option_key2}="{$option2}" 
+                                                    </foreach>>
+                                                {$option.title}
+                                            <php>else:</php>
+                                                <input type="radio" id="{$form.name}{$option_key}" class="radio" name="{$form.name}" value="{$option_key}" <eq name="form.value" value="$option_key"> checked</eq> {$form.extra_attr}> {$option}
+                                            <php>endif;</php>
                                         </label>
                                     </foreach>
                                 </case>
                                 <!-- 复选框 -->
                                 <case value="checkbox">
+                                    <!--
+                                        如果选项的值是自定义数组(必须定义key为title的元素)需要解析，如果选项的值是常规字符串直接显示
+                                        此处主要是用来给option定义更多的属性，比如data-ia=1，那么option应为
+                                        $option = array('title' => 标题, 'data-id' => 1);
+                                    -->
                                     <foreach name="form.options" item="option" key="option_key">
                                         <label class="checkbox-inline">
-                                            <input type="checkbox" name="{$form.name}[]" value="{$option_key}" <in name="option_key" value="$form.value"> checked</in> {$form.extra_attr}>{$option}
+                                            <php>if(is_array($option)):</php>
+                                                <input type="checkbox" name="{$form.name}[]" value="{$option_key}" <in name="option_key" value="$form.value"> checked</in> {$form.extra_attr}
+                                                    <foreach name="option" item="option2" key="option_key2">
+                                                        {$option_key2}="{$option2}" 
+                                                    </foreach>>
+                                                {$option.title}
+                                            <php>else:</php>
+                                                <input type="checkbox" name="{$form.name}[]" value="{$option_key}" <in name="option_key" value="$form.value"> checked</in> {$form.extra_attr}>{$option}
+                                            <php>endif;</php>
                                         </label>
                                     </foreach>
                                 </case>
                                 <!-- 下拉框 -->
                                 <case value="select">
+                                    <!--
+                                        如果选项的值是自定义数组(必须定义key为title的元素)需要解析，如果选项的值是常规字符串直接显示
+                                        此处主要是用来给option定义更多的属性，比如data-ia=1，那么option应为
+                                        $option = array('title' => 标题, 'data-id' => 1);
+                                    -->
                                     <select name="{$form.name}" class="form-control select" {$form.extra_attr}>
                                         <option value=''>请选择：</option>
                                         <foreach name="form.options" item="option" key="option_key">
-                                            <option value="{$option_key}" <eq name="form.value" value="$option_key"> selected</eq>>{$option}</option>
+                                            <php>if(is_array($option)):</php>
+                                                <option value="{$option_key}" <eq name="form.value" value="$option_key"> selected</eq>
+                                                    <foreach name="option" item="option2" key="option_key2">
+                                                        {$option_key2}="{$option2}" 
+                                                    </foreach>>
+                                                    {$option.title}
+                                                </option>
+                                            <php>else:</php>
+                                                <option value="{$option_key}" <eq name="form.value" value="$option_key"> selected</eq>>{$option}</option>
+                                            <php>endif;</php>
                                         </foreach>
                                     </select>
                                 </case>
@@ -460,7 +500,7 @@
                                                                     </case>
                                                                     <!-- 数组 -->
                                                                     <case value="array">
-                                                                        <textarea class="form-control textarea" rows="5" name="{$form.name}" {$tab_form.extra_attr}>{$form.value}</textarea>
+                                                                        <textarea class="form-control textarea" rows="5" name="{$tab_form.name}" {$tab_form.extra_attr}>{$tab_form.value}</textarea>
                                                                     </case>
                                                                     <!-- 密码 -->
                                                                     <case value="password">
@@ -468,26 +508,66 @@
                                                                     </case>
                                                                     <!-- 单选按钮 -->
                                                                     <case value="radio">
+                                                                        <!--
+                                                                            如果选项的值是自定义数组(必须定义key为title的元素)需要解析，如果选项的值是常规字符串直接显示
+                                                                            此处主要是用来给option定义更多的属性，比如data-ia=1，那么option应为
+                                                                            $option = array('title' => 标题, 'data-id' => 1);
+                                                                        -->
                                                                         <foreach name="tab_form.options" item="option" key="option_key">
-                                                                            <label class="radio-inline" for="{$form.name}{$option_key}">
-                                                                                <input type="radio" id="{$form.name}{$option_key}" class="checkbox" name="{$tab_form.name}" value="{$option}" <eq name="tab_form.value" value="$option_key"> checked</eq> {$tab_form.extra_attr}> {$option}
+                                                                            <label class="radio-inline" for="{$tab_form.name}{$option_key}">
+                                                                                <php>if(is_array($option)):</php>
+                                                                                    <input type="radio" id="{$tab_form.name}{$option_key}" class="radio" name="{$tab_form.name}" value="{$option}" <eq name="tab_form.value" value="$option_key"> checked</eq> {$tab_form.extra_attr}
+                                                                                        <foreach name="option" item="option2" key="option_key2">
+                                                                                            {$option_key2}="{$option2}" 
+                                                                                        </foreach>>
+                                                                                    {$option.title}
+                                                                                <php>else:</php>
+                                                                                    <input type="radio" id="{$tab_form.name}{$option_key}" class="radio" name="{$tab_form.name}" value="{$option}" <eq name="tab_form.value" value="$option_key"> checked</eq> {$tab_form.extra_attr}> {$option}
+                                                                                <php>endif;</php>
                                                                             </label>
                                                                         </foreach>
                                                                     </case>
                                                                     <!-- 复选框 -->
                                                                     <case value="checkbox">
+                                                                        <!--
+                                                                            如果选项的值是自定义数组(必须定义key为title的元素)需要解析，如果选项的值是常规字符串直接显示
+                                                                            此处主要是用来给option定义更多的属性，比如data-ia=1，那么option应为
+                                                                            $option = array('title' => 标题, 'data-id' => 1);
+                                                                        -->
                                                                         <foreach name="tab_form.options" item="option" key="option_key">
                                                                             <label class="checkbox-inline">
-                                                                                <input type="checkbox" name="{$tab_form.name}[]" value="{$option_key}" <in name="option_key" value="$tab_form.value"> checked</in> {$tab_form.extra_attr}>{$opt}
+                                                                                <php>if(is_array($option)):</php>
+                                                                                    <input type="checkbox" name="{$tab_form.name}[]" value="{$option_key}" <in name="option_key" value="$tab_form.value"> checked</in> {$tab_form.extra_attr}
+                                                                                        <foreach name="option" item="option2" key="option_key2">
+                                                                                            {$option_key2}="{$option2}" 
+                                                                                        </foreach>>
+                                                                                    {$option.title}
+                                                                                <php>else:</php>
+                                                                                    <input type="checkbox" name="{$tab_form.name}[]" value="{$option_key}" <in name="option_key" value="$tab_form.value"> checked</in> {$tab_form.extra_attr}>{$option}
+                                                                                <php>endif;</php>
                                                                             </label>
                                                                         </foreach>
                                                                     </case>
                                                                     <!-- 下拉框 -->
                                                                     <case value="select">
+                                                                        <!--
+                                                                            如果选项的值是自定义数组(必须定义key为title的元素)需要解析，如果选项的值是常规字符串直接显示
+                                                                            此处主要是用来给option定义更多的属性，比如data-ia=1，那么option应为
+                                                                            $option = array('title' => 标题, 'data-id' => 1);
+                                                                        -->
                                                                         <select name="{$tab_form.name}" class="form-control select" {$tab_form.extra_attr}>
                                                                             <option value=''>请选择：</option>
                                                                             <foreach name="tab_form.options" item="option" key="option_key">
-                                                                                <option value="{$option_key}" <eq name="tab_form.value" value="$option_key"> selected</eq>>{$option}</option>
+                                                                                <php>if(is_array($option)):</php>
+                                                                                    <option value="{$option_key}" <eq name="tab_form.value" value="$option_key"> selected</eq>
+                                                                                        <foreach name="option" item="option2" key="option_key2">
+                                                                                            {$option_key2}="{$option2}"
+                                                                                        </foreach>>
+                                                                                        {$option.title}
+                                                                                    </option>
+                                                                                <php>else:</php>
+                                                                                    <option value="{$option_key}" <eq name="tab_form.value" value="$option_key"> selected</eq>>{$option}</option>
+                                                                                <php>endif;</php>
                                                                             </foreach>
                                                                         </select>
                                                                     </case>
