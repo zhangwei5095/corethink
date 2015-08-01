@@ -67,7 +67,7 @@ class DocumentAttributeModel extends Model{
      * @author huajie <banhuajie@163.com>
      */
     protected function checkTableExist($doc_type){
-        $table_name = 'ct_document_extend_'.D('DocumentType')->getfieldById($doc_type, 'name');
+        $table_name = C('DB_PREFIX').'document_extend_'.D('DocumentType')->getfieldById($doc_type, 'name');
         $this->table_name = strtolower($table_name);
         $res = M()->query("SHOW TABLES LIKE '".$this->table_name."'");
         return count($res);
