@@ -330,7 +330,6 @@ VALUES
 	('版权信息','WEB_SITE_COPYRIGHT','版权所有 © 2014-2015 科斯克网络科技',1,'text','','设置在网站底部显示的版权信息，如“版权所有 © 2014-2015 科斯克网络科技”',1406991855,1406992583,6,1),
 	('网站备案号','WEB_SITE_ICP','苏ICP备1502009-2号',1,'text','','设置在网站底部显示的备案号，如“苏ICP备1502009-2号\"',1378900335,1415983236,7,1),
 	('站点统计','WEB_SITE_STATISTICS','',1,'textarea','','支持百度、Google、cnzz等所有Javascript的统计代码',1407824190,1407824303,8,1),
-	('前台主题','DEFAULT_THEME','default',1,'select','default:默认','前台模版主题，不影响后台',1425215616,1425299454,9,1),
 	('注册开关','TOGGLE_USER_REGISTER','1',2,'select','0:关闭注册\r\n1:允许注册','是否开放用户注册',1379504487,1379504580,2,1),
 	('注册时间间隔','LIMIT_TIME_BY_IP','0',2,'num','','同一IP注册时间间隔秒数',1379228036,1379228036,2,1),
 	('评论开关','TOGGLE_USER_COMMENT','1',2,'select','0:关闭评论,1:允许评论','评论关闭后用户不能进行评论',1418715779,1418716106,3,1),
@@ -457,7 +456,7 @@ VALUES
 	(77,32,'设置状态','Admin/Addon/setStatus','',0,1426580628,1426580628,8,1),
 	(78,2,'应用商店','','fa fa-folder-open-o',0,1437185077,1437185164,2,1),
 	(79,78,'功能模块','Admin/SystemModule/index','fa fa-th-large',0,1437185242,1438276915,1,1),
-	(80,78,'前台主题','Admin/SystemTheme/index','fa fa-adjust',0,1437185290,1438277065,2,0),
+	(80,78,'前台主题','Admin/SystemTheme/index','fa fa-adjust',0,1437185290,1438277065,2,1),
 	(81,78,'全局插件','Admin/SystemAddon/index','fa fa-th',0,1437185290,1438277092,3,0);
 
 /*!40000 ALTER TABLE `ct_system_menu` ENABLE KEYS */;
@@ -482,6 +481,40 @@ CREATE TABLE `ct_system_module` (
   `status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='模块功能表';
+
+
+
+# Dump of table ct_system_theme
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `ct_system_theme`;
+
+CREATE TABLE `ct_system_theme` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '名称',
+  `title` varchar(64) NOT NULL DEFAULT '' COMMENT '标题',
+  `description` varchar(128) NOT NULL DEFAULT '' COMMENT '描述',
+  `developer` varchar(32) NOT NULL DEFAULT '' COMMENT '开发者',
+  `version` varchar(8) NOT NULL DEFAULT '' COMMENT '版本',
+  `config` text NOT NULL COMMENT '主题配置',
+  `current` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否当前主题',
+  `ctime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `utime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `sort` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='前台主题表';
+
+LOCK TABLES `ct_system_theme` WRITE;
+/*!40000 ALTER TABLE `ct_system_theme` DISABLE KEYS */;
+
+INSERT INTO `ct_system_theme` (`id`, `name`, `title`, `description`, `developer`, `version`, `config`, `current`, `ctime`, `utime`, `sort`, `status`)
+VALUES
+	(1,'default','默认主题','CoreThink默认主题','南京科斯克网络科技有限公司','1.0','',1,1437786501,1437786501,0,1);
+
+/*!40000 ALTER TABLE `ct_system_theme` ENABLE KEYS */;
+UNLOCK TABLES;
+
 
 
 # Dump of table ct_tag

@@ -78,15 +78,19 @@ ul.token-input-list{overflow:hidden;height:31px;width:100%;border:1px solid #999
     background: none !important;
 }
 .bg-red {
+    color: #fff;
     background: red;
 }
 .bg-green {
+    color: #fff;
     background: green;
 }
 .bg-yellow {
+    color: #fff;
     background: yellow;
 }
 .bg-blue {
+    color: #fff;
     background: blue;
 }
 

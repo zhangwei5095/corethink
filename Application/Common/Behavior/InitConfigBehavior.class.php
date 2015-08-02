@@ -11,6 +11,8 @@ use Think\Behavior;
 defined('THINK_PATH') or exit();
 /**
  * 根据不同情况读取数据库的配置信息并与本地配置合并
+ * 本行为扩展很重要会影响核心系统前后台、模块功能及模版主题使用
+ * 如非必要或者并不是十分了解系统架构不推荐更改
  * @author jry <598821125@qq.com>
  */
 class InitConfigBehavior extends Behavior{
@@ -28,7 +30,10 @@ class InitConfigBehavior extends Behavior{
         //获取ThinkPHP控制器分级时控制器名称
         $controller_name = explode('/', CONTROLLER_NAME);
 
-        //前缀设置避免冲突
+        /**
+         * 前缀设置避免冲突
+         * 用于将各个模块的缓存、Cookie等数据分开防止冲突
+         */
         if(MODULE_NAME === 'Admin' || $controller_name[0] === 'Admin'){
             $config['DATA_CACHE_PREFIX'] = ENV_PRE.'Admin_'; //缓存前缀
             $config['SESSION_PREFIX']    = ENV_PRE.'Admin_'; //Session前缀
@@ -41,32 +46,40 @@ class InitConfigBehavior extends Behavior{
         C($config); //添加配置
 
         //读取数据库中的配置
-        $config = S('DB_CONFIG_DATA');
-        if(!$config){
+        //$system_config = S('DB_CONFIG_DATA');
+        if(!$system_config){
             //获取所有系统配置
-            $config = D('SystemConfig')->lists();
+            $system_config = D('SystemConfig')->lists();
 
             if(MODULE_NAME === 'Admin' || $controller_name[0] === 'Admin'){
                 //模板相关配置
-                $config['TMPL_PARSE_STRING']['__PUBLIC__'] = __ROOT__.'/Public';
-                $config['TMPL_PARSE_STRING']['__IMG__'] = __ROOT__.'/Application/Admin/View/Public/img';
-                $config['TMPL_PARSE_STRING']['__CSS__'] = __ROOT__.'/Application/Admin/View/Public/css';
-                $config['TMPL_PARSE_STRING']['__JS__']  = __ROOT__.'/Application/Admin/View/Public/js';
+                $system_config['TMPL_PARSE_STRING']['__PUBLIC__'] = __ROOT__.'/Public';
+                $system_config['TMPL_PARSE_STRING']['__IMG__'] = __ROOT__.'/Application/Admin/View/Public/img';
+                $system_config['TMPL_PARSE_STRING']['__CSS__'] = __ROOT__.'/Application/Admin/View/Public/css';
+                $system_config['TMPL_PARSE_STRING']['__JS__']  = __ROOT__.'/Application/Admin/View/Public/js';
             }elseif(MODULE_NAME === 'Home' || $controller_name[0] === 'Home'){
+                /**
+                 * 获取系统所有主题名称并配置THEME_LIST
+                 * 根据ThinkPHP规则如果开启自动侦测模板主题功能(TMPL_DETECT_THEME)
+                 * 则必须配置THEME_LIST，否则TP会调用默认主题(DEFAULT_THEME)导致主题功能失效
+                 */
+                $system_theme_list = D('SystemTheme')->getfield('name', true);
+                $system_config['THEME_LIST'] = implode(',', $system_theme_list);
+
+                //从系统主题数据表获取当前主题的名称
+                $current_theme = D('SystemTheme')->where(array('current' => 1))->order('id asc')->getField('name');
+                cookie('think_template', $current_theme); //设置当前前台主题
+
                 //模板相关配置
-                $config['TMPL_PARSE_STRING']['__PUBLIC__'] = __ROOT__.'/Public';
-                $config['TMPL_PARSE_STRING']['__IMG__'] = __ROOT__.'/Application/Home/View/'.$config['DEFAULT_THEME'].'/Public/img';
-                $config['TMPL_PARSE_STRING']['__CSS__'] = __ROOT__.'/Application/Home/View/'.$config['DEFAULT_THEME'].'/Public/css';
-                $config['TMPL_PARSE_STRING']['__JS__']  = __ROOT__.'/Application/Home/View/'.$config['DEFAULT_THEME'].'/Public/js';
+                $system_config['TMPL_PARSE_STRING']['__PUBLIC__'] = __ROOT__.'/Public';
+                $system_config['TMPL_PARSE_STRING']['__IMG__'] = __ROOT__.'/Application/Home/View/'.$current_theme.'/Public/img';
+                $system_config['TMPL_PARSE_STRING']['__CSS__'] = __ROOT__.'/Application/Home/View/'.$current_theme.'/Public/css';
+                $system_config['TMPL_PARSE_STRING']['__JS__']  = __ROOT__.'/Application/Home/View/'.$current_theme.'/Public/js';
             }
 
-            S('DB_CONFIG_DATA', $config, 3600); //缓存配置
+            S('DB_CONFIG_DATA', $system_config, 3600); //缓存配置
         }
 
-        //除非是Home模块否则主题配置取消
-        if(MODULE_NAME !== 'Home'){
-            $config['DEFAULT_THEME'] = '';
-        }
-        C($config); //添加配置
+        C($system_config); //添加配置
     }
 }
