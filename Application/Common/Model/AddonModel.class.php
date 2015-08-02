@@ -70,24 +70,24 @@ class AddonModel extends Model{
             switch($val['status']){
                 case '-1': //未安装
                     $val['status'] = '<i class="glyphicon glyphicon-trash" style="color:red"></i>';
-                    $val['right_button']  = '<a class="ajax-get" href="'.U('install?addon_name='.$val['name']).'">安装</a>';
+                    $val['right_button']  = '<a class="label label-success ajax-get" href="'.U('install?addon_name='.$val['name']).'">安装</a>';
                     break;
                 case '0': //禁用
                     $val['status'] = '<i class="glyphicon glyphicon-ban-circle" style="color:red"></i>';
-                    $val['right_button']  = '<a href="'.U('config',array('id'=>$val['id'])).'">设置</a> ';
-                    $val['right_button'] .= '<a class="ajax-get" href="'.U('setStatus',array('status'=>'resume', 'ids' => $val['id'])).'">启用</a> ';
-                    $val['right_button'] .= '<a class="ajax-get" href="'.U('uninstall?id='.$val['id']).'">卸载</a> ';
+                    $val['right_button']  = '<a class="label label-info " href="'.U('config',array('id'=>$val['id'])).'">设置</a> ';
+                    $val['right_button'] .= '<a class="label label-success ajax-get" href="'.U('setStatus',array('status'=>'resume', 'ids' => $val['id'])).'">启用</a> ';
+                    $val['right_button'] .= '<a class="label label-danger ajax-get" href="'.U('uninstall?id='.$val['id']).'">卸载</a> ';
                     if($val['adminlist']){
-                        $val['right_button'] .= '<a href="'.U('adminlist',array('name'=>$val['name'])).'">管理</a>';
+                        $val['right_button'] .= '<a class="label label-success " href="'.U('adminlist',array('name'=>$val['name'])).'">管理</a>';
                     }
                     break;
                 case '1': //正常
                     $val['status'] = '<i class="glyphicon glyphicon-ok" style="color:green"></i>';
-                    $val['right_button']  = '<a href="'.U('config',array('id'=>$val['id'])).'">设置</a> ';
-                    $val['right_button'] .= '<a class="ajax-get" href="'.U('setStatus',array('status'=>'forbid', 'ids' => $val['id'])).'">禁用</a> ';
-                    $val['right_button'] .= '<a class="ajax-get" href="'.U('uninstall?id='.$val['id']).'">卸载</a> ';
+                    $val['right_button']  = '<a class="label label-success " href="'.U('config',array('id'=>$val['id'])).'">设置</a> ';
+                    $val['right_button'] .= '<a class="label label-warning ajax-get" href="'.U('setStatus',array('status'=>'forbid', 'ids' => $val['id'])).'">禁用</a> ';
+                    $val['right_button'] .= '<a class="label label-danger ajax-get" href="'.U('uninstall?id='.$val['id']).'">卸载</a> ';
                     if($val['adminlist']){
-                        $val['right_button'] .= '<a href="'.U('adminlist',array('name'=>$val['name'])).'">管理</a>';
+                        $val['right_button'] .= '<a class="label label-success " href="'.U('adminlist',array('name'=>$val['name'])).'">后台管理</a>';
                     }
                     break;
             }

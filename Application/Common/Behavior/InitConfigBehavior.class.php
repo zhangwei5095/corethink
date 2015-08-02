@@ -68,7 +68,9 @@ class InitConfigBehavior extends Behavior{
 
                 //从系统主题数据表获取当前主题的名称
                 $current_theme = D('SystemTheme')->where(array('current' => 1))->order('id asc')->getField('name');
-                cookie('think_template', $current_theme); //设置当前前台主题
+                if(MODULE_NAME === 'Home'){
+                    $system_config['DEFAULT_THEME'] = $current_theme; //默认主题设为当前主题
+                }
 
                 //模板相关配置
                 $system_config['TMPL_PARSE_STRING']['__PUBLIC__'] = __ROOT__.'/Public';

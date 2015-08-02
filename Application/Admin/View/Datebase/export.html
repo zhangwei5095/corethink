@@ -31,8 +31,8 @@
                             <td class="hidden-xs">{$table.create_time}</td>
                             <td class="back-status">未备份</td>
                             <td class="action">
-                                <a class="ajax-get no-refresh" href="{:U('optimize?tables='.$table['name'])}">优化表</a>&nbsp;
-                                <a class="ajax-get no-refresh" href="{:U('repair?tables='.$table['name'])}">修复表</a>
+                                <a class="label label-success ajax-get no-refresh" href="{:U('optimize?tables='.$table['name'])}">优化表</a>&nbsp;
+                                <a class="label label-success ajax-get no-refresh" href="{:U('repair?tables='.$table['name'])}">修复表</a>
                             </td>
                         </tr>
                     </volist>

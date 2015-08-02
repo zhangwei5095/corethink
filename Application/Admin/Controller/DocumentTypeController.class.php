@@ -30,6 +30,7 @@ class DocumentTypeController extends AdminController{
         $page = new \Common\Util\Page(D('DocumentType')->where($map)->count(), C('ADMIN_PAGE_ROWS'));
 
         $attr['title'] = '字段管理';
+        $attr['class'] = 'label label-success';
         $attr['href'] = 'DocumentAttribute/index?doc_type=';
 
         //使用Builder快速建立列表页面。

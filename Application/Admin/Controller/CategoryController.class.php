@@ -70,6 +70,7 @@ EOF;
         $data_list = $tree->toFormatTree($data_list);
 
         $attr['title'] = '编辑';
+        $attr['class'] = 'label label-info';
         $attr['href'] = 'Admin/Category/edit/tab/'.$tab.'/id/';
 
         //使用Builder快速建立列表页面。

@@ -216,26 +216,26 @@ class ListBuilder extends Controller{
             foreach($this->_right_button_list as $right_button){
                 switch($right_button['type']){
                     case 'edit':
-                        $right_button['link'] = '<a href="'.U($right_button['url'], array('id' => $data[$this->_data_list_primary_key])).'">编辑</a> ';
+                        $right_button['link'] = '<a class="label label-info" href="'.U($right_button['url'], array('id' => $data[$this->_data_list_primary_key])).'">编辑</a> ';
                         break;
                     case 'forbid':
                         switch($data['status']){
                             case '1':
-                                $right_button['link'] = ' <a href="'.U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status'=>'forbid', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">禁用</a> ';
+                                $right_button['link'] = ' <a class="label label-warning ajax-get confirm" href="'.U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status'=>'forbid', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'">禁用</a> ';
                                 break;
                             case '0':
-                                $right_button['link'] = ' <a href="'.U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status'=>'resume', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">启用</a> ';
+                                $right_button['link'] = ' <a class="label label-success ajax-get confirm" href="'.U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status'=>'resume', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'">启用</a> ';
                                 break;
                             case '-1':
-                                $right_button['link'] = ' <a href="'.U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status'=>'restore', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">还原</a> ';
+                                $right_button['link'] = ' <a class="label label-success ajax-get confirm" href="'.U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status'=>'restore', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'">还原</a> ';
                                 break;
                         }
                         break;
                     case 'delete':
-                        $right_button['link'] = '<a href="'.U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status'=>'delete', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">删除</a> ';
+                        $right_button['link'] = '<a class="label label-danger ajax-get confirm" href="'.U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status'=>'delete', 'model' => $right_button['model'], 'ids' => $data[$this->_data_list_primary_key])).'">删除</a> ';
                         break;
                     case 'recycle':
-                        $right_button['link'] = '<a href="'.U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status'=>'recycle', 'ids' => $data[$this->_data_list_primary_key])).'" class="ajax-get confirm">回收</a> ';
+                        $right_button['link'] = '<a class="label label-danger ajax-get confirm" href="'.U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status'=>'recycle', 'ids' => $data[$this->_data_list_primary_key])).'">回收</a> ';
                         break;
                     case 'self':
                         if(!$right_button['attr']['addon']){
