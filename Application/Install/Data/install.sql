@@ -295,27 +295,6 @@ CREATE TABLE `ct_public_digg` (
 
 
 
-# Dump of table ct_store_module
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `ct_store_module`;
-CREATE TABLE `ct_store_module` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '名称',
-  `title` varchar(64) NOT NULL DEFAULT '' COMMENT '标题',
-  `description` varchar(128) NOT NULL DEFAULT '' COMMENT '描述',
-  `developer` varchar(32) NOT NULL DEFAULT '' COMMENT '开发者',
-  `version` varchar(8) NOT NULL DEFAULT '' COMMENT '版本',
-  `admin_menu` text NOT NULL COMMENT '菜单节点',
-  `ctime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `utime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `sort` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  `status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '状态',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
 # Dump of table ct_system_config
 # ------------------------------------------------------------
 
@@ -477,12 +456,32 @@ VALUES
 	(76,32,'编辑数据','Admin/Addon/adminEdit','',0,1426580628,1426580628,7,1),
 	(77,32,'设置状态','Admin/Addon/setStatus','',0,1426580628,1426580628,8,1),
 	(78,2,'应用商店','','fa fa-folder-open-o',0,1437185077,1437185164,2,1),
-	(79,78,'功能模块','Admin/StoreModule/index','fa fa-th-large',0,1437185242,1438276915,1,1),
-	(80,78,'前台主题','Admin/StoreTheme/index','fa fa-adjust',0,1437185290,1438277065,2,0),
-	(81,78,'全局插件','Admin/StoreAddon/index','fa fa-th',0,1437185290,1438277092,3,0);
+	(79,78,'功能模块','Admin/SystemModule/index','fa fa-th-large',0,1437185242,1438276915,1,1),
+	(80,78,'前台主题','Admin/SystemTheme/index','fa fa-adjust',0,1437185290,1438277065,2,0),
+	(81,78,'全局插件','Admin/SystemAddon/index','fa fa-th',0,1437185290,1438277092,3,0);
 
 /*!40000 ALTER TABLE `ct_system_menu` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+# Dump of table ct_system_module
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `ct_system_module`;
+CREATE TABLE `ct_system_module` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '名称',
+  `title` varchar(64) NOT NULL DEFAULT '' COMMENT '标题',
+  `description` varchar(128) NOT NULL DEFAULT '' COMMENT '描述',
+  `developer` varchar(32) NOT NULL DEFAULT '' COMMENT '开发者',
+  `version` varchar(8) NOT NULL DEFAULT '' COMMENT '版本',
+  `admin_menu` text NOT NULL COMMENT '菜单节点',
+  `ctime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `utime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `sort` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='模块功能表';
 
 
 # Dump of table ct_tag

@@ -54,7 +54,7 @@ class SystemMenuModel extends Model{
                 $map = array('id'=> $id);
                 $main_menu = array();
                 $tree = new \Common\Util\Tree();
-                $current_module_admin_menu = json_decode(D('StoreModule')->getFieldByName(MODULE_NAME, 'admin_menu'), true);
+                $current_module_admin_menu = json_decode(D('SystemModule')->getFieldByName(MODULE_NAME, 'admin_menu'), true);
                 do{
                     $main_menu = $tree->list_search($current_module_admin_menu, $map);
                     $main_menu = $main_menu[0];
@@ -77,7 +77,7 @@ class SystemMenuModel extends Model{
                 $result = $this->where($map)->order('pid desc')->select();
                 break;
             default: //模块菜单
-                $current_module_admin_menu = json_decode(D('StoreModule')->getFieldByName(MODULE_NAME, 'admin_menu'), true);
+                $current_module_admin_menu = json_decode(D('SystemModule')->getFieldByName(MODULE_NAME, 'admin_menu'), true);
                 $tree = new \Common\Util\Tree();
                 $map = array('url' => strtolower(MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME));
                 $result = $tree->list_search($current_module_admin_menu, $map);
@@ -117,7 +117,7 @@ class SystemMenuModel extends Model{
                 }
                 break;
             default: //模块菜单
-                $menus = json_decode(D('StoreModule')->getFieldByName(MODULE_NAME, 'admin_menu'), true);
+                $menus = json_decode(D('SystemModule')->getFieldByName(MODULE_NAME, 'admin_menu'), true);
                 $tree = new \Common\Util\Tree();
                 $map = array('url' => strtolower(MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME));
                 $child = $tree->list_search($menus, $map);

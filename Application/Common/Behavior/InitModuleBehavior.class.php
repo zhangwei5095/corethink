@@ -23,7 +23,7 @@ class InitModuleBehavior extends Behavior{
         if(defined('BIND_MODULE') && BIND_MODULE === 'Install') return;
 
         //允许访问模块列表加上安装的功能模块
-        $module_name_list = D('StoreModule')->where(array('status' => 1))->getField('name', true);
+        $module_name_list = D('SystemModule')->where(array('status' => 1))->getField('name', true);
         $module_allow_list = array_merge(C('MODULE_ALLOW_LIST'), $module_name_list);
         C('MODULE_ALLOW_LIST', $module_allow_list);
     }

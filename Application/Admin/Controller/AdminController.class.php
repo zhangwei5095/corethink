@@ -47,7 +47,7 @@ class AdminController extends Controller{
         }
 
         //获取功能模块的后台菜单列表
-        $moule_list = D('StoreModule')->where(array('status' => 1))->select(); //获取所有安装并启用的功能模块
+        $moule_list = D('SystemModule')->where(array('status' => 1))->select(); //获取所有安装并启用的功能模块
         $all_module_menu_list = array();
         foreach($moule_list as $key => $val){
             $menu_list_item = $tree->list_to_tree(json_decode($val['admin_menu'], true));
