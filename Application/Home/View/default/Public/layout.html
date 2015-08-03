@@ -15,20 +15,12 @@
     <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/favicon.ico">
     <link rel="apple-touch-icon" type="image/x-icon" href="__ROOT__/favicon.ico">
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrapextend/css/bootstrap.extend.css">
-    <style type="text/css">
-        body {
-            padding-top: 50px;
-            -webkit-font-smoothing: antialiased;
-        }
-        .breadcrumb {
-            margin-top: 10px
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrapextend/css/bootstrap.extend.css?v={:C('STATIC_VERSION')}">
+    <link rel="stylesheet" type="text/css" href="__CSS__/default.css?v={:C('STATIC_VERSION')}">
     <block name="style"></block>
     <script type="text/javascript" src="__PUBLIC__/jquery/jquery-1.11.1.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="__PUBLIC__/bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="__PUBLIC__/bootstrapextend/js/bootstrap.extend.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrapextend/js/bootstrap.extend.js?v={:C('STATIC_VERSION')}" charset="utf-8"></script>
     <block name="script"></block>
     {:C('WEB_SITE_STATISTICS')} <!-- 站点统计代码 -->
 </head>
@@ -36,7 +28,7 @@
     <block name="wrap">
         {:hook('PageHeader')} <!-- 文档开始钩子 -->
 
-        <block name="top-nav">
+        <block name="main-nav">
             <nav class="navbar navbar-inverse navbar-fixed-top navbar-auto-hiding" role="navigation">
                 <div class="container">
                     <div class="navbar-header">

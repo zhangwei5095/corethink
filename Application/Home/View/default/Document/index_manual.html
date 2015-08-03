@@ -156,8 +156,8 @@
 
 <block name="jumbotron"></block>
 
-<block name="top-nav">
-    <nav class="navbar navbar-inverse navbar-fixed-top navbar-auto-hiding" role="navigation">
+<block name="main-nav">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-main">
@@ -167,7 +167,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <php>if(C('WEB_SITE_LOGO')):</php>
-                    <a class="navbar-brand" href="__ROOT__/"><img alt="Brand" class="brand" src="{$Think.config.WEB_SITE_LOGO|get_cover='path'}"></a>
+                    <a class="navbar-brand" href="__ROOT__/"><img alt="logo" class="logo" src="{$Think.config.WEB_SITE_LOGO|get_cover='path'}"></a>
                 <php>else:</php>
                     <a class="navbar-brand" href="__ROOT__/">{:C('WEB_SITE_TITLE')}</a>
                 <php>endif;</php>
