@@ -116,8 +116,8 @@ EOF;
             }
         }else{
             //获取前台模版供选择
-            $default_theme = D('SystemConfig')->getFieldByName('DEFAULT_THEME','value');
-            $template_list = \Common\Util\File::get_dirs(getcwd().'/Application/Home/View/'.$default_theme.'/Document');
+            $current_theme = D('SystemTheme')->where(array('current' => 1))->order('id asc')->getField('name'); //从系统主题数据表获取当前主题的名称
+            $template_list = \Common\Util\File::get_dirs(getcwd().'/Application/Home/View/'.$current_theme.'/Document');
             foreach($template_list['file'] as $val){
                 $val = substr($val, 0, -5);
                 if(strstr($val, 'index')){
@@ -170,8 +170,8 @@ EOF;
             $info = D('Category')->find($id);
 
             //获取前台模版供选择
-            $default_theme = D('SystemConfig')->getFieldByName('DEFAULT_THEME','value');
-            $template_list = \Common\Util\File::get_dirs(getcwd().'/Application/Home/View/'.$default_theme.'/Document');
+            $current_theme = D('SystemTheme')->where(array('current' => 1))->order('id asc')->getField('name'); //从系统主题数据表获取当前主题的名称
+            $template_list = \Common\Util\File::get_dirs(getcwd().'/Application/Home/View/'.$current_theme.'/Document');
             foreach($template_list['file'] as $val){
                 $val = substr($val, 0, -5);
             if(strstr($val, 'index')){
