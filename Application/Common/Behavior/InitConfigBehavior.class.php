@@ -34,12 +34,11 @@ class InitConfigBehavior extends Behavior{
          * 前缀设置避免冲突
          * 用于将各个模块的缓存、Cookie等数据分开防止冲突
          */
+         $config['DATA_CACHE_PREFIX'] = ENV_PRE.MODULE_NAME.'_'; //数据缓存前缀
         if(MODULE_NAME === 'Admin' || $controller_name[0] === 'Admin'){
-            $config['DATA_CACHE_PREFIX'] = ENV_PRE.'Admin_'; //缓存前缀
             $config['SESSION_PREFIX']    = ENV_PRE.'Admin_'; //Session前缀
             $config['COOKIE_PREFIX']     = ENV_PRE.'Admin_'; //Cookie前缀
         }elseif(MODULE_NAME === 'Home' || $controller_name[0] === 'Home'){
-            $config['DATA_CACHE_PREFIX'] = ENV_PRE.'Home_'; //缓存前缀
             $config['SESSION_PREFIX']    = ENV_PRE.'Home_'; //Session前缀
             $config['COOKIE_PREFIX']     = ENV_PRE.'Home_'; //Cookie前缀
         }
