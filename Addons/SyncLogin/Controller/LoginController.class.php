@@ -63,10 +63,11 @@ class LoginController extends AddonController{
         //获取用户名、密码
         $username = $_POST['username'];
         $password = $_POST['password'];
+        $upload_object = D('Upload');
 
         //上传头像，发现相同文件直接返回
         $con['url'] = $_POST['avatar'];
-        $upload = $this->where($con)->find();
+        $upload = $upload_object->where($con)->find();
         if($upload){
             $_POST['avatar'] = $upload['id'];
         }else{
@@ -75,8 +76,12 @@ class LoginController extends AddonController{
             $upload_data['ext']    = 'png';
             $upload_data['md5']    = md5_file($_POST['avatar']);
             $upload_data['sha1']   = sha1_file($_POST['avatar']);
-            $upload_data['status'] = 1;
-            $_POST['avatar'] = M('Upload')->add($upload_data);
+            $upload_data = $upload_object->create($upload_data);
+            if($upload_data){
+                $_POST['avatar'] = $upload_object->add($upload_data);
+            }else{
+                $this->error('头像信息存储错误'.$upload_object->getError());
+            }
         }
 
         //注册用户
