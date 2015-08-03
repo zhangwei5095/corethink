@@ -605,7 +605,7 @@ LOCK TABLES `ct_user` WRITE;
 
 INSERT INTO `ct_user` (`id`, `username`, `email`, `mobile`, `password`, `group`, `avatar`, `score`, `money`, `sex`, `age`, `birthday`, `summary`, `extend`, `login`, `last_login_time`, `last_login_ip`, `reg_ip`, `ctime`, `utime`, `sort`, `status`)
 VALUES
-	(1,'admin','598821125@qq.com','15005173785','79cc780bd21b161230268824080b8476',1,0,0,0,'0',0,0,'','',7,1432362010,2130706433,0,0,0,0,1);
+	(1,'admin',NULL,NULL,'665cb371ec45a3619ded2ec741513da7',1,0,0,0,'0',0,0,'','',7,1432362010,2130706433,0,0,0,0,1);
 
 /*!40000 ALTER TABLE `ct_user` ENABLE KEYS */;
 UNLOCK TABLES;

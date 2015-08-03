@@ -306,8 +306,11 @@ function execute_sql_from_file($file){
  * @return string
  * @author jry <598821125@qq.com>
  */
-function user_md5($str, $key = 'CoreThink'){
-    return '' === $str ? '' : md5(sha1($str) . $key);
+function user_md5($str, $auth_key){
+    if(!$auth_key){
+        $auth_key = C('AUTH_KEY');
+    }
+    return '' === $str ? '' : md5(sha1($str) . $auth_key);
 }
 
 /**

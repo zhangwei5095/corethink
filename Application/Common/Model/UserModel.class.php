@@ -126,7 +126,7 @@ class UserModel extends Model{
         }else{
             $map['username'] = array('eq', $username); //用户名登陆
         }
-        $map['status']   = array('eq', 1);
+        $map['status'] = array('eq', 1);
         $user = $this->where($map)->find(); //查找用户
         if(!$user){
             $this->error = '用户不存在或被禁用！';

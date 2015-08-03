@@ -23,12 +23,6 @@ error_reporting(E_ALL^E_NOTICE^E_WARNING);
 define('ENV_PRE', 'CT_');
 
 /**
- * 系统调试设置
- * 项目正式部署后请设置为false
- */
-define('APP_DEBUG', $_SERVER[ENV_PRE.'APP_DEBUG']? : true);
-
-/**
  * 应用目录设置
  * 安全期间，建议安装调试完成后移动到非WEB目录
  */
@@ -51,6 +45,8 @@ define('HTML_PATH', RUNTIME_PATH.'Html/');
  */
 if(is_file(APP_PATH . 'Common/Conf/install.lock') === false && $_SERVER[ENV_PRE.'DEV_MODE'] !== 'true'){
     define('BIND_MODULE','Install');
+}else{
+    define('APP_DEBUG', $_SERVER[ENV_PRE.'APP_DEBUG']? : true); //系统调试设置, 项目正式部署后请设置为false
 }
 
 /**

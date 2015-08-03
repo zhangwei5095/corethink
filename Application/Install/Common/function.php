@@ -10,40 +10,67 @@
 /**
  * 系统环境检测
  * @return array 系统环境数据
+ * @author jry <598821125@qq.com>
  */
 function check_env(){
     $items = array(
-        'os'      => array('操作系统', '不限制', '类Unix', PHP_OS, 'glyphicon-ok text-success'),
-        'php'     => array('PHP版本', '5.3', '5.3+', PHP_VERSION, 'glyphicon-ok text-success'),
-        'upload'  => array('附件上传', '不限制', '2M+', '未知', 'glyphicon-ok text-success'),
-        'gd'      => array('GD库', '2.0', '2.0+', '未知', 'glyphicon-ok text-success'),
-        'disk'    => array('磁盘空间', '5M', '不限制', '未知', 'glyphicon-ok text-success'),
+        'os' => array(
+            'title'   => '操作系统',
+            'limit'   => '不限制',
+            'current' => PHP_OS,
+            'icon'    => 'glyphicon-ok text-success',
+        ),
+        'php' => array(
+            'title'   => 'PHP版本',
+            'limit'   => '5.3+',
+            'current' => PHP_VERSION,
+            'icon'    => 'glyphicon-ok text-success',
+        ),
+        'upload' => array(
+            'title'   => '附件上传',
+            'limit'   => '不限制',
+            'current' => ini_get('file_uploads') ? ini_get('upload_max_filesize'):'未知',
+            'icon'    => 'glyphicon-ok text-success',
+        ),
+        'gd' => array(
+            'title'   => 'GD库',
+            'limit'   => '2.0+',
+            'current' => '未知',
+            'icon'    => 'glyphicon-ok text-success',
+        ),
+        'disk' => array(
+            'title'   => '磁盘空间',
+            'limit'   => '100M+',
+            'current' => '未知',
+            'icon'    => 'glyphicon-ok text-success',
+        ),
     );
 
     //PHP环境检测
-    if($items['php'][3] < $items['php'][1]){
-        $items['php'][4] = 'remove';
+    if($items['php']['current'] < 5.3){
+        $items['php']['icon'] = 'glyphicon-remove text-danger';
         session('error', true);
     }
 
-    //附件上传检测
-    if(@ini_get('file_uploads'))
-        $items['upload'][3] = ini_get('upload_max_filesize');
-
     //GD库检测
     $tmp = function_exists('gd_info') ? gd_info() : array();
-    if(empty($tmp['GD Version'])){
-        $items['gd'][3] = '未安装';
-        $items['gd'][4] = 'remove';
+    if(!$tmp['GD Version']){
+        $items['gd']['current'] = '未安装';
+        $items['gd']['icon'] = 'glyphicon-remove text-danger';
         session('error', true);
-    } else {
-        $items['gd'][3] = $tmp['GD Version'];
+    }else{
+        $items['gd']['current'] = $tmp['GD Version'];
     }
     unset($tmp);
 
     //磁盘空间检测
-    if(function_exists('disk_free_space')) {
-        $items['disk'][3] = floor(disk_free_space('./') / (1024*1024)).'M';
+    if(function_exists('disk_free_space')){
+        $disk_size = floor(disk_free_space('./') / (1024*1024)).'M';
+        $items['disk']['current'] = $disk_size.'MB';
+        if($disk_size < 100){
+            $items['disk']['icon'] = 'glyphicon-remove text-danger';
+            session('error', true);
+        }
     }
 
     return $items;
@@ -52,40 +79,61 @@ function check_env(){
 /**
  * 目录，文件读写检测
  * @return array 检测数据
+ * @author jry <598821125@qq.com>
  */
 function check_dirfile(){
     $items = array(
-        array('dir',  '可写', 'glyphicon-ok text-success', APP_PATH . 'Common/Conf'),
-        array('file', '可写', 'glyphicon-ok text-success', APP_PATH . 'Common/Conf/config.php'),
-        array('dir',  '可写', 'glyphicon-ok text-success', './Runtime'),
-        array('dir',  '可写', 'glyphicon-ok text-success', './Uploads'),
+        '0' => array(
+            'type'  => 'file',
+            'path'  => APP_PATH . 'Common/Conf/config.php',
+            'title' => '可写',
+            'icon'  => 'glyphicon-ok text-success',
+        ),
+        '1' => array(
+            'type'  => 'dir',
+            'path'  => APP_PATH . 'Common/Conf',
+            'title' => '可写',
+            'icon'  => 'glyphicon-ok text-success',
+        ),
+        '2' => array(
+            'type'  => 'dir',
+            'path'  => RUNTIME_PATH,
+            'title' => '可写',
+            'icon'  => 'glyphicon-ok text-success',
+        ),
+        '3' => array(
+            'type'  => 'dir',
+            'path'  => './Uploads',
+            'title' => '可写',
+            'icon'  => 'glyphicon-ok text-success',
+        ),
     );
 
     foreach ($items as &$val){
-        $item = $val[3];
-        if('dir' == $val[0]){
-            if(!is_writable($item)){
-                if(is_dir($item)) {
-                    $val[1] = '不可写';
-                    $val[2] = 'glyphicon-remove text-danger';
+        $path = $val['path'];
+        if('dir' === $val['type']){
+            if(!is_writable($path)){
+                if(is_dir($path)) {
+                    $val['title'] = '不可写';
+                    $val['icon'] = 'glyphicon-remove text-danger';
                     session('error', true);
                 }else{
-                    $val[1] = '不存在';
-                    $val[2] = 'glyphicon-remove text-danger';
+                    $val['title'] = '不存在';
+                    $val['icon'] = 'glyphicon-remove text-danger';
                     session('error', true);
                 }
             }
         }else{
-            if(file_exists($item)){
-                if(!is_writable($item)){
-                    $val[1] = '不可写';
-                    $val[2] = 'glyphicon-remove text-danger';
+            if(file_exists($path)){
+                if(!is_writable($path)){
+                    $val['title'] = '不可写';
+                    $val['icon'] = 'glyphicon-remove text-danger';
                     session('error', true);
                 }
             }else{
-                if(!is_writable(dirname($item))) {
-                    $val[1] = '不存在';
-                    $val[2] = 'glyphicon-remove text-danger';
+                if(!is_writable(dirname($path))){
+                    $val['title'] = '不存在';
+                    $val['icon'] = 'glyphicon-remove text-danger';
                     session('error', true);
                 }
             }
@@ -98,47 +146,55 @@ function check_dirfile(){
  * 函数检测
  * @return array 检测数据
  */
-function check_func(){
+function check_func_and_ext(){
     $items = array(
-        array('mysql_connect',     '支持', 'glyphicon-ok text-success'),
-        array('file_get_contents', '支持', 'glyphicon-ok text-success'),
-        array('mb_strlen',         '支持', 'glyphicon-ok text-success'),
+        '0' => array(
+            'type'    => 'ext',
+            'name'    => 'pdo',
+            'title'   => '支持',
+            'current' =>  extension_loaded('pdo'),
+            'icon'    => 'glyphicon-ok text-success',
+        ),
+        '1' => array(
+            'type'    => 'ext',
+            'name'    => 'pdo_mysql',
+            'title'   => '支持',
+            'current' =>  extension_loaded('pdo_mysql'),
+            'icon'    => 'glyphicon-ok text-success',
+        ),
+        '2' => array(
+            'type'    => 'func',
+            'name'    => 'file_get_contents',
+            'title'   => '支持',
+            'icon'    => 'glyphicon-ok text-success',
+        ),
+        '3' => array(
+            'type'    => 'func',
+            'name'    => 'mb_strlen',
+            'title'   => '支持',
+            'icon'    => 'glyphicon-ok text-success',
+        ),
     );
-    foreach ($items as &$val) {
-        if(!function_exists($val[0])){
-            $val[1] = '不支持';
-            $val[2] = 'glyphicon-remove text-danger';
-            $val[3] = '开启';
-            session('error', true);
+    foreach($items as &$val){
+        switch($val['type']){
+            case 'ext':
+                if(!$val['current']){
+                    $val['title'] = '不支持';
+                    $val['icon'] = 'glyphicon-remove text-danger';
+                    session('error', true);
+                }
+                break;
+            case 'func':
+                if(!function_exists($val['name'])){
+                    $val['title'] = '不支持';
+                    $val['icon'] = 'glyphicon-remove text-danger';
+                    session('error', true);
+                }
+                break;
         }
     }
 
     return $items;
-}
-
-/**
- * 写入配置文件
- * @param  array $config 配置信息
- */
-function write_config($config, $auth){
-    if(is_array($config)){
-        //读取配置内容
-        $conf = file_get_contents(MODULE_PATH . 'Data/config.tpl');
-        //替换配置项
-        foreach ($config as $name => $value) {
-            $conf = str_replace("[{$name}]", $value, $conf);
-        }
-        $conf = str_replace('[AUTH_KEY]', $auth, $conf);
-        //写入应用配置文件
-
-        if(file_put_contents(APP_PATH . 'Common/Conf/config.php', $conf)){
-            show_msg('配置文件写入成功');
-        }else{
-            show_msg('配置文件写入失败！', 'error');
-            session('error', true);
-        }
-        return '';
-    }
 }
 
 /**
@@ -172,23 +228,32 @@ function create_tables($db, $prefix = ''){
         } else {
             $db->execute($value);
         }
-
     }
 }
 
 /**
- * 注册超级管理员账号
+ * 写入配置文件
+ * @param  array $config 配置信息
  */
-function register_administrator($db, $prefix, $admin){
-    show_msg('开始注册创始人帐号...');
-    $sql = "DELETE FROM {$prefix}user;" .
-           "ALTER TABLE {$prefix}user AUTO_INCREMENT = 1;" .
-           "INSERT INTO `{$prefix}user` (`id`, `username`, `email`, `mobile`, `password`, `group`, `status`) VALUES " .
-           "('1', '[NAME]', '[EMAIL]', '[MOBILE]','[PASS]', '1', '1')";
-    $password = user_md5($admin['password']);
-    $sql = str_replace(array('[NAME]', '[EMAIL]', '[MOBILE]', '[PASS]'), array($admin['username'], $admin['email'], $admin['mobile'], $password), $sql);
-    $db->execute($sql);
-    show_msg('创始人帐号注册完成！');
+function write_config($config, $auth){
+    if(is_array($config)){
+        //读取配置内容
+        $conf = file_get_contents(MODULE_PATH . 'Data/config.tpl');
+        //替换配置项
+        foreach ($config as $name => $value) {
+            $conf = str_replace("[{$name}]", $value, $conf);
+        }
+        $conf = str_replace('[AUTH_KEY]', $auth, $conf);
+        //写入应用配置文件
+
+        if(file_put_contents(APP_PATH . 'Common/Conf/config.php', $conf)){
+            show_msg('配置文件写入成功');
+        }else{
+            show_msg('配置文件写入失败！', 'error');
+            session('error', true);
+        }
+        return true;
+    }
 }
 
 /**
@@ -199,15 +264,4 @@ function show_msg($msg, $class = ''){
     echo "<script type=\"text/javascript\">showmsg(\"{$msg}\", \"{$class}\")</script>";
     flush();
     ob_flush();
-}
-
-/**
- * 生成系统AUTH_KEY
- * @author 麦当苗儿 <zuojiazi@vip.qq.com>
- */
-function build_auth_key(){
-    $chars  = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $chars .= '`~!@#$%^&*()_+-=[]{};:"|,.<>/?';
-    $chars  = str_shuffle($chars);
-    return substr($chars, 0, 40);
 }
