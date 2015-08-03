@@ -342,7 +342,7 @@ VALUES
 	('静态资源版本标识', 'STATIC_VERSION', '20150803', 3, 'text', '', '静态资源版本标识可以防止服务器缓存', 1438564784, 1438564784, 4, 1),
 	('配置分组','CONFIG_GROUP_LIST','1:基本\r\n2:用户\r\n3:系统\r\n4:上传\r\n',3,'array','','配置分组',1379228036,1426930700,5,1),
 	('分页数量','ADMIN_PAGE_ROWS','10',3,'num','','分页时每页的记录数',1434019462,1434019481, 6, 1),
-	('栏目分组','CATEGORY_GROUP_LIST','1:默认\r\n3:导航\r\n',3,'array','','栏目分类分组',1433602137,1433602165,5,7),
+	('栏目分组','CATEGORY_GROUP_LIST','1:默认\r\n3:导航\r\n',3,'array','','栏目分类分组',1433602137,1433602165,7,1),
 	('文件上传驱动类型','UPLOAD_DRIVER','Local',4,'select','Local:Local-本地\r\nFtp:FTP空间\r\nSae:Sae-Storage\r\nBcs:Bcs云存储\r\nUpyun:又拍云\r\nQiniu:七牛云存储','需要配置相应的UPLOAD_{driver}_CONFIG 配置方可使用，不然默认Local本地',1393073505,1393073505,1,1),
 	('FTP上传配置','UPLOAD_FTP_CONFIG','host:\r\nusername:\r\npassword:',4,'array','','FTP上传配置',1393073559,1393073559,2,1),
 	('Sae上传配置','UPLOAD_SAE_CONFIG','domain:',4,'array','','Sae上传配置',1393073998,1393073998,3,1),

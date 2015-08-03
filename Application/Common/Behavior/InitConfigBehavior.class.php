@@ -46,7 +46,7 @@ class InitConfigBehavior extends Behavior{
         C($config); //添加配置
 
         //读取数据库中的配置
-        //$system_config = S('DB_CONFIG_DATA');
+        $system_config = S('DB_CONFIG_DATA');
         if(!$system_config){
             //获取所有系统配置
             $system_config = D('SystemConfig')->lists();
@@ -70,6 +70,7 @@ class InitConfigBehavior extends Behavior{
                 $current_theme = D('SystemTheme')->where(array('current' => 1))->order('id asc')->getField('name');
                 if(MODULE_NAME === 'Home'){
                     $system_config['DEFAULT_THEME'] = $current_theme; //默认主题设为当前主题
+                    cookie('think_template', $current_theme); //默认主题设为当前主题
                 }
 
                 //模板相关配置
