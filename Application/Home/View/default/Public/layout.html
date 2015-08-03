@@ -21,6 +21,11 @@
     <script type="text/javascript" src="__PUBLIC__/jquery/jquery-1.11.1.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="__PUBLIC__/bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="__PUBLIC__/bootstrapextend/js/bootstrap.extend.js?v={:C('STATIC_VERSION')}" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('[data-toggle="popover"]').popover(); //一次性初始化所有弹出框
+        });
+    </script>
     <block name="script"></block>
     {:C('WEB_SITE_STATISTICS')} <!-- 站点统计代码 -->
 </head>
@@ -28,32 +33,34 @@
     <block name="wrap">
         {:hook('PageHeader')} <!-- 文档开始钩子 -->
 
-        <block name="main-nav">
-            <nav class="navbar navbar-inverse navbar-fixed-top navbar-auto-hiding" role="navigation">
+        <block name="top-nav">
+            <nav class="top-nav navbar navbar-inverse hidden-xs margin-bottom-none border-radius-none" role="navigation">
                 <div class="container">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-main">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-top">
                             <span class="sr-only">切换导航</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <php>if(C('WEB_SITE_LOGO')):</php>
-                            <a class="navbar-brand" href="__ROOT__/"><img alt="Brand" class="logo" src="{$Think.config.WEB_SITE_LOGO|get_cover='path'}"></a>
-                        <php>else:</php>
-                            <a class="navbar-brand" href="__ROOT__/">{:C('WEB_SITE_TITLE')}</a>
-                        <php>endif;</php>
                     </div>
-                    <div class="collapse navbar-collapse navbar-collapse-main">
-                        <ul class="nav navbar-nav">
-                            <li><a href="__ROOT__/">首页</a></li>
-                            <corethink:category_list name="vo">
-                                <li <if condition='$vo.id eq $__CURRENT_CATEGORY__'> class="active"</if> >
-                                    <a href="{:U('Home/Document/index', array('cid' => $vo['id']))}">{$vo.title}</a>
-                                </li>
-                            </corethink:category_list>
+                    <div class="collapse navbar-collapse navbar-collapse-top">
+                        <ul class="nav navbar-nav" style="margin-left:-15px" >
+                            <li><a href="mailto:admin@corethink.cn">联系：admin@corethink.cn</a></li>
+                            <li><a href="#" tabindex="0" role="button" data-toggle="popover" data-trigger="hover" data-placement="bottom"
+                                title="QQ联系" data-html="true" data-content="<div style='width:120px;'><ul class='list-unstyled'><li>技术：598821125</li><li>销售：603550095</li><li>市场：550138282</li></ul></div>">
+                                <i class="fa fa-qq"></i></a>
+                            </li>
+                            <li><a target="_blank" href="http://weibo.com/u/5667168319"><i class="fa fa-weibo"></i></a></li>
+                            <li><a href="#" data-html="true" tabindex="0" role="button" data-toggle="popover" data-trigger="hover" data-placement="bottom"
+                                title="微信扫一扫" data-html="true" data-content="<img src='__IMG__/weixin_gh_ce5447812a60.jpg'>">
+                                <i class="fa fa-weixin"></i></a>
+                            </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#">您好，欢迎来到{:C('WEB_SITE_TITLE')} ！</a></li>
+                            <li><a href="{:C('WEBSITE_DOMAIN')}">协议</a></li>
+                            <li><a href="{:C('WEBSITE_DOMAIN')}" target="_blank">手册</a></li>
                             <present name="__USER__">
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -73,6 +80,37 @@
                                 <li><a href="#" data-toggle="modal" data-target="#login-modal">登录</a></li>
                                 <li><a href="{:U('Home/User/register')}">注册</a></li>
                             </present>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </block>
+
+        <block name="main-nav">
+            <nav class="main-nav navbar navbar-default margin-bottom-none border-none" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-main">
+                            <span class="sr-only">切换导航</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <php>if(C('WEB_SITE_LOGO')):</php>
+                            <a class="navbar-brand" href="__ROOT__/"><img alt="logo" class="logo" src="{$Think.config.WEB_SITE_LOGO|get_cover='path'}"></a>
+                        <php>else:</php>
+                            <a class="navbar-brand" href="__ROOT__/"><img alt="logo" class="logo" src="__IMG__/logo_with_title.png"></a>
+                        <php>endif;</php>
+                    </div>
+                    <div class="collapse navbar-collapse navbar-collapse-main">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="__ROOT__/">首页</a></li>
+                            <corethink:category_list name="vo">
+                                <li <if condition='$vo.id eq $__CURRENT_CATEGORY__'> class="active"</if> >
+                                    <a href="{:U('Home/Document/index', array('cid' => $vo['id']))}">{$vo.title}</a>
+                                </li>
+                            </corethink:category_list>
+                            <li><a style="padding-left:20px;padding-right:20px;" href="__ROOT__/"><i class="fa fa-search fa-lg"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -134,14 +172,14 @@
             </footer>
         </block>
 
-        <block name="bottomn-nav">
-            <nav class="bottom_nav navbar-fixed-bottom">
-                <a class="item" href="__ROOT__/"><img src="__IMG__/tab1.png">首页</a>
-                <a class="item" href="{:U('Home/User/home')}"><img src="__IMG__/tab2.png">余额</a>
-                <a class="item" href="{:U('Home/UserMessage/index')}"><img src="__IMG__/tab3.png">消息</a>
-                <div class="item has_nav" onclick="$(this).find('.more_nav').toggle();">
-                    <img src="__IMG__/tab4.png">我
-                    <div class="more_nav">
+        <block name="nav-tabs-bottom">
+            <nav class="nav-tabs-bottom navbar-fixed-bottom">
+                <a class="item" href="__ROOT__/"><i class="fa fa-home fa-2x nav-icon"></i> 首页</a>
+                <a class="item" href="{:U('Home/User/home')}"><i class="fa fa-credit-card fa-2x nav-icon"></i> 余额</a>
+                <a class="item" href="{:U('Home/UserMessage/index')}"><i class="fa fa-envelope-o fa-2x nav-icon"></i> 消息</a>
+                <div class="item has_nav" onclick="$(this).find('.more-nav').toggle();">
+                    <i class="fa fa-user fa-2x nav-icon"></i> 我
+                    <div class="more-nav">
                         <em></em>
                         <a href="{:U('Home/User/home')}">个人主页</a>
                         <a href="{:U('Home/User/center')}">个人中心</a>

@@ -244,6 +244,9 @@ ul.token-input-list{overflow:hidden;height:31px;width:100%;border:1px solid #999
 
 /* jumbotron组件
 -------------------------------------------------- */
+.jumbotron {
+    position: relative;
+}
 .jumbotron:after {
     content: '';
     display: block;
@@ -268,13 +271,13 @@ ul.token-input-list{overflow:hidden;height:31px;width:100%;border:1px solid #999
 
 /* 仿APP底部的Tab导航组件
 -------------------------------------------------- */
-.bottom_nav{
+.nav-tabs-bottom {
     height: 50px;
     width: 100%;
     background: #f8f8f8;
     display: none;
 }
-.bottom_nav .item{
+.nav-tabs-bottom .item {
     color: #2e393f;
     display: block;
     cursor: pointer;
@@ -288,20 +291,20 @@ ul.token-input-list{overflow:hidden;height:31px;width:100%;border:1px solid #999
     width: 1%;
     text-decoration: none;
 }
-.bottom_nav .item:hover{
+.nav-tabs-bottom .item:hover {
     color: #fff;
-    background: #337ab7;
+    background: #009CEA;
 }
-.bottom_nav .item img{
+.nav-tabs-bottom .item .nav-icon {
     width: 25px;
     height: 25px;
     display: block;
     margin: 0 auto;
 }
-.bottom_nav .has_nav{
+.nav-tabs-bottom .has_nav {
     position:relative;
 }
-.more_nav{
+.nav-tabs-bottom .more-nav {
     position:absolute;
     right:5%;
     left:5%;
@@ -311,17 +314,17 @@ ul.token-input-list{overflow:hidden;height:31px;width:100%;border:1px solid #999
     background:#f8f8f8;
     display:none;
 }
-.more_nav em{
+.nav-tabs-bottom .more-nav em {
     width: 10px;
     height: 10px;
     background: #f8f8f8;
     position: absolute;
     left: 50%;
     margin-left: -5px;
-    bottom: -5px;
+    bottom: -4px;
     -webkit-transform: rotate(45deg);
 }
-.bottom_nav .more_nav a{
+.nav-tabs-bottom .more-nav a {
     padding: 0;
     color: #2e393f;
     line-height: 40px;
@@ -329,15 +332,15 @@ ul.token-input-list{overflow:hidden;height:31px;width:100%;border:1px solid #999
     display: block;
     text-decoration: none;
 }
-.bottom_nav .more_nav a:hover{
+.nav-tabs-bottom .more-nav a:hover {
     color: #fff;
-    background: #337ab7;
+    background: #009CEA;
 }
-@media (max-width: 768px){
+@media (max-width: 768px) {
     body{
         padding-bottom: 50px;
     }
-    .bottom_nav{
+    .nav-tabs-bottom{
         display: -webkit-box;
     }
 }

@@ -1,7 +1,51 @@
 body {
-    padding-top: 50px;
     -webkit-font-smoothing: antialiased;
 }
 .breadcrumb {
     margin-top: 10px
+}
+.btn-default-inverse {
+    color: #fff;
+    border-color: #fff;
+    text-shadow: none;
+}
+.btn-default-inverse:hover,
+.btn-default-inverse.hover,
+.btn-default-inverse.active {
+    color: #333; 
+    background: #fff;
+}
+.main-nav {
+    background-color: #fff;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+.main-nav .navbar-nav>li>a:hover {
+    background-color: #009CEA;
+    border-color: #009CEA;
+    color: #fff;
+}
+.main-nav .navbar-nav>.active>a,
+.main-nav .navbar-nav>.active>a:focus,
+.main-nav .navbar-nav>.active>a:hover {
+    background-color: #009CEA;
+    border-color: #009CEA;
+    color: #fff;
+}
+@media (min-width: 768px) {
+    .top-nav {
+        min-height: 30px;
+    }
+    .top-nav .navbar-nav>li>a {
+        padding: 5px;
+        font-size:12px;
+    }
+    .main-nav .navbar-nav>li>a {
+        padding: 32px 45px;
+    }
+    .main-nav .navbar-brand .logo {
+        height: 60px;
+        margin: -5px 0px;
+    }
 }
