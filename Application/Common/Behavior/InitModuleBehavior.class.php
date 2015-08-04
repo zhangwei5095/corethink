@@ -26,5 +26,9 @@ class InitModuleBehavior extends Behavior{
         $module_name_list = D('SystemModule')->where(array('status' => 1))->getField('name', true);
         $module_allow_list = array_merge(C('MODULE_ALLOW_LIST'), $module_name_list);
         C('MODULE_ALLOW_LIST', $module_allow_list);
+
+        //URL_MODEL必须在app_init阶段就从数据库读取出来应用，不然系统就会读取config.php中的配置导致后台的配置失效
+        $config['URL_MODEL'] = D('SystemConfig')->getFieldByName('URL_MODEL', 'value');
+        C($config);
     }
 }
