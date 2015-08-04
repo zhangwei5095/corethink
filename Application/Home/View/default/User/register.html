@@ -15,10 +15,24 @@
         <div class="row">
             <div class="col-xs-12 col-md-5">
                 <div class="login">
+                    <!-- 后台管理员允许注册方式才会显示 -->
+                    <php>$allow_reg_type = C('ALLOW_REG_TYPE');</php>
                     <ul class="nav-tabs nav">
-                        <li data-tab="reg1" class="active"><a href="#reg1" data-toggle="tab">用户名注册</a></li>
-                        <li data-tab="reg2"><a href="#reg2" data-toggle="tab">邮箱注册</a></li>
-                        <li data-tab="reg3"><a href="#reg3" data-toggle="tab">手机号注册</a></li>
+                        <php>if(in_array('username', $allow_reg_type)):</php>
+                            <li data-tab="reg1" <php>if($allow_reg_type[0] === 'username') echo 'class="active"';</php>>
+                                <a href="#reg1" data-toggle="tab">用户名注册</a>
+                            </li>
+                        <php>endif;</php>
+                        <php>if(in_array('email', $allow_reg_type)):</php>
+                            <li data-tab="reg2" <php>if($allow_reg_type[0] === 'email') echo 'class="active"';</php>>
+                                <a href="#reg2" data-toggle="tab">邮箱注册</a>
+                            </li>
+                        <php>endif;</php>
+                        <php>if(in_array('mobile', $allow_reg_type)):</php>
+                            <li data-tab="reg3" <php>if($allow_reg_type[0] === 'mobile') echo 'class="active"';</php>>
+                                <a href="#reg3" data-toggle="tab">手机号注册</a>
+                            </li>
+                        <php>endif;</php>
                     </ul>
                     <div class="tab-content">
                         <div id="reg1" class='tab-pane active'>

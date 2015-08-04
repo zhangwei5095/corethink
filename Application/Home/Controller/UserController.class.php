@@ -151,6 +151,9 @@ class UserController extends HomeController{
                 $this->error('注册已关闭！');
             }
             $reg_type = I('post.reg_type');
+            if(!in_array($reg_type, C('ALLOW_REG_TYPE'))){
+                $this->error('该注册方式已关闭，请选择其它方式注册！');
+            }
             switch($reg_type){
                 case 'username': //用户名注册
                     $username = I('post.username');
