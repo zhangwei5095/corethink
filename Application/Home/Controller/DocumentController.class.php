@@ -257,6 +257,15 @@ class DocumentController extends HomeController{
      */
     public function update(){
         $this->is_login();
+
+        //解析数据类似复选框类型的数组型值
+        foreach($_POST as $key => $val){
+            if(is_array($val)){
+                $_POST[$key] = implode(',', $val);
+            }
+        }
+
+        //新增或更新文档
         $document_object = D('Document');
         $result = $document_object->update();
         if(!$result){

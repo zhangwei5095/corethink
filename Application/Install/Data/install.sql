@@ -330,7 +330,7 @@ VALUES
 	('网站备案号','WEB_SITE_ICP','苏ICP备1502009-2号',1,'text','','设置在网站底部显示的备案号，如“苏ICP备1502009-2号\"',1378900335,1415983236,7,1),
 	('站点统计','WEB_SITE_STATISTICS','',1,'textarea','','支持百度、Google、cnzz等所有Javascript的统计代码',1407824190,1407824303,8,1),
 	('注册开关','TOGGLE_USER_REGISTER','1',2,'select','0:关闭注册\r\n1:允许注册','是否开放用户注册',1379504487,1379504580,1,1),
-	('允许注册方式','ALLOW_REG_TYPE','username,email,mobile',2,'checkbox','username:用户名\r\nemail:邮箱注册\r\nmobile:手机注册','',0,0,2,1),
+	('允许注册方式','ALLOW_REG_TYPE','username,email,mobile',2,'checkbox','username:用户名注册\r\nemail:邮箱注册\r\nmobile:手机注册','',0,0,2,1),
 	('注册时间间隔','LIMIT_TIME_BY_IP','0',2,'num','','同一IP注册时间间隔秒数',1379228036,1379228036,3,1),
 	('评论开关','TOGGLE_USER_COMMENT','1',2,'select','0:关闭评论,1:允许评论','评论关闭后用户不能进行评论',1418715779,1418716106,4,1),
 	('文件上传大小','UPLOAD_FILE_SIZE','10',2,'num','','文件上传大小单位：MB',1428681031,1428681031,5,1),
