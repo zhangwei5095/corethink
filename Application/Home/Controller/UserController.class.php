@@ -152,18 +152,29 @@ class UserController extends HomeController{
             }
             $reg_type = I('post.reg_type');
             switch($reg_type){
-                case '1': //邮箱注册
+                case 'username': //用户名注册
+                    $username = I('post.username');
+                    //图片验证码校验
+                    if(!$this->check_verify(I('post.verify'))){
+                        $this->error('验证码输入错误！');
+                    }
+                    break;
+                case 'email': //邮箱注册
                     $username = I('post.email');
                     $_POST['username'] = 'U'.NOW_TIME;
+                    //验证码严格加盐加密验证
+                    if(user_md5(I('post.verify'), $username) !== session('reg_verify')){
+                        $this->error('验证码错误！');
+                    }
                     break;
-                case '2': //手机号注册
+                case 'mobile': //手机号注册
                     $username = I('post.mobile');
                     $_POST['username'] = 'U'.NOW_TIME;
+                    //验证码严格加盐加密验证
+                    if(user_md5(I('post.verify'), $username) !== session('reg_verify')){
+                        $this->error('验证码错误！');
+                    }
                     break;
-            }
-            //验证码严格加盐加密验证
-            if(user_md5(I('post.verify'), $username) !== session('reg_verify')){
-                $this->error('验证码错误！');
             }
             $password = I('post.password');
             $user_object = D('User');
@@ -234,7 +245,18 @@ class UserController extends HomeController{
      */
     public function verify($vid = 1){
         $verify = new \Think\Verify();
+        $verify->length = 4;
         $verify->entry($vid);
+    }
+    
+    /**
+     * 检测验证码
+     * @param  integer $id 验证码ID
+     * @return boolean 检测结果
+     */
+    function check_verify($code, $vid = 1){
+        $verify = new \Think\Verify();
+        return $verify->check($code, $vid);
     }
 
     /**

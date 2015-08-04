@@ -41,6 +41,7 @@ class UserModel extends Model{
         array('username', '3,32', '用户名长度为1-32个字符', self::MUST_VALIDATE, 'length', self::MODEL_BOTH),
         array('username', '', '用户名被占用', self::MUST_VALIDATE, 'unique', self::MODEL_BOTH),
         array('username', 'checkIP', '注册太频繁请稍后再试', self::MUST_VALIDATE, 'callback', self::MODEL_INSERT), //IP限制
+        array('username', 'checkUsername', '该用户名禁止使用', self::MUST_VALIDATE, 'callback', self::MODEL_BOTH), //用户名敏感词检测
         array('username', '/^(?!_)(?!\d)(?!.*?_$)[\w\一-\龥]+$/', '用户名只可含有汉字、数字、字母、下划线且不以下划线开头结尾，不以数字开头！', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
 
         array('sex', 'require', '请选择性别', self::EXISTS_VALIDATE, 'regex', self::MODEL_BOTH),
@@ -178,6 +179,21 @@ class UserModel extends Model{
         $key = array_search(get_client_ip(1), $reg_ip);
         if($reg_ip && $key !== false){
             return false;
+        }
+        return true;
+    }
+
+    /**
+     * 用户名敏感词检测
+     * @return boolean ture 正常，false 敏感词
+     * @author jry <598821125@qq.com>
+     */
+    protected function checkUsername(){
+        $deny = explode(',', C('SENSITIVE_WORDS'));
+        foreach($deny as $k=> $v){
+            if(stristr(I('post.username'), $v)){
+                return false;
+            }
         }
         return true;
     }

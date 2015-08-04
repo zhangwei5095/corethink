@@ -589,7 +589,7 @@ CREATE TABLE `ct_user` (
   `last_login_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '最近登陆时间',
   `last_login_ip` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '最近登陆IP',
   `reg_ip` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '注册IP',
-  `reg_type` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '注册方式',
+  `reg_type` varchar(12) NOT NULL DEFAULT '' COMMENT '注册方式',
   `ctime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `utime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `sort` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
@@ -604,9 +604,9 @@ CREATE TABLE `ct_user` (
 LOCK TABLES `ct_user` WRITE;
 /*!40000 ALTER TABLE `ct_user` DISABLE KEYS */;
 
-INSERT INTO `ct_user` (`id`, `username`, `email`, `mobile`, `password`, `group`, `avatar`, `score`, `money`, `sex`, `age`, `birthday`, `summary`, `extend`, `login`, `last_login_time`, `last_login_ip`, `reg_ip`, `ctime`, `utime`, `sort`, `status`)
+INSERT INTO `ct_user` (`id`, `usertype`, `username`, `email`, `mobile`, `password`, `group`, `vip`, `avatar`, `score`, `money`, `sex`, `age`, `birthday`, `summary`, `realname`, `idcard_no`, `extend`, `login`, `last_login_time`, `last_login_ip`, `reg_ip`, `reg_type`, `ctime`, `utime`, `sort`, `status`)
 VALUES
-	(1,'admin',NULL,NULL,'665cb371ec45a3619ded2ec741513da7',1,0,0,0,'0',0,0,'','',7,1432362010,2130706433,0,0,0,0,1);
+	(1, 0, 'admin', NULL, NULL, '665cb371ec45a3619ded2ec741513da7', 1, 0, 0, 0, 0.00, '1', 0, 0, '', '', '', '', 1, 1438651748, 2130706433, 2130706433, 'admin', 1438651748, 1438651748, 0, 1);
 
 /*!40000 ALTER TABLE `ct_user` ENABLE KEYS */;
 UNLOCK TABLES;

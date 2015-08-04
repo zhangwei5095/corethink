@@ -60,6 +60,9 @@
         .login-panel .panel-body{
             padding: 38px;
         }
+        .login-panel .verifyimg-box {
+            padding: 0px 0px;
+        }
         .bottom {
             color: #eee;
             font-size: 13px;
@@ -119,6 +122,18 @@
                 /* Retina Display Support */
                 retina_detect: true
             });
+
+            //刷新验证码
+            $(function(){
+                var verifyimg = $(".verifyimg").attr("src");
+                $(".reloadverify").click(function(){
+                    if( verifyimg.indexOf('?')>0){
+                        $(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
+                    }else{
+                        $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+                    }
+                });
+            });
         })
     </script>
 </head>
@@ -143,6 +158,14 @@
                             <span class="input-group-addon bg-none"><i class="fa fa-lock"></i></span>
                             <input type="password" class="form-control" placeholder="请输入密码" name="password">
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon bg-none"><i class="fa fa-lock"></i></span>
+                            <input type="text" class="form-control" name="verify" placeholder="请输入验证码">
+                            <span class="input-group-addon bg-none verifyimg-box"><img class="verifyimg reloadverify" style="cursor:pointer;height:32px;border-radius:4px;" alt="验证码" src="{:U('verify')}" title="点击刷新"></span>
+                        </div>
+                        
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block submit ajax-post" target-form="login-form">登 录</button>
