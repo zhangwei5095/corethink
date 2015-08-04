@@ -173,6 +173,9 @@ class SystemConfigController extends AdminController{
             $config_object = D('SystemConfig');
             foreach ($config as $name => $value){
                 $map = array('name' => $name);
+                if(is_array($value)){ //如果值是数组则转换成字符串，适用于复选框等类型
+                    $value = implode(',', $value);
+                }
                 $config_object->where($map)->setField('value', $value);
             }
         }

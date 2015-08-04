@@ -122,6 +122,13 @@
                                         此处主要是用来给option定义更多的属性，比如data-ia=1，那么option应为
                                         $option = array('title' => 标题, 'data-id' => 1);
                                     -->
+                                    <notempty name="form.value">
+                                        <?php
+                                            if(is_string($form['value'])){
+                                                $form['value'] = explode(',', $form['value']);
+                                            }
+                                        ?>
+                                    </notempty>
                                     <foreach name="form.options" item="option" key="option_key">
                                         <label class="checkbox-inline">
                                             <php>if(is_array($option)):</php>
@@ -534,6 +541,13 @@
                                                                             此处主要是用来给option定义更多的属性，比如data-ia=1，那么option应为
                                                                             $option = array('title' => 标题, 'data-id' => 1);
                                                                         -->
+                                                                        <notempty name="tab_form.value">
+                                                                            <?php
+                                                                                if(is_string($tab_form['value'])){
+                                                                                    $tab_form['value'] = explode(',', $tab_form['value']);
+                                                                                }
+                                                                            ?>
+                                                                        </notempty>
                                                                         <foreach name="tab_form.options" item="option" key="option_key">
                                                                             <label class="checkbox-inline">
                                                                                 <php>if(is_array($option)):</php>

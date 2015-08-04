@@ -47,10 +47,16 @@ class SystemConfigModel extends Model{
         $map['status']  = array('eq', 1);
         $list = $this->where($map)->field('name,value,type')->select();
         foreach ($list as $key => $val){
-            if($val['type'] === 'array'){ //数组类型需要解析配置的value
-                $config[$val['name']] = parse_attr($val['value']);
-            }else{
-                $config[$val['name']] = $val['value'];
+            switch($val['type']){
+                case 'array': 
+                    $config[$val['name']] = parse_attr($val['value']);
+                    break;
+                case 'checkbox': 
+                    $config[$val['name']] = explode(',', $val['value']);
+                    break;
+                default:
+                    $config[$val['name']] = $val['value'];
+                    break;
             }
         }
         return $config;
