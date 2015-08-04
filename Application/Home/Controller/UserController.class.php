@@ -87,14 +87,14 @@ class UserController extends HomeController{
 
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->title('修改'.$user_info['username'].'的信息')  //设置页面标题
-                    ->setUrl(U('')) //设置表单提交地址
-                    ->addItem('username', 'text', '用户名', '')
-                    ->addItem('avatar', 'picture', '头像', '')
-                    ->addItem('sex', 'radio', '性别', '', C('USER_SEX_LIST'))
-                    ->addItem('age', 'num', '年龄', '')
-                    ->addItem('birthday', 'date', '生日', '自动计算：'.$user_info['gz'].' '.$user_info['xz'].' '.$user_info['sx'])
-                    ->addItem('summary', 'text', '签名', '一句话介绍')
+            $builder->setPageTitle('修改'.$user_info['username'].'的信息')  //设置页面标题
+                    ->setPostUrl(U('')) //设置表单提交地址
+                    ->addFormItem('username', 'text', '用户名', '')
+                    ->addFormItem('avatar', 'picture', '头像', '')
+                    ->addFormItem('sex', 'radio', '性别', '', C('USER_SEX_LIST'))
+                    ->addFormItem('age', 'num', '年龄', '')
+                    ->addFormItem('birthday', 'date', '生日', '自动计算：'.$user_info['gz'].' '.$user_info['xz'].' '.$user_info['sx'])
+                    ->addFormItem('summary', 'text', '签名', '一句话介绍')
                     ->setFormData($user_info)
                     ->setTemplate('Builder/formbuilder_user')
                     ->display();

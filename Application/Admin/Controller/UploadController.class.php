@@ -31,22 +31,22 @@ class UploadController extends AdminController{
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->title('上传列表')  //设置页面标题
-                ->addResumeButton() //添加启用按钮
-                ->addForbidButton() //添加禁用按钮
-                ->addDeleteButton() //添加删除按钮
+        $builder->setPageTitle('上传列表') //设置页面标题
+                ->addTopButton('resume') //添加启用按钮
+                ->addTopButton('forbid') //添加禁用按钮
+                ->addTopButton('delete') //添加删除按钮
                 ->setSearch('请输入ID/上传关键字', U('index'))
-                ->addField('id', 'ID', 'text')
-                ->addField('path', '路径', 'text')
-                ->addField('size', '大小', 'text')
-                ->addField('ctime', '创建时间', 'time')
-                ->addField('sort', '排序', 'text')
-                ->addField('status', '状态', 'status')
-                ->addField('right_button', '操作', 'btn')
-                ->dataList($data_list)    //数据列表
+                ->addTableColumn('id', 'ID')
+                ->addTableColumn('path', '路径')
+                ->addTableColumn('size', '大小')
+                ->addTableColumn('ctime', '创建时间', 'time')
+                ->addTableColumn('sort', '排序')
+                ->addTableColumn('status', '状态', 'status')
+                ->addTableColumn('right_button', '操作', 'btn')
+                ->setTableDataList($data_list) //数据列表
+                ->setTableDataPage($page->show()) //数据列表分页
                 ->addRightButton('forbid') //添加禁用/启用按钮
                 ->addRightButton('delete') //添加删除按钮
-                ->setPage($page->show())
                 ->display();
     }
 

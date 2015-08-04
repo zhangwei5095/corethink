@@ -14,72 +14,62 @@ use Think\Controller;
  * @author jry <598821125@qq.com>
  */
 class FormBuilder extends Controller{
-    private $_title; //页面标题
-    private $_tab_list; //Tab按钮列表
-    private $_tab_url; //Tab按钮地址
-    private $_current_tab = 0; //当前Tab
-    private $_url; //表单提交地址
+    private $_page_title;           //页面标题
+    private $_tab_nav = array();    //页面Tab导航
+    private $_post_url;             //表单提交地址
     private $_form_items = array(); //表单项目
     private $_extra_items = array(); //额外已经构造好的表单项目
     private $_form_data = array(); //表单数据
     private $_extra_html; //额外功能代码
     private $_template = 'Builder/formbuilder'; //模版
 
-    /**设置页面标题
+    /**
+     * 设置页面标题
      * @param $title 标题文本
      * @return $this
+     * @author jry <598821125@qq.com>
      */
-    public function title($title){
-        $this->meta_title = $title;
+    public function setPageTitle($page_title){
+        $this->_page_title = $page_title;
         return $this;
     }
 
-    /**设置Tab按钮列表
-     * @param $tab_list
+    /**
+     * 设置Tab按钮列表
+     * @param $tab_list    Tab列表  array('title' => '标题', 'href' => 'http://www.corethink.cn')
+     * @param $current_tab 当前tab
      * @return $this
+     * @author jry <598821125@qq.com>
      */
-    public function setTabList($tab_list){
-        $this->_tab_list = $tab_list;
+    public function setTabNav($tab_list, $current_tab){
+        $this->_tab_nav = array('tab_list' => $tab_list, 'current_tab' => $current_tab);
         return $this;
     }
 
-    /**设置Tab按钮地址
-     * @param $tab_list
-     * @return $this
-     */
-    public function setTabUrl($tab_url){
-        $this->_tab_url = $tab_url;
-        return $this;
-    }
-
-    /**设置当前Tab
-     * @param $tab
-     * @return $this
-     */
-    public function SetCurrentTab($current_tab){
-        $this->_current_tab = $current_tab;
-        return $this;
-    }
-
-    /**直接设置表单项数组
+    /**
+     * 直接设置表单项数组
      * @param $form_items 表单项数组
      * @return $this
+     * @author jry <598821125@qq.com>
      */
     public function setExtraItems($extra_items){
         $this->_extra_items = $extra_items;
         return $this;
     }
 
-    /**设置表单提交地址
+    /**
+     * 设置表单提交地址
      * @param $url 提交地址
      * @return $this
+     * @author jry <598821125@qq.com>
      */
-    public function setUrl($url){
-        $this->_url = $url;
+    public function setPostUrl($post_url){
+        $this->_post_url = $post_url;
         return $this;
     }
 
-    /**加入一个表单项
+    /**
+     * 加入一个表单项
      * @param $type 表单类型(取值参考系统配置FORM_ITEM_TYPE)
      * @param $title 表单标题
      * @param $tip 表单提示说明
@@ -88,8 +78,9 @@ class FormBuilder extends Controller{
      * @param $extra_class 表单项是否隐藏
      * @param $extra_attr 表单项额外属性
      * @return $this
+     * @author jry <598821125@qq.com>
      */
-    public function addItem($name, $type, $title, $tip, $options = array(), $extra_class = '', $extra_attr = ''){
+    public function addFormItem($name, $type, $title, $tip, $options = array(), $extra_class = '', $extra_attr = ''){
         $item['name'] = $name;
         $item['type'] = $type;
         $item['title'] = $title;
@@ -101,35 +92,47 @@ class FormBuilder extends Controller{
         return $this;
     }
 
-    /**设置表单表单数据
+    /**
+     * 设置表单表单数据
      * @param $form_data 表单数据
      * @return $this
+     * @author jry <598821125@qq.com>
      */
     public function setFormData($form_data){
         $this->_form_data = $form_data;
         return $this;
     }
 
-    /**设置额外功能代码
+    /**
+     * 设置额外功能代码
      * @param $extra_html 额外功能代码
      * @return $this
+     * @author jry <598821125@qq.com>
      */
     public function setExtraHtml($extra_html){
         $this->_extra_html = $extra_html;
         return $this;
     }
 
-    /**设置页面模版
+    /**
+     * 设置页面模版
      * @param $template 模版
      * @return $this
+     * @author jry <598821125@qq.com>
      */
     public function setTemplate($template){
         $this->_template = $template;
         return $this;
     }
 
-    //显示页面
+    /**
+     * 显示页面
+     * @author jry <598821125@qq.com>
+     */
     public function display(){
+        //页面标题
+        $this->meta_title = $this->_page_title;
+
         //额外已经构造好的表单项目与单个组装的的表单项目进行合并
         $this->_form_items = array_merge($this->_form_items, $this->_extra_items);
 
@@ -142,13 +145,11 @@ class FormBuilder extends Controller{
             }
         }
 
-        $this->assign('title', $this->_title);
-        $this->assign('tab_list', $this->_tab_list);
-        $this->assign('tab_url', $this->_tab_url);
-        $this->assign('current_tab', $this->_current_tab);
-        $this->assign('url', $this->_url);
-        $this->assign('form_items', $this->_form_items);
-        $this->assign('extra_html', $this->_extra_html);
+        $this->assign('page_title', $this->_page_title); //页面标题
+        $this->assign('tab_nav',    $this->_tab_nav);    //页面Tab导航
+        $this->assign('post_url',   $this->_post_url);   //标题提交地址
+        $this->assign('form_items', $this->_form_items); //表单项目
+        $this->assign('extra_html', $this->_extra_html); //额外HTML代码
         parent::display($this->_template);
     }
 }

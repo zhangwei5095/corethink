@@ -32,11 +32,8 @@ class DocumentController extends AdminController{
                                       ->order('sort desc,id desc')->where($map)->select();
         $page = new \Common\Util\Page(D('Document')->where($map)->count(), C('ADMIN_PAGE_ROWS'));
 
-        //新增按钮属性
-        $add_attr['class'] = 'btn btn-primary';
-        $add_attr['href'] = U('add', array('cid' => $cid));
-
         //移动按钮属性
+        $move_attr['title'] = '移 动';
         $move_attr['class'] = 'btn btn-info';
         $move_attr['onclick'] = 'move()';
 
@@ -96,24 +93,24 @@ EOF;
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->title($category['title']) //设置页面标题
-                ->addButton('新 增', $add_attr) //添加新增按钮
-                ->addResumeButton() //添加启用按钮
-                ->addForbidButton() //添加禁用按钮
-                ->addRecycleButton() //添加回收按钮
-                ->AddButton('移 动', $move_attr) //添加移动按钮
+        $builder->setPageTitle($category['title']) //设置页面标题
+                ->addTopButton('addnew', array('href' => U('add', array('cid' => $cid)))) //添加新增按钮
+                ->addTopButton('resume')  //添加启用按钮
+                ->addTopButton('forbid')  //添加禁用按钮
+                ->addTopButton('recycle') //添加回收按钮
+                ->addTopButton('self', $move_attr) //添加移动按钮
                 ->setSearch('请输入ID/标题', U('index'))
-                ->addField('id', 'ID', 'text')
-                ->addField('title', '标题', 'text')
-                ->addField('ctime', '发布时间', 'time')
-                ->addField('sort', '排序', 'text')
-                ->addField('status', '状态', 'status')
-                ->addField('right_button', '操作', 'btn')
-                ->dataList($document_list)    //数据列表
-                ->addRightButton('edit')   //添加编辑按钮
-                ->addRightButton('forbid') //添加禁用/启用按钮
+                ->addTableColumn('id', 'ID')
+                ->addTableColumn('title', '标题')
+                ->addTableColumn('ctime', '发布时间', 'time')
+                ->addTableColumn('sort', '排序', 'text')
+                ->addTableColumn('status', '状态', 'status')
+                ->addTableColumn('right_button', '操作', 'btn')
+                ->setTableDataList($document_list) //数据列表
+                ->setTableDataPage($page->show())  //数据列表分页
+                ->addRightButton('edit')    //添加编辑按钮
+                ->addRightButton('forbid')  //添加禁用/启用按钮
                 ->addRightButton('recycle') //添加回收按钮
-                ->setPage($page->show())
                 ->setExtraHtml($extra_html)
                 ->display();
     }
@@ -166,9 +163,9 @@ EOF;
 
         //使用FormBuilder快速建立表单页面。
         $builder = new \Common\Builder\FormBuilder();
-        $builder->title('新增文章') //设置页面标题
-                ->setUrl(U('update')) //设置表单提交地址
-                ->addItem('doc_type', 'hidden')
+        $builder->setPageTitle('新增文章') //设置页面标题
+                ->setPostUrl(U('update')) //设置表单提交地址
+                ->addFormItem('doc_type', 'hidden')
                 ->setFormData(array('doc_type' => $category_info['doc_type']))
                 ->setExtraItems($new_attribute_list)
                 ->display();
@@ -224,9 +221,9 @@ EOF;
 
         //使用FormBuilder快速建立表单页面。
         $builder = new \Common\Builder\FormBuilder();
-        $builder->title('编辑文章') //设置页面标题
-                ->setUrl(U('update')) //设置表单提交地址
-                ->addItem('id', 'hidden', 'ID', 'ID')
+        $builder->setPageTitle('编辑文章') //设置页面标题
+                ->setPostUrl(U('update')) //设置表单提交地址
+                ->addFormItem('id', 'hidden', 'ID', 'ID')
                 ->setExtraItems($new_attribute_list)
                 ->setFormData($document_info)
                 ->display();
@@ -299,20 +296,20 @@ EOF;
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->title('回收站') //设置页面标题
-                ->addDeleteButton() //添加删除按钮
-                ->addRestoreButton() //添加还原按钮
+        $builder->setPageTitle('回收站') //设置页面标题
+                ->addTopButton('delete') //添加删除按钮
+                ->addTopButton('restore') //添加还原按钮
                 ->setSearch('请输入ID/文档名称', U('recycle'))
-                ->addField('id', 'ID', 'text')
-                ->addField('title', '标题', 'text')
-                ->addField('ctime', '发布时间', 'time')
-                ->addField('sort', '排序', 'text')
-                ->addField('status', '状态', 'status')
-                ->addField('right_button', '操作', 'btn')
-                ->dataList($document_list)    //数据列表
+                ->addTableColumn('id', 'ID')
+                ->addTableColumn('title', '标题')
+                ->addTableColumn('ctime', '发布时间', 'time')
+                ->addTableColumn('sort', '排序')
+                ->addTableColumn('status', '状态', 'status')
+                ->addTableColumn('right_button', '操作', 'btn')
+                ->setTableDataList($document_list) //数据列表
+                ->setTableDataPage($page->show()) //数据列表分页
                 ->addRightButton('forbid') //添加禁用/启用按钮
                 ->addRightButton('delete') //添加删除按钮
-                ->setPage($page->show())
                 ->display();
     }
 }

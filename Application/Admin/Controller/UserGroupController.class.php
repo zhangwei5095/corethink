@@ -33,19 +33,19 @@ class UserGroupController extends AdminController{
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->title('部门列表')  //设置页面标题
-                ->AddNewButton()    //添加新增按钮
-                ->addResumeButton() //添加启用按钮
-                ->addForbidButton() //添加禁用按钮
-                ->addDeleteButton() //添加删除按钮
+        $builder->setPageTitle('部门列表') //设置页面标题
+                ->addTopButton('addnew')  //添加新增按钮
+                ->addTopButton('resume')  //添加启用按钮
+                ->addTopButton('forbid')  //添加禁用按钮
+                ->addTopButton('delete')  //添加删除按钮
                 ->setSearch('请输入ID/部门名称', U('index'))
-                ->addField('id', 'ID', 'text')
-                ->addField('title_show', '标题', 'text')
-                ->addField('icon', '图标', 'icon')
-                ->addField('sort', '排序', 'text')
-                ->addField('status', '状态', 'status')
-                ->addField('right_button', '操作', 'btn')
-                ->dataList($data_list)    //数据列表
+                ->addTableColumn('id', 'ID')
+                ->addTableColumn('title_show', '标题')
+                ->addTableColumn('icon', '图标', 'icon')
+                ->addTableColumn('sort', '排序')
+                ->addTableColumn('status', '状态', 'status')
+                ->addTableColumn('right_button', '操作', 'btn')
+                ->setTableDataList($data_list) //数据列表
                 ->addRightButton('edit')   //添加编辑按钮
                 ->addRightButton('forbid') //添加禁用/启用按钮
                 ->addRightButton('delete') //添加删除按钮

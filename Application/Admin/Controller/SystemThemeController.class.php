@@ -23,17 +23,17 @@ class SystemThemeController extends AdminController{
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->title('主题列表')  //设置页面标题
-                ->addField('name', '名称', 'text')
-                ->addField('title', '标题', 'text')
-                ->addField('description', '描述', 'text')
-                ->addField('developer', '开发者', 'text')
-                ->addField('version', '版本', 'text')
-                ->addField('ctime', '创建时间', 'date')
-                ->addField('status', '状态', 'text')
-                ->addField('right_button', '操作', 'btn')
-                ->dataList($data_list) //数据列表
-                ->setPage($page->show())
+        $builder->setPageTitle('主题列表') //设置页面标题
+                ->addTableColumn('name', '名称')
+                ->addTableColumn('title', '标题')
+                ->addTableColumn('description', '描述')
+                ->addTableColumn('developer', '开发者')
+                ->addTableColumn('version', '版本')
+                ->addTableColumn('ctime', '创建时间', 'date')
+                ->addTableColumn('status', '状态')
+                ->addTableColumn('right_button', '操作', 'btn')
+                ->setTableDataList($data_list) //数据列表
+                ->setTableDataPage($page->show()) //数据列表分页
                 ->display();
     }
 

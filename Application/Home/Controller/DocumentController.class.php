@@ -100,22 +100,22 @@ class DocumentController extends HomeController{
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->title('我的文档') //设置页面标题
-                ->addResumeButton() //添加启用按钮
-                ->addForbidButton() //添加禁用按钮
-                ->addRecycleButton() //添加回收按钮
+        $builder->setPageTitle('我的文档') //设置页面标题
+                ->addTopButton('resume') //添加启用按钮
+                ->addTopButton('forbid') //添加禁用按钮
+                ->addTopButton('recycle') //添加回收按钮
                 ->setSearch('请输入ID/标题', U('Document/mydoc', array('doc_type' => I('doc_type'))))
-                ->addField('id', 'ID', 'text')
-                ->addField('title', '标题', 'text')
-                ->addField('ctime', '发布时间', 'time')
-                ->addField('sort', '排序', 'text')
-                ->addField('status', '状态', 'status')
-                ->addField('right_button', '操作', 'btn')
-                ->dataList($document_list)    //数据列表
+                ->addTableColumn('id', 'ID', 'text')
+                ->addTableColumn('title', '标题', 'text')
+                ->addTableColumn('ctime', '发布时间', 'time')
+                ->addTableColumn('sort', '排序', 'text')
+                ->addTableColumn('status', '状态', 'status')
+                ->addTableColumn('right_button', '操作', 'btn')
+                ->setTableDataList($document_list) //数据列表
+                ->setTableDataPage($page->show())  //数据列表分页
                 ->addRightButton('edit')   //添加编辑按钮
                 ->addRightButton('forbid') //添加禁用/启用按钮
                 ->addRightButton('recycle') //添加回收按钮
-                ->setPage($page->show())
                 ->setTemplate('Builder/listbuilder_user')
                 ->display();
     }
@@ -178,9 +178,9 @@ class DocumentController extends HomeController{
 
         //使用FormBuilder快速建立表单页面。
         $builder = new \Common\Builder\FormBuilder();
-        $builder->title('新增文章')  //设置页面标题
-                ->setUrl(U('update')) //设置表单提交地址
-                ->addItem('doc_type', 'hidden')
+        $builder->setPageTitle('新增文章')  //设置页面标题
+                ->setPostUrl(U('update')) //设置表单提交地址
+                ->addFormItem('doc_type', 'hidden')
                 ->setFormData(array('doc_type' => $category_info['doc_type']))
                 ->setExtraItems($new_attribute_list)
                 ->setTemplate('Builder/formbuilder_user')
@@ -242,9 +242,9 @@ class DocumentController extends HomeController{
 
         //使用FormBuilder快速建立表单页面。
         $builder = new \Common\Builder\FormBuilder();
-        $builder->title('编辑文章')  //设置页面标题
-                ->setUrl(U('update')) //设置表单提交地址
-                ->addItem('id', 'hidden', 'ID', 'ID')
+        $builder->setPageTitle('编辑文章')  //设置页面标题
+                ->setPostUrl(U('update')) //设置表单提交地址
+                ->addFormItem('id', 'hidden', 'ID', 'ID')
                 ->setExtraItems($new_attribute_list)
                 ->setFormData($document_info)
                 ->setTemplate('Builder/formbuilder_user')

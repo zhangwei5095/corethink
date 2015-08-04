@@ -40,8 +40,8 @@ class AddonController extends HomeController{
      */
     public function execute($_addons = null, $_controller = null, $_action = null){
         if(C('URL_CASE_INSENSITIVE')){
-            $_addons        =   ucfirst(parse_name($_addons, 1));
-            $_controller    =   parse_name($_controller,1);
+            $_addons     = ucfirst(parse_name($_addons, 1));
+            $_controller = parse_name($_controller,1);
         }
 
         $TMPL_PARSE_STRING = C('TMPL_PARSE_STRING');
@@ -60,7 +60,7 @@ class AddonController extends HomeController{
      * @param $name 插件名称
      * @author jry <598821125@qq.com>
      */
-    public function weijia($name, $tab = 1){
+    public function adminList($name, $tab = 1){
         //获取插件实例
         $addon_class = get_addon_class($name);
         if(!class_exists($addon_class)){
@@ -73,13 +73,14 @@ class AddonController extends HomeController{
         $admin_list = $addon->admin_list;
         $tab_list = array();
         foreach($admin_list as $key => $val){
-            $tab_list[$key] = $val['title'];
+            $tab_list[$key]['title'] = $val['title'];
+            $tab_list[$key]['href']  = U('Home/Addon/adminList/name/'.$name.'/tab/'.$key);
         }
         $admin = $admin_list[$tab];
         $param = D('Addons://'.$name.'/'.$admin['model'].'')->adminList;
         if($param){
             //搜索
-            $keyword = (string)I('keyword');
+            $keyword   = (string)I('keyword');
             $condition = array('like','%'.$keyword.'%');
             $map['id|'.$param['search_key']] = array($condition, $condition,'_multi'=>true);
 
@@ -90,37 +91,33 @@ class AddonController extends HomeController{
 
             //使用Builder快速建立列表页面。
             $builder = new \Common\Builder\ListBuilder();
-            $builder->title($addon->info['title']) //设置页面标题
-                    ->AddNewButton('Addon/weijiaAdd/name/'.$name.'/tab/'.$tab) //添加新增按钮
-                    ->addResumeButton($param['model']) //添加启用按钮
-                    ->addForbidButton($param['model']) //添加禁用按钮
-                    ->setSearch('请输入关键字', U('Addon/weijia/name/'.$name, array('tab' => $tab)))
-                    ->SetTablist($tab_list) //设置Tab按钮列表
-                    ->setTabUrl('Addon/weijia/name/'.$name)
-                    ->SetCurrentTab($tab) //设置当前Tab
-                    ->setPage($page->show()) //分页
-                    ->dataList($data_list); //数据列表
+            $builder->setPageTitle($addon->info['title']) //设置页面标题
+                    ->AddTopButton('addnew', array('href'  => U('Home/Addon/adminAdd/name/'.$name.'/tab/'.$tab))) //添加新增按钮
+                    ->AddTopButton('resume', array('model' => $param['model'])) //添加启用按钮
+                    ->AddTopButton('forbid', array('model' => $param['model'])) //添加禁用按钮
+                    ->setSearch('请输入关键字', U('Home/Addon/adminList/name/'.$name, array('tab' => $tab)))
+                    ->SetTabNav($tab_list, $tab) //设置Tab按钮列表
+                    ->setTableDataList($data_list) //数据列表
+                    ->setTableDataPage($page->show()); //数据列表分页
 
             //根据插件的list_grid设置后台列表字段信息
             foreach($param['list_grid'] as $key => $val){
-                $builder->addField($key, $val['title'], $val['type']);
+                $builder->addTableColumn($key, $val['title'], $val['type']);
             }
 
             //根据插件的right_button设置后台列表右侧按钮
             foreach($param['right_button'] as $key => $val){
-                $attr['title'] = $val['title'];
-                $attr['target'] = $val['target']?:'_self';
-                $attr['addon'] = true;
-                $attr['href'] = $name.'://'.$val['href'];
-                $builder->addRightButton('self', $attr);
+                $builder->addRightButton('self', $val);
             }
-            
+
+            //定义编辑按钮
             $attr = array();
             $attr['title'] = '编辑';
-            $attr['href'] = 'Addon/weijiaEdit/name/'.$name.'/tab/'.$tab.'/id/';
+            $attr['class'] = 'label label-info';
+            $attr['href']  = 'Home/Addon/adminEdit/name/'.$name.'/tab/'.$tab.'/id/';
 
             //显示列表
-            $builder->addField('right_button', '操作', 'btn')
+            $builder->addTableColumn('right_button', '操作', 'btn')
                     ->addRightButton('self', $attr) //添加编辑按钮
                     ->addRightButton('forbid', $param['model']) //添加禁用/启用按钮
                     ->addRightButton('delete', $param['model']) //添加删除按钮
@@ -130,13 +127,13 @@ class AddonController extends HomeController{
             $this->error('插件列表信息不正确');
         }
     }
-    
-       /**
+
+    /**
      * 插件后台数据增加
      * @param string $name 插件名
      * @author jry <598821125@qq.com>
      */
-     public function weijiaAdd($name, $tab){
+     public function adminAdd($name, $tab){
         //获取插件实例
         $addon_class = get_addon_class($name);
         if(!class_exists($addon_class)){
@@ -159,15 +156,15 @@ class AddonController extends HomeController{
                     $this->error($addon_model_object->getError());
                 }
                 if($result){
-                    $this->success('新增成功', U('Addon/weijia/name/'.$name.'/tab/'.$tab));
+                    $this->success('新增成功', U('Addon/adminList/name/'.$name.'/tab/'.$tab));
                 }else{
                     $this->error('更新错误');
                 }
             }else{
                 //使用FormBuilder快速建立表单页面。
                 $builder = new \Common\Builder\FormBuilder();
-                $builder->title('新增数据')  //设置页面标题
-                        ->setUrl(U('addon/weijiaAdd/name/'.$name.'/tab/'.$tab)) //设置表单提交地址
+                $builder->setPageTitle('新增数据')  //设置页面标题
+                        ->setPostUrl(U('addon/adminAdd/name/'.$name.'/tab/'.$tab)) //设置表单提交地址
                         ->setExtraItems($param['field'])
                         ->setTemplate('Builder/formbuilder_addon')
                         ->display();
@@ -182,7 +179,7 @@ class AddonController extends HomeController{
      * @param string $name 插件名
      * @author jry <598821125@qq.com>
      */
-     public function weijiaEdit($name, $tab, $id){
+     public function adminEdit($name, $tab, $id){
         //获取插件实例
         $addon_class = get_addon_class($name);
         if(!class_exists($addon_class)){
@@ -205,16 +202,16 @@ class AddonController extends HomeController{
                     $this->error($addon_model_object->getError());
                 }
                 if($result){
-                    $this->success('更新成功', U('Addon/weijia/name/'.$name.'/tab/'.$tab));
+                    $this->success('更新成功', U('Addon/adminList/name/'.$name.'/tab/'.$tab));
                 }else{
                     $this->error('更新错误');
                 }
             }else{
                 //使用FormBuilder快速建立表单页面。
                 $builder = new \Common\Builder\FormBuilder();
-                $builder->title('编辑数据')  //设置页面标题
-                        ->setUrl(U('addon/weijiaEdit/name/'.$name.'/tab/'.$tab)) //设置表单提交地址
-                        ->addItem('id', 'hidden', 'ID', 'ID')
+                $builder->setPageTitle('编辑数据')  //设置页面标题
+                        ->setPostUrl(U('addon/adminEdit/name/'.$name.'/tab/'.$tab)) //设置表单提交地址
+                        ->addFormItem('id', 'hidden', 'ID', 'ID')
                         ->setExtraItems($param['field'])
                         ->setFormData(M($param['model'])->find($id))
                         ->setTemplate('Builder/formbuilder_addon')

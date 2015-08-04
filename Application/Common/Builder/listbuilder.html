@@ -1,19 +1,18 @@
 <div class="builder">
     <div class="row">
-        <notempty name="tab_list">
-            <div class="col-xs-12">
+        <notempty name="tab_nav">
+            <div class="col-xs-12 margin-bottom">
                 <ul class="nav nav-tabs">
-                    <volist name="tab_list" id="tab">
-                        <li class="<php>if($current_tab == $key) echo 'active';</php>"><a href="{:U($tab_url, array('tab' => $key))}">{$tab}</a></li>
+                    <volist name="tab_nav.tab_list" id="tab">
+                        <li class="<php>if($tab_nav['current_tab'] == $key) echo 'active';</php>"><a href="{$tab.href}">{$tab.title}</a></li>
                     </volist>
                 </ul>
-                <div class="blank"></div>
             </div>
         </notempty>
-        <notempty name="button_list">
+        <notempty name="top_button_list">
             <div class="col-xs-12 col-sm-9 margin-bottom">
-                <volist name="button_list" id="button">
-                    <a style="margin-right:5px;" {$button.attr}>{$button.title}</a>
+                <volist name="top_button_list" id="button">
+                    <a style="margin-right:5px;" {$button.attribute}>{$button.title}</a>
                 </volist>
             </div>
         </notempty>
@@ -32,17 +31,17 @@
                     <thead>
                         <tr>
                             <th><input class="check-all" type="checkbox"></th>
-                            <volist name="field_list" id="field">
-                                <th>{$field.title|htmlspecialchars}</th>
+                            <volist name="table_column_list" id="column">
+                                <th>{$column.title|htmlspecialchars}</th>
                             </volist>
                         </tr>
                     </thead>
                     <tbody>
-                        <volist name="data_list" id="data">
+                        <volist name="table_data_list" id="data">
                             <tr>
-                                <td><input class="ids" type="checkbox" value="{$data[$data_list_primary_key]}" name="ids[]"></td>
-                                <volist name="field_list" id="field">
-                                    <td>{$data[$field['name']]}</td>
+                                <td><input class="ids" type="checkbox" value="{$data[$table_data_list_key]}" name="ids[]"></td>
+                                <volist name="table_column_list" id="column">
+                                    <td>{$data[$column['name']]}</td>
                                 </volist>
                             </tr>
                         </volist>
@@ -51,8 +50,8 @@
                 <empty name="data_list">
                     <div class="text-center clearfix">暂时没有数据～</div>
                 </empty>
-                <notempty name="page">
-                    <ul class="pagination">{$page}</ul>
+                <notempty name="table_data_page">
+                    <ul class="pagination">{$table_data_page}</ul>
                 </notempty>
             </div>
         </div>

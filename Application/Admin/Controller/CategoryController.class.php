@@ -45,7 +45,7 @@ EOF;
      * 分类列表
      * @author jry <598821125@qq.com>
      */
-    public function index($tab = 1){
+    public function index($group = 1){
         //搜索
         $keyword = (string)I('keyword');
         $condition = array('like','%'.$keyword.'%');
@@ -56,7 +56,7 @@ EOF;
         if(I('get.pid')){
             $map['pid'] = array('eq', I('get.pid')); //父分类ID
         }
-        $map['group'] = array('eq', $tab);
+        $map['group'] = array('eq', $group);
         $data_list = D('Category')->field('id,pid,group,doc_type,title,url,icon,ctime,sort,status')
                                   ->where($map)->order('sort asc,id asc')->select();
         foreach($data_list as &$item){
@@ -69,27 +69,33 @@ EOF;
         $tree = new \Common\Util\Tree();
         $data_list = $tree->toFormatTree($data_list);
 
+        //设置Tab导航数据列表
+        $category_group_list = C('CATEGORY_GROUP_LIST'); //获取分类分组
+        foreach($category_group_list as $key => $val){
+            $tab_list[$key]['title'] = $val;
+            $tab_list[$key]['href']  = U('index', array('group' => $key));
+        }
+
         $attr['title'] = '编辑';
         $attr['class'] = 'label label-info';
-        $attr['href'] = 'Admin/Category/edit/tab/'.$tab.'/id/';
+        $attr['href'] = 'Admin/Category/edit/group/'.$group.'/id/';
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->title('分类列表')  //设置页面标题
-                ->AddNewButton('Admin/Category/add/tab/'.$tab) //添加新增按钮
-                ->addResumeButton() //添加启用按钮
-                ->addForbidButton() //添加禁用按钮
-                ->setSearch('请输入ID/分类名称', U('Admin/Category/index/tab/'.$tab))
-                ->SetTablist(C('CATEGORY_GROUP_LIST')) //设置Tab按钮列表
-                ->SetCurrentTab($tab) //设置当前Tab
-                ->addField('id', 'ID', 'text')
-                ->addField('title_show', '分类', 'text')
-                ->addField('url', '链接', 'text')
-                ->addField('icon', '图标', 'icon')
-                ->addField('sort', '排序', 'text')
-                ->addField('status', '状态', 'status')
-                ->addField('right_button', '操作', 'btn')
-                ->dataList($data_list)    //数据列表
+        $builder->setPageTitle('分类列表') //设置页面标题
+                ->addTopButton('addnew', array('href' => U('Admin/Category/add/group/'.$group))) //添加新增按钮
+                ->addTopButton('resume') //添加启用按钮
+                ->addTopButton('forbid') //添加禁用按钮
+                ->setSearch('请输入ID/分类名称', U('Admin/Category/index/group/'.$group))
+                ->setTabNav($tab_list, $group) //设置页面Tab导航
+                ->addTableColumn('id', 'ID')
+                ->addTableColumn('title_show', '分类')
+                ->addTableColumn('url', '链接')
+                ->addTableColumn('icon', '图标', 'icon')
+                ->addTableColumn('sort', '排序')
+                ->addTableColumn('status', '状态', 'status')
+                ->addTableColumn('right_button', '操作', 'btn')
+                ->setTableDataList($data_list)  //数据列表
                 ->addRightButton('self', $attr) //添加编辑按钮
                 ->addRightButton('forbid') //添加禁用/启用按钮
                 ->addRightButton('delete') //添加删除按钮
@@ -100,14 +106,14 @@ EOF;
      * 新增分类
      * @author jry <598821125@qq.com>
      */
-    public function add($tab = 1){
+    public function add($group = 1){
         if(IS_POST){
             $category_object = D('Category');
             $data = $category_object->create();
             if($data){
                 $id = $category_object->add();
                 if($id){
-                    $this->success('新增成功', U('Category/index', array('tab' => I('post.group'))));
+                    $this->success('新增成功', U('Category/index', array('group' => I('post.group'))));
                 }else{
                     $this->error('新增失败');
                 }
@@ -129,20 +135,20 @@ EOF;
 
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->title('新增分类')  //设置页面标题
-                    ->setUrl(U('add')) //设置表单提交地址
-                    ->addItem('group', 'radio', '分组', '分组', C('CATEGORY_GROUP_LIST'))
-                    ->addItem('pid', 'select', '上级分类', '所属的上级分类', $this->selectListAsTree('Category', array('group' => $tab), '顶级分类'))
-                    ->addItem('title', 'text', '分类标题', '分类标题')
-                    ->addItem('doc_type', 'radio', '分类内容模型', '分类内容模型', $this->selectListAsTree('DocumentType'))
-                    ->addItem('url', 'text', '链接', 'U函数解析的URL或者外链', null, 'hidden')
-                    ->addItem('content', 'kindeditor', '内容', '单页模型填写内容', null, 'hidden')
-                    ->addItem('index_template', 'select', '列表模版', '文档列表或封面模版', $template_list_index, 'hidden')
-                    ->addItem('detail_template', 'select', '详情页模版', '单页使用的模版或其他模型文档详情页模版', $template_list_detail, 'hidden')
-                    ->addItem('icon', 'icon', '图标', '菜单图标')
-                    ->addItem('sort', 'num', '排序', '用于显示的顺序')
-                    ->addItem('post_auth', 'radio', '投稿权限', '前台用户投稿权限', C('CATEGORY_POST_AUTH'))
-                    ->setFormData(array('group' => $tab, 'post_auth' => 1))
+            $builder->setPageTitle('新增分类')  //设置页面标题
+                    ->setPostUrl(U('add')) //设置表单提交地址
+                    ->addFormItem('group', 'radio', '分组', '分组', C('CATEGORY_GROUP_LIST'))
+                    ->addFormItem('pid', 'select', '上级分类', '所属的上级分类', $this->selectListAsTree('Category', array('group' => $group), '顶级分类'))
+                    ->addFormItem('title', 'text', '分类标题', '分类标题')
+                    ->addFormItem('doc_type', 'radio', '分类内容模型', '分类内容模型', $this->selectListAsTree('DocumentType'))
+                    ->addFormItem('url', 'text', '链接', 'U函数解析的URL或者外链', null, 'hidden')
+                    ->addFormItem('content', 'kindeditor', '内容', '单页模型填写内容', null, 'hidden')
+                    ->addFormItem('index_template', 'select', '列表模版', '文档列表或封面模版', $template_list_index, 'hidden')
+                    ->addFormItem('detail_template', 'select', '详情页模版', '单页使用的模版或其他模型文档详情页模版', $template_list_detail, 'hidden')
+                    ->addFormItem('icon', 'icon', '图标', '菜单图标')
+                    ->addFormItem('sort', 'num', '排序', '用于显示的顺序')
+                    ->addFormItem('post_auth', 'radio', '投稿权限', '前台用户投稿权限', C('CATEGORY_POST_AUTH'))
+                    ->setFormData(array('group' => $group, 'post_auth' => 1))
                     ->setExtraHtml($this->extra_html)
                     ->display();
         }
@@ -152,13 +158,13 @@ EOF;
      * 编辑分类
      * @author jry <598821125@qq.com>
      */
-    public function edit($id, $tab){
+    public function edit($id, $group){
         if(IS_POST){
             $category_object = D('Category');
             $data = $category_object->create();
             if($data){
                 if($category_object->save()!== false){
-                    $this->success('更新成功', U('Category/index', array('tab' => I('post.group'))));
+                    $this->success('更新成功', U('Category/index', array('group' => I('post.group'))));
                 }else{
                     $this->error('更新失败');
                 }
@@ -183,20 +189,20 @@ EOF;
 
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->title('编辑分类')  //设置页面标题
-                    ->setUrl(U('Admin/Category/edit/id/'.$id.'/tab/'.$tab)) //设置表单提交地址
-                    ->addItem('id', 'hidden', 'ID', 'ID')
-                    ->addItem('group', 'radio', '分组', '分组', C('CATEGORY_GROUP_LIST'))
-                    ->addItem('pid', 'select', '上级分类', '所属的上级分类', $this->selectListAsTree('Category', array('group' => $tab), '顶级分类'))
-                    ->addItem('title', 'text', '分类标题', '分类标题')
-                    ->addItem('doc_type', 'radio', '分类内容模型', '分类内容模型', $this->selectListAsTree('DocumentType'))
-                    ->addItem('url', 'text', '链接', 'U函数解析的URL或者外链', null, $info['doc_type'] == 1 ? : 'hidden')
-                    ->addItem('content', 'kindeditor', '内容', '单页模型填写内容', null, $info['doc_type'] == 2 ? : 'hidden')
-                    ->addItem('index_template', 'select', '模版', '文档列表或封面模版', $template_list_index, $info['doc_type'] > 2 ? : 'hidden')
-                    ->addItem('detail_template', 'select', '详情页模版', '单页使用的模版或其他模型文档详情页模版', $template_list_detail, $info['doc_type'] > 1 ? : 'hidden')
-                    ->addItem('icon', 'icon', '图标', '菜单图标')
-                    ->addItem('sort', 'num', '排序', '用于显示的顺序')
-                    ->addItem('post_auth', 'radio', '投稿权限', '前台用户投稿权限', C('CATEGORY_POST_AUTH'))
+            $builder->setPageTitle('编辑分类')  //设置页面标题
+                    ->setPostUrl(U('Admin/Category/edit/id/'.$id.'/group/'.$group)) //设置表单提交地址
+                    ->addFormItem('id', 'hidden', 'ID', 'ID')
+                    ->addFormItem('group', 'radio', '分组', '分组', C('CATEGORY_GROUP_LIST'))
+                    ->addFormItem('pid', 'select', '上级分类', '所属的上级分类', $this->selectListAsTree('Category', array('group' => $group), '顶级分类'))
+                    ->addFormItem('title', 'text', '分类标题', '分类标题')
+                    ->addFormItem('doc_type', 'radio', '分类内容模型', '分类内容模型', $this->selectListAsTree('DocumentType'))
+                    ->addFormItem('url', 'text', '链接', 'U函数解析的URL或者外链', null, $info['doc_type'] == 1 ? : 'hidden')
+                    ->addFormItem('content', 'kindeditor', '内容', '单页模型填写内容', null, $info['doc_type'] == 2 ? : 'hidden')
+                    ->addFormItem('index_template', 'select', '模版', '文档列表或封面模版', $template_list_index, $info['doc_type'] > 2 ? : 'hidden')
+                    ->addFormItem('detail_template', 'select', '详情页模版', '单页使用的模版或其他模型文档详情页模版', $template_list_detail, $info['doc_type'] > 1 ? : 'hidden')
+                    ->addFormItem('icon', 'icon', '图标', '菜单图标')
+                    ->addFormItem('sort', 'num', '排序', '用于显示的顺序')
+                    ->addFormItem('post_auth', 'radio', '投稿权限', '前台用户投稿权限', C('CATEGORY_POST_AUTH'))
                     ->setFormData($info)
                     ->setExtraHtml($this->extra_html)
                     ->display();

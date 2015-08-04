@@ -45,28 +45,29 @@ EOF;
                                                          ->order('id desc')->where($map)->select();
         $page = new \Common\Util\Page(D('DocumentAttribute')->where($map)->count(), C('ADMIN_PAGE_ROWS'));
 
-        $attr['href'] = U('add', array('doc_type' => $doc_type));
+        $attr['title'] = '新 增';
         $attr['class'] = 'btn btn-primary';
+        $attr['href'] = U('add', array('doc_type' => $doc_type));
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->title(字段管理) //设置页面标题
-                ->AddButton('新 增', $attr) //添加新增按钮
-                ->addResumeButton() //添加启用按钮
-                ->addForbidButton() //添加禁用按钮
+        $builder->setPageTitle('字段管理') //设置页面标题
+                ->addTopButton('self', $attr) //添加新增按钮
+                ->addTopButton('resume') //添加启用按钮
+                ->addTopButton('forbid') //添加禁用按钮
                 ->setSearch('请输入ID/名称/标题', U('index'))
-                ->addField('id', 'ID', 'text')
-                ->addField('name', '名称', 'text')
-                ->addField('title', '标题', 'text')
-                ->addField('type', '类型', 'type')
-                ->addField('ctime', '发布时间', 'time')
-                ->addField('status', '状态', 'status')
-                ->addField('right_button', '操作', 'btn')
-                ->dataList($document_attribute_list)    //数据列表
+                ->addTableColumn('id', 'ID')
+                ->addTableColumn('name', '名称')
+                ->addTableColumn('title', '标题')
+                ->addTableColumn('type', '类型', 'type')
+                ->addTableColumn('ctime', '发布时间', 'time')
+                ->addTableColumn('status', '状态', 'status')
+                ->addTableColumn('right_button', '操作', 'btn')
+                ->setTableDataList($document_attribute_list) //数据列表
+                ->setTableDataPage($page->show()) //数据列表分页
                 ->addRightButton('edit')   //添加编辑按钮
                 ->addRightButton('forbid') //添加禁用/启用按钮
                 ->addRightButton('delete') //添加删除按钮
-                ->setPage($page->show())
                 ->display();
     }
 
@@ -81,7 +82,7 @@ EOF;
             if($data){
                 $id = $document_attribute_object->add();
                 if($id){
-                    $result = $document_attribute_object->addField($data); //新增表字段
+                    $result = $document_attribute_object->addTableColumn($data); //新增表字段
                     if($result){
                         $this->success('新增字段成功', U('index', array('doc_type' => I('doc_type'))));
                     }else{
@@ -108,17 +109,17 @@ EOF;
 
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->title('新增字段')  //设置页面标题
-                    ->setUrl(U('add')) //设置表单提交地址
-                    ->addItem('doc_type', 'select', '文档类型', '文档类型', $this->selectListAsTree('DocumentType'))
-                    ->addItem('name', 'text', '字段名称', '字段名称，如“title”')
-                    ->addItem('title', 'text', '字段标题', '字段标题，如“标题”')
-                    ->addItem('type', 'select', '字段类型', '字段类型', $new_form_item_type)
-                    ->addItem('field', 'text', '字段定义', '字段定义，如：int(11) unsigned NOT NULL ')
-                    ->addItem('value', 'text', '字段默认值', '字段默认值')
-                    ->addItem('show', 'radio', '是否显示', '是否显示', array('1' => '显示', '0' => '不显示'))
-                    ->addItem('options', 'textarea', '额外选项', '额外选项radio/select等需要配置此项')
-                    ->addItem('tip', 'textarea', '字段补充说明', '字段补充说明')
+            $builder->setPageTitle('新增字段') //设置页面标题
+                    ->setPostUrl(U('add')) //设置表单提交地址
+                    ->addFormItem('doc_type', 'select', '文档类型', '文档类型', $this->selectListAsTree('DocumentType'))
+                    ->addFormItem('name', 'text', '字段名称', '字段名称，如“title”')
+                    ->addFormItem('title', 'text', '字段标题', '字段标题，如“标题”')
+                    ->addFormItem('type', 'select', '字段类型', '字段类型', $new_form_item_type)
+                    ->addFormItem('field', 'text', '字段定义', '字段定义，如：int(11) unsigned NOT NULL ')
+                    ->addFormItem('value', 'text', '字段默认值', '字段默认值')
+                    ->addFormItem('show', 'radio', '是否显示', '是否显示', array('1' => '显示', '0' => '不显示'))
+                    ->addFormItem('options', 'textarea', '额外选项', '额外选项radio/select等需要配置此项')
+                    ->addFormItem('tip', 'textarea', '字段补充说明', '字段补充说明')
                     ->setFormData($info)
                     ->setExtraHtml($this->extra_html)
                     ->display();
@@ -158,18 +159,18 @@ EOF;
 
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->title('编辑字段')  //设置页面标题
-                    ->setUrl(U('edit')) //设置表单提交地址
-                    ->addItem('id', 'hidden', 'ID', 'ID')
-                    ->addItem('doc_type', 'select', '文档类型', '文档类型', $this->selectListAsTree('DocumentType'))
-                    ->addItem('name', 'text', '字段名称', '字段名称，如“title”')
-                    ->addItem('title', 'text', '字段标题', '字段标题，如“标题”')
-                    ->addItem('type', 'select', '字段类型', '字段类型', $new_form_item_type)
-                    ->addItem('field', 'text', '字段定义', '字段定义，如：int(11) NOT NULL ')
-                    ->addItem('value', 'text', '字段默认值', '字段默认值')
-                    ->addItem('show', 'radio', '是否显示', '是否显示', array('1' => '显示', '0' => '不显示'))
-                    ->addItem('options', 'textarea', '额外选项', '额外选项radio/select等需要配置此项')
-                    ->addItem('tip', 'textarea', '字段补充说明', '字段补充说明')
+            $builder->setPageTitle('编辑字段') //设置页面标题
+                    ->setPostUrl(U('edit')) //设置表单提交地址
+                    ->addFormItem('id', 'hidden', 'ID', 'ID')
+                    ->addFormItem('doc_type', 'select', '文档类型', '文档类型', $this->selectListAsTree('DocumentType'))
+                    ->addFormItem('name', 'text', '字段名称', '字段名称，如“title”')
+                    ->addFormItem('title', 'text', '字段标题', '字段标题，如“标题”')
+                    ->addFormItem('type', 'select', '字段类型', '字段类型', $new_form_item_type)
+                    ->addFormItem('field', 'text', '字段定义', '字段定义，如：int(11) NOT NULL ')
+                    ->addFormItem('value', 'text', '字段默认值', '字段默认值')
+                    ->addFormItem('show', 'radio', '是否显示', '是否显示', array('1' => '显示', '0' => '不显示'))
+                    ->addFormItem('options', 'textarea', '额外选项', '额外选项radio/select等需要配置此项')
+                    ->addFormItem('tip', 'textarea', '字段补充说明', '字段补充说明')
                     ->setFormData(D('DocumentAttribute')->find($id))
                     ->setExtraHtml($this->extra_html)
                     ->display();

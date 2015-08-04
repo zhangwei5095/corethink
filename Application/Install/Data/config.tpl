@@ -29,7 +29,7 @@ return array(
     'PRODUCT_INFO'    => 'CoreThink是一套的互联网+解决方案云框架。致力于搭建一个完善的企业级应用生态环境以适应不同行业用户的需求,第三方开发者可以将自己的功能模块发布到官方的应用商城，最终达到“Enterprise One Solution”的目标。',
 
     //公司简介
-    'COMPANY_INFO'    => '南京科斯克网络科技有限公司(CoreThink)是一家新兴的互联网+项目 技术解决方案提供商。我们用敏锐的视角洞察IT市场的每一次变革,我们顶着时代变迁的浪潮站在了前沿,以开拓互联网行业新渠道为己任。',
+    'COMPANY_INFO'    => '南京科斯克网络科技有限公司(CoreThink)是一家新兴的互联网+项目技术解决方案提供商。我们用敏锐的视角洞察IT市场的每一次变革,我们顶着时代变迁的浪潮站在了前沿,以开拓互联网行业新渠道为己任。',
 
     //数据库配置
     'DB_TYPE'   => $_SERVER[ENV_PRE.'DB_TYPE'] ? : '[DB_TYPE]', // 数据库类型
@@ -152,4 +152,7 @@ return array(
         'hash'     => true, //是否生成hash编码
         'callback' => false, //检测文件是否存在回调函数，如果存在返回文件信息数组
     ),
+
+    //如果数据表字段名采用大小写混合需配置此项
+    'DB_PARAMS'  =>  array(\PDO::ATTR_CASE => \PDO::CASE_NATURAL),
 );
