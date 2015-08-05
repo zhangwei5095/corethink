@@ -114,13 +114,13 @@ class AddonController extends HomeController{
             $attr = array();
             $attr['title'] = '编辑';
             $attr['class'] = 'label label-info';
-            $attr['href']  = 'Home/Addon/adminEdit/name/'.$name.'/tab/'.$tab.'/id/';
+            $attr['href']  = U('Home/Addon/adminEdit/name/'.$name.'/tab/'.$tab.'/id/[__data_id__]');
 
             //显示列表
             $builder->addTableColumn('right_button', '操作', 'btn')
                     ->addRightButton('self', $attr) //添加编辑按钮
-                    ->addRightButton('forbid', $param['model']) //添加禁用/启用按钮
-                    ->addRightButton('delete', $param['model']) //添加删除按钮
+                    ->addRightButton('forbid', array('model' => $param['model'])) //添加禁用/启用按钮
+                    ->addRightButton('delete', array('model' => $param['model'])) //添加删除按钮
                     ->setTemplate('Builder/listbuilder_addon')
                     ->display();
         }else{

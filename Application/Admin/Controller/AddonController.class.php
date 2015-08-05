@@ -284,13 +284,13 @@ class AddonController extends AdminController {
             $attr = array();
             $attr['title'] = '编辑';
             $attr['class'] = 'label label-info';
-            $attr['href'] = 'Admin/Addon/adminEdit/name/'.$name.'/tab/'.$tab.'/id/';
+            $attr['href']  = U('Admin/Addon/adminEdit/name/'.$name.'/tab/'.$tab.'/id/[__data_id__]');
 
             //显示列表
             $builder->addTableColumn('right_button', '操作', 'btn')
                     ->addRightButton('self', $attr) //添加编辑按钮
-                    ->addRightButton('forbid', $param['model']) //添加禁用/启用按钮
-                    ->addRightButton('delete', $param['model']) //添加删除按钮
+                    ->addRightButton('forbid', array('model' => $param['model'])) //添加禁用/启用按钮
+                    ->addRightButton('delete', array('model' => $param['model'])) //添加删除按钮
                     ->display();
         }else{
             $this->error('插件列表信息不正确');

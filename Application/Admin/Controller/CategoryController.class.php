@@ -78,7 +78,7 @@ EOF;
 
         $attr['title'] = '编辑';
         $attr['class'] = 'label label-info';
-        $attr['href'] = 'Admin/Category/edit/group/'.$group.'/id/';
+        $attr['href']  = U('Admin/Category/edit/group/'.$group.'/id/[__data_id__]');
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
