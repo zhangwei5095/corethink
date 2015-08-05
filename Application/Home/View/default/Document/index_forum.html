@@ -1,4 +1,4 @@
-<extend name="Public/layout"/>
+<extend name="_Layout/main"/>
 
 <block name="body">
     <div class="container">
@@ -19,7 +19,7 @@
                                     </div>
                                     <div class="media-body">
                                         <h5 class="media-heading" style="height: 20px;">
-                                            <strong><a href="{:U('Document/index', array('cid' => $vo_child['id']))}">{$vo_child.title}</a></strong> 
+                                            <strong><a href="{:U('Document/index', array('cid' => $vo_child['id']))}">{$vo_child.title}</a></strong>
                                             <notempty name="vo_child.count_new_document"><span class="badge badge-sm bg-red">{$vo_child.count_new_document}</span></notempty>
                                         </h5>
                                         <div class="text">

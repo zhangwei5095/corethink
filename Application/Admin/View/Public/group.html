@@ -1,4 +1,4 @@
-<extend name="Public/layout"/>
+<extend name="_Layout/main"/>
 
 <block name="style">
     <style type="text/css">
@@ -32,7 +32,7 @@
                         <div class="controls">
                             <select name="pid" class="form-control">
                                 <volist name="all_group" id="group">
-                                    <option value="{$group.id}" 
+                                    <option value="{$group.id}"
                                         <php>if($group['id'] == $info['pid']) echo 'selected="selected"';</php> >
                                         {$group.title_show}
                                     </option>
