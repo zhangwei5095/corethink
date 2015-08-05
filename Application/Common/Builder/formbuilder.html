@@ -35,7 +35,7 @@
     }
 </style>
 
-<script type="text/javascript" src="__PUBLIC__/kindeditor/kindeditor-min.js" charset="utf-8"></script>
+<script type="text/javascript" src="__PUBLIC__/libs/kindeditor/kindeditor-min.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(function(){
         window.daterangepicker_locale = {
@@ -106,7 +106,7 @@
                                             <php>if(is_array($option)):</php>
                                                 <input type="radio" id="{$form.name}{$option_key}" class="radio" name="{$form.name}" value="{$option}" <eq name="form.value" value="$option_key"> checked</eq> {$form.extra_attr}
                                                     <foreach name="option" item="option2" key="option_key2">
-                                                        {$option_key2}="{$option2}" 
+                                                        {$option_key2}="{$option2}"
                                                     </foreach>>
                                                 {$option.title}
                                             <php>else:</php>
@@ -134,7 +134,7 @@
                                             <php>if(is_array($option)):</php>
                                                 <input type="checkbox" name="{$form.name}[]" value="{$option_key}" <in name="option_key" value="$form.value"> checked</in> {$form.extra_attr}
                                                     <foreach name="option" item="option2" key="option_key2">
-                                                        {$option_key2}="{$option2}" 
+                                                        {$option_key2}="{$option2}"
                                                     </foreach>>
                                                 {$option.title}
                                             <php>else:</php>
@@ -156,7 +156,7 @@
                                             <php>if(is_array($option)):</php>
                                                 <option value="{$option_key}" <eq name="form.value" value="$option_key"> selected</eq>
                                                     <foreach name="option" item="option2" key="option_key2">
-                                                        {$option_key2}="{$option2}" 
+                                                        {$option_key2}="{$option2}"
                                                     </foreach>>
                                                     {$option.title}
                                                 </option>
@@ -242,7 +242,7 @@
                                         <notempty name="form.value">
                                             <?php $images = explode(',',$form['value']); ?>
                                             <foreach name="images" item="img">
-                                                <span class="img-box"><img class="img img-responsive" src="{$img|get_cover}" data-id="{$img}"><i class="glyphicon glyphicon-remove-sign remove-picture"></i></span>
+                                                <span class="img-box"><img class="img img-responsive" src="{$img|get_cover}" data-id="{$img}"><i class="fa fa-remove-sign remove-picture"></i></span>
                                             </foreach>
                                         </notempty>
                                     </div>
@@ -259,7 +259,7 @@
                                                         alertMessager(data.message);
                                                     }else{
                                                         var input = $('#preview_{$k} input');
-                                                        var new_img = '<span class="img-box"><img class="img img-responsive" src="' + data.url + '"><i class="glyphicon glyphicon-remove-sign remove-picture"></i></span>';
+                                                        var new_img = '<span class="img-box"><img class="img img-responsive" src="' + data.url + '"><i class="fa fa-remove-sign remove-picture"></i></span>';
                                                         $('#preview_{$k}').append(new_img);
                                                         if(input.val()){
                                                             input.val(input.val() + ',' + data.id);
@@ -288,7 +288,7 @@
                                         <input type="hidden" name="{$form.name}" value="{$form.value}">
                                         <ul class="list-group margin-top">
                                             <notempty name="form.value">
-                                                <li class="list-group-item"><i class="glyphicon glyphicon-file"></i> {$form.value|get_upload_info='name'}</li>
+                                                <li class="list-group-item"><i class="fa fa-file"></i> {$form.value|get_upload_info='name'}</li>
                                             </notempty>
                                         </ul>
                                     </div>
@@ -306,7 +306,7 @@
                                                     if(data.error == 1){
                                                         alertMessager(data.message);
                                                     }else{
-                                                        $('#preview_{$k} .list-group').html('<li class="list-group-item"><i class="glyphicon glyphicon-file"></i> '+data.name+'</li>');
+                                                        $('#preview_{$k} .list-group').html('<li class="list-group-item"><i class="fa fa-file"></i> '+data.name+'</li>');
                                                         $('#preview_{$k} input').attr('value', data.id);
                                                     }
                                                 }
@@ -323,7 +323,7 @@
                                             <notempty name="form.value">
                                                 <?php $files = explode(',',$form['value']); ?>
                                                 <foreach name="files" item="file">
-                                                    <li class="list-group-item file-item" data-id="{$file}"><i class="glyphicon glyphicon-file"></i> {$file|get_upload_info='name'} <i class="glyphicon glyphicon-remove-sign remove-file"></i></li>
+                                                    <li class="list-group-item file-item" data-id="{$file}"><i class="fa fa-file"></i> {$file|get_upload_info='name'} <i class="fa fa-remove-sign remove-file"></i></li>
                                                 </foreach>
                                             </notempty>
                                         </ul>
@@ -342,7 +342,7 @@
                                                     if(data.error == 1){
                                                         alertMessager(data.message);
                                                     }else{
-                                                        $('#preview_{$k} .list-group').append('<li class="list-group-item file-item"><i class="glyphicon glyphicon-file remove-file"></i> '+data.name+'</li>');
+                                                        $('#preview_{$k} .list-group').append('<li class="list-group-item file-item"><i class="fa fa-file remove-file"></i> '+data.name+'</li>');
                                                         var input = $('#preview_{$k} input');
                                                         if(input.val() != ''){
                                                             input.val(input.val() + ',' + data.id);
@@ -375,8 +375,8 @@
                                                     width: '100%',
                                                     height: '500px',
                                                     cssPath : [
-                                                        '__PUBLIC__/bootstrap/css/bootstrap.min.css',
-                                                        '__PUBLIC__/kindeditor/plugins/code/prettify.css'
+                                                        '__PUBLIC__/libs/bootstrap/dist/css/bootstrap.min.css',
+                                                        '__PUBLIC__/libs/kindeditor/plugins/code/prettify.css'
                                                     ],
                                                     resizeType: 1,
                                                     pasteType : 2,
@@ -525,7 +525,7 @@
                                                                                 <php>if(is_array($option)):</php>
                                                                                     <input type="radio" id="{$tab_form.name}{$option_key}" class="radio" name="{$tab_form.name}" value="{$option}" <eq name="tab_form.value" value="$option_key"> checked</eq> {$tab_form.extra_attr}
                                                                                         <foreach name="option" item="option2" key="option_key2">
-                                                                                            {$option_key2}="{$option2}" 
+                                                                                            {$option_key2}="{$option2}"
                                                                                         </foreach>>
                                                                                     {$option.title}
                                                                                 <php>else:</php>
@@ -553,7 +553,7 @@
                                                                                 <php>if(is_array($option)):</php>
                                                                                     <input type="checkbox" name="{$tab_form.name}[]" value="{$option_key}" <in name="option_key" value="$tab_form.value"> checked</in> {$tab_form.extra_attr}
                                                                                         <foreach name="option" item="option2" key="option_key2">
-                                                                                            {$option_key2}="{$option2}" 
+                                                                                            {$option_key2}="{$option2}"
                                                                                         </foreach>>
                                                                                     {$option.title}
                                                                                 <php>else:</php>
@@ -661,7 +661,7 @@
                                                                             <notempty name="tab_form.value">
                                                                                 <?php $images = explode(',',$tab_form['value']); ?>
                                                                                 <foreach name="images" item="img">
-                                                                                    <span class="img-box"><img class="img img-responsive" src="{$img|get_cover}" data-id="{$img}"><i class="glyphicon glyphicon-remove-sign remove-picture"></i></span>
+                                                                                    <span class="img-box"><img class="img img-responsive" src="{$img|get_cover}" data-id="{$img}"><i class="fa fa-remove-sign remove-picture"></i></span>
                                                                                 </foreach>
                                                                             </notempty>
                                                                         </div>
@@ -678,7 +678,7 @@
                                                                                             alertMessager(data.message);
                                                                                         }else{
                                                                                             var input = $('#tab_{$group_k}_preview_{$tab_k} input');
-                                                                                            var new_img = '<span class="img-box"><img class="img img-responsive" src="' + data.url + '" data-id="'+data.id+'"><i class="glyphicon glyphicon-remove-sign remove-picture"></i></span>';
+                                                                                            var new_img = '<span class="img-box"><img class="img img-responsive" src="' + data.url + '" data-id="'+data.id+'"><i class="fa fa-remove-sign remove-picture"></i></span>';
                                                                                             $('#tab_{$group_k}_preview_{$tab_k}').append(new_img);
                                                                                             if(input.val()){
                                                                                                 input.val(input.val() + ',' + data.id);
@@ -707,7 +707,7 @@
                                                                             <input type="hidden" name="{$tab_form.name}" value="{$tab_form.value}">
                                                                             <ul class="list-group margin-top">
                                                                                 <notempty name="tab_form.value">
-                                                                                    <li class="list-group-item"><i class="glyphicon glyphicon-file"></i> {$tab_form.value|get_upload_info='name'}</li>
+                                                                                    <li class="list-group-item"><i class="fa fa-file"></i> {$tab_form.value|get_upload_info='name'}</li>
                                                                                 </notempty>
                                                                             </ul>
                                                                         </div>
@@ -725,7 +725,7 @@
                                                                                         if(data.error == 1){
                                                                                             alertMessager(data.message);
                                                                                         }else{
-                                                                                            $('#tab_{$group_k}_preview_{$tab_k} .list-group').html('<li class="list-group-item"><i class="glyphicon glyphicon-file"></i> '+data.name+'</li>');
+                                                                                            $('#tab_{$group_k}_preview_{$tab_k} .list-group').html('<li class="list-group-item"><i class="fa fa-file"></i> '+data.name+'</li>');
                                                                                             $('#tab_{$group_k}_preview_{$tab_k} input').attr('value', data.id);
                                                                                         }
                                                                                     }
@@ -742,7 +742,7 @@
                                                                                 <notempty name="tab_form.value">
                                                                                     <?php $files = explode(',',$tab_form['value']); ?>
                                                                                     <foreach name="files" item="file">
-                                                                                        <li class="list-group-item file-item" data-id="{$file}"><i class="glyphicon glyphicon-file"></i> {$file|get_upload_info='name'} <i class="glyphicon glyphicon-remove-sign remove-file"></i></li>
+                                                                                        <li class="list-group-item file-item" data-id="{$file}"><i class="fa fa-file"></i> {$file|get_upload_info='name'} <i class="fa fa-remove-sign remove-file"></i></li>
                                                                                     </foreach>
                                                                                 </notempty>
                                                                             </ul>
@@ -761,8 +761,8 @@
                                                                                         if(data.error == 1){
                                                                                             alertMessager(data.message);
                                                                                         }else{
-                                                                                            var new_file = '<li class="list-group-item file-item" data-id="'+data.id+'"><i class="glyphicon glyphicon-file"></i> '
-                                                                                                           +data.name+' <i class="glyphicon glyphicon-remove-sign remove-file"></i></li>'
+                                                                                            var new_file = '<li class="list-group-item file-item" data-id="'+data.id+'"><i class="fa fa-file"></i> '
+                                                                                                           +data.name+' <i class="fa fa-remove-sign remove-file"></i></li>'
                                                                                             $('#tab_{$group_k}_preview_{$tab_k} .list-group').append(new_file);
                                                                                             var input = $('#tab_{$group_k}_preview_{$tab_k} input');
                                                                                             if(input.val() != ''){
@@ -796,8 +796,8 @@
                                                                                         width: '100%',
                                                                                         height: '500px',
                                                                                         cssPath : [
-                                                                                            '__PUBLIC__/bootstrap/css/bootstrap.min.css',
-                                                                                            '__PUBLIC__/kindeditor/plugins/code/prettify.css'
+                                                                                            '__PUBLIC__/libs/bootstrap/dist/css/bootstrap.min.css',
+                                                                                            '__PUBLIC__/libs/kindeditor/plugins/code/prettify.css'
                                                                                         ],
                                                                                         resizeType: 1,
                                                                                         pasteType : 2,

@@ -41,38 +41,51 @@ var gulp_comment_banner = '/*! * <%= date %> */\n\n'; // mod ASCII banner
 var ADMIN = {
     ROOT: 'Application/Admin',
     VIEW: 'Application/Admin/View',
-    PUBLIC: 'Public/Admin',
-    STATIC: 'Public/Static'
 };
 
 // SCRIPT ADMIN
-var admin_script_files = [];
+var admin_script_files = [
+    "Public/libs/bootstrap/js/transition.js",
+    "Public/libs/bootstrap/js/alert.js",
+    "Public/libs/bootstrap/js/button.js",
+    "Public/libs/bootstrap/js/carousel.js",
+    "Public/libs/bootstrap/js/collapse.js",
+    "Public/libs/bootstrap/js/dropdown.js",
+    "Public/libs/bootstrap/js/modal.js",
+    "Public/libs/bootstrap/js/tooltip.js",
+    "Public/libs/bootstrap/js/popover.js",
+    "Public/libs/bootstrap/js/scrollspy.js",
+    "Public/libs/bootstrap/js/tab.js",
+    "Public/libs/bootstrap/js/affix.js",
+];
 
 gulp.task('admin_script_module', function() {
     gulp
         .src(admin_script_files)
-        .pipe(concat('app_admin_source.js'))
-        .pipe(gulp.dest(ADMIN.PUBLIC + '/js/'))
-        .pipe(uglify()).pipe(rename('app_admin.js'))
+        .pipe(concat('admin_source.js'))
+        .pipe(gulp.dest('Public/js/'))
+        .pipe(uglify()).pipe(rename('admin.js'))
         .pipe(header(gulp_comment_banner, {
             date: gulp_date_now
         }))
-        .pipe(gulp.dest(ADMIN.PUBLIC + '/js/'));
+        .pipe(gulp.dest('Public/js/'));
 });
 
 // STYLE ADMIN
-var admin_style_files = [];
+var admin_style_files = [
+    ADMIN.VIEW + "/_Resource/less/admin.less",
+];
 
 gulp.task('admin_style_module', function() {
     gulp
         .src(admin_style_files)
         .pipe(less())
         .pipe(prefix())
-        .pipe(rename('style_admin.css'))
+        .pipe(rename('admin.css'))
         .pipe(header(gulp_comment_banner, {
             date: gulp_date_now
         }))
-        .pipe(gulp.dest(ADMIN.PUBLIC + '/css/'))
+        .pipe(gulp.dest('Public/css/'))
         .pipe(livereload());
 });
 
@@ -86,15 +99,15 @@ gulp.task('watching', function() {
 
     // TASK
     gulp.watch(admin_script_files, ['admin_script_module']);
-    gulp.watch(ADMIN.ROOT + '**/*.less', ['admin_style_module']);
+    gulp.watch(ADMIN.ROOT + '/**/*.less', ['admin_style_module']);
 
     // LIVERELOAD
     livereload.listen();
 
     gulp.watch([
         'index.php',
-        ADMIN.ROOT + '**/*.php',
-        ADMIN.ROOT + '**/*.less',
+        ADMIN.ROOT + '/**/*.php',
+        ADMIN.ROOT + '/**/*.less',
     ], function(event) {
         livereload.changed(event.path);
     });

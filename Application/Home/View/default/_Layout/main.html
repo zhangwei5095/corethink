@@ -14,12 +14,12 @@
     <block name="title"><title>{$meta_title}｜{:C('WEB_SITE_TITLE')}－{:C('WEB_SITE_SLOGAN')}</title></block>
     <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/favicon.ico">
     <link rel="apple-touch-icon" type="image/x-icon" href="__ROOT__/favicon.ico">
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/libs/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/libs/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/libs/bootstrapextend/css/bootstrap.extend.css?v={:C('STATIC_VERSION')}">
     <link rel="stylesheet" type="text/css" href="__CSS__/default.css?v={:C('STATIC_VERSION')}">
     <block name="style"></block>
-    <script type="text/javascript" src="__PUBLIC__/libs/jquery/jquery-1.11.1.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="__PUBLIC__/libs/bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__PUBLIC__/libs/jquery/1.x/jquery-1.11.3.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__PUBLIC__/libs/bootstrap/dist/js/bootstrap.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="__PUBLIC__/libs/bootstrapextend/js/bootstrap.extend.js?v={:C('STATIC_VERSION')}" charset="utf-8"></script>
     <script type="text/javascript">
         $(function(){
@@ -122,7 +122,7 @@
         <block name="breadcrumb">
             <div class="container">
                 <ul class="breadcrumb">
-                    <li><a href="__ROOT__/"><span class="glyphicon glyphicon-home"></span></a></li>
+                    <li><a href="__ROOT__/"><span class="fa fa-home"></span></a></li>
                     <corethink:breadcrumb name="_breadcrumb" cid="$__CURRENT_CATEGORY__" group="$__CURRENT_CATEGORY_GROUP__">
                         <li><a href="{:U('Home/Document/index', array('cid' => $_breadcrumb['id']))}">{$_breadcrumb.title}</a></li>
                     </corethink:breadcrumb>
