@@ -93,7 +93,7 @@ EOF;
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->setPageTitle($category['title']) //设置页面标题
+        $builder->setMetaTitle($category['title']) //设置页面标题
                 ->addTopButton('addnew', array('href' => U('add', array('cid' => $cid)))) //添加新增按钮
                 ->addTopButton('resume')  //添加启用按钮
                 ->addTopButton('forbid')  //添加禁用按钮
@@ -163,7 +163,7 @@ EOF;
 
         //使用FormBuilder快速建立表单页面。
         $builder = new \Common\Builder\FormBuilder();
-        $builder->setPageTitle('新增文章') //设置页面标题
+        $builder->setMetaTitle('新增文章') //设置页面标题
                 ->setPostUrl(U('update')) //设置表单提交地址
                 ->addFormItem('doc_type', 'hidden')
                 ->setFormData(array('doc_type' => $category_info['doc_type']))
@@ -221,7 +221,7 @@ EOF;
 
         //使用FormBuilder快速建立表单页面。
         $builder = new \Common\Builder\FormBuilder();
-        $builder->setPageTitle('编辑文章') //设置页面标题
+        $builder->setMetaTitle('编辑文章') //设置页面标题
                 ->setPostUrl(U('update')) //设置表单提交地址
                 ->addFormItem('id', 'hidden', 'ID', 'ID')
                 ->setExtraItems($new_attribute_list)
@@ -296,7 +296,7 @@ EOF;
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->setPageTitle('回收站') //设置页面标题
+        $builder->setMetaTitle('回收站') //设置页面标题
                 ->addTopButton('delete') //添加删除按钮
                 ->addTopButton('restore') //添加还原按钮
                 ->setSearch('请输入ID/文档名称', U('recycle'))

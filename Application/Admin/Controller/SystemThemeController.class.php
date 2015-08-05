@@ -23,7 +23,7 @@ class SystemThemeController extends AdminController{
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->setPageTitle('主题列表') //设置页面标题
+        $builder->setMetaTitle('主题列表') //设置页面标题
                 ->addTableColumn('name', '名称')
                 ->addTableColumn('title', '标题')
                 ->addTableColumn('description', '描述')

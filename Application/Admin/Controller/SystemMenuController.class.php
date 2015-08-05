@@ -33,7 +33,7 @@ class SystemMenuController extends AdminController{
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->setPageTitle('菜单列表') //设置页面标题
+        $builder->setMetaTitle('菜单列表') //设置页面标题
                 ->addTopButton('addnew')  //添加新增按钮
                 ->addTopButton('resume')  //添加启用按钮
                 ->addTopButton('forbid')  //添加禁用按钮
@@ -74,7 +74,7 @@ class SystemMenuController extends AdminController{
         }else{
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->setPageTitle('新增菜单') //设置页面标题
+            $builder->setMetaTitle('新增菜单') //设置页面标题
                     ->setPostUrl(U('add')) //设置表单提交地址
                     ->addFormItem('pid', 'select', '上级菜单', '所属的上级菜单', $this->selectListAsTree('SystemMenu', null, '顶级菜单'))
                     ->addFormItem('title', 'text', '标题', '菜单标题')
@@ -105,7 +105,7 @@ class SystemMenuController extends AdminController{
         }else{
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->setPageTitle('新增菜单') //设置页面标题
+            $builder->setMetaTitle('新增菜单') //设置页面标题
                     ->setPostUrl(U('edit')) //设置表单提交地址
                     ->addFormItem('id', 'hidden', 'ID', 'ID')
                     ->addFormItem('pid', 'select', '上级菜单', '所属的上级菜单', $this->selectListAsTree('SystemMenu', null, '顶级菜单'))

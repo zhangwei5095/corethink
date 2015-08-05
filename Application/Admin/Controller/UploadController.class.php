@@ -31,7 +31,7 @@ class UploadController extends AdminController{
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->setPageTitle('上传列表') //设置页面标题
+        $builder->setMetaTitle('上传列表') //设置页面标题
                 ->addTopButton('resume') //添加启用按钮
                 ->addTopButton('forbid') //添加禁用按钮
                 ->addTopButton('delete') //添加删除按钮

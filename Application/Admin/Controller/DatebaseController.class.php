@@ -73,7 +73,7 @@ class DatebaseController extends AdminController{
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->setPageTitle($current_table['table_name'].'｜数据字典')  //设置页面标题
+        $builder->setMetaTitle($current_table['table_name'].'｜数据字典')  //设置页面标题
                 ->SetTabNav($tab_list, $table_id) //设置Tab导航
                 ->addTableColumn('COLUMN_NAME', '字段名', 'text')
                 ->addTableColumn('COLUMN_TYPE', '数据类型', 'text')

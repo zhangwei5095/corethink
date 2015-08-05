@@ -51,7 +51,7 @@ EOF;
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->setPageTitle('字段管理') //设置页面标题
+        $builder->setMetaTitle('字段管理') //设置页面标题
                 ->addTopButton('self', $attr) //添加新增按钮
                 ->addTopButton('resume') //添加启用按钮
                 ->addTopButton('forbid') //添加禁用按钮
@@ -109,7 +109,7 @@ EOF;
 
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->setPageTitle('新增字段') //设置页面标题
+            $builder->setMetaTitle('新增字段') //设置页面标题
                     ->setPostUrl(U('add')) //设置表单提交地址
                     ->addFormItem('doc_type', 'select', '文档类型', '文档类型', $this->selectListAsTree('DocumentType'))
                     ->addFormItem('name', 'text', '字段名称', '字段名称，如“title”')
@@ -159,7 +159,7 @@ EOF;
 
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->setPageTitle('编辑字段') //设置页面标题
+            $builder->setMetaTitle('编辑字段') //设置页面标题
                     ->setPostUrl(U('edit')) //设置表单提交地址
                     ->addFormItem('id', 'hidden', 'ID', 'ID')
                     ->addFormItem('doc_type', 'select', '文档类型', '文档类型', $this->selectListAsTree('DocumentType'))

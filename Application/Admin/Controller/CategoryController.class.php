@@ -82,7 +82,7 @@ EOF;
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->setPageTitle('分类列表') //设置页面标题
+        $builder->setMetaTitle('分类列表') //设置页面标题
                 ->addTopButton('addnew', array('href' => U('Admin/Category/add/group/'.$group))) //添加新增按钮
                 ->addTopButton('resume') //添加启用按钮
                 ->addTopButton('forbid') //添加禁用按钮
@@ -135,7 +135,7 @@ EOF;
 
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->setPageTitle('新增分类')  //设置页面标题
+            $builder->setMetaTitle('新增分类')  //设置页面标题
                     ->setPostUrl(U('add')) //设置表单提交地址
                     ->addFormItem('group', 'radio', '分组', '分组', C('CATEGORY_GROUP_LIST'))
                     ->addFormItem('pid', 'select', '上级分类', '所属的上级分类', $this->selectListAsTree('Category', array('group' => $group), '顶级分类'))
@@ -189,7 +189,7 @@ EOF;
 
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->setPageTitle('编辑分类')  //设置页面标题
+            $builder->setMetaTitle('编辑分类')  //设置页面标题
                     ->setPostUrl(U('Admin/Category/edit/id/'.$id.'/group/'.$group)) //设置表单提交地址
                     ->addFormItem('id', 'hidden', 'ID', 'ID')
                     ->addFormItem('group', 'radio', '分组', '分组', C('CATEGORY_GROUP_LIST'))

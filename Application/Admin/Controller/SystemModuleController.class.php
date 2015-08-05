@@ -23,7 +23,7 @@ class SystemModuleController extends AdminController{
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->setPageTitle('模块列表') //设置页面标题
+        $builder->setMetaTitle('模块列表') //设置页面标题
                 ->addTopButton('resume')  //添加启用按钮
                 ->addTopButton('forbid')  //添加禁用按钮
                 ->setSearch('请输入ID/标题', U('index'))

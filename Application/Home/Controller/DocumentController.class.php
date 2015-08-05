@@ -100,7 +100,7 @@ class DocumentController extends HomeController{
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->setPageTitle('我的文档') //设置页面标题
+        $builder->setMetaTitle('我的文档') //设置页面标题
                 ->addTopButton('resume') //添加启用按钮
                 ->addTopButton('forbid') //添加禁用按钮
                 ->addTopButton('recycle') //添加回收按钮
@@ -178,7 +178,7 @@ class DocumentController extends HomeController{
 
         //使用FormBuilder快速建立表单页面。
         $builder = new \Common\Builder\FormBuilder();
-        $builder->setPageTitle('新增文章')  //设置页面标题
+        $builder->setMetaTitle('新增文章')  //设置页面标题
                 ->setPostUrl(U('update')) //设置表单提交地址
                 ->addFormItem('doc_type', 'hidden')
                 ->setFormData(array('doc_type' => $category_info['doc_type']))
@@ -242,7 +242,7 @@ class DocumentController extends HomeController{
 
         //使用FormBuilder快速建立表单页面。
         $builder = new \Common\Builder\FormBuilder();
-        $builder->setPageTitle('编辑文章')  //设置页面标题
+        $builder->setMetaTitle('编辑文章')  //设置页面标题
                 ->setPostUrl(U('update')) //设置表单提交地址
                 ->addFormItem('id', 'hidden', 'ID', 'ID')
                 ->setExtraItems($new_attribute_list)

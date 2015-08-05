@@ -30,7 +30,7 @@ class UserCommentController extends AdminController{
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->setPageTitle('评论列表') //设置页面标题
+        $builder->setMetaTitle('评论列表') //设置页面标题
                 ->addTopButton('addnew')  //添加新增按钮
                 ->addTopButton('resume')  //添加启用按钮
                 ->addTopButton('forbid')  //添加禁用按钮
@@ -71,7 +71,7 @@ class UserCommentController extends AdminController{
         }else{
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->setPageTitle('新增评论')  //设置页面标题
+            $builder->setMetaTitle('新增评论')  //设置页面标题
                     ->setPostUrl(U('add')) //设置表单提交地址
                     ->addFormItem('table', 'radio', '数据表', '数据表ID',C('TABLE_LIST'))
                     ->addFormItem('data_id', 'num', '数据ID', '数据ID')
@@ -104,7 +104,7 @@ class UserCommentController extends AdminController{
         }else{
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->setPageTitle('编辑评论')  //设置页面标题
+            $builder->setMetaTitle('编辑评论')  //设置页面标题
                     ->setPostUrl(U('edit')) //设置表单提交地址
                     ->addFormItem('id', 'hidden', 'ID', 'ID')
                     ->addFormItem('table', 'radio', '数据表', '数据表ID',C('TABLE_LIST'))

@@ -14,7 +14,7 @@ use Think\Controller;
  * @author jry <598821125@qq.com>
  */
 class FormBuilder extends Controller{
-    private $_page_title;           //页面标题
+    private $_meta_title;            //页面标题
     private $_tab_nav = array();    //页面Tab导航
     private $_post_url;             //表单提交地址
     private $_form_items = array(); //表单项目
@@ -29,8 +29,8 @@ class FormBuilder extends Controller{
      * @return $this
      * @author jry <598821125@qq.com>
      */
-    public function setPageTitle($page_title){
-        $this->_page_title = $page_title;
+    public function setMetaTitle($meta_title){
+        $this->meta_title = $this->_meta_title = $meta_title;
         return $this;
     }
 
@@ -130,9 +130,6 @@ class FormBuilder extends Controller{
      * @author jry <598821125@qq.com>
      */
     public function display(){
-        //页面标题
-        $this->meta_title = $this->_page_title;
-
         //额外已经构造好的表单项目与单个组装的的表单项目进行合并
         $this->_form_items = array_merge($this->_form_items, $this->_extra_items);
 
@@ -145,7 +142,7 @@ class FormBuilder extends Controller{
             }
         }
 
-        $this->assign('page_title', $this->_page_title); //页面标题
+        $this->assign('meta_title', $this->_meta_title); //页面标题
         $this->assign('tab_nav',    $this->_tab_nav);    //页面Tab导航
         $this->assign('post_url',   $this->_post_url);   //标题提交地址
         $this->assign('form_items', $this->_form_items); //表单项目

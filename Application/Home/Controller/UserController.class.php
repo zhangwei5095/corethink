@@ -87,7 +87,7 @@ class UserController extends HomeController{
 
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->setPageTitle('修改'.$user_info['username'].'的信息')  //设置页面标题
+            $builder->setMetaTitle('修改'.$user_info['username'].'的信息')  //设置页面标题
                     ->setPostUrl(U('')) //设置表单提交地址
                     ->addFormItem('username', 'text', '用户名', '')
                     ->addFormItem('avatar', 'picture', '头像', '')

@@ -39,7 +39,7 @@ class SystemConfigController extends AdminController{
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->setPageTitle('配置列表') //设置页面标题
+        $builder->setMetaTitle('配置列表') //设置页面标题
                 ->addTopButton('addnew')  //添加新增按钮
                 ->addTopButton('resume')  //添加启用按钮
                 ->addTopButton('forbid')  //添加禁用按钮
@@ -87,7 +87,7 @@ class SystemConfigController extends AdminController{
 
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->setPageTitle('新增配置')  //设置页面标题
+            $builder->setMetaTitle('新增配置')  //设置页面标题
                     ->setPostUrl(U('add')) //设置表单提交地址
                     ->addFormItem('group', 'select', '配置分组', '配置所属的分组', C('CONFIG_GROUP_LIST'))
                     ->addFormItem('type', 'select', '配置类型', '配置类型的分组', $form_item_type)
@@ -128,7 +128,7 @@ class SystemConfigController extends AdminController{
 
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->setPageTitle('编辑配置')  //设置页面标题
+            $builder->setMetaTitle('编辑配置')  //设置页面标题
                     ->setPostUrl(U('edit')) //设置表单提交地址
                     ->addFormItem('id', 'hidden', 'ID', 'ID')
                     ->addFormItem('group', 'select', '配置分组', '配置所属的分组', C('CONFIG_GROUP_LIST'))
@@ -169,7 +169,7 @@ class SystemConfigController extends AdminController{
 
         //使用FormBuilder快速建立表单页面。
         $builder = new \Common\Builder\FormBuilder();
-        $builder->setPageTitle('系统设置')  //设置页面标题
+        $builder->setMetaTitle('系统设置')  //设置页面标题
                 ->SetTabNav($tab_list, $group) //设置Tab按钮列表
                 ->setPostUrl(U('groupSave')) //设置表单提交地址
                 ->setExtraItems($data_list) //直接设置表单数据

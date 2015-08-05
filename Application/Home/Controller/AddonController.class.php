@@ -91,7 +91,7 @@ class AddonController extends HomeController{
 
             //使用Builder快速建立列表页面。
             $builder = new \Common\Builder\ListBuilder();
-            $builder->setPageTitle($addon->info['title']) //设置页面标题
+            $builder->setMetaTitle($addon->info['title']) //设置页面标题
                     ->AddTopButton('addnew', array('href'  => U('Home/Addon/adminAdd/name/'.$name.'/tab/'.$tab))) //添加新增按钮
                     ->AddTopButton('resume', array('model' => $param['model'])) //添加启用按钮
                     ->AddTopButton('forbid', array('model' => $param['model'])) //添加禁用按钮
@@ -163,7 +163,7 @@ class AddonController extends HomeController{
             }else{
                 //使用FormBuilder快速建立表单页面。
                 $builder = new \Common\Builder\FormBuilder();
-                $builder->setPageTitle('新增数据')  //设置页面标题
+                $builder->setMetaTitle('新增数据')  //设置页面标题
                         ->setPostUrl(U('addon/adminAdd/name/'.$name.'/tab/'.$tab)) //设置表单提交地址
                         ->setExtraItems($param['field'])
                         ->setTemplate('Builder/formbuilder_addon')
@@ -209,7 +209,7 @@ class AddonController extends HomeController{
             }else{
                 //使用FormBuilder快速建立表单页面。
                 $builder = new \Common\Builder\FormBuilder();
-                $builder->setPageTitle('编辑数据')  //设置页面标题
+                $builder->setMetaTitle('编辑数据')  //设置页面标题
                         ->setPostUrl(U('addon/adminEdit/name/'.$name.'/tab/'.$tab)) //设置表单提交地址
                         ->addFormItem('id', 'hidden', 'ID', 'ID')
                         ->setExtraItems($param['field'])

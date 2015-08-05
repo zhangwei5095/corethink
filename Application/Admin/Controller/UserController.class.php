@@ -30,7 +30,7 @@ class UserController extends AdminController{
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->setPageTitle('用户列表') //设置页面标题
+        $builder->setMetaTitle('用户列表') //设置页面标题
                 ->addTopButton('addnew')  //添加新增按钮
                 ->addTopButton('resume')  //添加启用按钮
                 ->addTopButton('forbid')  //添加禁用按钮
@@ -78,7 +78,7 @@ class UserController extends AdminController{
         }else{
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->setPageTitle('新增用户') //设置页面标题
+            $builder->setMetaTitle('新增用户') //设置页面标题
                     ->setPostUrl(U('add')) //设置表单提交地址
                     ->addFormItem('reg_type', 'hidden', '注册方式', '注册方式')
                     ->addFormItem('usertype', 'radio', '用户类型', '用户类型', C('USER_TYPE_LIST'))
@@ -126,7 +126,7 @@ class UserController extends AdminController{
             $info = D('User')->find($id);
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->setPageTitle('编辑用户') //设置页面标题
+            $builder->setMetaTitle('编辑用户') //设置页面标题
                     ->setPostUrl(U('edit')) //设置表单提交地址
                     ->addFormItem('id', 'hidden', 'ID', 'ID')
                     ->addFormItem('usertype', 'radio', '用户类型', '用户类型', C('USER_TYPE_LIST'))

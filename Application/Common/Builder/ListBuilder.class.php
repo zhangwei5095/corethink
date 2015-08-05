@@ -14,7 +14,7 @@ use Think\Controller;
  * @author jry <598821125@qq.com>
  */
 class ListBuilder extends Controller{
-    private $_page_title;                  //页面标题
+    private $_meta_title;                  //页面标题
     private $_top_button_list = array();   //顶部工具栏按钮组
     private $_search  = array();           //搜索参数配置
     private $_tab_nav = array();           //页面Tab导航
@@ -32,8 +32,8 @@ class ListBuilder extends Controller{
      * @return $this
      * @author jry <598821125@qq.com>
      */
-    public function setPageTitle($page_title){
-        $this->_page_title = $page_title;
+    public function setMetaTitle($meta_title){
+        $this->meta_title = $this->_meta_title = $meta_title;
         return $this;
     }
 
@@ -372,9 +372,6 @@ class ListBuilder extends Controller{
      * @author jry <598821125@qq.com>
      */
     public function display(){
-        //页面标题
-        $this->meta_title = $this->_page_title;
-
         //编译data_list中的值
         foreach($this->_table_data_list as &$data){
             //编译表格右侧按钮
@@ -433,7 +430,7 @@ class ListBuilder extends Controller{
             $button['attribute'] = $this->compileHtmlAttr($button);
         }
 
-        $this->assign('page_title',          $this->_page_title);          //页面标题
+        $this->assign('meta_title',          $this->_meta_title);          //页面标题
         $this->assign('top_button_list',     $this->_top_button_list);     //顶部工具栏按钮
         $this->assign('search',              $this->_search);              //搜索配置
         $this->assign('tab_nav',             $this->_tab_nav);             //页面Tab导航

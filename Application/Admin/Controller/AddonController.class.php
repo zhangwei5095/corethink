@@ -24,7 +24,7 @@ class AddonController extends AdminController {
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->setPageTitle('插件列表')  //设置页面标题
+        $builder->setMetaTitle('插件列表')  //设置页面标题
                 ->addTopButton('resume') //添加启用按钮
                 ->addTopButton('forbid') //添加禁用按钮
                 ->addTableColumn('name', '标识')
@@ -101,7 +101,7 @@ class AddonController extends AdminController {
             }else{
                 //使用FormBuilder快速建立表单页面。
                 $builder = new \Common\Builder\FormBuilder();
-                $builder->setPageTitle('插件设置')  //设置页面标题
+                $builder->setMetaTitle('插件设置')  //设置页面标题
                         ->setPostUrl(U('config')) //设置表单提交地址
                         ->addFormItem('id', 'hidden', 'ID', 'ID')
                         ->setExtraItems($addon['config']) //直接设置表单数据
@@ -261,7 +261,7 @@ class AddonController extends AdminController {
 
             //使用Builder快速建立列表页面。
             $builder = new \Common\Builder\ListBuilder();
-            $builder->setPageTitle($addon->info['title']) //设置页面标题
+            $builder->setMetaTitle($addon->info['title']) //设置页面标题
                     ->AddTopButton('addnew', array('href'  => U('Admin/Addon/adminAdd/name/'.$name.'/tab/'.$tab))) //添加新增按钮
                     ->AddTopButton('resume', array('model' => $param['model'])) //添加启用按钮
                     ->AddTopButton('forbid', array('model' => $param['model'])) //添加禁用按钮
@@ -332,7 +332,7 @@ class AddonController extends AdminController {
             }else{
                 //使用FormBuilder快速建立表单页面。
                 $builder = new \Common\Builder\FormBuilder();
-                $builder->setPageTitle('新增数据')  //设置页面标题
+                $builder->setMetaTitle('新增数据')  //设置页面标题
                         ->setPostUrl(U('admin/addon/adminAdd/name/'.$name.'/tab/'.$tab)) //设置表单提交地址
                         ->setExtraItems($param['field'])
                         ->display();
@@ -377,7 +377,7 @@ class AddonController extends AdminController {
             }else{
                 //使用FormBuilder快速建立表单页面。
                 $builder = new \Common\Builder\FormBuilder();
-                $builder->setPageTitle('编辑数据')  //设置页面标题
+                $builder->setMetaTitle('编辑数据')  //设置页面标题
                         ->setPostUrl(U('admin/addon/adminedit/name/'.$name.'/tab/'.$tab)) //设置表单提交地址
                         ->addFormItem('id', 'hidden', 'ID', 'ID')
                         ->setExtraItems($param['field'])

@@ -35,7 +35,7 @@ class DocumentTypeController extends AdminController{
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->setPageTitle('类型列表')  //设置页面标题
+        $builder->setMetaTitle('类型列表')  //设置页面标题
                 ->addTopButton('addnew') //添加新增按钮
                 ->addTopButton('resume') //添加启用按钮
                 ->addTopButton('forbid') //添加禁用按钮
@@ -78,7 +78,7 @@ class DocumentTypeController extends AdminController{
         }else{
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->setPageTitle('新增类型')  //设置页面标题
+            $builder->setMetaTitle('新增类型')  //设置页面标题
                     ->setPostUrl(U('add')) //设置表单提交地址
                     ->addFormItem('name', 'text', '类型名称', '类型名称')
                     ->addFormItem('title', 'text', '类型标题', '类型标题')
@@ -146,7 +146,7 @@ class DocumentTypeController extends AdminController{
 
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->setPageTitle('编辑类型')  //设置页面标题
+            $builder->setMetaTitle('编辑类型')  //设置页面标题
                     ->setPostUrl(U('edit')) //设置表单提交地址
                     ->addFormItem('id', 'hidden', 'ID', 'ID')
                     ->addFormItem('name', 'text', '类型名称', '类型名称')
