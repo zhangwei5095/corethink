@@ -126,7 +126,7 @@
                                                         onUploadComplete:function(file, data){
                                                             var data = $.parseJSON(data);
                                                             var input = $('input[name="pictures"]');
-                                                            var new_img = '<span class="img-box"><img class="img" src="' + data.url + '"><i class="fa fa-remove-sign"></i></span>';
+                                                            var new_img = '<span class="img-box"><img class="img" src="' + data.url + '"><i class="fa fa-times-circle"></i></span>';
                                                             $('#preview_comment_picture').append(new_img);
                                                             if(input.val()){
                                                                 input.val(input.val() + ',' + data.id);

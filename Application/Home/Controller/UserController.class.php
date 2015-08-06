@@ -23,9 +23,9 @@ class UserController extends HomeController{
         if($usertype){
             $map['usertype'] = $usertype;
         }
-        $user_list = D('User')->page(!empty($_GET["p"])?$_GET["p"]:1, C('ADMIN_PAGE_ROWS'))
+        $user_list = D('User')->page(!empty($_GET["p"])?$_GET["p"]:1, 24)
                               ->where($map)->order('id desc')->select();
-        $page = new \Common\Util\Page(D('User')->where($map)->count(), C('ADMIN_PAGE_ROWS'));
+        $page = new \Common\Util\Page(D('User')->where($map)->count(), 24);
         $this->assign('page', $page->show());
         $this->assign('meta_title', '会员');
         $this->assign('user_list', $user_list);

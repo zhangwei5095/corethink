@@ -75,17 +75,17 @@ class SystemModuleModel extends Model{
         foreach($module_list as &$val){
             switch($val['status']){
                 case '-1': //未安装
-                    $val['status'] = '<i class="fa fa-download-alt" style="color:green"></i>';
+                    $val['status'] = '<i class="fa fa-download" style="color:green"></i>';
                     $val['right_button']  = '<a class="label label-success ajax-get" href="'.U('install?name='.$val['name']).'">安装</a>';
                     break;
                 case '0': //禁用
-                    $val['status'] = '<i class="fa fa-ban-circle" style="color:red"></i>';
+                    $val['status'] = '<i class="fa fa-ban" style="color:red"></i>';
                     $val['right_button'] .= '<a class="label label-info ajax-get" href="'.U('updateInfo?id='.$val['id']).'">更新菜单</a> ';
                     $val['right_button'] .= '<a class="label label-success ajax-get" href="'.U('setStatus', array('status' => 'resume', 'ids' => $val['id'])).'">启用</a> ';
                     $val['right_button'] .= '<a class="label label-danger ajax-get" href="'.U('setStatus', array('status' => 'uninstall', 'ids' => $val['id'])).'">卸载</a> ';
                     break;
                 case '1': //正常
-                    $val['status'] = '<i class="fa fa-ok" style="color:green"></i>';
+                    $val['status'] = '<i class="fa fa-check" style="color:green"></i>';
                     $val['right_button'] .= '<a class="label label-info ajax-get" href="'.U('updateInfo?id='.$val['id']).'">更新菜单</a> ';
                     $val['right_button'] .= '<a class="label label-warning ajax-get" href="'.U('setStatus', array('status' => 'forbid', 'ids' => $val['id'])).'">禁用</a> ';
                     $val['right_button'] .= '<a class="label label-danger ajax-get" href="'.U('setStatus', array('status' => 'uninstall', 'ids' => $val['id'])).'">卸载</a> ';

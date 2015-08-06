@@ -242,7 +242,7 @@
                                         <notempty name="form.value">
                                             <?php $images = explode(',',$form['value']); ?>
                                             <foreach name="images" item="img">
-                                                <span class="img-box"><img class="img img-responsive" src="{$img|get_cover}" data-id="{$img}"><i class="fa fa-remove-sign remove-picture"></i></span>
+                                                <span class="img-box"><img class="img img-responsive" src="{$img|get_cover}" data-id="{$img}"><i class="fa fa-times-circle remove-picture"></i></span>
                                             </foreach>
                                         </notempty>
                                     </div>
@@ -259,7 +259,7 @@
                                                         alertMessager(data.message);
                                                     }else{
                                                         var input = $('#preview_{$k} input');
-                                                        var new_img = '<span class="img-box"><img class="img img-responsive" src="' + data.url + '"><i class="fa fa-remove-sign remove-picture"></i></span>';
+                                                        var new_img = '<span class="img-box"><img class="img img-responsive" src="' + data.url + '"><i class="fa fa-times-circle remove-picture"></i></span>';
                                                         $('#preview_{$k}').append(new_img);
                                                         if(input.val()){
                                                             input.val(input.val() + ',' + data.id);
@@ -323,7 +323,7 @@
                                             <notempty name="form.value">
                                                 <?php $files = explode(',',$form['value']); ?>
                                                 <foreach name="files" item="file">
-                                                    <li class="list-group-item file-item" data-id="{$file}"><i class="fa fa-file"></i> {$file|get_upload_info='name'} <i class="fa fa-remove-sign remove-file"></i></li>
+                                                    <li class="list-group-item file-item" data-id="{$file}"><i class="fa fa-file"></i> {$file|get_upload_info='name'} <i class="fa fa-times-circle remove-file"></i></li>
                                                 </foreach>
                                             </notempty>
                                         </ul>
@@ -661,7 +661,7 @@
                                                                             <notempty name="tab_form.value">
                                                                                 <?php $images = explode(',',$tab_form['value']); ?>
                                                                                 <foreach name="images" item="img">
-                                                                                    <span class="img-box"><img class="img img-responsive" src="{$img|get_cover}" data-id="{$img}"><i class="fa fa-remove-sign remove-picture"></i></span>
+                                                                                    <span class="img-box"><img class="img img-responsive" src="{$img|get_cover}" data-id="{$img}"><i class="fa fa-times-circle remove-picture"></i></span>
                                                                                 </foreach>
                                                                             </notempty>
                                                                         </div>
@@ -678,7 +678,7 @@
                                                                                             alertMessager(data.message);
                                                                                         }else{
                                                                                             var input = $('#tab_{$group_k}_preview_{$tab_k} input');
-                                                                                            var new_img = '<span class="img-box"><img class="img img-responsive" src="' + data.url + '" data-id="'+data.id+'"><i class="fa fa-remove-sign remove-picture"></i></span>';
+                                                                                            var new_img = '<span class="img-box"><img class="img img-responsive" src="' + data.url + '" data-id="'+data.id+'"><i class="fa fa-times-circle remove-picture"></i></span>';
                                                                                             $('#tab_{$group_k}_preview_{$tab_k}').append(new_img);
                                                                                             if(input.val()){
                                                                                                 input.val(input.val() + ',' + data.id);
@@ -742,7 +742,7 @@
                                                                                 <notempty name="tab_form.value">
                                                                                     <?php $files = explode(',',$tab_form['value']); ?>
                                                                                     <foreach name="files" item="file">
-                                                                                        <li class="list-group-item file-item" data-id="{$file}"><i class="fa fa-file"></i> {$file|get_upload_info='name'} <i class="fa fa-remove-sign remove-file"></i></li>
+                                                                                        <li class="list-group-item file-item" data-id="{$file}"><i class="fa fa-file"></i> {$file|get_upload_info='name'} <i class="fa fa-times-circle remove-file"></i></li>
                                                                                     </foreach>
                                                                                 </notempty>
                                                                             </ul>
@@ -762,7 +762,7 @@
                                                                                             alertMessager(data.message);
                                                                                         }else{
                                                                                             var new_file = '<li class="list-group-item file-item" data-id="'+data.id+'"><i class="fa fa-file"></i> '
-                                                                                                           +data.name+' <i class="fa fa-remove-sign remove-file"></i></li>'
+                                                                                                           +data.name+' <i class="fa fa-times-circle remove-file"></i></li>'
                                                                                             $('#tab_{$group_k}_preview_{$tab_k} .list-group').append(new_file);
                                                                                             var input = $('#tab_{$group_k}_preview_{$tab_k} input');
                                                                                             if(input.val() != ''){
