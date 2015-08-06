@@ -15,13 +15,13 @@ use Think\Controller;
  */
 class FormBuilder extends Controller{
     private $_meta_title;            //页面标题
-    private $_tab_nav = array();    //页面Tab导航
-    private $_post_url;             //表单提交地址
-    private $_form_items = array(); //表单项目
+    private $_tab_nav = array();     //页面Tab导航
+    private $_post_url;              //表单提交地址
+    private $_form_items = array();  //表单项目
     private $_extra_items = array(); //额外已经构造好的表单项目
-    private $_form_data = array(); //表单数据
+    private $_form_data = array();   //表单数据
     private $_extra_html; //额外功能代码
-    private $_template = 'Builder/formbuilder'; //模版
+    private $_template = '_Builder/formbuilder'; //模版
 
     /**
      * 设置页面标题

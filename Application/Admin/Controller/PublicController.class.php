@@ -29,7 +29,7 @@ class PublicController extends Controller{
             $user_object = D('User');
             $uid = $user_object->login($username, $password, $map);
             if(0 < $uid){
-                $this->success('登录成功！', U('Index/index'));
+                $this->success('登录成功！', U('Admin/Index/index'));
             }else{
                 $this->error($user_object->getError());
             }

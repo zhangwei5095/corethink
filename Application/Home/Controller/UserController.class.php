@@ -96,7 +96,7 @@ class UserController extends HomeController{
                     ->addFormItem('birthday', 'date', '生日', '自动计算：'.$user_info['gz'].' '.$user_info['xz'].' '.$user_info['sx'])
                     ->addFormItem('summary', 'text', '签名', '一句话介绍')
                     ->setFormData($user_info)
-                    ->setTemplate('Builder/formbuilder_user')
+                    ->setTemplate('_Builder/formbuilder_user')
                     ->display();
         }
     }

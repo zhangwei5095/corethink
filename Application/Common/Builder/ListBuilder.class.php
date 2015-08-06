@@ -24,7 +24,7 @@ class ListBuilder extends Controller{
     private $_table_data_page;             //表格数据分页
     private $_right_button_list = array(); //表格右侧操作按钮组
     private $_extra_html;                  //额外功能代码
-    private $_template = 'Builder/listbuilder'; //模版
+    private $_template = '_Builder/listbuilder'; //模版
 
     /**
      * 设置页面标题

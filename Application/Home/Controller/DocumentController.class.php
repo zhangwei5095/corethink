@@ -116,7 +116,7 @@ class DocumentController extends HomeController{
                 ->addRightButton('edit')   //添加编辑按钮
                 ->addRightButton('forbid') //添加禁用/启用按钮
                 ->addRightButton('recycle') //添加回收按钮
-                ->setTemplate('Builder/listbuilder_user')
+                ->setTemplate('_Builder/listbuilder_user')
                 ->display();
     }
 
@@ -183,7 +183,7 @@ class DocumentController extends HomeController{
                 ->addFormItem('doc_type', 'hidden')
                 ->setFormData(array('doc_type' => $category_info['doc_type']))
                 ->setExtraItems($new_attribute_list)
-                ->setTemplate('Builder/formbuilder_user')
+                ->setTemplate('_Builder/formbuilder_user')
                 ->display();
     }
 
@@ -247,7 +247,7 @@ class DocumentController extends HomeController{
                 ->addFormItem('id', 'hidden', 'ID', 'ID')
                 ->setExtraItems($new_attribute_list)
                 ->setFormData($document_info)
-                ->setTemplate('Builder/formbuilder_user')
+                ->setTemplate('_Builder/formbuilder_user')
                 ->display();
     }
 

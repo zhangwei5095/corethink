@@ -1,6 +1,6 @@
 // gulp 安裝命令
-// @author     Jason 封仁杰 <solidzoro@live.com>
-// @lastdate   2015-08-05 15:51:03
+// @author   Jason 封仁杰 <solidzoro@live.com>
+// @lastdate 2015-08-05 15:51:03
 //
 // npm install gulp autoprefixer strftime gulp-less gulp-autoprefixer gulp-concat gulp-jade gulp-jshint gulp-uglify gulp-jshint gulp-coffee gulp-header gulp-rename gulp-sourcemaps gulp-minify-css gulp-livereload gulp-watch --save-dev
 
@@ -93,7 +93,7 @@ gulp.task('admin_style_module', function() {
 
 //
 //
-// WATCHING
+// 监听
 // --------------------------------------------
 gulp.task('watching', function() {
 
@@ -117,12 +117,12 @@ gulp.task('watching', function() {
 
 //
 //
-// RUNING
+// 运行
 // --------------------------------------------
 gulp.task('default', [
-    // 後端
+    // 后端
     'admin_script_module',
     'admin_style_module',
-    // 監聽
+    // 监听
     'watching'
 ]);

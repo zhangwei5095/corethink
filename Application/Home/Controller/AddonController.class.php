@@ -121,7 +121,7 @@ class AddonController extends HomeController{
                     ->addRightButton('self', $attr) //添加编辑按钮
                     ->addRightButton('forbid', array('model' => $param['model'])) //添加禁用/启用按钮
                     ->addRightButton('delete', array('model' => $param['model'])) //添加删除按钮
-                    ->setTemplate('Builder/listbuilder_addon')
+                    ->setTemplate('_Builder/listbuilder_addon')
                     ->display();
         }else{
             $this->error('插件列表信息不正确');
@@ -166,7 +166,7 @@ class AddonController extends HomeController{
                 $builder->setMetaTitle('新增数据')  //设置页面标题
                         ->setPostUrl(U('addon/adminAdd/name/'.$name.'/tab/'.$tab)) //设置表单提交地址
                         ->setExtraItems($param['field'])
-                        ->setTemplate('Builder/formbuilder_addon')
+                        ->setTemplate('_Builder/formbuilder_addon')
                         ->display();
             }
         }else{
@@ -214,7 +214,7 @@ class AddonController extends HomeController{
                         ->addFormItem('id', 'hidden', 'ID', 'ID')
                         ->setExtraItems($param['field'])
                         ->setFormData(M($param['model'])->find($id))
-                        ->setTemplate('Builder/formbuilder_addon')
+                        ->setTemplate('_Builder/formbuilder_addon')
                         ->display();
             }
         }else{
