@@ -1,4 +1,4 @@
-<extend name="Public/layout"/>
+<extend name="_Layout/main"/>
 
 <block name="body">
     <div class="container">
@@ -14,7 +14,7 @@
                     <div class="article-info text-muted">
                         <ul class="list-unstyled list-inline border-top border-bottom padding-top padding-bottom">
                             <li><i class="fa fa-calendar"></i> {$info.utime|time_format}</li>
-                            <li><i class="glyphicon glyphicon-eye-open"></i> {$info.view} 浏览</li>
+                            <li><i class="fa fa-eye-open"></i> {$info.view} 浏览</li>
                             <li><i class="fa fa-comments"></i> {$info.comment} 评论</li>
                             <li><i class="fa fa-thumbs-o-up"></i> {$info.good} 赞</li>
                         </ul>

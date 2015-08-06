@@ -77,11 +77,11 @@
                                 uploader:'{:U("Upload/upload")}',
                                 fileTypeExts:'*.gif;*.jpg;*.jpeg;*.png;*.bmp',
                                 fileSizeLimit:{:C('UPLOAD_IMAGE_SIZE')}*1024,
-                                buttonText:'<span class="glyphicon glyphicon-plus"></span>',
+                                buttonText:'<span class="fa fa-plus"></span>',
                                 onUploadComplete:function(file, data){
                                     var data = $.parseJSON(data);
                                     var input = $('input[name="pictures"]');
-                                    var new_img = '<span class="img-box"><img class="img" src="' + data.url + '"><i class="glyphicon glyphicon-remove-sign"></i></span>';
+                                    var new_img = '<span class="img-box"><img class="img" src="' + data.url + '"><i class="fa fa-remove-sign"></i></span>';
                                     $('#preview_comment_picture').append(new_img);
                                     if(input.val()){
                                         input.val(input.val() + ',' + data.id);

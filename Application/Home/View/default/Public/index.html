@@ -1,4 +1,4 @@
-<extend name="Public/layout"/>
+<extend name="_Layout/main"/>
 
 <block name="title"><title>{:C('WEB_SITE_TITLE')}－{:C('WEB_SITE_SLOGAN')}</title></block>
 
@@ -14,12 +14,12 @@
         #my-slide .slider1 .btn-default-inverse:hover,
         #my-slide .slider1 .btn-default-inverse.hover,
         #my-slide .slider1 .btn-default-inverse.active {
-            color: #65b72f; 
+            color: #65b72f;
         }
         #my-slide .slider2 .btn-default-inverse:hover,
         #my-slide .slider2 .btn-default-inverse.hover,
         #my-slide .slider2 .btn-default-inverse.active {
-            color: #047ecc; 
+            color: #047ecc;
         }
         .feature .thumbnail .lazy{
             width: 100%;
@@ -53,7 +53,7 @@
                 pauseOnHover: true
             });
             $('#owl-case').owlCarousel();
-        }); 
+        });
     </script>
 </block>
 

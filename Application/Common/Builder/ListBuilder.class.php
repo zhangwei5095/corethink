@@ -395,13 +395,13 @@ class ListBuilder extends Controller{
                     case 'status':
                         switch($data[$column['name']]){
                             case '-1':
-                                $data[$column['name']] = '<i class="glyphicon glyphicon-trash" style="color:red"></i>';
+                                $data[$column['name']] = '<i class="fa fa-trash" style="color:red"></i>';
                                 break;
                             case '0':
-                                $data[$column['name']] = '<i class="glyphicon glyphicon-ban-circle" style="color:red"></i>';
+                                $data[$column['name']] = '<i class="fa fa-ban-circle" style="color:red"></i>';
                                 break;
                             case '1':
-                                $data[$column['name']] = '<i class="glyphicon glyphicon-ok" style="color:green"></i>';
+                                $data[$column['name']] = '<i class="fa fa-ok" style="color:green"></i>';
                                 break;
                         }
                         break;

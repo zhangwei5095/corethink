@@ -53,9 +53,9 @@ class InitConfigBehavior extends Behavior{
             if(MODULE_NAME === 'Admin' || $controller_name[0] === 'Admin'){
                 //模板相关配置
                 $system_config['TMPL_PARSE_STRING']['__PUBLIC__'] = __ROOT__.'/Public';
-                $system_config['TMPL_PARSE_STRING']['__IMG__'] = __ROOT__.'/Application/Admin/View/Public/img';
-                $system_config['TMPL_PARSE_STRING']['__CSS__'] = __ROOT__.'/Application/Admin/View/Public/css';
-                $system_config['TMPL_PARSE_STRING']['__JS__']  = __ROOT__.'/Application/Admin/View/Public/js';
+                $system_config['TMPL_PARSE_STRING']['__IMG__'] = __ROOT__.'/Application/Admin/View/_Resource/img';
+                $system_config['TMPL_PARSE_STRING']['__CSS__'] = __ROOT__.'/Application/Admin/View/_Resource/css';
+                $system_config['TMPL_PARSE_STRING']['__JS__']  = __ROOT__.'/Application/Admin/View/_Resource/js';
             }elseif(MODULE_NAME === 'Home' || $controller_name[0] === 'Home'){
                 /**
                  * 获取系统所有主题名称并配置THEME_LIST
@@ -74,9 +74,9 @@ class InitConfigBehavior extends Behavior{
 
                 //模板相关配置
                 $system_config['TMPL_PARSE_STRING']['__PUBLIC__'] = __ROOT__.'/Public';
-                $system_config['TMPL_PARSE_STRING']['__IMG__'] = __ROOT__.'/Application/Home/View/'.$current_theme.'/Public/img';
-                $system_config['TMPL_PARSE_STRING']['__CSS__'] = __ROOT__.'/Application/Home/View/'.$current_theme.'/Public/css';
-                $system_config['TMPL_PARSE_STRING']['__JS__']  = __ROOT__.'/Application/Home/View/'.$current_theme.'/Public/js';
+                $system_config['TMPL_PARSE_STRING']['__IMG__'] = __ROOT__.'/Application/Home/View/'.$current_theme.'/_Resource/img';
+                $system_config['TMPL_PARSE_STRING']['__CSS__'] = __ROOT__.'/Application/Home/View/'.$current_theme.'/_Resource/css';
+                $system_config['TMPL_PARSE_STRING']['__JS__']  = __ROOT__.'/Application/Home/View/'.$current_theme.'/_Resource/js';
             }
 
             S('DB_CONFIG_DATA', $system_config, 3600); //缓存配置
