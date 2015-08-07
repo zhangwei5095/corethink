@@ -82,7 +82,7 @@ EOF;
             if($data){
                 $id = $document_attribute_object->add();
                 if($id){
-                    $result = $document_attribute_object->addTableColumn($data); //新增表字段
+                    $result = $document_attribute_object->addField($data); //新增表字段
                     if($result){
                         $this->success('新增字段成功', U('index', array('doc_type' => I('doc_type'))));
                     }else{
@@ -202,19 +202,6 @@ EOF;
             default :
                 parent::setStatus($model);
                 break;
-        }
-    }
-
-    /**
-     * 根据表单类型名称获取字段定义
-     * @author jry <598821125@qq.com>
-     */
-    public function getFieldByName($name){
-        $form_item_type = C('FORM_ITEM_TYPE');
-        if($name){
-             $this->success($form_item_type[$name][1]);
-        }else{
-            $this->error('获取字段定义失败');
         }
     }
 }
