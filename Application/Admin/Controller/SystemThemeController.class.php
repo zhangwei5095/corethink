@@ -43,7 +43,7 @@ class SystemThemeController extends AdminController{
      */
     public function install($name){
         //获取当前主题信息
-        $config_file = realpath(APP_PATH.'Home/View/'.$name).'/corethink.php';
+        $config_file = realpath(APP_PATH.'Home/View/'.$name).'/'.D('SystemTheme')->install_file();
         if(!$config_file){
             $this->error('安装失败');
         }
@@ -75,7 +75,7 @@ class SystemThemeController extends AdminController{
     public function updateInfo($id){
         $system_theme_object = D('SystemTheme');
         $name = $system_theme_object->getFieldById($id, 'name');
-        $config_file = realpath(APP_PATH.'Home/View/'.$name).'/corethink.php';
+        $config_file = realpath(APP_PATH.'Home/View/'.$name).'/'.D('SystemTheme')->install_file();
         if(!$config_file){
             $this->error('不存在安装文件');
         }

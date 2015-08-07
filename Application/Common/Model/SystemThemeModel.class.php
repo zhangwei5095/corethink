@@ -15,6 +15,14 @@ use Think\Storage;
  */
 class SystemThemeModel extends Model{
     /**
+     * 安装描述文件名
+     * @author jry <598821125@qq.com>
+     */
+    public function install_file(){
+        return 'corethink.php';
+    }
+
+    /**
      * 自动验证规则
      * @author jry <598821125@qq.com>
      */
@@ -45,11 +53,11 @@ class SystemThemeModel extends Model{
      * @author jry <598821125@qq.com>
      */
     public function getAll(){
-        //获取Home主题所有主题（文件夹下必须有corethink.php）
+        //获取Home主题所有主题（文件夹下必须有$install_file定义的安装描述文件）
         $path = APP_PATH.'Home/View/';
         $dirs = array_map('basename', glob($path.'*', GLOB_ONLYDIR));
         foreach($dirs as $dir){
-            $config_file = realpath($path.$dir).'/corethink.php';
+            $config_file = realpath($path.$dir).'/'.$this->install_file();
             if(Storage::has($config_file)){
                 $theme_dir_list[] = $dir;
                 $temp_arr = include $config_file;

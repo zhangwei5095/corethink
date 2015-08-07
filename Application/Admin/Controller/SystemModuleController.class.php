@@ -46,7 +46,7 @@ class SystemModuleController extends AdminController{
      */
     public function install($name){
         //获取当前模块信息
-        $config_file = realpath(APP_PATH.$name).'/corethink.php';
+        $config_file = realpath(APP_PATH.$name).'/'.D('SystemModule')->install_file();
         if(!$config_file){
             $this->error('安装失败');
         }
@@ -85,7 +85,7 @@ class SystemModuleController extends AdminController{
     public function updateInfo($id){
         $system_module_object = D('SystemModule');
         $name = $system_module_object->getFieldById($id, 'name');
-        $config_file = realpath(APP_PATH.$name).'/corethink.php';
+        $config_file = realpath(APP_PATH.$name).'/'.D('SystemModule')->install_file();
         if(!$config_file){
             $this->error('不存在安装文件');
         }
