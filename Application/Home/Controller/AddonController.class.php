@@ -114,7 +114,7 @@ class AddonController extends HomeController{
             $attr = array();
             $attr['title'] = '编辑';
             $attr['class'] = 'label label-info';
-            $attr['href']  = U('Home/Addon/adminEdit/name/'.$name.'/tab/'.$tab.'/id/[__data_id__]');
+            $attr['href']  = U('Home/Addon/adminEdit', array('name' => $name, 'tab' => $tab, 'id' => '__data_id__'));
 
             //显示列表
             $builder->addTableColumn('right_button', '操作', 'btn')

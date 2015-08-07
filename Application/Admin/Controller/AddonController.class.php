@@ -284,7 +284,7 @@ class AddonController extends AdminController {
             $attr = array();
             $attr['title'] = '编辑';
             $attr['class'] = 'label label-info';
-            $attr['href']  = U('Admin/Addon/adminEdit/name/'.$name.'/tab/'.$tab.'/id/[__data_id__]');
+            $attr['href']  = U('Admin/Addon/adminEdit', array('name' => $name, 'tab' => $tab, 'id' => '__data_id__'));
 
             //显示列表
             $builder->addTableColumn('right_button', '操作', 'btn')

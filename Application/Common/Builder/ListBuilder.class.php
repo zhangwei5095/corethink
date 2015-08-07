@@ -226,8 +226,8 @@ class ListBuilder extends Controller{
      * 在使用预置的几种按钮时，比如我想改变编辑按钮的名称
      * 那么只需要$builder->addRightpButton('edit', array('title' => '换个马甲'))
      * 如果想改变地址甚至新增一个属性用上面类似的定义方法
-     * 因为添加右侧按钮的时候你并没有办法知道数据ID，于是我们采用[__data_id__]作为约定的标记
-     * [__data_id__]会在display方法里自动替换成数据的真实ID
+     * 因为添加右侧按钮的时候你并没有办法知道数据ID，于是我们采用__data_id__作为约定的标记
+     * __data_id__会在display方法里自动替换成数据的真实ID
      * @param string $type 按钮类型，edit/forbid/recycle/restore/delete/self六种取值
      * @param array  $attr 按钮属性，一个定了标题/链接/CSS类名等的属性描述数组
      * @return $this
@@ -239,7 +239,7 @@ class ListBuilder extends Controller{
                 //预定义按钮属性以简化使用
                 $my_attribute['title'] = '编辑';
                 $my_attribute['class'] = 'label label-info';
-                $my_attribute['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit/'.$this->_table_data_list_key.'/[__data_id__]');
+                $my_attribute['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit', array($this->_table_data_list_key => '__data_id__'));
 
                 //如果定义了属性数组则与默认的进行合并，详细使用方法参考上面的顶部按钮
                 /**
@@ -262,10 +262,10 @@ class ListBuilder extends Controller{
                 $my_attribute['data-model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
                 $my_attribute['0']['title'] = '启用';
                 $my_attribute['0']['class'] = 'label label-success ajax-get confirm';
-                $my_attribute['0']['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus/ids/[__data_id__]', array('status' => 'resume', 'model' => $my_attribute['data-model']));
+                $my_attribute['0']['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'resume', 'ids' => '__data_id__', 'model' => $my_attribute['data-model']));
                 $my_attribute['1']['title'] = '禁用';
                 $my_attribute['1']['class'] = 'label label-warning ajax-get confirm';
-                $my_attribute['1']['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus/ids/[__data_id__]', array('status' => 'forbid', 'model' => $my_attribute['data-model']));
+                $my_attribute['1']['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'forbid', 'ids' => '__data_id__', 'model' => $my_attribute['data-model']));
 
                 //这个按钮定义好了把它丢进按钮池里
                 $this->_right_button_list[] = $my_attribute;
@@ -275,7 +275,7 @@ class ListBuilder extends Controller{
                 $my_attribute['title'] = '回收';
                 $my_attribute['class'] = 'label label-danger ajax-get confirm';
                 $my_attribute['data-model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
-                $my_attribute['href'] = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus/ids/[__data_id__]', array('status' => 'recycle', 'model' => $my_attribute['data-model']));
+                $my_attribute['href'] = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'recycle', 'ids' => '__data_id__', 'model' => $my_attribute['data-model']));
 
                 //如果定义了属性数组则与默认的进行合并，详细使用方法参考上面的顶部按钮
                 if($attribute){
@@ -290,7 +290,7 @@ class ListBuilder extends Controller{
                 $my_attribute['title'] = '还原';
                 $my_attribute['class'] = 'label label-danger ajax-get confirm';
                 $my_attribute['data-model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
-                $my_attribute['href'] = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus/ids/[__data_id__]', array('status' => 'restore', 'model' => $my_attribute['data-model']));
+                $my_attribute['href'] = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'restore', 'ids' => '__data_id__', 'model' => $my_attribute['data-model']));
 
                 //如果定义了属性数组则与默认的进行合并，详细使用方法参考上面的顶部按钮
                 if($attribute){
@@ -305,7 +305,7 @@ class ListBuilder extends Controller{
                 $my_attribute['title'] = '删除';
                 $my_attribute['class'] = 'label label-danger ajax-get confirm';
                 $my_attribute['data-model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
-                $my_attribute['href'] = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus/ids/[__data_id__]', array('status' => 'delete', 'model' => $my_attribute['data-model']));
+                $my_attribute['href'] = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'delete', 'ids' => '__data_id__', 'model' => $my_attribute['data-model']));
 
                 //如果定义了属性数组则与默认的进行合并，详细使用方法参考上面的顶部按钮
                 if($attribute){
@@ -381,8 +381,8 @@ class ListBuilder extends Controller{
                     $right_button = $right_button[$data['status']];
                 }
 
-                //将约定的标记[__data_id__]替换成真实的数据ID
-                $right_button['href'] = preg_replace('/\[__data_id__\]/i', $data[$this->_table_data_list_key], $right_button['href']);
+                //将约定的标记__data_id__替换成真实的数据ID
+                $right_button['href'] = preg_replace('/__data_id__/i', $data[$this->_table_data_list_key], $right_button['href']);
 
                 //编译按钮属性
                 $right_button['attribute'] = $this->compileHtmlAttr($right_button);

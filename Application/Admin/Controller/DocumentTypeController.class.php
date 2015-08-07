@@ -31,7 +31,7 @@ class DocumentTypeController extends AdminController{
 
         $attr['title'] = '字段管理';
         $attr['class'] = 'label label-success';
-        $attr['href']  = U('Admin/DocumentAttribute/index/doc_type/[__data_id__]');
+        $attr['href']  = U('Admin/DocumentAttribute/index', array('doc_type' => '__data_id__'));
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
