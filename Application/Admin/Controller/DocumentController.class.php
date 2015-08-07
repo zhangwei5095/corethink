@@ -120,55 +120,66 @@ EOF;
      * @author jry <598821125@qq.com>
      */
     public function add(){
-        //获取当前分类
-        $cid = I('get.cid');
-        $category_info = D('Category')->find($cid);
-        $doc_type = D('DocumentType')->find($category_info['doc_type']);
-        $field_sort = json_decode($doc_type['field_sort'], true);
-        $field_group = parse_attr($doc_type['field_group']);
-
-        //获取文档字段
-        $map['status'] = array('eq', '1');
-        $map['show'] = array('eq', '1');
-        $map['doc_type'] = array('in', '0,'.$category_info['doc_type']);
-        $attribute_list = D('DocumentAttribute')->where($map)->select();
-
-        //解析字段options
-        $new_attribute_list = array();
-        foreach($attribute_list as $attr){
-            if($attr['name'] == 'cid'){
-                $con['group'] = $category_info['group'];
-                $con['doc_type'] = $category_info['doc_type'];
-                $con['status'] = array('egt', 0);
-                $attr['value'] = $cid;
-                $attr['options'] = $this->selectListAsTree('Category', $con);
+        if(IS_POST){
+            //新增文档
+            $document_object = D('Document');
+            $result = $document_object->update();
+            if(!$result){
+                $this->error($document_object->getError());
             }else{
-                $attr['options'] = parse_attr($attr['options']);
+                $this->success('新增成功', U('Document/index', array('cid' => I('post.cid'))));
             }
-            $new_attribute_list[$attr['id']] = $attr;
-        }
+        }else{
+            //获取当前分类
+            $cid = I('get.cid');
+            $category_info = D('Category')->find($cid);
+            $doc_type = D('DocumentType')->find($category_info['doc_type']);
+            $field_sort = json_decode($doc_type['field_sort'], true);
+            $field_group = parse_attr($doc_type['field_group']);
 
-        //表单字段排序及分组
-        if($field_sort){
-            $new_attribute_list_sort = array();
-            foreach($field_sort as $k1 => &$v1){
-                $new_attribute_list_sort[0]['type'] = 'group';
-                $new_attribute_list_sort[0]['options']['group'.$k1]['title'] = $field_group[$k1];
-                foreach($v1 as $k2 => $v2){
-                    $new_attribute_list_sort[0]['options']['group'.$k1]['options'][] = $new_attribute_list[$v2];
+            //获取文档字段
+            $map['status'] = array('eq', '1');
+            $map['show'] = array('eq', '1');
+            $map['doc_type'] = array('in', '0,'.$category_info['doc_type']);
+            $attribute_list = D('DocumentAttribute')->where($map)->select();
+
+            //解析字段options
+            $new_attribute_list = array();
+            foreach($attribute_list as $attr){
+                if($attr['name'] == 'cid'){
+                    $con['group'] = $category_info['group'];
+                    $con['doc_type'] = $category_info['doc_type'];
+                    $con['status'] = array('egt', 0);
+                    $attr['value'] = $cid;
+                    $attr['options'] = $this->selectListAsTree('Category', $con);
+                }else{
+                    $attr['options'] = parse_attr($attr['options']);
                 }
+                $new_attribute_list[$attr['id']] = $attr;
             }
-            $new_attribute_list = $new_attribute_list_sort;
-        }
 
-        //使用FormBuilder快速建立表单页面。
-        $builder = new \Common\Builder\FormBuilder();
-        $builder->setMetaTitle('新增文章') //设置页面标题
-                ->setPostUrl(U('update')) //设置表单提交地址
-                ->addFormItem('doc_type', 'hidden')
-                ->setFormData(array('doc_type' => $category_info['doc_type']))
-                ->setExtraItems($new_attribute_list)
-                ->display();
+            //表单字段排序及分组
+            if($field_sort){
+                $new_attribute_list_sort = array();
+                foreach($field_sort as $k1 => &$v1){
+                    $new_attribute_list_sort[0]['type'] = 'group';
+                    $new_attribute_list_sort[0]['options']['group'.$k1]['title'] = $field_group[$k1];
+                    foreach($v1 as $k2 => $v2){
+                        $new_attribute_list_sort[0]['options']['group'.$k1]['options'][] = $new_attribute_list[$v2];
+                    }
+                }
+                $new_attribute_list = $new_attribute_list_sort;
+            }
+
+            //使用FormBuilder快速建立表单页面。
+            $builder = new \Common\Builder\FormBuilder();
+            $builder->setMetaTitle('新增文章') //设置页面标题
+                    ->setPostUrl(U('add')) //设置表单提交地址
+                    ->addFormItem('doc_type', 'hidden')
+                    ->setFormData(array('doc_type' => $category_info['doc_type']))
+                    ->setExtraItems($new_attribute_list)
+                    ->display();
+        }
     }
 
     /**
@@ -176,83 +187,67 @@ EOF;
      * @author jry <598821125@qq.com>
      */
     public function edit($id){
-        //获取文档信息
-        $document_info = D('Document')->detail($id);
-
-        //获取当前分类
-        $category_info = D('Category')->find($document_info['cid']);
-        $doc_type = D('DocumentType')->find($category_info['doc_type']);
-        $field_sort = json_decode($doc_type['field_sort'], true);
-        $field_group = parse_attr($doc_type['field_group']);
-
-        //获取文档字段
-        $map['status'] = array('eq', '1');
-        $map['show'] = array('eq', '1');
-        $map['doc_type'] = array('in', '0,'.$category_info['doc_type']);
-        $attribute_list = D('DocumentAttribute')->where($map)->select();
-
-        //解析字段options
-        $new_attribute_list = array();
-        foreach($attribute_list as $attr){
-            if($attr['name'] == 'cid'){
-                $con['group'] = $category_info['group'];
-                $con['doc_type'] = $category_info['doc_type'];
-                $con['status'] = array('egt', 0);
-                $attr['options'] = $this->selectListAsTree('Category', $con);
+        if(IS_POST){
+            //更新文档
+            $document_object = D('Document');
+            $result = $document_object->update();
+            if(!$result){
+                $this->error($document_object->getError());
             }else{
-                $attr['options'] = parse_attr($attr['options']);
+                $this->success('更新成功', U('Document/index', array('cid' => I('post.cid'))));
             }
-            $new_attribute_list[$attr['id']] = $attr;
-            $new_attribute_list[$attr['id']]['value'] = $document_info[$attr['name']];
-        }
-
-        //表单字段排序及分组
-        if($field_sort){
-            $new_attribute_list_sort = array();
-            foreach($field_sort as $k1 => &$v1){
-                $new_attribute_list_sort[0]['type'] = 'group';
-                $new_attribute_list_sort[0]['options']['group'.$k1]['title'] = $field_group[$k1];
-                foreach($v1 as $k2 => $v2){
-                    $new_attribute_list_sort[0]['options']['group'.$k1]['options'][] = $new_attribute_list[$v2];
-                }
-            }
-            $new_attribute_list = $new_attribute_list_sort;
-        }
-
-        //使用FormBuilder快速建立表单页面。
-        $builder = new \Common\Builder\FormBuilder();
-        $builder->setMetaTitle('编辑文章') //设置页面标题
-                ->setPostUrl(U('update')) //设置表单提交地址
-                ->addFormItem('id', 'hidden', 'ID', 'ID')
-                ->setExtraItems($new_attribute_list)
-                ->setFormData($document_info)
-                ->display();
-    }
-
-    /**
-     * 新增或更新一个文档
-     * @author jry <598821125@qq.com>
-     */
-    public function update(){
-        //解析数据类似复选框类型的数组型值
-        foreach($_POST as $key => $val){
-            if(is_array($val)){
-                $_POST[$key] = implode(',', $val);
-            }
-        }
-
-        //新增或更新文档
-        $document_object = D('Document');
-        $result = $document_object->update();
-        if(!$result){
-            $this->error($document_object->getError());
         }else{
-            if(is_array($result)){
-                $message = '更新成功';
-            }else{
-                $message = '新增成功';
+            //获取文档信息
+            $document_info = D('Document')->detail($id);
+
+            //获取当前分类
+            $category_info = D('Category')->find($document_info['cid']);
+            $doc_type = D('DocumentType')->find($category_info['doc_type']);
+            $field_sort = json_decode($doc_type['field_sort'], true);
+            $field_group = parse_attr($doc_type['field_group']);
+
+            //获取文档字段
+            $map['status'] = array('eq', '1');
+            $map['show'] = array('eq', '1');
+            $map['doc_type'] = array('in', '0,'.$category_info['doc_type']);
+            $attribute_list = D('DocumentAttribute')->where($map)->select();
+
+            //解析字段options
+            $new_attribute_list = array();
+            foreach($attribute_list as $attr){
+                if($attr['name'] == 'cid'){
+                    $con['group'] = $category_info['group'];
+                    $con['doc_type'] = $category_info['doc_type'];
+                    $con['status'] = array('egt', 0);
+                    $attr['options'] = $this->selectListAsTree('Category', $con);
+                }else{
+                    $attr['options'] = parse_attr($attr['options']);
+                }
+                $new_attribute_list[$attr['id']] = $attr;
+                $new_attribute_list[$attr['id']]['value'] = $document_info[$attr['name']];
             }
-            $this->success($message, U('Document/index', array('cid' => I('post.cid'))));
+
+            //表单字段排序及分组
+            if($field_sort){
+                $new_attribute_list_sort = array();
+                foreach($field_sort as $k1 => &$v1){
+                    $new_attribute_list_sort[0]['type'] = 'group';
+                    $new_attribute_list_sort[0]['options']['group'.$k1]['title'] = $field_group[$k1];
+                    foreach($v1 as $k2 => $v2){
+                        $new_attribute_list_sort[0]['options']['group'.$k1]['options'][] = $new_attribute_list[$v2];
+                    }
+                }
+                $new_attribute_list = $new_attribute_list_sort;
+            }
+
+            //使用FormBuilder快速建立表单页面。
+            $builder = new \Common\Builder\FormBuilder();
+            $builder->setMetaTitle('编辑文章') //设置页面标题
+                    ->setPostUrl(U('edit')) //设置表单提交地址
+                    ->addFormItem('id', 'hidden', 'ID', 'ID')
+                    ->setExtraItems($new_attribute_list)
+                    ->setFormData($document_info)
+                    ->display();
         }
     }
 

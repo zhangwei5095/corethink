@@ -14,6 +14,17 @@ use Think\Controller;
  */
 class SystemUpdateController extends AdminController{
     /**
+     * 初始化方法
+     * @author jry <598821125@qq.com>
+     */
+    protected function _initialize(){
+        //只有ID为1的超级管理员才有权限系统更新
+        if(session('user_auth.uid') !== '1'){
+            $this->success('');
+        }
+    }
+
+    /**
      * 检查新版本
      * @author jry <598821125@qq.com>
      */

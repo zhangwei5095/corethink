@@ -67,6 +67,13 @@ class DocumentModel extends Model{
      * @author jry <598821125@qq.com>
      */
     public function update(){
+        //解析数据类似复选框类型的数组型值
+        foreach($_POST as $key => $val){
+            if(is_array($val)){
+                $_POST[$key] = implode(',', $val);
+            }
+        }
+        //调用create方法构造数据
         $base_data = $this->create();
         if($base_data){
             //获取当前分类
