@@ -1,6 +1,6 @@
 <extend name="_Layout/main"/>
 
-<block name="body">
+<block name="main">
     <div class="data-table">
         <table class="table table-hover">
             <thead>
@@ -63,7 +63,11 @@
                             window.onbeforeunload = function(){ return null; }
                         }
                     }else{
-                        alertMessager(data.info, 'danger');
+                        $.bootstrapGrowl(data.info, {
+                            type: 'danger',
+                            align: 'center',
+                            width: 'auto',
+                        });
                     }
                 }
             });

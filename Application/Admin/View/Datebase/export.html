@@ -1,10 +1,10 @@
 <extend name="_Layout/main"/>
 
-<block name="body">
+<block name="main">
     <div class="toolbar margin-bottom">
         <a id="export" class="btn btn-primary" href="javascript:;" autocomplete="off">立即备份</a>
-        <a id="optimize" class="btn btn-success" href="{:U('optimize')}">优化表</a>
-        <a id="repair" class="btn btn-success" href="{:U('repair')}">修复表</a>
+        <a id="optimize" class="btn btn-warning" href="{:U('optimize')}">优化表</a>
+        <a id="repair" class="btn btn-danger" href="{:U('repair')}">修复表</a>
     </div>
     <!-- 数据列表 -->
     <div class="data-table">
@@ -31,8 +31,8 @@
                             <td class="hidden-xs">{$table.create_time}</td>
                             <td class="back-status">未备份</td>
                             <td class="action">
-                                <a class="label label-success ajax-get no-refresh" href="{:U('optimize?tables='.$table['name'])}">优化表</a>&nbsp;
-                                <a class="label label-success ajax-get no-refresh" href="{:U('repair?tables='.$table['name'])}">修复表</a>
+                                <a class="btn btn-xs btn-warning ajax-get no-refresh" href="{:U('optimize?tables='.$table['name'])}">优化表</a>
+                                <a class="btn btn-xs btn-danger ajax-get no-refresh" href="{:U('repair?tables='.$table['name'])}">修复表</a>
                             </td>
                         </tr>
                     </volist>
@@ -50,9 +50,17 @@
             $optimize.add($repair).click(function(){
                 $.post(this.href, $form.serialize(), function(data){
                     if(data.status){
-                        alertMessager(data.info, 'success');
+                        $.bootstrapGrowl(data.info, {
+                            type: 'success',
+                            align: 'center',
+                            width: 'auto',
+                        });
                     }else{
-                        alertMessager(data.info, 'danger');
+                        $.bootstrapGrowl(data.info, {
+                            type: 'danger',
+                            align: 'center',
+                            width: 'auto',
+                        });
                     }
                     setTimeout(function(){
                         $(that).removeClass('disabled').prop('disabled',false);
@@ -74,7 +82,11 @@
                             backup(data.tab);
                             window.onbeforeunload = function(){ return "正在备份数据库，请不要关闭！" }
                         }else{
-                            alertMessager(data.info, 'danger');
+                            $.bootstrapGrowl(data.info, {
+                                type: 'danger',
+                                align: 'center',
+                                width: 'auto',
+                            });
                             $export.parent().children().removeClass("disabled");
                             $export.html("立即备份");
                             setTimeout(function(){
@@ -98,7 +110,11 @@
                         }
                         backup(data.tab, tab.id != data.tab.id);
                     }else{
-                        alertMessager(data.info, 'danger');
+                        $.bootstrapGrowl(data.info, {
+                            type: 'danger',
+                            align: 'center',
+                            width: 'auto',
+                        });
                         $export.parent().children().removeClass("disabled");
                         $export.html("立即备份");
                         setTimeout(function(){
