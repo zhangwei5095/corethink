@@ -14,7 +14,7 @@
     <link rel="apple-touch-icon" type="image/x-icon" href="__ROOT__/favicon.ico">
     <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin.css?v={:C('STATIC_VERSION')}">
     <block name="style"></block>
     <script src="__PUBLIC__/libs/jquery/1.x/jquery-1.11.3.min.js"></script>
     <block name="libs"></block>
@@ -27,7 +27,7 @@
 
 <body id="<?php echo 'body-'.$CONTROLLER_NAME.'-'.$ACTION_NAME; ?>" class="<?php echo 'body-'.$CONTROLLER_NAME.' body-'.$CONTROLLER_NAME.'-'.$ACTION_NAME; ?>">
     <div class="clearfix full-header">
-        <div class="navbar navbar-inverse margin-none border-radius-none" role="navigation">
+        <div class="navbar navbar-inverse" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-top">
@@ -38,11 +38,11 @@
                     </button>
                     <php>if(C('WEB_SITE_LOGO')):</php>
                         <a class="navbar-brand" target="_blank" href="__ROOT__/">
-                            <img class="logo" src="{$Think.config.WEB_SITE_LOGO|get_cover='path'}">
+                            <img class="logo" src="{$Think.config.WEB_SITE_LOGO}">
                         </a>
                     <php>else:</php>
                         <a class="navbar-brand" target="_blank" href="__ROOT__/">
-                            <img class="logo" src="__ROOT__/logo.png">
+                            <img class="logo" src="__HOME_IMG__/logo_with_title.png">
                         </a>
                     <php>endif;</php>
                 </div>
@@ -147,7 +147,7 @@
                     var $universalObject{$Think.CONTROLLER_NAME} = {<block name='universal'></block>};
                 </script>
             </div>
-            <script src="__PUBLIC__/js/admin.js"></script>
+            <script src="__PUBLIC__/js/admin.js?v={:C('STATIC_VERSION')}"></script>
             <block name="script"></block>
         </div>
     </div>

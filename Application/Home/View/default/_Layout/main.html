@@ -15,11 +15,11 @@
     <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/favicon.ico">
     <link rel="apple-touch-icon" type="image/x-icon" href="__ROOT__/favicon.ico">
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/home.min.css?v={:C('STATIC_VERSION')}"> <!-- 引入gulp合并压缩的css -->
-    <link rel="stylesheet" type="text/css" href="__CSS__/main.css?v={:C('STATIC_VERSION')}"> <!-- 引入当前主题无需经过gulp并压缩的css -->
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/main.css?v={:C('STATIC_VERSION')}"> <!-- 引入当前主题无需经过gulp并压缩的css -->
     <block name="style"></block>
     <script type="text/javascript" src="__PUBLIC__/libs/jquery/1.x/jquery-1.11.3.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="__PUBLIC__/js/home.min.js?v={:C('STATIC_VERSION')}" charset="utf-8"></script> <!-- 引入gulp并压缩的js -->
-    <script type="text/javascript" src="__JS__/main.js?v={:C('STATIC_VERSION')}" charset="utf-8"></script> <!-- 引入当前主题无需经过gulp并压缩的js -->
+    <script type="text/javascript" src="__HOME_JS__/main.js?v={:C('STATIC_VERSION')}" charset="utf-8"></script> <!-- 引入当前主题无需经过gulp并压缩的js -->
     <block name="script"></block>
     {:C('WEB_SITE_STATISTICS')} <!-- 站点统计代码 -->
 </head>
@@ -53,7 +53,7 @@
                             </li>
                             <li><a target="_blank" href="http://weibo.com/u/5667168319"><i class="fa fa-weibo"></i></a></li>
                             <li><a href="#" data-html="true" tabindex="0" role="button" data-toggle="popover" data-trigger="hover" data-placement="bottom"
-                                title="微信扫一扫" data-html="true" data-content="<img src='__IMG__/weixin_gh_ce5447812a60.jpg'>">
+                                title="微信扫一扫" data-html="true" data-content="<img src='__HOME_IMG__/weixin_gh_ce5447812a60.jpg'>">
                                 <i class="fa fa-weixin"></i></a>
                             </li>
                         </ul>
@@ -99,7 +99,7 @@
                         <php>if(C('WEB_SITE_LOGO')):</php>
                             <a class="navbar-brand" href="__ROOT__/"><img alt="logo" class="logo" src="{$Think.config.WEB_SITE_LOGO|get_cover='path'}"></a>
                         <php>else:</php>
-                            <a class="navbar-brand" href="__ROOT__/"><img alt="logo" class="logo" src="__IMG__/logo_with_title.png"></a>
+                            <a class="navbar-brand" href="__ROOT__/"><img alt="logo" class="logo" src="__HOME_IMG__/logo_with_title.png"></a>
                         <php>endif;</php>
                     </div>
                     <div class="collapse navbar-collapse navbar-collapse-main">

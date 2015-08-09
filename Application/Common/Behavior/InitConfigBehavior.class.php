@@ -50,34 +50,29 @@ class InitConfigBehavior extends Behavior{
             //获取所有系统配置
             $system_config = D('SystemConfig')->lists();
 
-            if(MODULE_NAME === 'Admin' || $controller_name[0] === 'Admin'){
-                //模板相关配置
-                $system_config['TMPL_PARSE_STRING']['__PUBLIC__'] = __ROOT__.'/Public';
-                $system_config['TMPL_PARSE_STRING']['__IMG__'] = __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/img';
-                $system_config['TMPL_PARSE_STRING']['__CSS__'] = __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/css';
-                $system_config['TMPL_PARSE_STRING']['__JS__']  = __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/js';
-            }elseif(MODULE_NAME === 'Home' || $controller_name[0] === 'Home'){
-                /**
-                 * 获取系统所有主题名称并配置THEME_LIST
-                 * 根据ThinkPHP规则如果开启自动侦测模板主题功能(TMPL_DETECT_THEME)
-                 * 则必须配置THEME_LIST，否则TP会调用默认主题(DEFAULT_THEME)导致主题功能失效
-                 */
-                $system_theme_list = D('SystemTheme')->getfield('name', true);
-                $system_config['THEME_LIST'] = implode(',', $system_theme_list);
+            /**
+             * 获取系统所有主题名称并配置THEME_LIST
+             * 根据ThinkPHP规则如果开启自动侦测模板主题功能(TMPL_DETECT_THEME)
+             * 则必须配置THEME_LIST，否则TP会调用默认主题(DEFAULT_THEME)导致主题功能失效
+             */
+            $system_theme_list = D('SystemTheme')->getfield('name', true);
+            $system_config['THEME_LIST'] = implode(',', $system_theme_list);
 
-                //从系统主题数据表获取当前主题的名称
-                $current_theme = D('SystemTheme')->where(array('current' => 1))->order('id asc')->getField('name');
-                if(MODULE_NAME === 'Home'){
-                    $system_config['DEFAULT_THEME'] = $current_theme; //默认主题设为当前主题
-                    cookie('think_template', $current_theme); //默认主题设为当前主题
-                }
-
-                //模板相关配置
-                $system_config['TMPL_PARSE_STRING']['__PUBLIC__'] = __ROOT__.'/Public';
-                $system_config['TMPL_PARSE_STRING']['__IMG__'] = __ROOT__.'/'.APP_PATH.'Home/View/'.$current_theme.'/_Resource/img';
-                $system_config['TMPL_PARSE_STRING']['__CSS__'] = __ROOT__.'/'.APP_PATH.'Home/View/'.$current_theme.'/_Resource/css';
-                $system_config['TMPL_PARSE_STRING']['__JS__']  = __ROOT__.'/'.APP_PATH.'Home/View/'.$current_theme.'/_Resource/js';
+            //从系统主题数据表获取当前主题的名称
+            $current_theme = D('SystemTheme')->where(array('current' => 1))->order('id asc')->getField('name');
+            if(MODULE_NAME === 'Home'){
+                $system_config['DEFAULT_THEME'] = $current_theme; //默认主题设为当前主题
+                cookie('think_template', $current_theme); //默认主题设为当前主题
             }
+
+            //模板相关配置
+            $system_config['TMPL_PARSE_STRING']['__PUBLIC__']    = __ROOT__.'/Public';
+            $system_config['TMPL_PARSE_STRING']['__ADMIN_IMG__'] = __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/img';
+            $system_config['TMPL_PARSE_STRING']['__ADMIN_CSS__'] = __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/css';
+            $system_config['TMPL_PARSE_STRING']['__ADMIN_JS__']  = __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/js';
+            $system_config['TMPL_PARSE_STRING']['__HOME_IMG__']  = __ROOT__.'/'.APP_PATH.'Home/View/'.$current_theme.'/_Resource/img';
+            $system_config['TMPL_PARSE_STRING']['__HOME_CSS__']  = __ROOT__.'/'.APP_PATH.'Home/View/'.$current_theme.'/_Resource/css';
+            $system_config['TMPL_PARSE_STRING']['__HOME_JS__']   = __ROOT__.'/'.APP_PATH.'Home/View/'.$current_theme.'/_Resource/js';
 
             S('DB_CONFIG_DATA', $system_config, 3600); //缓存配置
         }

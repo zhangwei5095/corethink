@@ -348,10 +348,10 @@ function get_cover($id, $type){
     if(!$url){
         switch($type){
             case 'default' : //默认图片
-                $url = C('TMPL_PARSE_STRING.__IMG__').'/default1.png';
+                $url = C('TMPL_PARSE_STRING.__HOME_IMG__').'/default1.png';
                 break;
             case 'avatar' : //用户头像
-                $url = C('TMPL_PARSE_STRING.__IMG__').'/avatar'.rand(1,7).'.png';
+                $url = C('TMPL_PARSE_STRING.__HOME_IMG__').'/avatar'.rand(1,7).'.png';
                 break;
             default: //文档列表默认图片
                 break;
