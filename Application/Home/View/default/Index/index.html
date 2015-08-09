@@ -6,10 +6,16 @@
 
 <block name="style">
     <style type="text/css">
+        .main-nav {
+            margin-bottom: 0px;
+        }
         @media (max-width: 768px) {
             #my-slide .btn {
                 margin-bottom: 8px;
             }
+        }
+        #my-slide {
+            margin-bottom: 20px;
         }
         #my-slide .slider1 .btn-default-inverse:hover,
         #my-slide .slider1 .btn-default-inverse.hover,
@@ -33,6 +39,7 @@
 </block>
 
 <block name="script">
+    <script type="text/javascript" src="__PUBLIC__/libs/jquery_devrama_slider/jquery.devrama.slider.js"></script>
     <script type="text/javascript">
         $(function(){
             $('#my-slide').DrSlider({
@@ -52,7 +59,6 @@
                 progressColor: '#fff',
                 pauseOnHover: true
             });
-            $('#owl-case').owlCarousel();
         });
     </script>
 </block>
@@ -106,7 +112,7 @@
 
 <block name="body">
     <div class="container">
-        <a class="btn btn-info btn-block margin-top margin-bottom">特性</a>
+        <a class="btn btn-info btn-block">特性</a>
         <div class="row feature">
             <div class="col-xs-12 col-sm-4 col-md-3">
                 <div class="thumbnail">

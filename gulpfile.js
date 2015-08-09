@@ -8,7 +8,7 @@
 
 //
 //
-// init module
+// 初始化gulp插件
 // --------------------------------------------
 var gulp = require('gulp');
 var less = require('gulp-less');
@@ -36,18 +36,19 @@ var gulp_comment_banner = '/*! ---- * <%= date %> ---- */\n\n'; // mod ASCII ban
 
 //
 //
-// ADMIN
+// 编译压缩后台相关样式与脚本
 // --------------------------------------------
 var ADMIN = {
     ROOT: 'Application/Admin',
-    VIEW: 'Application/Admin/View',
+    GULP: 'Application/Admin/View/_Resource/gulp/'
 };
 
-// SCRIPT ADMIN
+// 加载后台所有需要压缩js文件
 var admin_script_files = [
-    ADMIN.VIEW + "/_Resource/js/admin.js",
+    ADMIN.GULP + "admin.js",
 ];
 
+// 压缩并在/Public/js下生成后台admin.min.js文件
 gulp.task('admin_script_module', function() {
     gulp
         .src(admin_script_files)
@@ -66,11 +67,13 @@ gulp.task('admin_script_module', function() {
         .pipe(gulp.dest('Public/js/'));
 });
 
-// STYLE ADMIN
+
+// 加载后台所有需要编译的less或者css文件
 var admin_style_files = [
-    ADMIN.VIEW + "/_Resource/less/admin.less",
+    ADMIN.GULP + "admin.less",
 ];
 
+// 压缩并在/Public/css下生成后台admin.min.css文件
 gulp.task('admin_style_module', function() {
     gulp
         .src(admin_style_files)
@@ -78,6 +81,68 @@ gulp.task('admin_style_module', function() {
         .pipe(prefix('last 2 version', 'ie 8', 'ie 9'))
         .pipe(sourcemaps.init())
         .pipe(rename('admin.css'))
+        .pipe(header(gulp_comment_banner, {
+            date: gulp_date_now
+        }))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('Public/css/'))
+        .pipe(minifyCss())
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(gulp.dest('Public/css/'))
+        .pipe(livereload());
+});
+
+
+
+//
+//
+// 编译压缩前台相关样式与脚本
+// --------------------------------------------
+var HOME = {
+    ROOT: 'Application/Home/',
+    GULP: 'Application/Home/View/default/_Resource/gulp/'
+};
+
+// 加载前台所有需要压缩js文件
+var home_script_files = [
+    HOME.GULP + "home.js",
+];
+
+// 压缩并在/Public/js下生成后台home.min.js文件
+gulp.task('home_script_module', function() {
+    gulp
+        .src(home_script_files)
+        .pipe(imports())
+        .pipe(header(gulp_comment_banner, {
+            date: gulp_date_now
+        }))
+        .pipe(gulp.dest('Public/js/'))
+        .pipe(uglify())
+        .pipe(header(gulp_comment_banner, {
+            date: gulp_date_now
+        }))
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(gulp.dest('Public/js/'));
+});
+
+
+// 加载前台所有需要编译的less或者css文件
+var home_style_files = [
+    HOME.GULP + "home.less",
+];
+
+// 压缩并在/Public/css下生成后台admin.min.css文件
+gulp.task('home_style_module', function() {
+    gulp
+        .src(home_style_files)
+        .pipe(less())
+        .pipe(prefix('last 2 version', 'ie 8', 'ie 9'))
+        .pipe(sourcemaps.init())
+        .pipe(rename('home.css'))
         .pipe(header(gulp_comment_banner, {
             date: gulp_date_now
         }))
@@ -107,12 +172,21 @@ gulp.task('watching', function() {
         'Public/libs/**/*.less'
     ], ['admin_style_module']);
 
+    gulp.watch(home_script_files, ['home_script_module']);
+    gulp.watch([
+        HOME.ROOT + '/**/*.less',
+        'Application/Common/**/*.less',
+        'Public/libs/**/*.less'
+    ], ['home_style_module']);
+
     // LIVERELOAD
     livereload.listen();
     gulp.watch([
         'index.php',
         ADMIN.ROOT + '/**/*.php',
         ADMIN.ROOT + '/**/*.less',
+        HOME.ROOT + '/**/*.php',
+        HOME.ROOT + '/**/*.less',
         'Application/Common/**/*.less',
         'Public/libs/**/*.less',
     ], function(event) {
@@ -127,9 +201,12 @@ gulp.task('watching', function() {
 // 运行
 // --------------------------------------------
 gulp.task('default', [
-    // 后端
+    // 后台
     'admin_script_module',
     'admin_style_module',
+    // 前台
+    'home_script_module',
+    'home_style_module',
     // 监听
     'watching'
 ]);

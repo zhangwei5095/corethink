@@ -1,5 +1,6 @@
-//import("../../../../../Public/libs/ieonly/respond.min.js");
-//import("../../../../../Public/libs/ieonly/html5shiv.min.js");
+//import("../../../../../Public/libs/respond/respond.src.js");
+//import("../../../../../Public/libs/html5shiv/html5shiv.js");
+//import("../../../../../Public/libs/excanvas/excanvas.js");
 //import("../../../../../Public/libs/moment/min/moment.min.js");
 
 //import("../../../../../Public/libs/bootstrap/js/transition.js");
@@ -15,6 +16,7 @@
 //import("../../../../../Public/libs/bootstrap/js/tab.js");
 //import("../../../../../Public/libs/bootstrap/js/affix.js");
 
+//import("../../../../../Public/libs/bootstrap_extend/js/bootstrap.extend.js");
 //import("../../../../../Public/libs/bootstrap_daterangepicker/daterangepicker.js");
 //import("../../../../../Public/libs/bootstrap_growl/jquery.bootstrap-growl.js");
 
@@ -24,6 +26,7 @@
 //import("../../../../../Public/libs/jquery_starrating/egstar-rating.js");
 //import("../../../../../Public/libs/jquery_tokeninput/js/jquery.tokeninput.js");
 //import("../../../../../Public/libs/jquery_huploadify/jquery.HuploadifyMod.js");
+//import("../../../../../Public/libs/font_awesome_picker/font-awesome.picker.js");
 
 
 //import("../../../../../Application/Admin/View/_Layout/_main.js");

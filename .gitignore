@@ -2,6 +2,6 @@
 /Runtime/
 /Uploads/
 /node_modules/
-/Public/css/
-/Public/js/
+/Public/css/*.css
+/Public/js/*.js
 /*.log
