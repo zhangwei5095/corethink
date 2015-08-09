@@ -1,0 +1,32 @@
+<case value="file">
+    <div id="[type]{$group_k}_upload_{$[type]k}" {$form.extra_attr}></div>
+    <div id="[type]{$group_k}_preview_{$[type]k}">
+        <input type="hidden" name="{$[type]form.name}" value="{$[type]form.value}">
+        <ul class="list-group margin-top">
+            <notempty name="[type]form.value">
+                <li class="list-group-item"><i class="fa fa-file"></i> {$[type]form.value|get_upload_info='name'}</li>
+            </notempty>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        $(function(){
+            $('#[type]{$group_k}_upload_{$[type]k}').Huploadify({
+                uploader:'{:U("Home/Upload/upload")}',
+                fileTypeExts:'*.gif;*.jpg;*.jpeg;*.png;'+
+                             '*.swf;*.flv;*.mp3;*.wav;*.wma;*.wmv;*.mid;*.avi;*.mpg;*.asf;*.rm;*.rmvb;*.mp4;'+
+                             '*.doc;*.docx;*.xls;*.xlsx;*.ppt;*.pptx;*.wps;*.txt;*.zip;*.rar;*.gz;*.bz2;*.7z',
+                fileSizeLimit:{:C('UPLOAD_FILE_SIZE')}*1024,
+                buttonText:'上传文件',
+                onUploadComplete:function(file, data){
+                    var data = $.parseJSON(data);
+                    if(data.error == 1){
+                        $.bootstrapGrowl(data.message);
+                    }else{
+                        $('#[type]{$group_k}_preview_{$[type]k} .list-group').html('<li class="list-group-item"><i class="fa fa-file"></i> '+data.name+'</li>');
+                        $('#[type]{$group_k}_preview_{$[type]k} input').attr('value', data.id);
+                    }
+                }
+            });
+        });
+    </script>
+</case>

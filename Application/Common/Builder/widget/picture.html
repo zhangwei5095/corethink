@@ -1,0 +1,26 @@
+<case value="picture">
+    <div id="[type]{$group_k}_upload_{$[type]k}" {$form.extra_attr}></div>
+    <div id="[type]{$group_k}_preview_{$[type]k}">
+        <input type="hidden" name="{$[type]form.name}" value="{$[type]form.value}">
+        <img class="img-responsive" style="margin-top:8px;max-height:60px;" src="{$[type]form.value|get_cover}">
+    </div>
+    <script type="text/javascript">
+        $(function(){
+            $('#[type]{$group_k}_upload_{$[type]k}').Huploadify({
+                uploader:'{:U("Home/Upload/upload")}',
+                fileTypeExts:'*.gif;*.jpg;*.jpeg;*.png;*.bmp',
+                fileSizeLimit:{:C('UPLOAD_IMAGE_SIZE')}*1024,
+                buttonText:'上传图片',
+                onUploadComplete:function(file, data){
+                    var data = $.parseJSON(data);
+                    if(data.error == 1){
+                        $.bootstrapGrowl(data.message);
+                    }else{
+                        $('#[type]{$group_k}_preview_{$[type]k} img').attr('src', data.url);
+                        $('#[type]{$group_k}_preview_{$[type]k} input').attr('value', data.id);
+                    }
+                }
+            });
+        });
+    </script>
+</case>
