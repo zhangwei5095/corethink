@@ -59,8 +59,11 @@ EOF;
         $map['group'] = array('eq', $group);
         $data_list = D('Category')->field('id,pid,group,doc_type,title,url,icon,ctime,sort,status')
                                   ->where($map)->order('sort asc,id asc')->select();
+
+        //非系统特殊类型则给标题加上链接以便于进入相应文档列表
         foreach($data_list as &$item){
-            if($item['doc_type'] >= 3){
+            $document_type = D('DocumentType')->find($item['doc_type']); //获取当前文档类型
+            if($document_type['system'] === '0'){
                 $item['title'] = '<a href="'.U('Document/index', array('cid' => $item['id'])).'">'.$item['title'].'</a>';
             }
         }

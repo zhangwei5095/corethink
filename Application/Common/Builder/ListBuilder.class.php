@@ -23,6 +23,7 @@ class ListBuilder extends Controller{
     private $_table_data_list_key = 'id';  //表格数据列表主键字段名
     private $_table_data_page;             //表格数据分页
     private $_right_button_list = array(); //表格右侧操作按钮组
+    private $_alter_data_list = array();   //表格数据列表重新修改的项目
     private $_extra_html;                  //额外功能代码
     private $_template = '_Builder/listbuilder'; //模版
 
@@ -346,6 +347,19 @@ class ListBuilder extends Controller{
     }
 
     /**
+     * 修改列表数据
+     * 有时候列表数据需要在最终输出前做一次小的修改
+     * 比如管理员列表ID为1的超级管理员右侧编辑按钮不显示删除
+     * @param $page
+     * @return $this
+     * @author jry <598821125@qq.com>
+     */
+    public function alterTableData($condition, $alter_data){
+        $this->_alter_data_list[] = array('condition' => $condition, 'alter_data' => $alter_data);
+        return $this;
+    }
+
+    /**
      * 设置额外功能代码
      * @param $extra_html 额外功能代码
      * @return $this
@@ -375,18 +389,20 @@ class ListBuilder extends Controller{
         //编译data_list中的值
         foreach($this->_table_data_list as &$data){
             //编译表格右侧按钮
-            foreach($this->_right_button_list as $right_button){
-                //禁用按钮比较特殊，它需要根据数据当前状态判断是显示禁用还是启用
-                if($right_button['type'] === 'forbid'){
-                    $right_button = $right_button[$data['status']];
+            if($this->_right_button_list){
+                foreach($this->_right_button_list as $right_button){
+                    //禁用按钮比较特殊，它需要根据数据当前状态判断是显示禁用还是启用
+                    if($right_button['type'] === 'forbid'){
+                        $right_button = $right_button[$data['status']];
+                    }
+
+                    //将约定的标记__data_id__替换成真实的数据ID
+                    $right_button['href'] = preg_replace('/__data_id__/i', $data[$this->_table_data_list_key], $right_button['href']);
+
+                    //编译按钮属性
+                    $right_button['attribute'] = $this->compileHtmlAttr($right_button);
+                    $data['right_button'] .= '<a '.$right_button['attribute'] .'>'.$right_button['title'].'</a> ';
                 }
-
-                //将约定的标记__data_id__替换成真实的数据ID
-                $right_button['href'] = preg_replace('/__data_id__/i', $data[$this->_table_data_list_key], $right_button['href']);
-
-                //编译按钮属性
-                $right_button['attribute'] = $this->compileHtmlAttr($right_button);
-                $data['right_button'] .= '<a '.$right_button['attribute'] .'>'.$right_button['title'].'</a> ';
             }
 
             //根据表格标题字段指定类型编译列表数据
@@ -406,16 +422,16 @@ class ListBuilder extends Controller{
                         }
                         break;
                     case 'icon':
-                        $data[$column['name']] = '<i class="'.$data[$field['name']].'"></i>';
+                        $data[$column['name']] = '<i class="'.$data[$column['name']].'"></i>';
                         break;
                     case 'date':
-                        $data[$column['name']] = time_format($data[$field['name']], 'Y-m-d');
+                        $data[$column['name']] = time_format($data[$column['name']], 'Y-m-d');
                         break;
                     case 'time':
-                        $data[$column['name']] = time_format($data[$field['name']]);
+                        $data[$column['name']] = time_format($data[$column['name']]);
                         break;
                     case 'image':
-                        $data[$column['name']] = '<img src="'.get_cover($data[$field['name']]).'">';
+                        $data[$column['name']] = '<img src="'.get_cover($data[$column['name']]).'">';
                         break;
                     case 'type':
                         $form_item_type = C('FORM_ITEM_TYPE');
@@ -423,11 +439,26 @@ class ListBuilder extends Controller{
                         break;
                 }
             }
+
+            /**
+             * 修改列表数据
+             * 有时候列表数据需要在最终输出前做一次小的修改
+             * 比如管理员列表ID为1的超级管理员右侧编辑按钮不显示删除
+             */
+            if($this->_alter_data_list){
+                foreach($this->_alter_data_list as $alter){
+                    if($data[$alter['condition']['key']] === $alter['condition']['value']){
+                        $data = array_merge($data, $alter['alter_data']);
+                    }
+                }
+            }
         }
 
         //编译top_button_list中的HTML属性
-        foreach($this->_top_button_list as &$button){
-            $button['attribute'] = $this->compileHtmlAttr($button);
+        if($this->_top_button_list){
+            foreach($this->_top_button_list as &$button){
+                $button['attribute'] = $this->compileHtmlAttr($button);
+            }
         }
 
         $this->assign('meta_title',          $this->_meta_title);          //页面标题
@@ -439,6 +470,7 @@ class ListBuilder extends Controller{
         $this->assign('table_data_list_key', $this->_table_data_list_key); //表格数据主键字段名称
         $this->assign('table_data_page',     $this->_table_data_page);     //表示个数据分页
         $this->assign('right_button_list',   $this->_right_button_list);   //表格右侧操作按钮
+        $this->assign('alter_data_list',     $this->_alter_data_list);     //表格数据列表重新修改的项目
         $this->assign('extra_html',          $this->_extra_html);          //额外HTML代码
         parent::display($this->_template);
     }

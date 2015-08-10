@@ -35,7 +35,7 @@ $(function() {
                         $('#login-modal').modal(); //弹出登陆框
                     } else {
                         $.bootstrapGrowl(data.info, {
-                            type: 'success',
+                            type: 'danger',
                             align: 'center',
                             width: 'auto',
                         });

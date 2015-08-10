@@ -24,7 +24,6 @@ class DocumentTypeController extends AdminController{
         $map['id|title|name'] = array($condition, $condition, $condition,'_multi'=>true);
 
         //获取所有类型
-        $map['system'] = array('eq', '0'); //非系统类型
         $map['status'] = array('egt', '0'); //禁用和正常状态
         $data_list = D('DocumentType')->page(!empty($_GET["p"])?$_GET["p"]:1, C('ADMIN_PAGE_ROWS'))->where($map)->order('sort asc,id asc')->select();
         $page = new \Common\Util\Page(D('DocumentType')->where($map)->count(), C('ADMIN_PAGE_ROWS'));
@@ -54,6 +53,10 @@ class DocumentTypeController extends AdminController{
                 ->addRightButton('edit')   //添加编辑按钮
                 ->addRightButton('forbid') //添加禁用/启用按钮
                 ->addRightButton('delete') //添加删除按钮
+                ->alterTableData( //修改列表数据
+                    array('key' => 'system', 'value' => '1'),
+                    array('right_button' => '<a class="label label-warning">系统模型无需操作</a>')
+                )
                 ->display();
     }
 
@@ -172,17 +175,26 @@ class DocumentTypeController extends AdminController{
         }
         $map['id'] = array('in',$ids);
         switch($status){
-            case 'delete'  : //删除条目
-                $con['doc_type'] = $ids;
-                $count = D('category')->where($con)->count();
-                if($count > 0){
-                    $this->error('存在该文档类型的分类，无法删除！');
+            case 'delete' : //删除条目
+                //获取当前文档模型信息
+                $document_type_object = D('DocumentType');
+                $document_type = $document_type_object->where($map)->find();
+
+                //系统模型无需操作
+                if($document_type['system'] === '1'){
+                    $this->error('系统模型无需操作');
                 }else{
-                    $result = D('DocumentType')->where($map)->delete();
-                    if($result){
-                        $this->success('删除成功，不可恢复！');
+                    $con['doc_type'] = $ids;
+                    $count = D('category')->where($con)->count();
+                    if($count > 0){
+                        $this->error('存在该文档类型的分类，无法删除！');
                     }else{
-                        $this->error('删除失败');
+                        $result = $document_type_object->where($map)->delete();
+                        if($result){
+                            $this->success('删除成功，不可恢复！');
+                        }else{
+                            $this->error('删除失败');
+                        }
                     }
                 }
                 break;

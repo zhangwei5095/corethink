@@ -265,9 +265,9 @@ LOCK TABLES `ct_document_type` WRITE;
 
 INSERT INTO `ct_document_type` (`id`, `name`, `title`, `icon`, `field_sort`, `field_group`, `system`, `ctime`, `utime`, `sort`, `status`)
 VALUES
-	(1,'link','链接','icon-link','','',1,1426580628,1426580628,0,1),
-	(2,'page','单页','icon-file','','',1,1426580628,1426580628,0,1),
-	(3,'article','文章','icon-edit','{\"1\":[\"1\",\"3\",\"12\",\"13\",\"14\",\"15\"],\"2\":[\"10\",\"8\"]}','1:基础\n2:扩展',0,1426580628,1426580628,0,1);
+	(1,'link','链接','fa fa-link','','',1,1426580628,1426580628,0,1),
+	(2,'page','单页','fa fa-file-text','','',1,1426580628,1426580628,0,1),
+	(3,'article','文章','fa fa-file-word-o','{\"1\":[\"1\",\"3\",\"12\",\"13\",\"14\",\"15\"],\"2\":[\"10\",\"8\"]}','1:基础\n2:扩展',0,1426580628,1426580628,0,1);
 
 /*!40000 ALTER TABLE `ct_document_type` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -394,7 +394,7 @@ VALUES
 	(12,6,'清空缓存','Admin/Index/rmdirr','',0,1427475588,1427475588,1,1),
 	(13,7,'系统设置','Admin/SystemConfig/group','fa fa-gears',0,1426580628,1438276516,1,1),
 	(14,13,'修改','Admin/SystemConfig/groupSave','',0,1426580628,1426580628,1,1),
-	(15,7,'文档类型','Admin/DocumentType/index','fa fa-th-list',1,1426580628,1438277140,2,1),
+	(15,7,'文档模型','Admin/DocumentType/index','fa fa-th-list',1,1426580628,1438277140,2,1),
 	(16,15,'添加','Admin/DocumentType/add','',0,1426580628,1426580628,1,1),
 	(17,15,'编辑','Admin/DocumentType/edit','',0,1426580628,1426580628,2,1),
 	(18,15,'设置状态','Admin/DocumentType/setStatus','',0,1426580628,1426580628,3,1),
@@ -440,7 +440,7 @@ VALUES
 	(59,58,'添加','Admin/UserComment/add','',0,1426580628,1426580628,1,1),
 	(60,58,'编辑','Admin/UserComment/edit','',0,1426580628,1426580628,2,1),
 	(61,58,'设置状态','Admin/UserComment/setStatus','',0,1426580628,1426580628,3,1),
-	(62,9,'回收站','Admin/Document/recycle','fa fa-refresh',0,1427475588,1438277313,5,1),
+	(62,9,'回收站','Admin/Document/recycle','fa fa-trash',0,1427475588,1438277313,5,1),
 	(63,10,'上传管理','Admin/Upload/index','fa fa-upload',0,1427475588,1438277518,1,1),
 	(64,63,'上传文件','Admin/Upload/upload','',0,1427475588,1427475588,1,1),
 	(65,63,'下载图片','Admin/Upload/downremoteimg','',0,1427475588,1427475588,2,1),
