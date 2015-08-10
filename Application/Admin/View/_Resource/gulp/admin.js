@@ -16,8 +16,8 @@
 //import("../../../../../Public/libs/bootstrap/js/tab.js");
 //import("../../../../../Public/libs/bootstrap/js/affix.js");
 
-//import("../../../../../Public/libs/bootstrap_extend/js/bootstrap.extend.js");
-//import("../../../../../Public/libs/bootstrap_growl/jquery.bootstrap-growl.js");
+//import("../../../../../Public/libs/bootstrap_extend/js/bootstrap-extend.js");
+//import("../../../../../Public/libs/bootstrap_growl/bootstrap-growl.js");
 //import("../../../../../Public/libs/bootstrap_daterangepicker/daterangepicker.js");
 //import("../../../../../Public/libs/bootstrap_star_rating/js/star-rating.js");
 

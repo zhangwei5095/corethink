@@ -28,4 +28,7 @@ return array(
     'DATA_CACHE_PREFIX' => ENV_PRE.MODULE_NAME.'_', //缓存前缀
     'SESSION_PREFIX'    => ENV_PRE.MODULE_NAME.'_', //Session前缀
     'COOKIE_PREFIX'     => ENV_PRE.MODULE_NAME.'_', //Cookie前缀
+
+    //是否开启模板编译缓存,设为false则每次都会重新编译
+    'TMPL_CACHE_ON' => false, 
 );

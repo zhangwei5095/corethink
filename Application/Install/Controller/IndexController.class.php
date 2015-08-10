@@ -94,10 +94,13 @@ class IndexController extends Controller{
                     $this->error('数据库连接失败，请检查数据库配置！');
                 }
 
-                //检测是否已存在数据库
-                $result2 = $db_instance->execute('SELECT * FROM information_schema.schemata WHERE schema_name="'.$db_name.'"');
-                if($result2){
-                    $this->error('该数据库已存在，请更换数据库名称！');
+                //用户选择不覆盖情况下检测是否已存在数据库
+                if(I('post.cover') === '0'){
+                    //检测是否已存在数据库
+                    $result2 = $db_instance->execute('SELECT * FROM information_schema.schemata WHERE schema_name="'.$db_name.'"');
+                    if($result2){
+                        $this->error('该数据库已存在，请更换名称！如需覆盖，请选中覆盖按钮！');
+                    }
                 }
 
                 //创建数据库
@@ -114,7 +117,6 @@ class IndexController extends Controller{
             }else{
                 session('error', false);
                 $rand = \Org\Util\String::randString(6,3); //生成随机数
-                $this->assign('rand', $rand);
                 $this->assign('meta_title', "step3");
                 $this->display();
             }
@@ -123,6 +125,7 @@ class IndexController extends Controller{
 
     //安装第四步，安装数据表，创建配置文件
     public function step4(){
+        session('error', false);
         $this->assign('meta_title', "step4");
         $this->display();
 
@@ -148,7 +151,7 @@ class IndexController extends Controller{
         }
 
         if(session('error')){
-            $this->error('安装出错', 'step1');
+            $this->error('安装出错', 'index');
         }else{
             session('step', 4);
             $this->redirect('complete');

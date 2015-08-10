@@ -61,7 +61,7 @@ CREATE TABLE `ct_addon_hook` (
   `ctime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `utime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='钩子表';
 
 LOCK TABLES `ct_addon_hook` WRITE;
@@ -602,7 +602,7 @@ CREATE TABLE `ct_user` (
   `utime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `sort` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户会员信息表';
 
 LOCK TABLES `ct_user` WRITE;
