@@ -33,7 +33,7 @@ EOF;
      */
     public function index($doc_type){
         //搜索
-        $keyword = (string)I('keyword');
+        $keyword = I('keyword', '', 'string');
         $condition = array('like','%'.$keyword.'%');
         $map['id|name|title'] = array($condition, $condition, $condition,'_multi'=>true);
 

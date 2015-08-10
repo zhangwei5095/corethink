@@ -77,7 +77,7 @@ class DocumentController extends HomeController{
         $uid = $this->is_login();
 
         //搜索
-        $keyword = (string)I('keyword');
+        $keyword = I('keyword', '', 'string');
         $condition = array('like','%'.$keyword.'%');
         $map['id|title'] = array($condition, $condition,'_multi'=>true);
 

@@ -19,7 +19,7 @@ class UserCommentController extends AdminController{
      */
     public function index(){
         //搜索
-        $keyword = (string)I('keyword');
+        $keyword = I('keyword', '', 'string');
         $condition = array('like','%'.$keyword.'%');
         $map['id|content'] = array($condition, $condition,'_multi'=>true);
 

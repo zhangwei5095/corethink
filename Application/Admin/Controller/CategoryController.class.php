@@ -47,7 +47,7 @@ EOF;
      */
     public function index($group = 1){
         //搜索
-        $keyword = (string)I('keyword');
+        $keyword = I('keyword', '', 'string');
         $condition = array('like','%'.$keyword.'%');
         $map['id|title'] = array($condition, $condition,'_multi'=>true);
 

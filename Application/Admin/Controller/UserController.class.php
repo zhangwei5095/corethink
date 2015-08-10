@@ -19,7 +19,7 @@ class UserController extends AdminController{
      */
     public function index(){
         //搜索
-        $keyword = (string)I('keyword');
+        $keyword = I('keyword', '', 'string');
         $condition = array('like','%'.$keyword.'%');
         $map['id|username|email|mobile'] = array($condition, $condition, $condition, $condition,'_multi'=>true);
 

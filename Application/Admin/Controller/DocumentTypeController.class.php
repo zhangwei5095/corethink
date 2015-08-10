@@ -19,7 +19,7 @@ class DocumentTypeController extends AdminController{
      */
     public function index(){
         //搜索
-        $keyword = (string)I('keyword');
+        $keyword = I('keyword', '', 'string');
         $condition = array('like','%'.$keyword.'%');
         $map['id|title|name'] = array($condition, $condition, $condition,'_multi'=>true);
 
