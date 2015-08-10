@@ -45,7 +45,7 @@ $(function() {
         var url = $(this).attr('url');
         var query = $('.builder .search-form').find('input').serialize();
         query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
-        query = query.replace(/^&/g, '');
+        query = query.replace(/(^&)|(\+)/g, '');
         if (url.indexOf('?') > 0) {
             url += '&' + query;
         } else {

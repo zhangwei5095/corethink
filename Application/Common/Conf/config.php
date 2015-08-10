@@ -91,15 +91,6 @@ return array(
         '0'  => '禁止投稿',
     ),
 
-    //注册方式列表
-    'REG_TYPE_LIST' => array(
-        'admin'    => '后台',
-        'username' => '用户名',
-        'email'    => '邮箱',
-        'mobile'   => '手机号',
-        'sns'      => '第三方',
-    ),
-
     //前台用户类型
     'USER_TYPE_LIST' => array(
         '0'  => '个人',
