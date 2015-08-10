@@ -52,6 +52,11 @@ EOF;
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
         $builder->setMetaTitle('字段管理') //设置页面标题
+                ->addTopButton('self', array( //添加返回按钮
+                    'title' => '<i class="fa fa-reply"></i> 返回模型列表',
+                     'class' => 'btn btn-warning',
+                     'onclick' => 'javascript:history.back(-1);return false;')
+                )
                 ->addTopButton('self', $attr) //添加新增按钮
                 ->addTopButton('resume') //添加启用按钮
                 ->addTopButton('forbid') //添加禁用按钮

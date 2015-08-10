@@ -44,11 +44,15 @@ class DocumentController extends AdminController{
         $category_list = D('Category')->where($map)->select();
         $tree = new \Common\Util\Tree();
         $category_list = $tree->toFormatTree($category_list);
+
         //构造移动文档的目标分类列表
         $options = '';
         foreach($category_list as $key => $val){
             $options .= '<option value="'.$val['id'].'">'.$val['title_show'].'</option>';
         }
+
+        //文档移动POST地址
+        $move_url = U('Admin/Document/move');
 
         $extra_html = <<<EOF
         <div class="modal fade" id="moveModal">
@@ -59,7 +63,7 @@ class DocumentController extends AdminController{
                         <p class="modal-title">移动至</p>
                     </div>
                     <div class="modal-body">
-                        <form action="{:U('Document/move')}" method="post" class="form">
+                        <form action="{$move_url}" method="post" class="form">
                             <div class="form-group">
                                 <select name="to_cid" class="form-control">{$options}</select>
                             </div>
@@ -98,6 +102,11 @@ EOF;
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
         $builder->setMetaTitle($category['title']) //设置页面标题
+                ->addTopButton('self', array( //添加返回按钮
+                    'title' => '<i class="fa fa-reply"></i> 返回分类',
+                     'class' => 'btn btn-warning',
+                     'onclick' => 'javascript:history.back(-1);return false;')
+                )
                 ->addTopButton('addnew', array('href' => U('add', array('cid' => $cid)))) //添加新增按钮
                 ->addTopButton('resume')  //添加启用按钮
                 ->addTopButton('forbid')  //添加禁用按钮
@@ -307,7 +316,7 @@ EOF;
                 ->addTableColumn('right_button', '操作', 'btn')
                 ->setTableDataList($document_list) //数据列表
                 ->setTableDataPage($page->show()) //数据列表分页
-                ->addRightButton('forbid') //添加禁用/启用按钮
+                ->addRightButton('restore') //添加还原按钮
                 ->addRightButton('delete') //添加删除按钮
                 ->display();
     }

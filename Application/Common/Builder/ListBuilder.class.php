@@ -124,7 +124,7 @@ class ListBuilder extends Controller{
                 $my_attribute['target-form'] = 'ids';
                 $my_attribute['class'] = 'btn btn-success ajax-post confirm';
                 $my_attribute['data-model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
-                $my_attribute['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'recycle', 'model' => $my_attribute['data-model']));
+                $my_attribute['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'restore', 'model' => $my_attribute['data-model']));
 
                 //如果定义了属性数组则与默认的进行合并，详细使用方法参考上面的新增按钮
                 if($attribute){
@@ -152,15 +152,14 @@ class ListBuilder extends Controller{
                 break;
             case 'self': //添加自定义按钮(第一原则使用上面预设的按钮，如果有特殊需求不能满足则使用此自定义按钮方法)
                 //预定义按钮属性以简化使用
-                $my_attribute['title'] = '自定义按钮';
                 $my_attribute['target-form'] = 'ids';
-                $my_attribute['class'] = 'label label-default';
+                $my_attribute['class'] = 'btn btn-danger';
 
                 //如果定义了属性数组则与默认的进行合并
                 if($attribute){
                     $my_attribute = array_merge($my_attribute, $attribute);
                 }else{
-                    $this->error('该自定义按钮未配置属性');
+                    $my_attribute['title'] = '该自定义按钮未配置属性';
                 }
 
                 //这个按钮定义好了把它丢进按钮池里
@@ -289,7 +288,7 @@ class ListBuilder extends Controller{
             case 'restore':
                 //预定义按钮属性以简化使用
                 $my_attribute['title'] = '还原';
-                $my_attribute['class'] = 'label label-danger ajax-get confirm';
+                $my_attribute['class'] = 'label label-success ajax-get confirm';
                 $my_attribute['data-model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
                 $my_attribute['href'] = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'restore', 'ids' => '__data_id__', 'model' => $my_attribute['data-model']));
 
@@ -318,14 +317,13 @@ class ListBuilder extends Controller{
                 break;
             case 'self':
                 //预定义按钮属性以简化使用
-                $my_attribute['title'] = '自定义按钮';
                 $my_attribute['class'] = 'label label-default';
 
                 //如果定义了属性数组则与默认的进行合并
                 if($attribute){
                     $my_attribute = array_merge($my_attribute, $attribute);
                 }else{
-                    $this->error('该自定义按钮未配置属性');
+                    $my_attribute['title'] = '该自定义按钮未配置属性';
                 }
 
                 //这个按钮定义好了把它丢进按钮池里

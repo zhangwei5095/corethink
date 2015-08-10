@@ -7,13 +7,13 @@
     <foreach name="[type]form.options" item="option" key="option_key">
         <label class="radio-inline" for="{$[type]form.name}{$option_key}">
             <php>if(is_array($option)):</php>
-                <input type="radio" id="{$[type]form.name}{$option_key}" class="radio" name="{$[type]form.name}" value="{$option}" <eq name="[type]form.value" value="$option_key"> checked</eq> {$[type]form.extra_attr}
+                <input type="radio" id="{$[type]form.name}{$option_key}" class="radio" name="{$[type]form.name}" value="{$option_key}" <eq name="[type]form.value" value="$option_key"> checked</eq> {$[type]form.extra_attr}
                     <foreach name="option" item="option2" key="option_key2">
                         {$option_key2}="{$option2}"
                     </foreach>>
                 {$option.title}
             <php>else:</php>
-                <input type="radio" id="{$[type]form.name}{$option_key}" class="radio" name="{$[type]form.name}" value="{$option}" <eq name="[type]form.value" value="$option_key"> checked</eq> {$[type]form.extra_attr}> {$option}
+                <input type="radio" id="{$[type]form.name}{$option_key}" class="radio" name="{$[type]form.name}" value="{$option_key}" <eq name="[type]form.value" value="$option_key"> checked</eq> {$[type]form.extra_attr}> {$option}
             <php>endif;</php>
         </label>
     </foreach>
