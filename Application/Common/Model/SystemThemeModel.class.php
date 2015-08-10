@@ -23,6 +23,29 @@ class SystemThemeModel extends Model{
     }
 
     /**
+     * 查找后置操作
+     * @author jry <598821125@qq.com>
+     */
+    protected function _after_find(&$result, $options){
+        //如果模版文件夹下不存在该模版对应的目录则将该模块状态记为损坏:-2
+        if(!file_exists(realpath(APP_PATH.'Home/View/'.$result['name']))){
+            $con['id'] = $result['id'];
+            $this->where($con)->setField('status', -2);
+        }
+    }
+
+    /**
+     * 查找后置操作
+     * @author jry <598821125@qq.com>
+     */
+    protected function _after_select(&$result, $options){
+        foreach($result as &$record){
+            $this->_after_find($record, $options);
+        }
+    }
+
+
+    /**
      * 自动验证规则
      * @author jry <598821125@qq.com>
      */
@@ -92,10 +115,10 @@ class SystemThemeModel extends Model{
                     if($val['current']){
                         $val['right_button'] .= '<span class="label label-success" href="#">我是当前主题</span> ';
                     }else{
-                        $val['right_button'] .= '<a class="label label-danger ajax-get" href="'.U('setStatus', array('status' => 'current', 'ids' => $val['id'])).'">设为当前主题</a> ';
+                        $val['right_button'] .= '<a class="label label-danger ajax-get" href="'.U('setCurrent', array('id' => $val['id'])).'">设为当前主题</a> ';
                     }
                     $val['right_button'] .= '<a class="label label-info ajax-get" href="'.U('updateInfo?id='.$val['id']).'">更新信息</a> ';
-                    $val['right_button'] .= '<a class="label label-danger ajax-get" href="'.U('setStatus', array('status' => 'uninstall', 'ids' => $val['id'])).'">卸载</a> ';
+                    $val['right_button'] .= '<a class="label label-danger ajax-get" href="'.U('uninstall', array('id' => $val['id'])).'">卸载</a> ';
                     break;
             }
         }

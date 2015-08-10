@@ -111,13 +111,13 @@ class SystemModuleModel extends Model{
                     $val['status'] = '<i class="fa fa-ban text-danger"></i>';
                     $val['right_button'] .= '<a class="label label-info ajax-get" href="'.U('updateInfo?id='.$val['id']).'">更新菜单</a> ';
                     $val['right_button'] .= '<a class="label label-success ajax-get" href="'.U('setStatus', array('status' => 'resume', 'ids' => $val['id'])).'">启用</a> ';
-                    $val['right_button'] .= '<a class="label label-danger ajax-get" href="'.U('setStatus', array('status' => 'uninstall', 'ids' => $val['id'])).'">卸载</a> ';
+                    $val['right_button'] .= '<a class="label label-danger ajax-get" href="'.U('uninstall', array('id' => $val['id'])).'">卸载</a> ';
                     break;
                 case '1': //正常
                     $val['status'] = '<i class="fa fa-check text-success"></i>';
                     $val['right_button'] .= '<a class="label label-info ajax-get" href="'.U('updateInfo?id='.$val['id']).'">更新菜单</a> ';
                     $val['right_button'] .= '<a class="label label-warning ajax-get" href="'.U('setStatus', array('status' => 'forbid', 'ids' => $val['id'])).'">禁用</a> ';
-                    $val['right_button'] .= '<a class="label label-danger ajax-get" href="'.U('setStatus', array('status' => 'uninstall', 'ids' => $val['id'])).'">卸载</a> ';
+                    $val['right_button'] .= '<a class="label label-danger ajax-get" href="'.U('uninstall', array('id' => $val['id'])).'">卸载</a> ';
                     break;
             }
         }

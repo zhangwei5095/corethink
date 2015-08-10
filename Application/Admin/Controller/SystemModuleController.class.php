@@ -79,6 +79,24 @@ class SystemModuleController extends AdminController{
     }
 
     /**
+     * 卸载模块
+     * @author jry <598821125@qq.com>
+     */
+    public function uninstall($id){
+        $system_module_object = D('SystemModule');
+        $name = $system_module_object->where($map)->getFieldById($id, 'name');
+        $result = $system_module_object->delete($id);
+        if($result){
+            $sql_status = execute_sql_from_file(realpath(APP_PATH.$name).'/Sql/uninstall.sql');
+            if($sql_status){
+                $this->success('卸载成功！');
+            }
+        }else{
+            $this->error('卸载失败');
+        }
+    }
+
+    /**
      * 更新模块信息
      * @author jry <598821125@qq.com>
      */
@@ -105,36 +123,6 @@ class SystemModuleController extends AdminController{
             }
         }else{
             $this->error($system_module_object->getError());
-        }
-    }
-
-    /**
-     * 设置一条或者多条数据的状态
-     * @author jry <598821125@qq.com>
-     */
-    public function setStatus($model = CONTROLLER_NAME){
-        $ids    = I('request.ids');
-        $status = I('request.status');
-        if(empty($ids)){
-            $this->error('请选择要操作的数据');
-        }
-        $map['id'] = array('eq',$ids);
-        switch($status){
-            case 'uninstall' : //卸载
-                $name = D($model)->where($map)->getField('name');
-                $result = D($model)->where($map)->delete();
-                if($result){
-                    $sql_status = execute_sql_from_file(realpath(APP_PATH.$name).'/Sql/uninstall.sql');
-                    if($sql_status){
-                        $this->success('卸载成功！');
-                    }
-                }else{
-                    $this->error('卸载失败');
-                }
-                break;
-            default :
-                parent::setStatus($model);
-                break;
         }
     }
 }
