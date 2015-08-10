@@ -129,7 +129,7 @@ class UserController extends AdminController{
                     ->setPostUrl(U('edit')) //设置表单提交地址
                     ->addFormItem('id', 'hidden', 'ID', 'ID')
                     ->addFormItem('usertype', 'radio', '用户类型', '用户类型', C('USER_TYPE_LIST'))
-                    ->addFormItem('group', 'select', '部门', '所属部门', $this->selectListAsTree('UserGroup', null, '默认部门'))
+                    ->addFormItem('group', 'select', '部门', '所属部门', select_list_as_tree('UserGroup', null, '默认部门'))
                     ->addFormItem('username', 'text', '用户名', '用户名')
                     ->addFormItem('email', 'text', '邮箱', '邮箱')
                     ->addFormItem('mobile', 'text', '手机号码', '手机号码')

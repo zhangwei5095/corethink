@@ -238,7 +238,7 @@ class ListBuilder extends Controller{
             case 'edit': //编辑按钮
                 //预定义按钮属性以简化使用
                 $my_attribute['title'] = '编辑';
-                $my_attribute['class'] = 'label label-info';
+                $my_attribute['class'] = 'label label-primary';
                 $my_attribute['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit', array($this->_table_data_list_key => '__data_id__'));
 
                 //如果定义了属性数组则与默认的进行合并，详细使用方法参考上面的顶部按钮
@@ -266,6 +266,20 @@ class ListBuilder extends Controller{
                 $my_attribute['1']['title'] = '禁用';
                 $my_attribute['1']['class'] = 'label label-warning ajax-get confirm';
                 $my_attribute['1']['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'forbid', 'ids' => '__data_id__', 'model' => $my_attribute['data-model']));
+
+                //这个按钮定义好了把它丢进按钮池里
+                $this->_right_button_list[] = $my_attribute;
+                break;
+            case 'hide': //改变记录状态按钮，会更具数据当前的状态自动选择应该显示隐藏/显示
+                //预定义按钮属
+                $my_attribute['type'] = 'hide';
+                $my_attribute['data-model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
+                $my_attribute['2']['title'] = '显示';
+                $my_attribute['2']['class'] = 'label label-success ajax-get confirm';
+                $my_attribute['2']['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'show', 'ids' => '__data_id__', 'model' => $my_attribute['data-model']));
+                $my_attribute['1']['title'] = '隐藏';
+                $my_attribute['1']['class'] = 'label label-info ajax-get confirm';
+                $my_attribute['1']['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'hide', 'ids' => '__data_id__', 'model' => $my_attribute['data-model']));
 
                 //这个按钮定义好了把它丢进按钮池里
                 $this->_right_button_list[] = $my_attribute;
@@ -389,8 +403,8 @@ class ListBuilder extends Controller{
             //编译表格右侧按钮
             if($this->_right_button_list){
                 foreach($this->_right_button_list as $right_button){
-                    //禁用按钮比较特殊，它需要根据数据当前状态判断是显示禁用还是启用
-                    if($right_button['type'] === 'forbid'){
+                    //禁用按钮与隐藏比较特殊，它需要根据数据当前状态判断是显示禁用还是启用
+                    if($right_button['type'] === 'forbid' || $right_button['type'] === 'hide'){
                         $right_button = $right_button[$data['status']];
                     }
 
@@ -416,6 +430,9 @@ class ListBuilder extends Controller{
                                 break;
                             case '1':
                                 $data[$column['name']] = '<i class="fa fa-check text-success"></i>';
+                                break;
+                            case '2':
+                                $data[$column['name']] = '<i class="fa fa-eye-slash text-warning"></i>';
                                 break;
                         }
                         break;

@@ -380,6 +380,33 @@ function get_upload_info($id, $field){
 
 
 /**
+ * 获取所有数据并转换成一维数组
+ * @author jry <598821125@qq.com>
+ */
+function select_list_as_tree($model, $map = null, $extra = null){
+    //获取列表
+    $con['status'] = array('eq', 1);
+    if($map){
+        $con = array_merge($con, $map);
+    }
+    $list = D($model)->where($con)->select();
+
+    //转换成树状列表
+    $tree = new \Common\Util\Tree();
+    $list = $tree->toFormatTree($list);
+
+    if($extra){
+        $result[0] = $extra;
+    }
+
+    //转换成一维数组
+    foreach($list as $val){
+        $result[$val['id']] = $val['title_show'];
+    }
+    return $result;
+}
+
+/**
  * 系统邮件发送函数
  * @param string $receiver 收件人
  * @param string $subject 邮件主题

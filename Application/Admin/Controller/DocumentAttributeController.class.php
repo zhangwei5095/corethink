@@ -116,7 +116,7 @@ EOF;
             $builder = new \Common\Builder\FormBuilder();
             $builder->setMetaTitle('新增字段') //设置页面标题
                     ->setPostUrl(U('add')) //设置表单提交地址
-                    ->addFormItem('doc_type', 'select', '文档类型', '文档类型', $this->selectListAsTree('DocumentType'))
+                    ->addFormItem('doc_type', 'select', '文档类型', '文档类型', select_list_as_tree('DocumentType'))
                     ->addFormItem('name', 'text', '字段名称', '字段名称，如“title”')
                     ->addFormItem('title', 'text', '字段标题', '字段标题，如“标题”')
                     ->addFormItem('type', 'select', '字段类型', '字段类型', $new_form_item_type)
@@ -167,7 +167,7 @@ EOF;
             $builder->setMetaTitle('编辑字段') //设置页面标题
                     ->setPostUrl(U('edit')) //设置表单提交地址
                     ->addFormItem('id', 'hidden', 'ID', 'ID')
-                    ->addFormItem('doc_type', 'select', '文档类型', '文档类型', $this->selectListAsTree('DocumentType'))
+                    ->addFormItem('doc_type', 'select', '文档类型', '文档类型', select_list_as_tree('DocumentType'))
                     ->addFormItem('name', 'text', '字段名称', '字段名称，如“title”')
                     ->addFormItem('title', 'text', '字段标题', '字段标题，如“标题”')
                     ->addFormItem('type', 'select', '字段类型', '字段类型', $new_form_item_type)

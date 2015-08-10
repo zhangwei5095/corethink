@@ -156,7 +156,7 @@ class DocumentController extends HomeController{
                 $con['group'] = $category_info['group'];
                 $con['doc_type'] = $category_info['doc_type'];
                 $attr['value'] = $category_info['id'];
-                $attr['options'] = $this->selectListAsTree('Category', $con);
+                $attr['options'] = select_list_as_tree('Category', $con);
             }else{
                 $attr['options'] = parse_attr($attr['options']);
             }
@@ -219,7 +219,7 @@ class DocumentController extends HomeController{
                 $con = array();
                 $con['group'] = $category_info['group'];
                 $con['doc_type'] = $category_info['doc_type'];
-                $attr['options'] = $this->selectListAsTree('Category', $con);
+                $attr['options'] = select_list_as_tree('Category', $con);
             }else{
                 $attr['options'] = parse_attr($attr['options']);
             }
@@ -285,7 +285,11 @@ class DocumentController extends HomeController{
      * @author jry <598821125@qq.com>
      */
     public function detail($id){
-        $info = D('Document')->detail($id);
+        $map['status'] = array('egt', 1); //正常、隐藏两种状态是可以访问的
+        $info = D('Document')->where($map)->detail($id);
+        if(!$info){
+            $this->error('您访问的文档已禁用或不存在');
+        }
         $result = D('Document')->where(array('id' => $id))->SetInc('view'); //阅读量加1
         $category = D('Category')->find($info['cid']);
         $template = $category['detail_template'] ? 'Document/'.$category['detail_template'] : 'Document/detail_default';

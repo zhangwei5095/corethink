@@ -80,7 +80,7 @@ EOF;
         }
 
         $attr['title'] = '编辑';
-        $attr['class'] = 'label label-info';
+        $attr['class'] = 'label label-primary';
         $attr['href']  = U('Admin/Category/edit', array('group' => $group, 'id' => '__data_id__'));
 
         //使用Builder快速建立列表页面。
@@ -100,6 +100,7 @@ EOF;
                 ->addTableColumn('right_button', '操作', 'btn')
                 ->setTableDataList($data_list)  //数据列表
                 ->addRightButton('self', $attr) //添加编辑按钮
+                ->addRightButton('hide') //添加隐藏/显示按钮
                 ->addRightButton('forbid') //添加禁用/启用按钮
                 ->addRightButton('delete') //添加删除按钮
                 ->display();
@@ -141,9 +142,9 @@ EOF;
             $builder->setMetaTitle('新增分类')  //设置页面标题
                     ->setPostUrl(U('add')) //设置表单提交地址
                     ->addFormItem('group', 'radio', '分组', '分组', C('CATEGORY_GROUP_LIST'))
-                    ->addFormItem('pid', 'select', '上级分类', '所属的上级分类', $this->selectListAsTree('Category', array('group' => $group), '顶级分类'))
+                    ->addFormItem('pid', 'select', '上级分类', '所属的上级分类', select_list_as_tree('Category', array('group' => $group), '顶级分类'))
                     ->addFormItem('title', 'text', '分类标题', '分类标题')
-                    ->addFormItem('doc_type', 'radio', '分类内容模型', '分类内容模型', $this->selectListAsTree('DocumentType'))
+                    ->addFormItem('doc_type', 'radio', '分类内容模型', '分类内容模型', select_list_as_tree('DocumentType'))
                     ->addFormItem('url', 'text', '链接', 'U函数解析的URL或者外链', null, 'hidden')
                     ->addFormItem('content', 'kindeditor', '内容', '单页模型填写内容', null, 'hidden')
                     ->addFormItem('index_template', 'select', '列表模版', '文档列表或封面模版', $template_list_index, 'hidden')
@@ -196,9 +197,9 @@ EOF;
                     ->setPostUrl(U('Admin/Category/edit/id/'.$id.'/group/'.$group)) //设置表单提交地址
                     ->addFormItem('id', 'hidden', 'ID', 'ID')
                     ->addFormItem('group', 'radio', '分组', '分组', C('CATEGORY_GROUP_LIST'))
-                    ->addFormItem('pid', 'select', '上级分类', '所属的上级分类', $this->selectListAsTree('Category', array('group' => $group), '顶级分类'))
+                    ->addFormItem('pid', 'select', '上级分类', '所属的上级分类', select_list_as_tree('Category', array('group' => $group), '顶级分类'))
                     ->addFormItem('title', 'text', '分类标题', '分类标题')
-                    ->addFormItem('doc_type', 'radio', '分类内容模型', '分类内容模型', $this->selectListAsTree('DocumentType'))
+                    ->addFormItem('doc_type', 'radio', '分类内容模型', '分类内容模型', select_list_as_tree('DocumentType'))
                     ->addFormItem('url', 'text', '链接', 'U函数解析的URL或者外链', null, $info['doc_type'] == 1 ? : 'hidden')
                     ->addFormItem('content', 'kindeditor', '内容', '单页模型填写内容', null, $info['doc_type'] == 2 ? : 'hidden')
                     ->addFormItem('index_template', 'select', '模版', '文档列表或封面模版', $template_list_index, $info['doc_type'] > 2 ? : 'hidden')

@@ -164,7 +164,7 @@ EOF;
                     $con['doc_type'] = $category_info['doc_type'];
                     $con['status'] = array('egt', 0);
                     $attr['value'] = $cid;
-                    $attr['options'] = $this->selectListAsTree('Category', $con);
+                    $attr['options'] = select_list_as_tree('Category', $con);
                 }else{
                     $attr['options'] = parse_attr($attr['options']);
                 }
@@ -232,7 +232,7 @@ EOF;
                     $con['group'] = $category_info['group'];
                     $con['doc_type'] = $category_info['doc_type'];
                     $con['status'] = array('egt', 0);
-                    $attr['options'] = $this->selectListAsTree('Category', $con);
+                    $attr['options'] = select_list_as_tree('Category', $con);
                 }else{
                     $attr['options'] = parse_attr($attr['options']);
                 }
@@ -283,7 +283,7 @@ EOF;
                 if($form_category_type === $to_category_type){
                     $map['id'] = array('in',$ids);
                     $data = array('cid' => $to_cid);
-                    $this->editRow('Document', $data, $map, array('success'=>'移动成功','error'=>'移动失败'));
+                    edit_table_row('Document', $data, $map, array('success'=>'移动成功','error'=>'移动失败'));
                 }else{
                     $this->error('该分类模型不匹配');
                 }
