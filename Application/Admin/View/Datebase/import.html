@@ -1,43 +1,51 @@
 <extend name="_Layout/main"/>
 
 <block name="main">
+    <!-- 数据列表 -->
     <div class="data-table">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th width="200">备份名称</th>
-                    <th width="80">卷数</th>
-                    <th width="80">压缩</th>
-                    <th width="80">数据大小</th>
-                    <th width="200">备份时间</th>
-                    <th>状态</th>
-                    <th width="120">操作</th>
-                </tr>
-            </thead>
-            <tbody>
-                <volist name="list" id="data">
+        <div class="panel panel-default">
+            <table class="table table-bordered table-responsive table-striped table-hover">
+                <thead>
                     <tr>
-                        <td>{$data.time|time_format}</td>
-                        <td>{$data.part}</td>
-                        <td>{$data.compress}</td>
-                        <td>{$data.size}</td>
-                        <td>{$key}</td>
-                        <td>-</td>
-                        <td class="action">
-                            <a class="label label-danger db-import" href="{:U('do_import?time='.$data['time'])}">还原</a>&nbsp;
-                            <a class="label label-danger ajax-get confirm" href="{:U('del?time='.$data['time'])}">删除</a>
-                        </td>
+                        <th width="200">备份名称</th>
+                        <th width="80">卷数</th>
+                        <th width="80">压缩</th>
+                        <th width="80">数据大小</th>
+                        <th width="200">备份时间</th>
+                        <th>状态</th>
+                        <th width="120">操作</th>
                     </tr>
-                </volist>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <volist name="list" id="data">
+                        <tr>
+                            <td>{$data.time|time_format}</td>
+                            <td>{$data.part}</td>
+                            <td>{$data.compress}</td>
+                            <td>{$data.size}</td>
+                            <td>{$key}</td>
+                            <td>-</td>
+                            <td class="action">
+                                <a class="label label-danger db-import" href="{:U('do_import?time='.$data['time'])}">还原</a>&nbsp;
+                                <a class="label label-danger ajax-get confirm" href="{:U('del?time='.$data['time'])}">删除</a>
+                            </td>
+                        </tr>
+                    </volist>
+                </tbody>
+            </table>
+        </div>
     </div>
 </block>
 
 <block name="script">
     <script type="text/javascript">
         $(function(){
-            $(".db-import").click(function(){
+            $(".db-import").click(function() {
+                if ($(this).hasClass('confirm')) {
+                    if (!confirm('确认要执行该操作吗?')) {
+                        return false;
+                    }
+                }
                 var self = this, status = ".";
                 $.get(self.href, success, "json");
                 window.onbeforeunload = function(){ return "正在还原数据库，请不要关闭！" }

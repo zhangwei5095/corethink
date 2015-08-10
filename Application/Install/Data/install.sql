@@ -62,7 +62,6 @@ CREATE TABLE `ct_addon_hook` (
   `utime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='钩子表';
 
 LOCK TABLES `ct_addon_hook` WRITE;
@@ -387,8 +386,8 @@ VALUES
 	(5,0,'其它','Admin/Other/index','fa fa-cloud',0,1426580628,1426580628,3,0),
 	(6,1,'系统操作','','fa fa-folder-open-o',0,1426580628,1426580628,1,1),
 	(7,2,'系统功能','','fa fa-folder-open-o',0,1426580628,1438277612,1,1),
-	(8,2,'应用商店','','fa fa-folder-open-o',0,1437185077,1437185164,2,1),
-	(9,2,'数据库管理','','fa fa-folder-open-o',0,1426580628,1426580628,3,1),
+	(8,2,'扩展中心','','fa fa-folder-open-o',0,1437185077,1437185164,2,1),
+	(9,2,'数据中心','','fa fa-folder-open-o',0,1426580628,1426580628,3,1),
 	(10,3,'内容管理','','fa fa-folder-open-o',0,1430290276,1438277591,1,1),
 	(11,3,'文件管理','','fa fa-folder-open-o',0,1430290276,1438277393,1,1),
 	(12,4,'用户管理','','fa fa-folder-open-o',0,1426580628,1438277454,1,1),
@@ -604,10 +603,6 @@ CREATE TABLE `ct_user` (
   `sort` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `mobile` (`mobile`),
-  KEY `status` (`status`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户会员信息表';
 
 LOCK TABLES `ct_user` WRITE;
