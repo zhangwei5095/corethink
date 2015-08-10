@@ -1,5 +1,6 @@
 <div class="builder builder-list-box">
 
+    <!-- Tab导航 -->
     <notempty name="tab_nav">
         <div class="builder-tabs builder-list-tabs">
             <div class="row">
@@ -14,16 +15,19 @@
         </div>
     </notempty>
 
+    <!-- 顶部工具栏按钮 -->
     <div class="builder-toolbar builder-list-toolbar">
         <div class="row">
+            <!-- 工具栏按钮 -->
             <notempty name="top_button_list">
-                <div class="col-xs-12 col-sm-9">
+                <div class="col-xs-12 col-sm-9 button-list">
                     <volist name="top_button_list" id="button">
                         <a {$button.attribute}>{$button.title}</a>&nbsp;
                     </volist>
                 </div>
             </notempty>
 
+            <!-- 搜索框 -->
             <notempty name="search">
                 <div class="col-xs-12 col-sm-3">
                     <div class="input-group search-form">
@@ -63,10 +67,11 @@
                                 </volist>
 
                                 <empty name="table_data_list">
-                                    <tr class="table-data-list-empty">
+                                    <tr class="builder-data-empty">
                                         <php>$tdcolspan = count($table_column_list)+1</php>
-                                        <td class="text-center" colspan="{$tdcolspan}">
-                                            <i class="fa fa-database"></i> 暂时没有数据
+                                        <td class="text-center empty-info" colspan="{$tdcolspan}">
+                                            <i class="fa fa-database"></i> 暂时没有数据<br>
+                                            <span class="small">本系统由 <a href="{:C('WEBSITE_DOMAIN')}" class="text-muted" target="_blank">{:C('PRODUCT_NAME')}</a> v{:C('CURRENT_VERSION')} 强力驱动</span>
                                         </td>
                                     </tr>
                                 </empty>

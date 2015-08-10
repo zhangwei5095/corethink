@@ -64,7 +64,8 @@ gulp.task('admin_script_module', function() {
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(gulp.dest('Public/js/'));
+        .pipe(gulp.dest('Public/js/'))
+        .pipe(livereload()); // 动态加载，有文件变动即自动重新编译压缩
 });
 
 
@@ -91,7 +92,7 @@ gulp.task('admin_style_module', function() {
             suffix: '.min'
         }))
         .pipe(gulp.dest('Public/css/'))
-        .pipe(livereload());
+        .pipe(livereload()); // 动态加载，有文件变动即自动重新编译压缩
 });
 
 
@@ -126,7 +127,8 @@ gulp.task('home_script_module', function() {
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(gulp.dest('Public/js/'));
+        .pipe(gulp.dest('Public/js/'))
+        .pipe(livereload()); // 动态加载，有文件变动即自动重新编译压缩
 });
 
 
@@ -153,14 +155,14 @@ gulp.task('home_style_module', function() {
             suffix: '.min'
         }))
         .pipe(gulp.dest('Public/css/'))
-        .pipe(livereload());
+        .pipe(livereload()); // 动态加载，有文件变动即自动重新编译压缩
 });
 
 
 
 //
 //
-// 监听
+// 监听，有文件变动即自动重新编译压缩
 // --------------------------------------------
 gulp.task('watching', function() {
 
@@ -183,12 +185,14 @@ gulp.task('watching', function() {
     livereload.listen();
     gulp.watch([
         'index.php',
-        ADMIN.ROOT + '/**/*.php',
         ADMIN.ROOT + '/**/*.less',
-        HOME.ROOT + '/**/*.php',
+        ADMIN.ROOT + '/**/*.js',
         HOME.ROOT + '/**/*.less',
+        HOME.ROOT + '/**/*.js',
         'Application/Common/**/*.less',
+        'Application/Common/**/*.js',
         'Public/libs/**/*.less',
+        'Public/libs/**/*.js'
     ], function(event) {
         livereload.changed(event.path);
     });

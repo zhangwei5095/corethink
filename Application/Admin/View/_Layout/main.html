@@ -15,6 +15,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/favicon.ico">
 
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin.css?v={:C('STATIC_VERSION')}">
+    <link rel="stylesheet" type="text/css" href="__ADMIN_CSS__/{:C('ADMIN_THEME')}.css">
     <block name="style"></block>
     <script src="__PUBLIC__/libs/jquery/1.x/jquery-1.11.3.min.js"></script>
     <block name="libs"></block>
@@ -82,29 +83,30 @@
                 <div class="row">
 
                     <div id="sidebar" class="col-xs-12 col-sm-2 sidebar">
-                        <?php if(0): ?>
                         <!-- 切换左侧菜单 -->
-                        <button id="menu-toggle" class="btn btn-default btn-block hidden-xs border-radius-none" title="切换左侧菜单">
+                        <button id="sidebar-toggle" class="btn btn-default btn-block hidden-xs" title="切换左侧菜单">
                             <i class="fa fa-bars"></i>
                         </button>
-                        <?php endif; ?>
 
                         <!-- 侧边导航 -->
-                        <div class="panel-group margin-none" role="tablist">
+                        <div class="panel-group" role="tablist">
                             <volist name="__SIDE_MENU_LIST__" id="vo">
                                 <div class="panel panel-default">
                                     <div class="panel-heading" role="tab">
                                         <h4 class="panel-title"><a data-toggle="collapse" href="#side-menu{$key}">
-                                            <i class="{$vo.icon}"></i>
-                                            <span class="menu-title">{$vo.title}</a></span>
+                                            <i class="{$vo.icon}"></i> 
+                                            <span class="sidebar-title">{$vo.title}</a></span>
                                         </h4>
                                     </div>
                                     <div id="side-menu{$key}" class="panel-collapse collapse in" role="tabpanel">
 
                                         <div class="list-group">
                                             <volist name="vo._child" id="vo_child">
-                                                <a class="list-group-item border-radius-none <php>if(in_array($vo_child['id'], $__PARENT_MENU_ID__)) echo 'active';</php>"
-                                                href="{:U($vo_child['url'])}"><i class="{$vo_child.icon}"></i> <span class="menu-title">{$vo_child.title}</span></a>
+                                                <a class="list-group-item <?php if(in_array($vo_child['id'], $__PARENT_MENU_ID__)) echo 'active'; ?>"
+                                                href="{:U($vo_child['url'])}">
+                                                    <i class="{$vo_child.icon}"></i> 
+                                                    <span class="sidebar-title">{$vo_child.title}</span>
+                                                </a>
                                             </volist>
                                         </div>
 
@@ -116,15 +118,13 @@
 
 
                     <div id="main" class="col-xs-12 col-sm-10 main">
-                        <?php if(0): ?>
-                        <!-- 麵包屑部分，建議拿掉。 -->
-                        <ul class="breadcrumb border-radius-none">
-                            <li><i class="icon-location-arrow"></i></li>
+                        <!-- 面包屑导航 -->
+                        <ul class="breadcrumb">
+                            <li><i class="fa fa-map-marker"></i></li>
                             <volist name="__PARENT_MENU__" id="vo">
                                 <li>{$vo.title}</li>
                             </volist>
                         </ul>
-                        <?php endif; ?>
 
                         <block name="main"></block>
 

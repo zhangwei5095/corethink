@@ -1,12 +1,14 @@
-// 通用表单（列表＋内容）
+// Builder通用样式（列表＋表单）
 .builder {
     .builder-tabs, .builder-toolbar, .builder-container {
         margin-bottom: 20px;
     }
-    .builder-table {
-        .table-data-list-empty {
-            td {
-                padding: 150px 0;
+    .builder-container {
+        .builder-data-empty {
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            .empty-info {
+                padding: 130px 0;
                 color: @gray;
             }
         }
@@ -16,7 +18,18 @@
     }
 }
 //
-// 通用表单 内容
+// Builder列表样式
+@media (max-width: 768px){
+    .builder-list-toolbar {
+        .button-list {
+            .btn {
+                margin-bottom: 15px;
+            }
+        }
+    }
+}
+//
+// Builder表单样式
 .builder-form-box {
     .huploadify-upload {
         margin-bottom: 10px;
