@@ -2,7 +2,12 @@
     <div id="[type]{$group_k}_upload_{$[type]k}" {$form.extra_attr}></div>
     <div id="[type]{$group_k}_preview_{$[type]k}">
         <input type="hidden" name="{$[type]form.name}" value="{$[type]form.value}">
-        <img class="img-responsive" style="margin-top:8px;max-height:60px;" src="{$[type]form.value|get_cover}">
+        <notempty name="[type]form.value">
+            <span class="img-box">
+                <img class="img" src="{$[type]form.value|get_cover}" data-id="{$[type]form.value}">
+                <i class="fa fa-times-circle remove-picture"></i>
+            </span>
+        </notempty>
     </div>
     <script type="text/javascript">
         $(function(){
@@ -21,6 +26,15 @@
                     }
                 }
             });
+        });
+        //删除图片
+        $('#[type]{$group_k}_preview_{$[type]k} .remove-picture').click(function(){
+            var ready_for_remove_id = $(this).closest('.img-box').find('img').attr('data-id'); //获取待删除的图片ID
+            if(!ready_for_remove_id){
+                $.alertMessager('错误', 'danger');
+            }
+            $('#[type]{$group_k}_preview_{$[type]k} input').val('') //删除后覆盖原input的值为空
+            $(this).closest('.img-box').remove(); //删除图片预览图
         });
     </script>
 </case>

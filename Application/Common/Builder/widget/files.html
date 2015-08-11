@@ -2,11 +2,15 @@
     <div id="[type]{$group_k}_upload_{$[type]k}" {$[type]form.extra_attr}></div>
     <div id="[type]{$group_k}_preview_{$[type]k}">
         <input type="hidden" name="{$[type]form.name}" value="{$[type]form.value}">
-        <ul class="list-group margin-top file-box">
+        <ul class="list-group file-box">
             <notempty name="[type]form.value">
                 <?php $files = explode(',',$[type]form['value']); ?>
                 <foreach name="files" item="file">
-                    <li class="list-group-item file-item" data-id="{$file}"><i class="fa fa-file"></i> {$file|get_upload_info='name'} <i class="fa fa-times-circle remove-file"></i></li>
+                    <li class="list-group-item file-item" data-id="{$file}">
+                        <i class="fa fa-file"></i> 
+                        <span>{$file|get_upload_info='name'}</span> 
+                        <i class="fa fa-times-circle remove-file"></i>
+                    </li>
                 </foreach>
             </notempty>
         </ul>
