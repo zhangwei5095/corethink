@@ -1,7 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <block name="title"><title>{$meta_title}｜{:C('WEB_SITE_TITLE')}－{:C('WEB_SITE_SLOGAN')}</title></block>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta name="author" content="{:C('WEB_SITE_TITLE')}">
     <meta name="keywords" content="{$meta_keywords}">
@@ -10,168 +12,171 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="{:C('WEB_SITE_TITLE')}">
     <meta name="format-detection" content="telephone=no,email=no">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <block name="title"><title>{$meta_title}｜{:C('WEB_SITE_TITLE')}－{:C('WEB_SITE_SLOGAN')}</title></block>
     <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/favicon.ico">
     <link rel="apple-touch-icon" type="image/x-icon" href="__ROOT__/favicon.ico">
+
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/home.min.css?v={:C('STATIC_VERSION')}"> <!-- 引入gulp合并压缩的css -->
     <link rel="stylesheet" type="text/css" href="__HOME_CSS__/main.css?v={:C('STATIC_VERSION')}"> <!-- 引入当前主题无需经过gulp并压缩的css -->
     <block name="style"></block>
     <script type="text/javascript" src="__PUBLIC__/libs/jquery/1.x/jquery-1.11.3.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="__PUBLIC__/js/home.min.js?v={:C('STATIC_VERSION')}" charset="utf-8"></script> <!-- 引入gulp并压缩的js -->
-    <script type="text/javascript" src="__HOME_JS__/main.js?v={:C('STATIC_VERSION')}" charset="utf-8"></script> <!-- 引入当前主题无需经过gulp并压缩的js -->
-    <block name="script"></block>
+    <block name="libs"></block>
     {:C('WEB_SITE_STATISTICS')} <!-- 站点统计代码 -->
 </head>
 
-<?php
-    $CONTROLLER_NAME = strtolower($Think.CONTROLLER_NAME);
-    $ACTION_NAME = strtolower($Think.ACTION_NAME);
-?>
-
-<body id="<?php echo 'body-'.$CONTROLLER_NAME.'-'.$ACTION_NAME; ?>" class="<?php echo 'body-'.$CONTROLLER_NAME.' body-'.$CONTROLLER_NAME.'-'.$ACTION_NAME; ?>">
-    <block name="wrap">
+<body id="<?php echo 'body-'.$__CONTROLLER_NAME__.'-'.$__ACTION_NAME__; ?>" class="<?php echo 'body-'.$__CONTROLLER_NAME__.' body-'.$__CONTROLLER_NAME__.'-'.$__ACTION_NAME__; ?>">
+    <div class="clearfix hook hook-page-header">
         {:hook('PageHeader')} <!-- 文档开始钩子 -->
+    </div>
 
-        <block name="top-nav">
-            <nav class="top-nav navbar navbar-inverse hidden-xs margin-bottom-none border-radius-none" role="navigation">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-top">
-                            <span class="sr-only">切换导航</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                    <div class="collapse navbar-collapse navbar-collapse-top">
-                        <ul class="nav navbar-nav" style="margin-left:-15px" >
-                            <li><a href="mailto:admin@corethink.cn">联系：admin@corethink.cn</a></li>
-                            <li><a href="#" tabindex="0" role="button" data-toggle="popover" data-trigger="hover" data-placement="bottom"
-                                title="QQ联系" data-html="true" data-content="<div style='width:120px;'><ul class='list-unstyled'><li>技术：598821125</li><li>销售：603550095</li><li>市场：550138282</li></ul></div>">
-                                <i class="fa fa-qq"></i></a>
-                            </li>
-                            <li><a target="_blank" href="http://weibo.com/u/5667168319"><i class="fa fa-weibo"></i></a></li>
-                            <li><a href="#" data-html="true" tabindex="0" role="button" data-toggle="popover" data-trigger="hover" data-placement="bottom"
-                                title="微信扫一扫" data-html="true" data-content="<img src='__HOME_IMG__/weixin_gh_ce5447812a60.jpg'>">
-                                <i class="fa fa-weixin"></i></a>
-                            </li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#">您好，欢迎来到{:C('WEB_SITE_TITLE')} ！</a></li>
-                            <li><a href="{:C('WEBSITE_DOMAIN')}">协议</a></li>
-                            <li><a href="{:C('WEBSITE_DOMAIN')}" target="_blank">手册</a></li>
-                            <present name="__USER__">
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-user"></i> {$__USER__.username}
-                                        <span class="caret"></span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="{:U('Home/User/home')}"><i class="fa fa-home"></i> 个人主页</a></li>
-                                        <li><a href="{:U('Home/User/center')}"><i class="fa fa-tachometer"></i> 个人中心</a></li>
-                                        <li><a href="{:U('Home/UserMessage/index')}"><i class="fa fa-envelope"></i> 消息中心</a></li>
-                                        <li><a href="{:U('Home/Addon/index')}"><i class="fa fa-weixin"></i> 微＋平台</a></li>
-                                        <li class="divider hidden-xs"></li>
-                                        <li><a href="{:U('Home/User/logout')}" class="ajax-get"><i class="fa fa-sign-out"></i> 退出登录</a></li>
-                                    </ul>
+    <block name="wrap">
+        <div class="clearfix full-header">
+            <block name="top-nav">
+                <nav class="top-nav navbar navbar-inverse navbar-static-top hidden-xs">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-top">
+                                <span class="sr-only">切换导航</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="collapse navbar-collapse navbar-collapse-top">
+                            <ul class="nav navbar-nav" style="margin-left:-10px" >
+                                <li><a href="#">联系方式：</a></li>
+                                <li><a href="mailto:admin@corethink.cn"><i class="fa fa-envelope"></i></a></li>
+                                <li><a href="#" tabindex="0" role="button" data-toggle="popover" data-trigger="hover" data-placement="bottom"
+                                    title="QQ联系" data-html="true" data-content="<div style='width:120px;'><ul class='list-unstyled'><li>技术：598821125</li><li>销售：603550095</li><li>市场：550138282</li></ul></div>">
+                                    <i class="fa fa-qq"></i></a>
                                 </li>
-                            <else />
-                                <li><a href="#" data-toggle="modal" data-target="#login-modal">登录</a></li>
-                                <li><a href="{:U('Home/User/register')}">注册</a></li>
-                            </present>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </block>
-
-        <block name="main-nav">
-            <nav class="main-nav navbar navbar-default margin-bottom-none border-none" role="navigation">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-main">
-                            <span class="sr-only">切换导航</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <php>if(C('WEB_SITE_LOGO')):</php>
-                            <a class="navbar-brand" href="__ROOT__/"><img alt="logo" class="logo" src="{$Think.config.WEB_SITE_LOGO|get_cover='path'}"></a>
-                        <php>else:</php>
-                            <a class="navbar-brand" href="__ROOT__/"><img alt="logo" class="logo" src="__HOME_IMG__/logo_with_title.png"></a>
-                        <php>endif;</php>
-                    </div>
-                    <div class="collapse navbar-collapse navbar-collapse-main">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="__ROOT__/">首页</a></li>
-                            <corethink:category_list name="vo">
-                                <li <if condition='$vo.id eq $__CURRENT_CATEGORY__'> class="active"</if> >
-                                    <a href="{:U('Home/Document/index', array('cid' => $vo['id']))}">{$vo.title}</a>
+                                <li><a href="#" data-html="true" tabindex="0" role="button" data-toggle="popover" data-trigger="hover" data-placement="bottom"
+                                    title="微信扫一扫" data-html="true" data-content="<img src='__HOME_IMG__/weixin_gh_ce5447812a60.jpg'>">
+                                    <i class="fa fa-weixin"></i></a>
                                 </li>
-                            </corethink:category_list>
-                            <li><a style="padding-left:20px;padding-right:20px;" href="__ROOT__/"><i class="fa fa-search fa-lg"></i></a></li>
-                        </ul>
+                                <li><a target="_blank" href="http://weibo.com/u/5667168319"><i class="fa fa-weibo"></i></a></li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#">您好，欢迎来到{:C('WEB_SITE_TITLE')} ！</a></li>
+                                <li><a href="{:C('WEBSITE_DOMAIN')}">协议</a></li>
+                                <li><a href="{:C('WEBSITE_DOMAIN')}" target="_blank">手册</a></li>
+                                <present name="__USER__">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fa fa-user"></i> {$__USER__.username}
+                                            <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{:U('Home/User/home')}"><i class="fa fa-home"></i> 个人主页</a></li>
+                                            <li><a href="{:U('Home/User/center')}"><i class="fa fa-tachometer"></i> 个人中心</a></li>
+                                            <li><a href="{:U('Home/UserMessage/index')}"><i class="fa fa-envelope"></i> 消息中心</a></li>
+                                            <li><a href="{:U('Home/Addon/index')}"><i class="fa fa-weixin"></i> 微＋平台</a></li>
+                                            <li class="divider hidden-xs"></li>
+                                            <li><a href="{:U('Home/User/logout')}" class="ajax-get"><i class="fa fa-sign-out"></i> 退出登录</a></li>
+                                        </ul>
+                                    </li>
+                                <else />
+                                    <li><a href="#" data-toggle="modal" data-target="#login-modal">登录</a></li>
+                                    <li><a href="{:U('Home/User/register')}">注册</a></li>
+                                </present>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-            </nav>
-        </block>
+                </nav>
+            </block>
 
-        <block name="jumbotron"></block>
-
-        <block name="breadcrumb">
-            <div class="container">
-                <ul class="breadcrumb">
-                    <li><a href="__ROOT__/"><span class="fa fa-home"></span></a></li>
-                    <corethink:breadcrumb name="_breadcrumb" cid="$__CURRENT_CATEGORY__" group="$__CURRENT_CATEGORY_GROUP__">
-                        <li><a href="{:U('Home/Document/index', array('cid' => $_breadcrumb['id']))}">{$_breadcrumb.title}</a></li>
-                    </corethink:breadcrumb>
-                </ul>
-            </div>
-        </block>
-
-        <div class="main">
-            <block name="body">这里是内容</block>
+            <block name="main-nav">
+                <nav class="main-nav navbar navbar-default navbar-static-top" role="navigation">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-main">
+                                <span class="sr-only">切换导航</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <php>if(C('WEB_SITE_LOGO')):</php>
+                                <a class="navbar-brand" href="__ROOT__/"><img alt="logo" class="logo" src="{$Think.config.WEB_SITE_LOGO|get_cover='path'}"></a>
+                            <php>else:</php>
+                                <a class="navbar-brand" href="__ROOT__/"><img alt="logo" class="logo" src="__HOME_IMG__/logo_with_title.png"></a>
+                            <php>endif;</php>
+                        </div>
+                        <div class="collapse navbar-collapse navbar-collapse-main">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="__ROOT__/">首页</a></li>
+                                <corethink:category_list name="vo">
+                                    <li <if condition='$vo.id eq $__CURRENT_CATEGORY__'> class="active"</if> >
+                                        <a href="{:U('Home/Document/index', array('cid' => $vo['id']))}">{$vo.title}</a>
+                                    </li>
+                                </corethink:category_list>
+                                <li><a style="padding-left:20px;padding-right:20px;" href="__ROOT__/"><i class="fa fa-search fa-lg"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </block>
         </div>
 
-        <block name="footer">
-            <footer class="footer">
-                <hr>
+        <div class="clearfix full-container">
+            <block name="jumbotron"></block>
+
+            <block name="breadcrumb">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-sm-6 col-lg-5">
-                            <h3 class="text-primary">{:C('WEB_SITE_TITLE')}</h3>
-                            <p>{:C('WEB_SITE_DESCRIPTION')}</p>
-                        </div>
-                        <div class="col-sm-6 col-lg-6 col-lg-offset-1">
-                            <div class="row">
-                                <!-- 栏目分类标签调用底部导航分类 -->
-                                <corethink:category_list name="vo" group="3" pid="15">
-                                    <div class="col-xs-6 col-sm-3" style="height:120px;">
-                                        <h4 class="text-primary">{$vo.title}</h4>
-                                        <ul class="list-unstyled">
-                                            <notempty name="vo._child">
-                                                <volist name="vo._child" id="vo_child">
-                                                    <li><a target="_blank" class="text-muted" href="{:U('Home/Document/index/cid/'.$vo_child['id'])}">{$vo_child.title}</a></li>
-                                                </volist>
-                                            </notempty>
-                                        <ul>
-                                    </div>
-                                </corethink:category_list>
+                    <ul class="breadcrumb">
+                        <li><a href="__ROOT__/"><span class="fa fa-home"></span></a></li>
+                        <corethink:breadcrumb name="_breadcrumb" cid="$__CURRENT_CATEGORY__" group="$__CURRENT_CATEGORY_GROUP__">
+                            <li><a href="{:U('Home/Document/index', array('cid' => $_breadcrumb['id']))}">{$_breadcrumb.title}</a></li>
+                        </corethink:breadcrumb>
+                    </ul>
+                </div>
+            </block>
+
+            <div id="main" class="main">
+                <block name="main">这里是内容</block>
+            </div>
+        </div>
+
+        <div class="clearfix full-foooter">
+            <block name="footer">
+                <footer class="footer">
+                    <hr>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-5">
+                                <h3 class="text-primary">{:C('WEB_SITE_TITLE')}</h3>
+                                <p>{:C('WEB_SITE_DESCRIPTION')}</p>
+                            </div>
+                            <div class="col-sm-6 col-lg-6 col-lg-offset-1">
+                                <div class="row">
+                                    <!-- 栏目分类标签调用底部导航分类 -->
+                                    <corethink:category_list name="vo" group="3" pid="15">
+                                        <div class="col-xs-6 col-sm-3" style="height:120px;">
+                                            <h4 class="text-primary">{$vo.title}</h4>
+                                            <ul class="list-unstyled">
+                                                <notempty name="vo._child">
+                                                    <volist name="vo._child" id="vo_child">
+                                                        <li><a target="_blank" class="text-muted" href="{:U('Home/Document/index/cid/'.$vo_child['id'])}">{$vo_child.title}</a></li>
+                                                    </volist>
+                                                </notempty>
+                                            <ul>
+                                        </div>
+                                    </corethink:category_list>
+                                </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <ul class="copyright list-inline text-center">
+                                <li>{:C('WEB_SITE_COPYRIGHT')}</li>
+                                <li><a class="icp" href="http://www.miibeian.gov.cn/" target="_blank">{:C('WEB_SITE_ICP')}</a></li>
+                                <li><a href="{:C('WEBSITE_DOMAIN')}" title="轻量级WEB产品开发框架"><span class="label label-default">CorerThink</span></a></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="row border-top padding-top">
-                        <ul class="list-inline text-center">
-                            <li>{:C('WEB_SITE_COPYRIGHT')}</li>
-                            <li><a class="padding-left border-left" href="http://www.miibeian.gov.cn/" target="_blank">{:C('WEB_SITE_ICP')}</a></li>
-                            <li><a href="{:C('WEBSITE_DOMAIN')}" title="轻量级WEB产品开发框架"><span class="label label-default">CorerThink</span></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </footer>
-        </block>
+                </footer>
+            </block>
+        </div>
+    </block>
 
+    <div class="clearfix full-extend">
         <block name="nav-tabs-bottom">
             <nav class="nav-tabs-bottom navbar-fixed-bottom">
                 <a class="item" href="__ROOT__/"><i class="fa fa-home fa-2x nav-icon"></i> 首页</a>
@@ -226,8 +231,24 @@
                 </div>
             </div>
         </div>
+    </div>
 
+    <div class="clearfix full-script">
+        <div class="container-fluid">
+            <div id="universal">
+                <script type="text/javascript">
+                    var $universalObject{$Think.CONTROLLER_NAME} = {<block name='universal'></block>};
+                </script>
+            </div>
+
+            <script type="text/javascript" src="__PUBLIC__/js/home.min.js?v={:C('STATIC_VERSION')}"></script> <!-- 引入gulp并压缩的js -->
+            <script type="text/javascript" src="__HOME_JS__/main.js?v={:C('STATIC_VERSION')}"></script> <!-- 引入当前主题无需经过gulp并压缩的js -->
+            <block name="script"></block>
+        </div>
+    </div>
+
+    <div class="clearfix hook hook-page-footer">
         {:hook('PageFooter')} <!-- 文档末尾钩子 -->
-    </block>
+    </div>
 </body>
 </html>

@@ -1,28 +1,34 @@
 <?php 
-    $userinfo = D('User')->find(is_login());
-    $date = new \Org\Util\Date((int)$userinfo['birthday']);
-    $userinfo['gz'] = $date->magicInfo('GZ');
-    $userinfo['xz'] = $date->magicInfo('XZ');
-    $userinfo['sx'] = $date->magicInfo('SX');
-    $map['status'] = 1;
-    $map['system'] = 0;
-    $doc_type_list = D('DocumentType')->where($map)->order('id asc')->select();
+    $user_info = D('User')->find(is_login());
 ?>
 
-<div class="panel panel-default">
+<block name="style">
+    <style type="text/css">
+        .avatar-box table.info td{
+            width: 50%;
+            padding: 2px;
+        }
+    </style>
+</block>
+
+<div class="panel panel-default avatar-box">
     <div class="panel-heading text-center">
-        <h3 class="panel-title"><img class="img-circle img-responsive" src="{$userinfo.avatar|get_cover='avatar'}"  style="width:120px;height:120px;"></h3>
+        <h3 class="panel-title">
+            <a href="{:U('User/home')}" target="_blank">
+                <img class="img-circle" src="{$user_info.avatar|get_cover='avatar'}" style="width:120px;height:120px;">
+            </a>
+        </h3>
     </div>
     <div class="panel-body">
-        <table class="table margin-none">
+        <table class="info">
             <tbody>
                 <tr>
                     <td class="border-none">关注：0</td>
                     <td class="border-none">粉丝：0</td>
                 </tr>
                 <tr>
-                    <td class="border-none">积分：{$userinfo.score}</td>
-                    <td class="border-none">余额：¥{$userinfo.money}</td>
+                    <td class="border-none">积分：{$user_info.score}</td>
+                    <td class="border-none">余额：¥{$user_info.money}</td>
                 </tr>
             </tbody>
         </table>
@@ -33,30 +39,19 @@
     <div class="panel-group" role="tablist">
         <div class="panel panel-default">
             <div class="panel-heading" role="tab">
-                <h4 class="panel-title"><a class="" data-toggle="collapse" href="#list1">个人</a></h4>
+                <h4 class="panel-title">
+                    <a class="" data-toggle="collapse" href="#list1"><i class="fa fa-folder-open-o"></i> 个人中心</a>
+                </h4>
             </div>
             <div id="list1" class="panel-collapse collapse in" role="tabpanel">
                 <div class="list-group">
-                    <a class="list-group-item"href="{:U('User/home')}" target="_blank"><i class="icon icon-home"></i> 个人主页</a>
-                    <a class="list-group-item" href="{:U('User/profile')}"><i class="icon icon-edit"></i> 修改信息</a>
-                    <a class="list-group-item" href="{:U('UserMessage/index')}"><i class="icon icon-chat-dot"></i> 消息中心</a>
-                    <a class="list-group-item" href="{:U('User/safe')}"><i class="icon icon-lock"></i> 账号安全</a>
-                    <a class="list-group-item" href="{:U('User/smrz')}"><i class="icon icon-user"></i> 实名认证</a>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab">
-                <h4 class="panel-title"><a class="" data-toggle="collapse" href="#list2">内容中心</a></h4>
-            </div>
-            <div id="list2" class="panel-collapse collapse in" role="tabpanel">
-                <div class="list-group">
-                    <volist name="doc_type_list" id="doc_type">
-                        <a class="list-group-item" href="{:U('Document/mydoc/doc_type/'.$doc_type['id'])}"><i class="icon icon-list"></i> 我的{$doc_type.title}</a>
-                    </volist>
-                    <volist name="doc_type_list" id="doc_type">
-                        <a class="list-group-item" href="{:U('Document/add/doc_type/'.$doc_type['id'])}"><i class="icon {$doc_type.icon}"></i> 添加{$doc_type.title}</a>
-                    </volist>
+                    <a class="list-group-item" href="{:U('User/profile')}"><i class="fa fa-edit"></i> 修改信息</a>
+                    <a class="list-group-item" href="{:U('UserMessage/index')}"><i class="fa fa-envelope-o"></i> 消息中心</a>
+                    <a class="list-group-item" href="{:U('Document/mydoc')}"><i class="fa fa-file-word-o"></i> 我的文档</a>
+                    <!-- 
+                        <a class="list-group-item" href="{:U('User/safe')}"><i class="icon icon-lock"></i> 账号安全</a>
+                        <a class="list-group-item" href="{:U('User/smrz')}"><i class="icon icon-user"></i> 实名认证</a>
+                    -->
                 </div>
             </div>
         </div>

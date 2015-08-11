@@ -1,29 +1,53 @@
 <extend name="_Layout/main"/>
 
-<block name="body">
+<block name="style">
+    <style type="text/css">
+        .forum-plate-list .panel-body .plate {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .forum-plate-list .panel-body .media-heading {
+            height: 20px;
+        }
+        .badge-sm {
+            vertical-align: top;
+            padding: 1px 5px;
+            background-color: red;
+        }
+    </style>
+</block>
+
+<block name="main">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-9">
+                <!-- 文档列表页面顶部钩子 -->
+                <div class="clearfix hook hook-document-list-before">
+                    {:hook('DocumentListBefore')}
+                </div>
+
+                <!-- 论坛板块列表 -->
                 <corethink:category_list name="vo" pid="$__CURRENT_CATEGORY__" group="$__CURRENT_CATEGORY_GROUP__">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default forum-plate-list">
                         <div class="panel-heading">
                             <h3 class="panel-title">{$vo.title}</h3>
                         </div>
                         <div class="panel-body">
                             <volist name="vo._child" id="vo_child">
-                                <div class="col-xs-12 col-sm-6 margin-bottom padding-bottom border-bottom">
+                                <div class="col-xs-12 col-sm-6 plate">
                                     <div class="media-left">
                                         <a href="#">
                                               <i style="color:<php>echo '#'.sprintf('%02X',rand(0,255)).sprintf('%02X',rand(0,255)).sprintf('%02X',rand(0,255));</php>"class="fa fa-2x {$vo_child.icon}"></i>
                                         </a>
                                     </div>
                                     <div class="media-body">
-                                        <h5 class="media-heading" style="height: 20px;">
+                                        <h5 class="media-heading">
                                             <strong><a href="{:U('Document/index', array('cid' => $vo_child['id']))}">{$vo_child.title}</a></strong>
-                                            <notempty name="vo_child.count_new_document"><span class="badge badge-sm bg-red">{$vo_child.count_new_document}</span></notempty>
+                                            <notempty name="vo_child.count_new_document"><span class="badge badge-sm">{$vo_child.count_new_document}</span></notempty>
                                         </h5>
                                         <div class="text">
-                                            <span class="margin-right small text-danger">帖数 {$vo_child.count_sum_document|default=0}</span>
+                                            <span class="small text-danger">帖数 {$vo_child.count_sum_document|default=0}</span>
                                             <span class="small text-muted">回复数 {$vo_child.count_sum_comment|default=0}</span>
                                         </div>
                                     </div>
@@ -32,6 +56,11 @@
                         </div>
                     </div>
                 </corethink:category_list>
+
+                <!-- 文档列表页面底部钩子 -->
+                <div class="clearfix hook hook-document-list-after">
+                    {:hook('DocumentListAfter')}
+                </div>
             </div>
             <div class="col-xs-12 col-sm-3">
                 <!-- 侧边导航 -->
@@ -41,7 +70,12 @@
                             {$vo.title}
                         </a>
                     </corethink:category_list>
-                </ul>
+                </div>
+
+                <!-- 页面侧边栏钩子 -->
+                <div class="clearfix hook hook-page-side">
+                    {:hook('PageSide')}
+                </div>
             </div>
         </div>
     </div>

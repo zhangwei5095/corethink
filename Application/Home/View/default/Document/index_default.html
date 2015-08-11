@@ -3,9 +3,16 @@
 <block name="style">
     <style type="text/css">
         /* 文章列表样式 */
+        .article-list .media {
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
         .article-list .list-cover{
             width: 180px;
             height: 100px;
+        }
+        .article-list .list-title{
+            margin-top: 6px;
         }
         .article-list .list-abstract{
             height: 42px;
@@ -15,7 +22,7 @@
         @media (max-width: 768px) {
             .article-list .list-title{
                 font-size: 14px;
-                margin-bottom: 0px;
+                margin: 0px;
             }
             .article-list .list-cover{
                 width: 90px;
@@ -34,13 +41,19 @@
     </style>
 </block>
 
-<block name="body">
+<block name="main">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-9">
+                <!-- 文档列表页面顶部钩子 -->
+                <div class="clearfix hook hook-document-list-before">
+                    {:hook('DocumentListBefore')}
+                </div>
+
+                <!-- 文档列表 -->
                 <div class="article-list">
                     <volist name="volist" id="vo">
-                        <div class="media border-bottom padding-bottom">
+                        <div class="media">
                             <div class="media-left">
                                 <a href="{:U('Document/detail/id/'.$vo['id'])}">
                                     <img class="list-cover lazy" data-original="{$vo.cover|get_cover='default'}">
@@ -60,10 +73,16 @@
                     </volist>
                     <ul class="pagination">{$page}</ul>
                 </div>
+
+                <!-- 文档列表页面底部钩子 -->
+                <div class="clearfix hook hook-document-list-after">
+                    {:hook('DocumentListAfter')}
+                </div>
             </div>
             <div class="col-xs-12 col-sm-3 form">
                 <a href="{:U('Document/add', array('cid' => $__CURRENT_CATEGORY__))}" class="btn btn-primary btn-block">发表</a>
                 <div class="blank"></div>
+
                 <!-- 侧边导航 -->
                 <div class="list-group">
                     <corethink:category_list name="vo" pid="$__CURRENT_CATEGORY__">
@@ -71,7 +90,12 @@
                             {$vo.title}
                         </a>
                     </corethink:category_list>
-                </ul>
+                </div>
+
+                <!-- 页面侧边栏钩子 -->
+                <div class="clearfix hook hook-page-side">
+                    {:hook('PageSide')}
+                </div>
             </div>
         </div>
     </div>

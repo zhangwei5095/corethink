@@ -1,8 +1,17 @@
-<div class="comment-box">
+<style type="text/css">
+    .comment-list-box .comment-list .media {
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+    }
+    .comment-box {
+        margin-top: 10px;
+    }
+</style>
+<div class="comment-list-box">
     <h3>{$info.comment} 条评论</h3>
     <div class="comment-list">
         <corethink:comment_list name="vo" table="$__CURRENT_TABLE_ID__" group="0" data_id="$info['id']">
-            <div class="media border-bottom padding-bottom">
+            <div class="media">
                 <div class="media-left">
                     <a href="{:U('User/home/uid/'.$vo['uid'])}" class="avatar">
                         <img class="img-circle" src="{$vo.avatar|get_cover='avatar'}" style="width:48px;height:48px;">
@@ -37,7 +46,7 @@
     </div>
 </div>
 <php>if(C('TOGGLE_USER_COMMENT')):</php>
-    <div class="comment margin-bottom">
+    <div class="comment-box">
         <notempty name="__USER__">
             <form action="{:U('UserComment/add')}" method="post" class="form comment-form">
                 <div class="form-group">
@@ -97,7 +106,7 @@
                 </div>
             </form>
         <else />
-            <div class="margin-top">
+            <div>
                 <a class="btn btn-success" href="{:U('User/register')}">注 册</a>
                 <a class="btn btn-primary" data-toggle="modal" data-target="#login-modal">登 录</a>
             </div>

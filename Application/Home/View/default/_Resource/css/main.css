@@ -1,6 +1,5 @@
-body {
-    -webkit-font-smoothing: antialiased;
-}
+/* 通用样式
+-------------------------------------------------- */
 .btn-default-inverse {
     color: #fff;
     border-color: #fff;
@@ -12,8 +11,12 @@ body {
     color: #333; 
     background: #fff;
 }
+
+/* 顶部导航及主导航样式
+-------------------------------------------------- */
 .top-nav{
     margin-bottom: 0px;
+    z-index: 9999;
 }
 .main-nav {
     border: 0px;
@@ -34,6 +37,10 @@ body {
     border-color: #009CEA;
     color: #fff;
 }
+.main-nav .navbar-brand .logo {
+    height: 32px;
+    margin: -6px 0px;
+}
 @media (min-width: 768px) {
     .top-nav {
         min-height: 30px;
@@ -49,4 +56,13 @@ body {
         height: 60px;
         margin: -5px 0px;
     }
+}
+
+/* 底部样式
+-------------------------------------------------- */
+.footer .copyright {
+    border-top: 1px solid #eee;
+    padding: 10px 0px;
+    margin-top: 15px;
+    margin-bottom: 0px;
 }

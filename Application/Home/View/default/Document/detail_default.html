@@ -1,9 +1,15 @@
 <extend name="_Layout/main"/>
 
-<block name="body">
+<block name="main">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-9">
+                <!-- 文档详情页面顶部钩子 -->
+                <div class="clearfix hook hook-document-detail-before">
+                    {:hook('DocumentDetailBefore')}
+                </div>
+
+                <!-- 文章内容 -->
                 <article class="article">
                     <!-- 文章标题 -->
                     <div class="article-title">
@@ -32,29 +38,6 @@
                     <div class="article-body">
                         {$info.content|parse_content}
                     </div>
-                    <!-- 文章点赞 -->
-                    <div class="article-digg text-center padding-top">
-                        <a href="{:U('PublicDigg/digg/', array('table' => $__CURRENT_TABLE_ID__, 'data_id' => $info['id'], 'type' => '1'))}" class="btn btn-danger-inverse btn-pills digg-good ajax-digg">
-                            <span class="text"><span class="fa fa-thumbs-o-up"></span> 点赞</span>
-                            <span class="num">{$info.good}</span>
-                        </a>
-                        <a href="{:U('PublicDigg/digg/', array('table' => $__CURRENT_TABLE_ID__, 'data_id' => $info['id'], 'type' => '3'))}" class="btn btn-success-inverse btn-pills digg-mark ajax-digg">
-                            <span class="text"><span class="fa fa-star-o"></span> 收藏</span>
-                            <span class="num">{$info.mark}</span>
-                        </a>
-                        <div class="btn-group">
-                            <a class="btn btn-info-inverse btn-pills dropdown-toggle" data-toggle="dropdown">
-                                <span class="text"><span class="fa fa-share"></span> 分享</span>
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">微信</a></li>
-                                <li><a href="#">朋友圈</a></li>
-                                <li><a href="#">微博</a></li>
-                                <li><a href="#">QQ空间</a></li>
-                            </ul>
-                        </div>
-                    </div>
                     <!-- 文章导航 -->
                     <div class="article-pager">
                         <hr>
@@ -65,7 +48,38 @@
                         <hr>
                     </div>
                 </article>
-                <include file="Comment/default" /><!-- 包含评论 -->
+
+                <!-- 文章点赞 -->
+                <div class="article-digg text-center padding-top">
+                    <a href="{:U('PublicDigg/digg/', array('table' => $__CURRENT_TABLE_ID__, 'data_id' => $info['id'], 'type' => '1'))}" class="btn btn-danger-inverse btn-pills digg-good ajax-digg">
+                        <span class="text"><span class="fa fa-thumbs-o-up"></span> 点赞</span>
+                        <span class="num">{$info.good}</span>
+                    </a>
+                    <a href="{:U('PublicDigg/digg/', array('table' => $__CURRENT_TABLE_ID__, 'data_id' => $info['id'], 'type' => '3'))}" class="btn btn-success-inverse btn-pills digg-mark ajax-digg">
+                        <span class="text"><span class="fa fa-star-o"></span> 收藏</span>
+                        <span class="num">{$info.mark}</span>
+                    </a>
+                    <div class="btn-group">
+                        <a class="btn btn-info-inverse btn-pills dropdown-toggle" data-toggle="dropdown">
+                            <span class="text"><span class="fa fa-share"></span> 分享</span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">微信</a></li>
+                            <li><a href="#">朋友圈</a></li>
+                            <li><a href="#">微博</a></li>
+                            <li><a href="#">QQ空间</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 包含评论 -->
+                <include file="Comment/default" />
+
+                <!-- 文档详情页面底部钩子 -->
+                <div class="clearfix hook hook-document-detail-after">
+                    {:hook('DocumentDetailAfter')}
+                </div>
             </div>
             <div class="col-xs-12 col-sm-3">
                 <!-- 侧边导航 -->
@@ -75,7 +89,12 @@
                             {$vo.title}
                         </a>
                     </corethink:category_list>
-                </ul>
+                </div>
+
+                <!-- 页面侧边栏钩子 -->
+                <div class="clearfix hook hook-page-side">
+                    {:hook('PageSide')}
+                </div>
             </div>
         </div>
     </div>
@@ -116,7 +135,11 @@
                             if(data.login == 1){
                                 $('#login-modal').modal(); //弹出登陆框
                             }else{
-                                alertMessager(data.info, 'danger');
+                                $.bootstrapGrowl(data.info, {
+                                    type: 'danger',
+                                    align: 'center',
+                                    width: 'auto',
+                                });
                             }
                         }
                     });

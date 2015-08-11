@@ -10,7 +10,7 @@
     </div>
 </block>
 
-<block name="body">
+<block name="main">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-3">
@@ -22,9 +22,7 @@
                     <dl class="dl-horizontal">
                         <dt class="time">用户名：</dt><dd>{$userinfo.username}</dd>
                         <dt class="time">年龄：</dt><dd>{$userinfo.age}岁</dd>
-                        <dt class="time">干支：</dt><dd>{$userinfo.gz}</dd>
-                        <dt class="time">星座：</dt><dd>{$userinfo.xz}</dd>
-                        <dt class="time">生肖：</dt><dd>{$userinfo.sx}</dd>
+                        <dt class="time">生日：</dt><dd>{$info.birthday|time_format='Y-m-d'}</dd>
                         <dt class="time">最后登录：</dt><dd class="time">{$userinfo.last_login_time|friendly_date}</dd>
                     </dl>
                     <div class="alert alert-warning">签名：{$userinfo.summary}</div>

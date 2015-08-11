@@ -80,10 +80,6 @@ class UserController extends HomeController{
             }
         }else{
             $user_info = D('User')->find($this->is_login());
-            $date = new Date((int)$user_info['birthday']);
-            $user_info['gz'] = $date->magicInfo('GZ');
-            $user_info['xz'] = $date->magicInfo('XZ');
-            $user_info['sx'] = $date->magicInfo('SX');
 
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
@@ -93,7 +89,7 @@ class UserController extends HomeController{
                     ->addFormItem('avatar', 'picture', '头像', '')
                     ->addFormItem('sex', 'radio', '性别', '', C('USER_SEX_LIST'))
                     ->addFormItem('age', 'num', '年龄', '')
-                    ->addFormItem('birthday', 'date', '生日', '自动计算：'.$user_info['gz'].' '.$user_info['xz'].' '.$user_info['sx'])
+                    ->addFormItem('birthday', 'date', '生日', '生日')
                     ->addFormItem('summary', 'text', '签名', '一句话介绍')
                     ->setFormData($user_info)
                     ->setTemplate('_Builder/formbuilder_user')

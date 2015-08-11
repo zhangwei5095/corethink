@@ -36,7 +36,12 @@
                         <div class="form-group">
                             <label class="item-label">图标<span class="check-tips">（部门图标）</span></label>
                             <div class="controls">
-                                <input type="text" class="form-control" name="icon" value="{$info.icon|default=''}">
+                                <input type="text" class="form-control icon" name="icon" value="{$info.icon|default=''}">
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $(".icon").iconChoosen({});
+                                    });
+                                </script>
                             </div>
                         </div>
                         <div class="form-group">

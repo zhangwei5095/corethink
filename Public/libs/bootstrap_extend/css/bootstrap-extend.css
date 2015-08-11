@@ -7,10 +7,6 @@
 .btn-pills {
     border-radius: 20px
 }
-.badge-sm {
-    vertical-align: top;
-    padding: 1px 5px;
-}
 .text-overflow {
     overflow: hidden;
     text-overflow: ellipsis;

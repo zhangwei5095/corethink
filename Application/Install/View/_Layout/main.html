@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="renderer" content="webkit|ie-comp|ie-stand">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>安装{:C('INSTALL_PRODUCT_NAME')}－{$meta_title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/libs/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/libs/bootstrap_extend/css/bootstrap-extend.css">
     <script type="text/javascript" src="__PUBLIC__/libs/jquery/1.x/jquery-1.11.3.min.js" charset="utf-8"></script>
@@ -15,7 +15,7 @@
     <block name="script"></block>
 </head>
 <body style="background-color: #f6f6f6;">
-    <div class="navbar navbar-inverse border-radius-none">
+    <div class="navbar navbar-inverse navbar-static-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
@@ -39,7 +39,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <block name="body"></block>
+            <block name="main"></block>
         </div>
     </div>
 </body>

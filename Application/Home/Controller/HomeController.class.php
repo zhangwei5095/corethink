@@ -29,6 +29,8 @@ class HomeController extends CommonController{
         $this->assign('__USER__', session('user_auth')); //用户登录信息
         $table_list = array_flip(C('TABLE_LIST')); //交换数组的键值
         $this->assign('__CURRENT_TABLE_ID__', $table_list[CONTROLLER_NAME]); //根据当前控制器及配置数组获取评论数据表ID
+        $this->assign('__CONTROLLER_NAME__', strtolower(CONTROLLER_NAME)); //当前控制器名称
+        $this->assign('__ACTION_NAME__', strtolower(ACTION_NAME)); //当前方法名称
     }
 
     /**

@@ -78,5 +78,7 @@ class AdminController extends CommonController{
         $this->assign('__PARENT_MENU_ID__', $parent_menu_id); //当前菜单的所有父级菜单的ID
         $this->assign('__CURRENT_ROOTMENU__', $current_root_menu['id']); //当前主菜单
         $this->assign('__USER__', session('user_auth')); //用户登录信息
+        $this->assign('__CONTROLLER_NAME__', strtolower(CONTROLLER_NAME)); //当前控制器名称
+        $this->assign('__ACTION_NAME__', strtolower(ACTION_NAME)); //当前方法名称
     }
 }
