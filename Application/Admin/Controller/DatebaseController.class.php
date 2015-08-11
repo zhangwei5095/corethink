@@ -12,6 +12,7 @@ use Think\Db;
 use Common\Util\Database;
 /**
  * 数据库管理控制器
+ * 该类参考了OneThink的部分实现
  * @author jry <598821125@qq.com>
  */
 class DatebaseController extends AdminController{
@@ -99,7 +100,7 @@ class DatebaseController extends AdminController{
     }
     /**
      * 数据库还原
-     * @author jry <598821125@qq.com>
+     * @author 麦当苗儿 <zuojiazi@vip.qq.com>
      */
     public function import(){
         //列出备份文件列表
@@ -140,7 +141,7 @@ class DatebaseController extends AdminController{
     /**
      * 优化表
      * @param  String $tables 表名
-     * @author jry <598821125@qq.com>
+     * @author 麦当苗儿 <zuojiazi@vip.qq.com>
      */
     public function optimize($tables = null){
         if($tables) {
@@ -170,7 +171,7 @@ class DatebaseController extends AdminController{
     /**
      * 修复表
      * @param  String $tables 表名
-     * @author jry <598821125@qq.com>
+     * @author 麦当苗儿 <zuojiazi@vip.qq.com>
      */
     public function repair($tables = null){
         if($tables) {
@@ -200,7 +201,7 @@ class DatebaseController extends AdminController{
     /**
      * 删除备份文件
      * @param  Integer $time 备份时间
-     * @author jry <598821125@qq.com>
+     * @author 麦当苗儿 <zuojiazi@vip.qq.com>
      */
     public function del($time = 0){
         if($time){
@@ -222,7 +223,7 @@ class DatebaseController extends AdminController{
      * @param  String  $tables 表名
      * @param  Integer $id     表ID
      * @param  Integer $start  起始行数
-     * @author jry <598821125@qq.com>
+     * @author 麦当苗儿 <zuojiazi@vip.qq.com>
      */
     public function do_export($tables = null, $id = null, $start = null){
         if(IS_POST && !empty($tables) && is_array($tables)){ //初始化
@@ -300,7 +301,7 @@ class DatebaseController extends AdminController{
 
     /**
      * 还原数据库
-     * @author jry <598821125@qq.com>
+     * @author 麦当苗儿 <zuojiazi@vip.qq.com>
      */
     public function do_import($time = 0, $part = null, $start = null){
         if(is_numeric($time) && is_null($part) && is_null($start)){ //初始化

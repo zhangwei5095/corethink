@@ -1,11 +1,9 @@
 <?php
-// +----------------------------------------------------------------------
-// | CoreThink [ Simple Efficient Excellent ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2014 http://www.corethink.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Author: ijry <ijry@qq.com> <http://www.corethink.cn>
-// +----------------------------------------------------------------------
+/**
+ * 通用支付接口类
+ * @author yunwuxin<448901948@qq.com>
+ * @alter jry <59821125@qq.com> <http://www.corethink.cn>
+ */
 namespace Common\Util;
  /**
  * 通用支付接口类

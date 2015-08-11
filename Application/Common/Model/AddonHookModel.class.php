@@ -9,7 +9,8 @@
 namespace Common\Model;
 use Think\Model;
 /**
- * 插件模型
+ * 插件钩子模型
+ * 该类参考了OneThink的部分实现
  * @author jry <598821125@qq.com>
  */
 class AddonHookModel extends Model {
@@ -37,7 +38,7 @@ class AddonHookModel extends Model {
 
     /**
      * 更新插件里的所有钩子对应的插件
-     * @author jry <598821125@qq.com>
+     * @alter jry <598821125@qq.com>
      */
     public function updateHooks($addons_name){
         $addons_class = get_addon_class($addons_name);//获取插件名
@@ -62,7 +63,7 @@ class AddonHookModel extends Model {
 
     /**
      * 更新单个钩子处的插件
-     * @author jry <598821125@qq.com>
+     * @alter jry <598821125@qq.com>
      */
     public function updateAddons($hook_name, $addons_name){
         $o_addons = $this->where("name='{$hook_name}'")->getField('addons');
@@ -83,7 +84,7 @@ class AddonHookModel extends Model {
 
     /**
      * 去除插件所有钩子里对应的插件数据
-     * @author jry <598821125@qq.com>
+     * @alter jry <598821125@qq.com>
      */
     public function removeHooks($addons_name){
         $addons_class = get_addon_class($addons_name);
@@ -106,7 +107,7 @@ class AddonHookModel extends Model {
 
     /**
      * 去除单个钩子里对应的插件数据
-     * @author jry <598821125@qq.com>
+     * @alter jry <598821125@qq.com>
      */
     public function removeAddons($hook_name, $addons_name){
         $o_addons = $this->where("name='{$hook_name}'")->getField('addons');

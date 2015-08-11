@@ -8,7 +8,6 @@
 // +----------------------------------------------------------------------
 namespace Home\Controller;
 use Think\Controller;
-use \Org\Util\Date;
 /**
  * 用户控制器
  * @author jry <598821125@qq.com>

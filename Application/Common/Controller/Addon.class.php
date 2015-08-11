@@ -9,6 +9,7 @@
 namespace Common\Controller;
 /**
  * 插件类
+ * 该类参考了OneThink的部分实现
  * @author jry <598821125@qq.com>
  */
 abstract class Addon{

@@ -10,7 +10,8 @@ namespace Common\Model;
 use Think\Model;
 /**
  * 插件模型
-* @author jry <598821125@qq.com>
+ * 该类参考了OneThink的部分实现
+ * @author jry <598821125@qq.com>
  */
 class AddonModel extends Model{
     /**

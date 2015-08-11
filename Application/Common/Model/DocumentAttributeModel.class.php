@@ -10,6 +10,7 @@ namespace Common\Model;
 use Think\Model;
 /**
  * 文档字段模型
+ * 该类参考了OneThink的部分实现
  * @author huajie <banhuajie@163.com>
  */
 class DocumentAttributeModel extends Model{

@@ -10,6 +10,7 @@ namespace Admin\Controller;
 use Think\Controller;
 /**
  * 扩展后台管理页面
+ * 该类参考了OneThink的部分实现
  * @author jry <598821125@qq.com>
  */
 class AddonController extends AdminController {
