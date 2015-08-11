@@ -34,7 +34,9 @@ class PublicController extends Controller{
                 $this->error($user_object->getError());
             }
         }else{
-            $this->meta_title = '用户登录';
+            $this->assign('meta_title', '用户登录');
+            $this->assign('__CONTROLLER_NAME__', strtolower(CONTROLLER_NAME)); //当前控制器名称
+            $this->assign('__ACTION_NAME__', strtolower(ACTION_NAME)); //当前方法名称
             $this->display();
         }
     }

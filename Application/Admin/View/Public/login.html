@@ -5,16 +5,11 @@
     <meta name="renderer" content="webkit">
     <title>{$meta_title}｜{:C('WEB_SITE_TITLE')}后台管理</title>
 
-    <script src="__PUBLIC__/libs/jquery/1.x/jquery-1.11.3.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin.css?v={:C('STATIC_VERSION')}">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin.min.css?v={:C('STATIC_VERSION')}">
+    <script type="text/javascript" src="__PUBLIC__/libs/jquery/1.x/jquery-1.11.3.min.js"></script>
 </head>
 
-<?php
-    $CONTROLLER_NAME = strtolower($Think.CONTROLLER_NAME);
-    $ACTION_NAME = strtolower($Think.ACTION_NAME);
-?>
-
-<body id="<?php echo 'body-'.$CONTROLLER_NAME.'-'.$ACTION_NAME; ?>" class="<?php echo 'body-'.$CONTROLLER_NAME.' body-'.$CONTROLLER_NAME.'-'.$ACTION_NAME; ?>">
+<body id="<?php echo 'body-'.$__CONTROLLER_NAME__.'-'.$__ACTION_NAME__; ?>" class="<?php echo 'body-'.$__CONTROLLER_NAME__.' body-'.$__CONTROLLER_NAME__.'-'.$__ACTION_NAME__; ?>">
 
     <div id="particles-js" class="background"></div>
 
@@ -66,7 +61,7 @@
         <span>Powered by {:C('PRODUCT_NAME')} v{:C('CURRENT_VERSION')}</span>
         <span>Copyright © <a href="{:C('WEBSITE_DOMAIN')}" target="_blank">{:C('COMPANY_NAME')}</a> All rights reserved.</span>
         <script src="__PUBLIC__/libs/particles/particles.min.js"></script>
-        <script src="__PUBLIC__/js/admin.js?v={:C('STATIC_VERSION')}"></script>
+        <script src="__PUBLIC__/js/admin.min.js?v={:C('STATIC_VERSION')}"></script>
     </div>
 </body>
 </html>
