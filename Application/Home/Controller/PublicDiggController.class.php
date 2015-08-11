@@ -55,9 +55,8 @@ class PublicDiggController extends HomeController{
                     $return['status'] = 1;
                     $return['info'] = '操作成功';
                     $return['digg_status'] = 1;
-                    $this->ajaxReturn($return);
                 }else{
-                    $this->error('操作失败');
+                    $this->error('操作失败'.$public_digg_object->getError());
                 }
             }else{
                 $this->error($public_digg_object->getError());
@@ -68,8 +67,13 @@ class PublicDiggController extends HomeController{
         unset($con['uid']);
         $con['status'] = 1;
         $return['digg_count'] = $public_digg_object->where($con)->count();
-        D(C('TABLE_LIST.'.I('table')))->where(array('id' => (int)I('data_id')))
-                                      ->setField(C('DIGG_TYPE_LIST.'.I('type')), $return['digg_count']); // 更新Digg计数
+        $current_digg_object = D(C('TABLE_LIST.'.I('table')));
+        $result = $current_digg_object->where(array('id' => (int)I('data_id')))
+            ->setField(C('DIGG_TYPE_LIST.'.I('type')), $return['digg_count']); // 更新Digg计数
+        if(!$result){
+            $return['status'] = 0;
+            $return['info'] = '操作失败'.$current_digg_object->getError();
+        }
         $this->ajaxReturn($return);
     }
 
