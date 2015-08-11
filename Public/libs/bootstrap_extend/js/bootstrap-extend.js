@@ -134,6 +134,9 @@ $(function() {
                     setTimeout(function() {
                         $(that).removeClass('disabled').prop('disabled', false);
                     }, 2000);
+                    if($('.reload-verify').length > 0){
+                        $('.reload-verify').click();
+                    }
                 }
             });
         }

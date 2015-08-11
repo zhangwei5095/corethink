@@ -6,8 +6,8 @@ $(function() {
 
     //刷新验证码
     $(function() {
-        var verifyimg = $(".verifyimg").attr("src");
-        $(".reloadverify").click(function() {
+        $(".reload-verify").on('click', function() {
+            var verifyimg = $(".verifyimg").attr("src");
             if (verifyimg.indexOf('?') > 0) {
                 $(".verifyimg").attr("src", verifyimg + '&random=' + Math.random());
             } else {
