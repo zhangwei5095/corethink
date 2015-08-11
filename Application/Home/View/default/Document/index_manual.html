@@ -142,7 +142,7 @@
                         $('#manual-title').text(node.title); //设置右侧标题
                         $('#ztree-manual-content').html(node.content); //设置右侧文档主题内容
                     }else{
-                        alertMessager(data.info, 'danger');
+                        $.alertMessager(data.info, 'danger');
                     }
                 });
             };
@@ -153,7 +153,7 @@
                     var nodes = data.data;
                     $.fn.zTree.init($("#ztree-manual"), setting, eval('('+nodes+')'));
                 }else{
-                    alertMessager(data.info, 'danger');
+                    $.alertMessager(data.info, 'danger');
                 }
             });
         });

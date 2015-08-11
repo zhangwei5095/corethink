@@ -86,7 +86,7 @@ $(function() {
         if (data.status == 1) {
             $('.update').html(data.info);
         } else {
-            alertMessager(data.info, 'danger');
+            $.alertMessager(data.info, 'danger');
         }
     });
 

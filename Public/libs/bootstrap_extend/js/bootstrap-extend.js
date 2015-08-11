@@ -1,6 +1,6 @@
 $(function() {
-    //弹窗提醒
-    function alertMessager(message, type, time) {
+    //jQuery弹窗提醒插件
+    $.alertMessager = function(message, type, time) {
         if($.bootstrapGrowl){
             $.bootstrapGrowl(message, {
                 type: type,
@@ -18,7 +18,7 @@ $(function() {
                 $('.messager').remove();
             }, time ? time : 2000);
         }
-    }
+    };
 
 
 
@@ -39,7 +39,7 @@ $(function() {
                     } else {
                         message = data.info;
                     }
-                    alertMessager(message, 'success');
+                    $.alertMessager(message, 'success');
                     setTimeout(function() {
                         $(that).removeClass('disabled').prop('disabled', false);
                         if (data.url) {
@@ -52,7 +52,7 @@ $(function() {
                     if (data.login == 1) {
                         $('#login-modal').modal(); //弹出登陆框
                     } else {
-                        alertMessager(data.info, 'danger');
+                        $.alertMessager(data.info, 'danger');
                     }
                     setTimeout(function() {
                         $(that).removeClass('disabled').prop('disabled', false);
@@ -121,7 +121,7 @@ $(function() {
                     } else {
                         message = data.info;
                     }
-                    alertMessager(message, 'success');
+                    $.alertMessager(message, 'success');
                     setTimeout(function() {
                         if (data.url) {
                             location.href = data.url;
@@ -130,7 +130,7 @@ $(function() {
                         }
                     }, 2000);
                 } else {
-                    alertMessager(data.info, 'danger');
+                    $.alertMessager(data.info, 'danger');
                     setTimeout(function() {
                         $(that).removeClass('disabled').prop('disabled', false);
                     }, 2000);
@@ -139,5 +139,4 @@ $(function() {
         }
         return false;
     });
-
 });

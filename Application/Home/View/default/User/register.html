@@ -227,8 +227,8 @@
 <block name="script">
     <script type="text/javascript">
         $(function(){
-            var wait = 30;
-            function time(that){
+            //发送验证码倒计时
+            function time(that, wait){
                 if(wait == 0){
                     $(that).removeClass('disabled').prop('disabled',false);
                     $(that).html('重新发送验证码');
@@ -236,8 +236,8 @@
                     $(that).html(wait+'秒后重新发送');
                     wait--;
                     setTimeout(function(){
-                        time(that);
-                    },1000);
+                        time(that, wait);
+                    }, 1000);
                 }
             }
 
@@ -251,24 +251,23 @@
                 }
             });
 
-            $('.send-mail-verify').click(
-                var url;
+            $('.send-mail-verify').click(function(){
+                var url = '';
                 var that = this;
                 if(url = "{:U('User/SendMailVerify')}"){
                     var email = $('input[name="email"]').val();
                     var filter  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
                     if(!filter.test(email)){
-                        alertMessager('邮箱账号不正确', 'danger');
+                        $.alertMessager('邮箱账号不正确', 'danger');
                     }else{
                         $(that).addClass('disabled').prop('disabled', true);
-                        wait = 30;
-                        time(that);
+                        time(that, 30);
                         $.post(url,{'email':email, 'title':'用户注册'}).success(function(data){
                             message = data.info;
                             if(data.status == 1){
-                                alertMessager(data.info, 'success');
+                                $.alertMessager(data.info, 'success');
                             }else{
-                                alertMessager(data.info, 'danger');
+                                $.alertMessager(data.info, 'danger');
                             }
                         });
                     }
@@ -283,16 +282,15 @@
                     var mobile = $('input[name="mobile"]').val();
                     var filter  = /^1\d{10}$/;
                     if(!filter.test(mobile)){
-                        alertMessager('手机号码不正确', 'danger');
+                        $.alertMessager('手机号码不正确', 'danger');
                     }else{
                         $(that).addClass('disabled').prop('disabled', true);
-                        wait = 30;
-                        time(that);
+                        time(that, 30);
                         $.post(url,{'mobile':mobile, 'title':'用户注册'}).success(function(data){
                             if(data.status == 1){
-                                alertMessager(data.info, 'success');
+                                $.alertMessager(data.info, 'success');
                             }else{
-                                alertMessager(data.info, 'danger');
+                                $.alertMessager(data.info, 'danger');
                             }
                         });
                     }

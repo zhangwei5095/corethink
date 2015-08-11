@@ -20,7 +20,7 @@
                 onUploadComplete:function(file, data){
                     var data = $.parseJSON(data);
                     if(data.error == 1){
-                        alertMessager(data.message, 'danger');
+                        $.alertMessager(data.message, 'danger');
                     }else{
                         $('#[type]{$group_k}_preview_{$[type]k} .list-group').html('<li class="list-group-item"><i class="fa fa-file"></i> '+data.name+'</li>');
                         $('#[type]{$group_k}_preview_{$[type]k} input').attr('value', data.id);
