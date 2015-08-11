@@ -53,17 +53,9 @@
             $optimize.add($repair).click(function(){
                 $.post(this.href, $form.serialize(), function(data){
                     if(data.status){
-                        $.bootstrapGrowl(data.info, {
-                            type: 'success',
-                            align: 'center',
-                            width: 'auto',
-                        });
+                        alertMessager(data.info, 'success');
                     }else{
-                        $.bootstrapGrowl(data.info, {
-                            type: 'danger',
-                            align: 'center',
-                            width: 'auto',
-                        });
+                        alertMessager(data.info, 'danger');
                     }
                     setTimeout(function(){
                         $(that).removeClass('disabled').prop('disabled',false);
@@ -90,11 +82,7 @@
                             backup(data.tab);
                             window.onbeforeunload = function(){ return "正在备份数据库，请不要关闭！" }
                         }else{
-                            $.bootstrapGrowl(data.info, {
-                                type: 'danger',
-                                align: 'center',
-                                width: 'auto',
-                            });
+                            alertMessager(data.info, 'danger');
                             $export.parent().children().removeClass("disabled");
                             $export.html("立即备份");
                             setTimeout(function(){
@@ -118,11 +106,7 @@
                         }
                         backup(data.tab, tab.id != data.tab.id);
                     }else{
-                        $.bootstrapGrowl(data.info, {
-                            type: 'danger',
-                            align: 'center',
-                            width: 'auto',
-                        });
+                        alertMessager(data.info, 'danger');
                         $export.parent().children().removeClass("disabled");
                         $export.html("立即备份");
                         setTimeout(function(){

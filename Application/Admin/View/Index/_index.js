@@ -86,11 +86,7 @@ $(function() {
         if (data.status == 1) {
             $('.update').html(data.info);
         } else {
-            $.bootstrapGrowl(data.info, {
-                type: 'danger',
-                align: 'center',
-                width: 'auto',
-            });
+            alertMessager(data.info, 'danger');
         }
     });
 

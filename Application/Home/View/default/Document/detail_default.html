@@ -135,11 +135,7 @@
                             if(data.login == 1){
                                 $('#login-modal').modal(); //弹出登陆框
                             }else{
-                                $.bootstrapGrowl(data.info, {
-                                    type: 'danger',
-                                    align: 'center',
-                                    width: 'auto',
-                                });
+                                alertMessager(data.info, 'danger');
                             }
                         }
                     });

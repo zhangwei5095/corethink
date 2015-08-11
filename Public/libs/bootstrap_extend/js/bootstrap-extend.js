@@ -1,4 +1,26 @@
 $(function() {
+    //弹窗提醒
+    function alertMessager(message, type, time) {
+        if($.bootstrapGrowl){
+            $.bootstrapGrowl(message, {
+                type: type,
+                align: 'center',
+                width: 'auto'
+            });
+        }else{
+            type = type ? type : 'danger';
+            var messager = '<div style="width:380px;height:auto;margin:0 auto;max-width: 80%;top:52px;left:0;right:0;z-index:99999;"' +
+                'class="messager navbar-fixed-top border-none alert alert-' + type + '"><button type="button" class="close" ' +
+                'data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>' + message + '</div>';
+            $('.messager').remove();
+            $('body').prepend(messager);
+            setTimeout(function() {
+                $('.messager').remove();
+            }, time ? time : 2000);
+        }
+    }
+
+
 
     //ajax get请求
     $('body').on('click', '.ajax-get', function() {
@@ -17,11 +39,7 @@ $(function() {
                     } else {
                         message = data.info;
                     }
-                    $.bootstrapGrowl(message, {
-                        type: 'success',
-                        align: 'center',
-                        width: 'auto',
-                    });
+                    alertMessager(message, 'success');
                     setTimeout(function() {
                         $(that).removeClass('disabled').prop('disabled', false);
                         if (data.url) {
@@ -34,11 +52,7 @@ $(function() {
                     if (data.login == 1) {
                         $('#login-modal').modal(); //弹出登陆框
                     } else {
-                        $.bootstrapGrowl(data.info, {
-                            type: 'danger',
-                            align: 'center',
-                            width: 'auto',
-                        });
+                        alertMessager(data.info, 'danger');
                     }
                     setTimeout(function() {
                         $(that).removeClass('disabled').prop('disabled', false);
@@ -107,11 +121,7 @@ $(function() {
                     } else {
                         message = data.info;
                     }
-                    $.bootstrapGrowl(message, {
-                        type: 'success',
-                        align: 'center',
-                        width: 'auto',
-                    });
+                    alertMessager(message, 'success');
                     setTimeout(function() {
                         if (data.url) {
                             location.href = data.url;
@@ -120,11 +130,7 @@ $(function() {
                         }
                     }, 2000);
                 } else {
-                    $.bootstrapGrowl(data.info, {
-                        type: 'danger',
-                        align: 'center',
-                        width: 'auto',
-                    });
+                    alertMessager(data.info, 'danger');
                     setTimeout(function() {
                         $(that).removeClass('disabled').prop('disabled', false);
                     }, 2000);
