@@ -82,6 +82,8 @@ class Tree{
                     if(isset($refer[$parent_id])){
                         $parent =& $refer[$parent_id];
                         $parent[$child][] =& $list[$key];
+                    }else{
+                        $tree[] =& $list[$key];
                     }
                 }
             }
