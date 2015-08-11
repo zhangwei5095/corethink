@@ -1,9 +1,9 @@
 <case value="board">
     <input type="hidden" name="{$[type]form.name}" value='{$[type]form.value}'>
-    <div class="row boards_{$[type]k}" {$[type]form.extra_attr}>
+    <div class="row board_list boards_{$[type]k}" {$[type]form.extra_attr}>
         <div class="container-fluid">
             <foreach name="form.options" item="option" key="option_key">
-                <div class="panel panel-default col-xs-12 col-sm-3 padding-none margin-right" data-id="{$option_key}">
+                <div class="panel panel-default board col-xs-12 col-sm-3" data-id="{$option_key}">
                     <div class="panel-heading">
                         <strong>{$option.title}</strong>
                     </div>
