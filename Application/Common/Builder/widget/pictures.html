@@ -5,7 +5,7 @@
         <notempty name="[type]form.value">
             <?php $images = explode(',',$[type]form['value']); ?>
             <foreach name="images" item="img">
-                <span class="img-box"><img class="img img-responsive" src="{$img|get_cover}" data-id="{$img}"><i class="fa fa-remove-sign remove-picture"></i></span>
+                <span class="img-box"><img class="img" src="{$img|get_cover}" data-id="{$img}"><i class="fa fa-times-circle remove-picture"></i></span>
             </foreach>
         </notempty>
     </div>
@@ -22,7 +22,7 @@
                         $.alertMessager(data.message, 'danger');
                     }else{
                         var input = $('#[type]{$group_k}_preview_{$[type]k} input');
-                        var new_img = '<span class="img-box"><img class="img img-responsive" src="' + data.url + '" data-id="'+data.id+'"><i class="fa fa-remove-sign remove-picture"></i></span>';
+                        var new_img = '<span class="img-box"><img class="img" src="' + data.url + '" data-id="'+data.id+'"><i class="fa fa-times-circle remove-picture"></i></span>';
                         $('#[type]{$group_k}_preview_{$[type]k}').append(new_img);
                         if(input.val()){
                             input.val(input.val() + ',' + data.id);
