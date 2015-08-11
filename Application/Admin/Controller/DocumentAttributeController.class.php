@@ -89,7 +89,17 @@ EOF;
                 if($id){
                     $result = $document_attribute_object->addField($data); //新增表字段
                     if($result){
-                        $this->success('新增字段成功', U('index', array('doc_type' => I('doc_type'))));
+                        //自动将新添加的字段ID添加到模型字段排序的[基础]中
+                        //此代码执行后用户不再需要手动去编辑模型然后拖动排序字段
+                        $document_type_object = D('DocumentType');
+                        $field_sort = json_decode($document_type_object->getFieldById($doc_type, 'field_sort'), true);
+                        $field_sort[1][] = (string)$id;
+                        $status = $document_type_object->where(array('id' => $doc_type))->setField('field_sort', json_encode($field_sort));
+                        if($status){
+                            $this->success('新增字段成功', U('index', array('doc_type' => $doc_type)));
+                        }else{
+                            $this->error('新增字段成功，字段排序失败！'.$document_type_object->getError(), U('index', array('doc_type' => $doc_type)));
+                        }
                     }else{
                         $document_attribute_object->delete($id); //删除新增数据
                         $this->error('新建字段出错！');
