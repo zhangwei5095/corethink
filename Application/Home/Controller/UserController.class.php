@@ -290,7 +290,7 @@ class UserController extends HomeController{
         }
         $reg_verify = \Org\Util\String::randString(6,1); //生成验证码
         session('reg_verify', user_md5($reg_verify, $receiver));
-        $body = $title.'验证码：'.$reg_verify;
+        $body = '短信验证码：'.$reg_verify;
         if(send_mobile_message($receiver, $title, $body)){
             $this->success('发送成功，请查收！');
         }else{

@@ -62,13 +62,21 @@
                                 <present name="__USER__">
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                            <i class="fa fa-user"></i> {$__USER__.username}
+                                            <i class="fa fa-user"></i> 
+                                            <span class="<notempty name='__NEW_MESSAGE__'>red-dot</notempty>">
+                                                {$__USER__.username}
+                                            </span>
                                             <span class="caret"></span>
                                         </a>
                                         <ul class="dropdown-menu">
                                             <li><a href="{:U('Home/User/home')}"><i class="fa fa-home"></i> 个人主页</a></li>
                                             <li><a href="{:U('Home/User/center')}"><i class="fa fa-tachometer"></i> 个人中心</a></li>
-                                            <li><a href="{:U('Home/UserMessage/index')}"><i class="fa fa-envelope"></i> 消息中心</a></li>
+                                            <li>
+                                                <a href="{:U('Home/UserMessage/index')}">
+                                                    <i class="fa fa-envelope"></i>
+                                                    <span class="<notempty name='__NEW_MESSAGE__'>red-dot</notempty>"> 消息中心 </span>
+                                                </a>
+                                            </li>
                                             <li><a href="{:U('Home/Addon/index')}"><i class="fa fa-weixin"></i> 微＋平台</a></li>
                                             <li class="divider hidden-xs"></li>
                                             <li><a href="{:U('Home/User/logout')}" class="ajax-get"><i class="fa fa-sign-out"></i> 退出登录</a></li>

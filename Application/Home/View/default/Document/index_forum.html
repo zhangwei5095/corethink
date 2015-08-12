@@ -10,11 +10,6 @@
         .forum-plate-list .panel-body .media-heading {
             height: 20px;
         }
-        .badge-sm {
-            vertical-align: top;
-            padding: 1px 5px;
-            background-color: red;
-        }
     </style>
 </block>
 
@@ -44,7 +39,7 @@
                                     <div class="media-body">
                                         <h5 class="media-heading">
                                             <strong><a href="{:U('Document/index', array('cid' => $vo_child['id']))}">{$vo_child.title}</a></strong>
-                                            <notempty name="vo_child.count_new_document"><span class="badge badge-sm">{$vo_child.count_new_document}</span></notempty>
+                                            <notempty name="vo_child.count_new_document"><span class="red-badge-num">{$vo_child.count_new_document}</span></notempty>
                                         </h5>
                                         <div class="text">
                                             <span class="small text-danger">帖数 {$vo_child.count_sum_document|default=0}</span>

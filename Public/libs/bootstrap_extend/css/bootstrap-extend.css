@@ -13,6 +13,37 @@
     white-space: nowrap;
 }
 
+/* 处女座的右上角小红点 */
+.red-dot {
+    position: relative;
+    display: inline-block;
+    padding: 0 6px;
+}
+.red-dot::after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 8px;
+    height: 8px;
+    background-color: #f74c31;
+    border-radius: 5px;
+    right: -2px;
+    top: -2px;
+}
+/* 仿IOS右上角红色数字角标 */
+.red-badge-num {
+    height: 17px;
+    line-height: 18px;
+    font-size: 12px;
+    min-width: 17px;
+    padding: 0px 5px;
+    border-radius: 9px;
+    display: inline-block;
+    text-align: center;
+    background: #f74c31;
+    color: #fff;
+}
+
 
 
 /* 幽灵按钮

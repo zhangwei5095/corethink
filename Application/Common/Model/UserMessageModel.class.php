@@ -50,4 +50,19 @@ class UserMessageModel extends Model{
             return $this->add($result);
         }
     }
+
+    /**
+     * 获取当前用户未读消息数量
+     * @param $type 消息类型
+     * @author jry <598821125@qq.com>
+     */
+    public function newMessageCount($type = null){
+        $map['status'] = array('eq', 1);
+        $map['to_uid'] = array('eq', is_login());
+        $map['is_read'] = array('eq', 0);
+        if($type !== null){
+            $map['type'] = array('eq', $type);
+        }
+        return D('UserMessage')->where($map)->count();
+    }
 }

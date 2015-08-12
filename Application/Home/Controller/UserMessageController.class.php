@@ -62,16 +62,9 @@ class UserMessageController extends HomeController{
      * @param $type 消息类型
      * @author jry <598821125@qq.com>
      */
-    public function unReadMessageCount($type = null){
-        $map['status'] = array('eq', 1);
-        $map['to_uid'] = array('eq', is_login());
-        $map['is_read'] = array('eq', 0);
-        if($type !== null){
-            $map['type'] = array('eq', $type);
-        }
-        $un_read_count = (int)D('UserMessage')->where($map)->count();
+    public function newMessageCount($type = null){
         $data['status'] = 1;
-        $data['unReadCount'] = $un_read_count;
+        $data['new_message'] = D('UserMessage')->newMessageCount($type);
         $this->ajaxReturn($data);
     }
 
