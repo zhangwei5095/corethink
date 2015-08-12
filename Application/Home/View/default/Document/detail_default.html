@@ -1,5 +1,22 @@
 <extend name="_Layout/main"/>
 
+<block name="style">
+    <style type="text/css">
+        .article-title {
+            margin-bottom: 15px;
+        }
+        .article-info {
+            padding: 10px 0px;
+            margin-bottom: 20px;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        .article-info ul {
+            margin-bottom: 0px;
+        }
+    </style>
+</block>
+
 <block name="main">
     <div class="container">
         <div class="row">
@@ -15,17 +32,15 @@
                     <div class="article-title">
                         <h3 class="text-muted-5">{$info.title}</h3>
                     </div>
-                    <div class="blank"></div>
                     <!-- 文章信息 -->
                     <div class="article-info text-muted">
-                        <ul class="list-unstyled list-inline border-top border-bottom padding-top padding-bottom">
+                        <ul class="list-unstyled list-inline">
                             <li><i class="fa fa-calendar"></i> {$info.utime|time_format}</li>
                             <li><i class="fa fa-eye"></i> {$info.view} 浏览</li>
                             <li><i class="fa fa-comments"></i> {$info.comment} 评论</li>
                             <li><i class="fa fa-thumbs-o-up"></i> {$info.good} 赞</li>
                         </ul>
                     </div>
-                    <div class="blank"></div>
                     <!-- 文章摘要 -->
                     <notempty name="info.abstract">
                         <div class="article-abstract">

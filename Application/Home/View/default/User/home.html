@@ -15,19 +15,19 @@
         <div class="row">
             <div class="col-xs-12 col-sm-3">
                 <div class="thumbnail">
-                    <img class="img-responsive" src="{$info.avatar|get_cover='avatar'}">
+                    <img class="img-responsive" src="{$user_info.avatar|get_cover='avatar'}">
                 </div>
             </div>
             <div class="col-xs-12 col-md-9">
                 <div>
                     <header>
-                        <h1>{$info.username}</h1>
+                        <h1>{$user_info.username}</h1>
                         <dl class="dl-horizontal">
-                            <dt class="time">年龄：</dt><dd>{$info.age}岁</dd>
-                            <dt class="time">生日：</dt><dd>{$info.birthday|time_format='Y-m-d'}</dd>
-                            <dt class="time">最后登录：</dt><dd class="time">{$info.last_login_time|friendly_date}</dd>
+                            <dt class="time">年龄：</dt><dd>{$user_info.age}岁</dd>
+                            <dt class="time">生日：</dt><dd>{$user_info.birthday|time_format='Y-m-d'}</dd>
+                            <dt class="time">最后登录：</dt><dd class="time">{$user_info.last_login_time|friendly_date}</dd>
                         </dl>
-                        <div class="alert alert-warning">签名：{$info.summary}</div>
+                        <div class="alert alert-warning">签名：{$user_info.summary}</div>
                     </header>
                 </div>
             </div>
@@ -37,15 +37,15 @@
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#comment" data-toggle="tab">留言</a></li>
                 </ul>
+                <div class="blank"></div>
                 <div class="tab-content">
-                    <div class="blank"></div>
                     <div class="tab-pane fade in active" id="comment">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">{$info.comment} 条留言</h3>
+                                <h3 class="panel-title">{$user_info.comment} 条留言</h3>
                             </div>
                             <div class="panel-body">
-                                <corethink:comment_list name="vo" table="$__CURRENT_TABLE_ID__" data_id="$info['id']">
+                                <corethink:comment_list name="vo" table="$__CURRENT_TABLE_ID__" data_id="$user_info['id']">
                                     <div class="media border-bottom padding-bottom">
                                         <div class="media-left">
                                             <a href="{:U('User/home/uid/'.$vo['uid'])}" class="avatar">
@@ -90,7 +90,7 @@
                                         <div class="form-group">
                                             <input type="hidden" name="pid" value="0">
                                             <input type="hidden" name="table" value="{$__CURRENT_TABLE_ID__}">
-                                            <input type="hidden" name="data_id" value="{$info.id}">
+                                            <input type="hidden" name="data_id" value="{$user_info.id}">
                                             <table style="display:inline-block">
                                                 <tr>
                                                     <td>

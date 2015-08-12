@@ -41,11 +41,11 @@ class UserController extends HomeController{
             $uid  = is_login();
         }
         $user_info = D('User')->where($con)->find($uid);
-        if(!$user_info['status'] !== '1'){
+        if($user_info['status'] !== '1'){
             $this->error('该用户不存在或已禁用');
         }
         $this->assign('meta_title', $user_info['username'].'的主页');
-        $this->assign('info', $user_info);
+        $this->assign('user_info', $user_info);
         $this->display();
     }
 

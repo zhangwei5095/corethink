@@ -84,7 +84,11 @@
         <div class="panel panel-default login-panel col-xs-12 col-md-4 col-md-offset-4">
             <div class="panel-heading">
                 <h3 class="panel-title text-center">
-                    <img class="logo" src="__HOME_IMG__/logo_with_title.png">
+                    <php>if(C('WEB_SITE_LOGO')):</php>
+                        <a href="__ROOT__/"><img class="logo" src="{$Think.config.WEB_SITE_LOGO}"></a>
+                    <php>else:</php>
+                        <a href="__ROOT__/"><img class="logo" src="__HOME_IMG__/logo_with_title.png"></a>
+                    <php>endif;</php>
                 </h3>
                 <div class="info text-muted text-center">
                     {:C('WEB_SITE_SLOGAN')}

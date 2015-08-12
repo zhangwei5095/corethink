@@ -17,15 +17,14 @@
                 <include file="User/side" /><!-- 包含用户中心侧边导航 -->
             </div>
             <div class="col-xs-12 col-md-9">
-                <div class="blank"></div>
                 <div>
                     <dl class="dl-horizontal">
-                        <dt class="time">用户名：</dt><dd>{$userinfo.username}</dd>
-                        <dt class="time">年龄：</dt><dd>{$userinfo.age}岁</dd>
-                        <dt class="time">生日：</dt><dd>{$info.birthday|time_format='Y-m-d'}</dd>
-                        <dt class="time">最后登录：</dt><dd class="time">{$userinfo.last_login_time|friendly_date}</dd>
+                        <dt class="time">用户名：</dt><dd>{$user_info.username}</dd>
+                        <dt class="time">年龄：</dt><dd>{$user_info.age}岁</dd>
+                        <dt class="time">生日：</dt><dd>{$user_info.birthday|time_format='Y-m-d'}</dd>
+                        <dt class="time">最后登录：</dt><dd class="time">{$user_info.last_login_time|friendly_date}</dd>
                     </dl>
-                    <div class="alert alert-warning">签名：{$userinfo.summary}</div>
+                    <div class="alert alert-warning">签名：{$user_info.summary}</div>
                 </div>
             </div>
         </div>
