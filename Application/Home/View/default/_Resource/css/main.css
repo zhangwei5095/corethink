@@ -1,5 +1,8 @@
 /* 通用样式
 -------------------------------------------------- */
+.nav-tabs {
+    margin-bottom: 20px;
+}
 .btn-default-inverse {
     color: #fff;
     border-color: #fff;

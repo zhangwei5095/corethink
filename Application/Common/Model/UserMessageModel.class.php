@@ -36,6 +36,17 @@ class UserMessageModel extends Model{
     );
 
     /**
+     * 消息类型
+     * @author jry <598821125@qq.com>
+     */
+    public function message_type($id){
+        $type[0] = '系统消息';
+        $type[1] = '评论消息';
+        $type[2] = '私信消息';
+        return $id ? $type[$id] : $type;
+    }
+
+    /**
      * 发送消息
      * @author jry <598821125@qq.com>
      */

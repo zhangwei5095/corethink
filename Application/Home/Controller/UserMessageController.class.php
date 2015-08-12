@@ -31,8 +31,15 @@ class UserMessageController extends HomeController{
         $map['type'] = array('eq', $type);
         $map['status'] = array('eq', 1);
         $map['to_uid'] = array('eq', is_login());
-        $message_list = D('UserMessage')->where($map)->order('sort desc,id desc')->select();
-        $this->assign('volist', $message_list);
+        $user_message_object = D('UserMessage');
+        $message_list = $user_message_object->where($map)->order('sort desc,id desc')->select();
+        $message_type = $user_message_object->message_type();
+        foreach($message_type as $key => $val){
+            $new_message_type[$key] = D('UserMessage')->newMessageCount($key);
+        }
+        $this->assign('message_list', $message_list);
+        $this->assign('message_type', $message_type);
+        $this->assign('new_message_type', $new_message_type);
         $this->assign('__CURRENT_MESSAGE_TYPE', $type);
         $this->assign('meta_title', "消息中心");
         $this->display();
@@ -74,9 +81,10 @@ class UserMessageController extends HomeController{
      * @author jry <598821125@qq.com>
      */
     public function readAll($type = null){
-        $map['status'] = array('eq', 1);
-        $map['to_uid'] = array('eq', is_login());
+        $map['status']  = array('eq', 1);
+        $map['to_uid']  = array('eq', is_login());
         $map['is_read'] = array('eq', 0);
+        $map['id']      = array('in', I('ids'));
         if($type !== null){
             $map['type'] = array('eq', $type);
         }
