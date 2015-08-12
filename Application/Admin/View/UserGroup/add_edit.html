@@ -1,9 +1,9 @@
 <extend name="_Layout/main"/>
 
 <block name="main">
-    <div class="row">
-        <div class="col-xs-12">
-            <form action="__SELF__" method="post" class="form">
+    <div class="row builder builder-form-box">
+        <div class="col-xs-12 builder-form-container">
+            <form action="__SELF__" method="post" class="form builder-form">
                 <ul class="nav-tabs nav" style="margin-bottom: 20px;">
                     <li class="active"><a href="#tab1" data-toggle="tab">部门信息</a></li>
                     <neq name="info.id" value="1"><li><a href="#tab2" data-toggle="tab">部门权限</a></li></neq>
@@ -14,7 +14,7 @@
                             <div class="form-group">
                                 <label class="item-label">上级部门<span class="check-tips">（所属的上级部门）</span></label>
                                 <div class="controls">
-                                    <select name="pid" class="form-control">
+                                    <select name="pid" class="form-control select">
                                         <volist name="all_group" id="group">
                                             <option value="{$group.id}"
                                                 <php>if($group['id'] == $info['pid']) echo 'selected="selected"';</php> >
@@ -30,13 +30,13 @@
                         <div class="form-group">
                             <label class="item-label">部门名称<span class="check-tips">（部门名称）</span></label>
                             <div class="controls">
-                                <input type="text" class="form-control" name="title" value="{$info.title|default=''}">
+                                <input type="text" class="form-control input" name="title" value="{$info.title|default=''}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="item-label">图标<span class="check-tips">（部门图标）</span></label>
                             <div class="controls">
-                                <input type="text" class="form-control icon" name="icon" value="{$info.icon|default=''}">
+                                <input type="text" class="form-control input icon" name="icon" value="{$info.icon|default=''}">
                                 <script type="text/javascript">
                                     $(function(){
                                         $(".icon").iconChoosen({});
@@ -47,7 +47,7 @@
                         <div class="form-group">
                             <label class="item-label">排序<span class="check-tips">（用于分组显示的顺序）</span></label>
                             <div class="controls">
-                                <input type="text" class="form-control" name="sort" value="{$info.sort|default=0}">
+                                <input type="text" class="form-control input" name="sort" value="{$info.sort|default=0}">
                             </div>
                         </div>
                     </div>

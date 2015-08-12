@@ -12,9 +12,6 @@
                 color: @gray;
             }
         }
-        .submit, .return {
-            min-width: 120px;
-        }
     }
 }
 //
@@ -45,10 +42,15 @@
 .builder-form-box {
     .builder-form-container {
         // 表单项目宽度
-        .builder-form {
-            .input, .select, .textarea, .img-box, .file-box {
-                width: 50%;
-                max-width: 638px;
+        @media (min-width: 768px){
+            .builder-form {
+                .input, .select, .textarea, .img-box, .file-box {
+                    width: 50%;
+                    max-width: 638px;
+                }
+                .submit, .return {
+                    min-width: 120px;
+                }
             }
         }
     }
