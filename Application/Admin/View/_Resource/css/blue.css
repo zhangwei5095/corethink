@@ -4,29 +4,17 @@
  a {
     color: #15afef;
 }
+.btn,
 .alert,
+.label,
 .form-control {
     border-radius: 0px;
 }
-.btn {
-    border-radius: 0px;
-    background: #15afef;
-    border-color: #15afef;
-    color: #fff;
-}
-.btn:hover,
-.btn:focus,
-.btn:active,
-.btn.disabled,
-.btn.disabled:hover {
-    background: #0c7dac;
-    border-color: #0c7dac;
-    color: #fff;
-}
+
 /*
 主导航背景色
  */
-.navbar-inverse {
+.full-header .navbar {
     background-color: #15afef;
     border-color: #15afef;
     border: none;
@@ -35,35 +23,40 @@
 主导航border为0时保持高度
  */
 @media (min-width: 768px) {
-    .navbar-nav>li>a {
+    .full-header .navbar .navbar-nav>li>a {
         padding-top: 16px;
         padding-bottom: 16px;
+    }
+}
+@media (max-width: 768px) {
+    .full-header .navbar {
+        margin-bottom: 15px;
     }
 }
 /*
 主导航字体颜色
  */
-.navbar-inverse .navbar-brand,
-.navbar-inverse .navbar-nav>li>a {
+.full-header .navbar .navbar-brand,
+.full-header .navbar .navbar-nav>li>a {
     color: #fff;
 }
 /*
 主导航高亮项目背景色
  */
-.navbar-inverse .navbar-nav>.active>a,
-.navbar-inverse .navbar-nav>.active>a:focus,
-.navbar-inverse .navbar-nav>.active>a:hover,
-.navbar-inverse .navbar-nav>.open>a,
-.navbar-inverse .navbar-nav>.open>a:focus,
-.navbar-inverse .navbar-nav>.open>a:hover {
+.full-header .navbar .navbar-nav>.active>a,
+.full-header .navbar .navbar-nav>.active>a:focus,
+.full-header .navbar .navbar-nav>.active>a:hover,
+.full-header .navbar .navbar-nav>.open>a,
+.full-header .navbar .navbar-nav>.open>a:focus,
+.full-header .navbar .navbar-nav>.open>a:hover {
     color: #fff;
     background-color: #0c7dac;
 }
 /*
 主导航鼠标移过背景色
  */
-.navbar-inverse .navbar-nav>li>a:focus,
-.navbar-inverse .navbar-nav>li>a:hover {
+.full-header .navbar .navbar-nav>li>a:focus,
+.full-header .navbar .navbar-nav>li>a:hover {
     color: #fff;
     background-color: #0c7dac;
 }
@@ -71,39 +64,42 @@
 /*
 左侧导航
  */
-.wrap>.left {
+.full-container #sidebar {
     background-color: #fff !important;
     border-right: 1px solid #ddd;
 }
-.wrap>.left #menu-toggle {
+.full-container #sidebar #sidebar-toggle {
     margin-bottom: 10px;
     border-right: none;
     background-color: #f6f6f6;
     border-color: #f6f6f6;
     color: #414141;
 }
-.wrap>.left>.panel-group {
+.full-container #sidebar>.panel-group {
     padding-left: 15px;
 }
-.wrap>.left>.panel-group>.panel-default {
+.full-container #sidebar>.panel-group>.panel {
     border: none;
 }
-.wrap>.left>.panel-group>.panel-default>.panel-heading {
+.full-container #sidebar>.panel-group>.panel>.panel-heading {
     border-left: 3px solid #15afef;
     background-color: #fff;
     border-radius: 0px;
 }
-.wrap>.left>.panel-group>.panel-default>.panel-collapse>.list-group{
+.full-container #sidebar>.panel-group>.panel>.panel-collapse>.list-group{
     border: none;
     margin-top: 10px;
     margin-bottom: 10px;
 }
-.wrap>.left>.panel-group>.panel-default .list-group-item {
+.full-container #sidebar>.panel-group>.panel:first-child {
+    border-top: 0px !important;
+}
+.full-container #sidebar>.panel-group>.panel .list-group-item {
     border: none;
 }
-.wrap>.left>.panel-group>.panel-default .list-group-item.active,
-.wrap>.left>.panel-group>.panel-default .list-group-item.active:focus,
-.wrap>.left>.panel-group>.panel-default .list-group-item.active:hover {
+.full-container #sidebar>.panel-group>.panel .list-group-item.active,
+.full-container #sidebar>.panel-group>.panel .list-group-item.active:focus,
+.full-container #sidebar>.panel-group>.panel .list-group-item.active:hover {
     color: #414141;
     background-color: #f6f6f6;
     border-color: #fff;
@@ -112,12 +108,12 @@
 /*
 面包屑导航
  */
-.wrap>.right .breadcrumb {
+.full-container #main .breadcrumb {
     background-color: #fff;
     margin-top: 8px;
     color: #555;
 }
-.wrap>.right .breadcrumb a{
+.full-container #main .breadcrumb a{
     color: #777;
     font-size: 18px;
 }
@@ -125,14 +121,14 @@
 /*
 TAB切换
  */
-.wrap>.right .nav-tabs>li>a {
+.full-container #main .nav-tabs>li>a {
     margin: 0px;
     border-radius: 0px;
     padding: 10px 25px;
 }
-.wrap>.right .nav-tabs>li.active>a,
-.wrap>.right .nav-tabs>li.active>a:focus,
-.wrap>.right .nav-tabs>li.active>a:hover {
+.full-container #main .nav-tabs>li.active>a,
+.full-container #main .nav-tabs>li.active>a:focus,
+.full-container #main .nav-tabs>li.active>a:hover {
     color: #555;
     padding: 9px 25px;
     border-top: 3px solid #15afef;
@@ -142,9 +138,29 @@ TAB切换
 }
 
 /*
+按钮
+ */
+.full-container #main .btn,
+.full-container #main .label {
+    border-radius: 0px;
+    background: #15afef;
+    border-color: #15afef;
+    color: #fff;
+}
+.full-container #main .btn:hover,
+.full-container #main .btn:focus,
+.full-container #main .btn:active,
+.full-container #main .btn.disabled,
+.full-container #main .btn.disabled:hover {
+    background: #0c7dac;
+    border-color: #0c7dac;
+    color: #fff;
+}
+
+/*
 表格
  */
-.wrap>.right .table thead th {
+.full-container #main .table thead th {
     background: #15afef;
     border: none;
     color: #fff;
@@ -152,11 +168,11 @@ TAB切换
 /*
 分页
  */
-.wrap>.right .pagination li a {
+.full-container #main .pagination li a {
     color: #15afef;
     border-radius: 0px;
 }
-.wrap>.right .pagination li.active a {
+.full-container #main .pagination li.active a {
     color: #fff;
     border-radius: 0px;
     border-color: #15afef;
@@ -168,35 +184,35 @@ TAB切换
  小屏幕特殊样式
  */
 @media (max-width: 768px) {
-    .navbar-inverse .navbar-toggle {
+    .full-header .navbar .navbar-toggle {
         border-color: #fff;
     }
-    .navbar-inverse .navbar-toggle:focus,
-    .navbar-inverse .navbar-toggle:hover {
+    .full-header .navbar .navbar-toggle:focus,
+    .full-header .navbar .navbar-toggle:hover {
         background-color: #fff;
     }
-    .navbar-inverse .navbar-toggle:hover .icon-bar {
+    .full-header .navbar .navbar-toggle:hover .icon-bar {
         background-color: #15afef;
     }
-    .navbar-inverse .navbar-collapse,
-    .navbar-inverse .navbar-form {
+    .full-header .navbar .navbar-collapse,
+    .full-header .navbar .navbar-form {
         border-color: #15afef;
     }
 
-    .navbar-inverse .navbar-nav>.open>a,
-    .navbar-inverse .navbar-nav>.open>a:focus,
-    .navbar-inverse .navbar-nav>.open>a:hover {
+    .full-header .navbar .navbar-nav>.open>a,
+    .full-header .navbar .navbar-nav>.open>a:focus,
+    .full-header .navbar .navbar-nav>.open>a:hover {
         color: #fff;
         background-color: #0c7dac;
     }
-    .navbar-inverse .navbar-nav .open .dropdown-menu .divider {
+    .full-header .navbar .navbar-nav .open .dropdown-menu .divider {
         background-color: #0c7dac
     }
-    .navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+    .full-header .navbar .navbar-nav .open .dropdown-menu>li>a {
         color: #fff;
     }
-    .navbar-inverse .navbar-nav .open .dropdown-menu>li>a:focus,
-    .navbar-inverse .navbar-nav .open .dropdown-menu>li>a:hover {
+    .full-header .navbar .navbar-nav .open .dropdown-menu>li>a:focus,
+    .full-header .navbar .navbar-nav .open .dropdown-menu>li>a:hover {
         color: #fff;
         background-color: #0c7dac;
     }
