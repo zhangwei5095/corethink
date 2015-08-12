@@ -21,15 +21,75 @@ class UserMessageController extends HomeController{
         parent::_initialize();
         $this->is_login();
     }
+
     /**
      * 默认方法
+     * @param $type 消息类型
      * @author jry <598821125@qq.com>
      */
     public function index($type = 0){
-        $message_list = D('UserMessage')->getAllMessageByType($type);
+        $map['type'] = array('eq', $type);
+        $map['status'] = array('eq', 1);
+        $map['to_uid'] = array('eq', is_login());
+        $message_list = D('UserMessage')->where($map)->order('sort desc,id desc')->select();
         $this->assign('volist', $message_list);
         $this->assign('__CURRENT_MESSAGE_TYPE', $type);
         $this->assign('meta_title', "消息中心");
-        $this->display('User/message');
+        $this->display();
+    }
+
+    /**
+     * 查看消息
+     * @param $type 消息类型
+     * @author jry <598821125@qq.com>
+     */
+    public function detail($id){
+        $user_message_object = D('UserMessage');
+        $user_message_info = $user_message_object->find($id);
+        if(!$user_message_info){
+            $this->error('该消息已禁用或不存在');
+        }
+        $map['id'] = array('eq', $id);
+        $user_message_object->where($map)->setField('is_read', 1);
+        $this->assign('user_message_info', $user_message_info);
+        $this->assign('__CURRENT_MESSAGE_TYPE', $user_message_info['type']);
+        $this->assign('meta_title', $user_message_info['title']);
+        $this->display();
+    }
+
+    /**
+     * 获取当前用户未读消息数量
+     * @param $type 消息类型
+     * @author jry <598821125@qq.com>
+     */
+    public function unReadMessageCount($type = null){
+        $map['status'] = array('eq', 1);
+        $map['to_uid'] = array('eq', is_login());
+        $map['is_read'] = array('eq', 0);
+        if($type !== null){
+            $map['type'] = array('eq', $type);
+        }
+        $un_read_count = (int)D('UserMessage')->where($map)->count();
+        $data['status'] = 1;
+        $data['unReadCount'] = $un_read_count;
+        $this->ajaxReturn($data);
+    }
+
+    /**
+     * 设置当前用户所有未读消息为已读
+     * @param $type 消息类型
+     * @author jry <598821125@qq.com>
+     */
+    public function readAll($type = null){
+        $map['status'] = array('eq', 1);
+        $map['to_uid'] = array('eq', is_login());
+        $map['is_read'] = array('eq', 0);
+        if($type !== null){
+            $map['type'] = array('eq', $type);
+        }
+        $result = D('UserMessage')->where($map)->setField('is_read', 1);
+        if($result){
+            $this->success('操作成功');
+        }
     }
 }

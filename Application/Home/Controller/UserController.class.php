@@ -40,15 +40,10 @@ class UserController extends HomeController{
         if(!$uid){
             $uid  = is_login();
         }
-        $con['status'] = 1;
         $user_info = D('User')->where($con)->find($uid);
-        if(!$user_info){
+        if(!$user_info['status'] !== '1'){
             $this->error('该用户不存在或已禁用');
         }
-        $date = new Date((int)$user_info['birthday']);
-        $user_info['gz'] = $date->magicInfo('GZ');
-        $user_info['xz'] = $date->magicInfo('XZ');
-        $user_info['sx'] = $date->magicInfo('SX');
         $this->assign('meta_title', $user_info['username'].'的主页');
         $this->assign('info', $user_info);
         $this->display();

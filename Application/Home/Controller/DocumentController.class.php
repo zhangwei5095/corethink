@@ -295,7 +295,7 @@ class DocumentController extends HomeController{
         $template = $category['detail_template'] ? 'Document/'.$category['detail_template'] : 'Document/detail_default';
         $this->assign('info', $info);
         $this->assign('__CURRENT_CATEGORY__', $category['id']);
-        $this->meta_title = $info['title'];
+        $this->assign('meta_title', $info['title']);
         Cookie('__forward__', $_SERVER['REQUEST_URI']);
         $this->display($template);
     }

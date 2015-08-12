@@ -36,49 +36,12 @@ class UserMessageModel extends Model{
     );
 
     /**
-     * 根据ID获取消息
-     * @author jry <598821125@qq.com>
-     */
-    public function getMessageById($id){
-        $map['id'] = array('eq', $id);
-        return $this->where($map)->find();
-    }
-
-    /**
-     * 获取所有消息
-     * @author jry <598821125@qq.com>
-     */
-    public function getAllMessage($map, $status = '0,1'){
-        $map['status'] = array('in', $status);
-        return $this->where($map)->order('sort desc,id desc')->select();
-    }
-
-    /**
-     * 根据分类获取所有消息
-     * @author jry <598821125@qq.com>
-     */
-    public function getAllMessageByType($type, $status = '0,1'){
-        $map['type'] = array('eq', $type);
-        $map['status'] = array('in', $status);
-        $map['to_uid'] = array('eq', is_login());
-        return $this->where($map)->order('sort desc,id desc')->select();
-    }
-
-    /**
-     * 设置消息状态已读
-     * @author jry <598821125@qq.com>
-     */
-    public function readMessage($ids){
-        $map['id'] = array('in', $ids);
-        return $this->where($map)->setField('is_read', 1);
-    }
-
-    /**
      * 发送消息
      * @author jry <598821125@qq.com>
      */
-    public function sendMessage($title, $to_uid, $type = 0, $from_uid = 0){
+    public function sendMessage($title, $content, $to_uid, $type = 0, $from_uid = 0){
         $data['title'] = $title;
+        $data['content'] = $content;
         $data['to_uid'] = $to_uid;
         $data['type'] = $type;
         $data['from_uid'] = $from_uid;

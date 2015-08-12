@@ -685,7 +685,8 @@ DROP TABLE IF EXISTS `ct_user_message`;
 CREATE TABLE `ct_user_message` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '消息ID',
   `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '消息父ID',
-  `title` varchar(1024) NOT NULL DEFAULT '' COMMENT '消息内容',
+  `title` varchar(1024) NOT NULL DEFAULT '' COMMENT '消息标题',
+  `content` text COMMENT '消息内容',
   `type` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '0系统消息,1评论消息,2私信消息',
   `to_uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '接收用户ID',
   `from_uid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '私信消息发信用户ID',
