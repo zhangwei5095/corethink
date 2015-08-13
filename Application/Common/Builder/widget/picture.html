@@ -21,7 +21,8 @@
                     if(data.error == 1){
                         $.alertMessager(data.message, 'danger');
                     }else{
-                        $('#[type]{$group_k}_preview_{$[type]k} img').attr('src', data.url);
+                        var new_img = '<span class="img-box"><img class="img" src="' + data.url + '" data-id="'+data.id+'"><i class="fa fa-times-circle remove-picture"></i></span>';
+                        $('#[type]{$group_k}_preview_{$[type]k}').append(new_img);
                         $('#[type]{$group_k}_preview_{$[type]k} input').attr('value', data.id);
                     }
                 }

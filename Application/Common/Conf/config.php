@@ -77,7 +77,7 @@ return array(
         'time'       => array('时间', 'int(11) UNSIGNED NOT NULL'),
         'picture'    => array('图片', 'int(11) UNSIGNED NOT NULL'),
         'pictures'   => array('图片(多图)', 'varchar(32) NOT NULL'),
-        'file'       => array('文件', 'varchar(32) NOT NULL'),
+        'file'       => array('文件', 'int(11) UNSIGNED NOT NULL'),
         'files'      => array('多文件', 'varchar(32) NOT NULL'),
         'kindeditor' => array('编辑器 kindeditor', 'text'),
         'simditor'   => array('编辑器 simditor', 'text'),

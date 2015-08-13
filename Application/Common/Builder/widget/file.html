@@ -26,7 +26,9 @@
                     if(data.error == 1){
                         $.alertMessager(data.message, 'danger');
                     }else{
-                        $('#[type]{$group_k}_preview_{$[type]k} .list-group').html('<li class="list-group-item"><i class="fa fa-file"></i> '+data.name+'</li>');
+                        var new_file = '<li class="list-group-item file-item" data-id="'+data.id+'"><i class="fa fa-file"></i> '
+                                       +data.name+' <i class="fa fa-times-circle remove-file"></i></li>'
+                        $('#[type]{$group_k}_preview_{$[type]k} .list-group').html(new_file);
                         $('#[type]{$group_k}_preview_{$[type]k} input').attr('value', data.id);
                     }
                 }
