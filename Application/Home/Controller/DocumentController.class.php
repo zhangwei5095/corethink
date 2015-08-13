@@ -75,7 +75,7 @@ class DocumentController extends HomeController{
                 $this->assign('info', $category_info);
                 $this->assign('volist', $document_list);
                 $this->assign('page', $page->show());
-                $this->meta_title = $category_info['title'];
+                $this->meta_title = $category_info['title'].'列表';
                 Cookie('__forward__', $_SERVER['REQUEST_URI']);
                 $this->display($template);
         }
@@ -320,7 +320,7 @@ class DocumentController extends HomeController{
 
         $this->assign('info', $info);
         $this->assign('__CURRENT_CATEGORY__', $category_info['id']);
-        $this->assign('meta_title', $info['title']);
+        $this->assign('meta_title', $info['main_field']);
         Cookie('__forward__', $_SERVER['REQUEST_URI']);
         $this->display($template);
     }

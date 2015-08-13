@@ -59,7 +59,8 @@ class UserGroupController extends AdminController{
     public function add(){
         if(IS_POST){
             $user_group_object = D('UserGroup');
-            $_POST['auth']= implode(',', I('post.auth'));
+            $_POST['menu_auth']= implode(',', I('post.menu_auth'));
+            $_POST['category_auth']= implode(',', I('post.category_auth'));
             $data = $user_group_object->create();
             if($data){
                 $id = $user_group_object->add();
@@ -72,11 +73,28 @@ class UserGroupController extends AdminController{
                 $this->error($user_group_object->getError());
             }
         }else{
+            //获取现有部门
             $map['status'] = array('egt', 0);
             $tree = new \Common\Util\Tree();
             $all_group = $tree->toFormatTree(D('UserGroup')->where($map)->order('sort asc,id asc')->select());
             $all_group = array_merge(array(0 => array('id'=>0, 'title_show'=>'顶级部门')), $all_group);
+
+            //获取栏目分类权限节点（系统权限节点直接使用AdminController里的__ALL_MENU_LIST__）
+            $category_auth_list = array();
+            $category_group_list = C('CATEGORY_GROUP_LIST');
+            foreach($category_group_list as $key => $val){
+                //获取当前分组下的分类
+                $map['status'] = array('egt', 1);
+                $map['group']  = array('eq', $key);
+                $category_list = $tree->toFormatTree(D('Category')->where($map)->select());
+
+                //构造权限列表
+                $category_auth_list[$key]['title'] = $val;
+                $category_auth_list[$key]['auth'] = $category_list;
+            }
+
             $this->assign('all_group', $all_group);
+            $this->assign('category_auth_list', $category_auth_list);
             $this->meta_title = '新增部门';
             $this->display('add_edit');
         }
@@ -89,7 +107,8 @@ class UserGroupController extends AdminController{
     public function edit($id){
         if(IS_POST){
             $user_group_object = D('UserGroup');
-            $_POST['auth']= implode(',', I('post.auth'));
+            $_POST['menu_auth']= implode(',', I('post.menu_auth'));
+            $_POST['category_auth']= implode(',', I('post.category_auth'));
             $data = $user_group_object->create();
             if($data){
                 if($user_group_object->save()!== false){
@@ -101,15 +120,35 @@ class UserGroupController extends AdminController{
                 $this->error($user_group_object->getError());
             }
         }else{
+            //获取部门信息
             $info = D('UserGroup')->find($id);
-            $info['auth'] = explode(',', $info['auth']);
+            $info['menu_auth'] = explode(',', $info['menu_auth']);
+            $info['category_auth'] = explode(',', $info['category_auth']);
+
+            //获取现有部门
             $map['status'] = array('egt', 0);
             $tree = new \Common\Util\Tree();
             $all_group = $tree->toFormatTree(D('UserGroup')->where($map)->order('sort asc,id asc')->select());
             $all_group = array_merge(array(0 => array('id'=>0, 'title_show'=>'顶级部门')), $all_group);
+
+            //获取栏目分类权限节点（系统权限节点直接使用AdminController里的__ALL_MENU_LIST__）
+            $category_auth_list = array();
+            $category_group_list = C('CATEGORY_GROUP_LIST');
+            foreach($category_group_list as $key => $val){
+                //获取当前分组下的分类
+                $map['status'] = array('egt', 1);
+                $map['group']  = array('eq', $key);
+                $category_list = $tree->toFormatTree(D('Category')->where($map)->select());
+
+                //构造权限列表
+                $category_auth_list[$key]['title'] = $val;
+                $category_auth_list[$key]['auth'] = $category_list;
+            }
+
             $this->assign('all_group', $all_group);
+            $this->assign('category_auth_list', $category_auth_list);
             $this->assign('info', $info);
-            $this->meta_title = '编辑部门';
+            $this->assign('meta_title', '编辑部门');
             $this->display('add_edit');
         }
     }

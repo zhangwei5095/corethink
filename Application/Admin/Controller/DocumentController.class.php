@@ -18,6 +18,11 @@ class DocumentController extends AdminController{
      * @author jry <598821125@qq.com>
      */
     public function index($cid){
+        //分类权限检测
+        if(!D('UserGroup')->checkCategoryAuth($cid)){
+            $this->error('权限不足！');
+        }
+
         //获取分类信息
         $category_info = D('Category')->find($cid);
 
@@ -124,7 +129,7 @@ class DocumentController extends AdminController{
                     $('.modal-title').html('移动选中的的文章至：');
                     $('#moveModal').modal('show', 'fit')
                 }else{
-                    $.alertMessager('请选择需要移动的文章', danger);
+                    $.alertMessager('请选择需要移动的文章', 'danger');
                 }
             }
         </script>
@@ -169,7 +174,12 @@ EOF;
      * 新增文档
      * @author jry <598821125@qq.com>
      */
-    public function add(){
+    public function add($cid){
+        //分类权限检测
+        if(!D('UserGroup')->checkCategoryAuth($cid)){
+            $this->error('权限不足！');
+        }
+
         if(IS_POST){
             //新增文档
             $document_object = D('Document');
@@ -181,7 +191,6 @@ EOF;
             }
         }else{
             //获取当前分类
-            $cid = I('get.cid');
             $category_info = D('Category')->find($cid);
             $doc_type = D('DocumentType')->find($category_info['doc_type']);
             $field_sort = json_decode($doc_type['field_sort'], true);
@@ -237,6 +246,14 @@ EOF;
      * @author jry <598821125@qq.com>
      */
     public function edit($id){
+        //获取文档信息
+        $document_info = D('Document')->detail($id);
+
+        //分类权限检测
+        if(!D('UserGroup')->checkCategoryAuth($document_info['cid'])){
+            $this->error('权限不足！');
+        }
+
         if(IS_POST){
             //更新文档
             $document_object = D('Document');
@@ -247,8 +264,6 @@ EOF;
                 $this->success('更新成功', U('Document/index', array('cid' => I('post.cid'))));
             }
         }else{
-            //获取文档信息
-            $document_info = D('Document')->detail($id);
 
             //获取当前分类
             $category_info = D('Category')->find($document_info['cid']);
@@ -306,6 +321,16 @@ EOF;
      * @author jry <598821125@qq.com>
      */
     public function move(){
+        //分类权限检测
+        if(!D('UserGroup')->checkCategoryAuth(I('post.from_cid'))){
+            $this->error('当前分类权限不足！');
+        }
+
+        //分类权限检测
+        if(!D('UserGroup')->checkCategoryAuth(I('post.to_cid'))){
+            $this->error('目标分类权限不足！');
+        }
+
         if(IS_POST){
             $ids = I('post.ids');
             $from_cid = I('post.from_cid');
@@ -320,7 +345,7 @@ EOF;
                 if($form_category_type === $to_category_type){
                     $map['id'] = array('in',$ids);
                     $data = array('cid' => $to_cid);
-                    edit_table_row('Document', $data, $map, array('success'=>'移动成功','error'=>'移动失败'));
+                    $this->editRow('Document', $data, $map, array('success'=>'移动成功','error'=>'移动失败'));
                 }else{
                     $this->error('该分类模型不匹配');
                 }

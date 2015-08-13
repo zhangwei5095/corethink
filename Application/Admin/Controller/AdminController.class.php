@@ -29,7 +29,7 @@ class AdminController extends CommonController{
         }
 
         //权限检测
-        if(!D('UserGroup')->checkAuth()){
+        if(!D('UserGroup')->checkMenuAuth()){
             $this->error('权限不足！');
         }
 

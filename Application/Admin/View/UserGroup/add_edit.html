@@ -6,10 +6,11 @@
             <form action="__SELF__" method="post" class="form builder-form">
                 <ul class="nav-tabs nav" style="margin-bottom: 20px;">
                     <li class="active"><a href="#tab1" data-toggle="tab">部门信息</a></li>
-                    <neq name="info.id" value="1"><li><a href="#tab2" data-toggle="tab">部门权限</a></li></neq>
+                    <neq name="info.id" value="1"><li><a href="#tab2" data-toggle="tab">系统权限</a></li></neq>
+                    <neq name="info.id" value="1"><li><a href="#tab3" data-toggle="tab">分类权限</a></li></neq>
                 </ul>
                 <div class="tab-content">
-                    <div id="tab1" class='tab-pane active'>
+                    <div id="tab1" class="tab-pane active">
                         <neq name="info.id" value="1">
                             <div class="form-group">
                                 <label class="item-label">上级部门<span class="check-tips">（所属的上级部门）</span></label>
@@ -52,57 +53,85 @@
                         </div>
                     </div>
                     <neq name="info.id" value="1">
-                        <div id="tab2" class='tab-pane' style="margin-left: 20px;margin-bottom: 20px;">
-                            <div class="form-group">
-                                <div class="controls auth">
-                                    <volist name="__ALL_MENU_LIST__" id="vo1">
-                                        <div>
-                                            <label class="checkbox">
-                                                <input type="checkbox" name="auth[]" <php>if(in_array($vo1['id'], $info['auth'])) echo "checked";</php> value="{$vo1.id}">{$vo1.title}
-                                            </label>
-                                            <div class="auth{$vo1.id}" style="padding-left: 25px;">
-                                                <volist name="vo1._child" id="vo2">
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" name="auth[]" <php>if(in_array($vo2['id'], $info['auth'])) echo "checked";</php> value="{$vo2.id}">{$vo2.title}
-                                                    </label>
-                                                    <div class="auth{$vo2.id}" style="padding-left: 25px;">
-                                                        <foreach name="vo2._child" item="vo3">
-                                                            <label class="checkbox">
-                                                                <input type="checkbox" name="auth[]" <php>if(in_array($vo3['id'], $info['auth'])) echo "checked";</php> value="{$vo3.id}">{$vo3.title}
-                                                            </label>
-                                                            <notempty name="vo3._child">
-                                                                <div class="auth{$vo3.id}" style="padding-left: 25px;">
-                                                                    <volist name="vo3._child" id="vo4">
-                                                                        <notempty name="vo4._child">
-                                                                            <div style="padding-top: 10px;">
-                                                                            <label class="checkbox-inline">
-                                                                                <input type="checkbox" name="auth[]" <php>if(in_array($vo4['id'], $info['auth'])) echo "checked";</php> value="{$vo4.id}">{$vo4.title}
-                                                                            </label>
-                                                                            </div>
-                                                                        <else />
-                                                                             <label class="checkbox-inline">
-                                                                                <input type="checkbox" name="auth[]" <php>if(in_array($vo4['id'], $info['auth'])) echo "checked";</php> value="{$vo4.id}">{$vo4.title}
-                                                                            </label>
-                                                                        </notempty>
-                                                                        <notempty name="vo4._child">
-                                                                            <div class="auth{$vo4.id}" style="padding-left: 25px;">
-                                                                                <foreach name="vo4._child" item="vo5">
-                                                                                    <label class="checkbox-inline">
-                                                                                        <input type="checkbox" name="auth[]" <php>if(in_array($vo5['id'], $info['auth'])) echo "checked";</php> value="{$vo5.id}">{$vo5.title}
-                                                                                    </label>
-                                                                                </foreach>
-                                                                            </div>
-                                                                        </notempty>
-                                                                    </volist>
-                                                                </div>
-                                                            </notempty>
-                                                        </foreach>
-                                                    </div>
-                                                </volist>
+                        <div id="tab2" class="tab-pane">
+                            <div class="container">
+                                <div class="col-xs-12">
+                                    <div class="form-group auth">
+                                        <volist name="__ALL_MENU_LIST__" id="vo1">
+                                            <div>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="menu_auth[]" <php>if(in_array($vo1['id'], $info['menu_auth'])) echo "checked";</php> value="{$vo1.id}">{$vo1.title}
+                                                </label>
+                                                <div class="auth{$vo1.id}" style="padding-left: 25px;">
+                                                    <volist name="vo1._child" id="vo2">
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" name="menu_auth[]" <php>if(in_array($vo2['id'], $info['menu_auth'])) echo "checked";</php> value="{$vo2.id}">{$vo2.title}
+                                                        </label>
+                                                        <div class="auth{$vo2.id}" style="padding-left: 25px;">
+                                                            <foreach name="vo2._child" item="vo3">
+                                                                <label class="checkbox">
+                                                                    <input type="checkbox" name="menu_auth[]" <php>if(in_array($vo3['id'], $info['menu_auth'])) echo "checked";</php> value="{$vo3.id}">{$vo3.title}
+                                                                </label>
+                                                                <notempty name="vo3._child">
+                                                                    <div class="auth{$vo3.id}" style="padding-left: 25px;">
+                                                                        <volist name="vo3._child" id="vo4">
+                                                                            <notempty name="vo4._child">
+                                                                                <div style="padding-top: 10px;">
+                                                                                <label class="checkbox-inline">
+                                                                                    <input type="checkbox" name="menu_auth[]" <php>if(in_array($vo4['id'], $info['menu_auth'])) echo "checked";</php> value="{$vo4.id}">{$vo4.title}
+                                                                                </label>
+                                                                                </div>
+                                                                            <else />
+                                                                                 <label class="checkbox-inline">
+                                                                                    <input type="checkbox" name="menu_auth[]" <php>if(in_array($vo4['id'], $info['menu_auth'])) echo "checked";</php> value="{$vo4.id}">{$vo4.title}
+                                                                                </label>
+                                                                            </notempty>
+                                                                            <notempty name="vo4._child">
+                                                                                <div class="auth{$vo4.id}" style="padding-left: 25px;">
+                                                                                    <foreach name="vo4._child" item="vo5">
+                                                                                        <label class="checkbox-inline">
+                                                                                            <input type="checkbox" name="menu_auth[]" <php>if(in_array($vo5['id'], $info['menu_auth'])) echo "checked";</php> value="{$vo5.id}">{$vo5.title}
+                                                                                        </label>
+                                                                                    </foreach>
+                                                                                </div>
+                                                                            </notempty>
+                                                                        </volist>
+                                                                    </div>
+                                                                </notempty>
+                                                            </foreach>
+                                                        </div>
+                                                    </volist>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </volist>
+                                        </volist>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
+                    </neq>
+                    <neq name="info.id" value="1">
+                        <div id="tab3" class="tab-pane">
+                            <div class="row">
+                                <volist name="category_auth_list" id="vo">
+                                    <div class="col-xs 12 col-sm-3">
+                                        <div class="panel panel-default " style="padding: 0px;">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">{$vo.title}分组</h3>
+                                            </div>
+                                            <table class="table table-bordered table-responsive">
+                                                <volist name="vo.auth" id="vo1">
+                                                    <tr>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox" name="category_auth[]" value="{$vo1.id}" <php>if(in_array($vo1['id'], $info['category_auth'])) echo "checked";</php>> {$vo1.title_show}
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                </volist>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </volist>
                             </div>
                         </div>
                     </neq>

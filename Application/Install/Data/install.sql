@@ -454,28 +454,31 @@ VALUES
 	(64,60,'文档列表','Admin/Document/index','',0,1427475588,1427475588,4,1),
 	(65,64,'添加','Admin/Document/add','',0,1426580628,1426580628,1,1),
 	(66,64,'编辑','Admin/Document/edit','',0,1426580628,1426580628,2,1),
-	(67,64,'设置状态','Admin/Document/setStatus','',0,1426580628,1426580628,3,1),
-	(68,10,'标签列表','Admin/PublicTag/index','fa fa-tags',0,1426580628,1438277250,3,1),
-	(69,68,'添加','Admin/PublicTag/add','',0,1426580628,1426580628,1,1),
-	(70,68,'编辑','Admin/PublicTag/edit','',0,1426580628,1426580628,2,1),
-	(71,68,'设置状态','Admin/PublicTag/setStatus','',0,1426580628,1426580628,3,1),
-	(72,10,'万能评论','Admin/PublicComment/index','fa fa-comments',0,1426580628,1438277284,4,1),
-	(73,72,'添加','Admin/PublicComment/add','',0,1426580628,1426580628,1,1),
-	(74,72,'编辑','Admin/PublicComment/edit','',0,1426580628,1426580628,2,1),
-	(75,72,'设置状态','Admin/PublicComment/setStatus','',0,1426580628,1426580628,3,1),
-	(76,10,'回收站','Admin/Document/recycle','fa fa-trash',0,1427475588,1438277313,5,1),
-	(77,11,'上传管理','Admin/PublicUpload/index','fa fa-upload',0,1427475588,1438277518,1,1),
-	(78,77,'上传文件','Admin/PublicUpload/upload','',0,1427475588,1427475588,1,1),
-	(79,77,'下载图片','Admin/PublicUpload/downremoteimg','',0,1427475588,1427475588,2,1),
-	(80,77,'文件浏览','Admin/PublicUpload/fileManager','',0,1427475588,1427475588,3,1),
-	(81,12,'用户列表','Admin/User/index','fa fa-user',0,1426580628,1438277505,1,1),
-	(82,81,'添加','Admin/User/add','',0,1426580628,1426580628,1,1),
-	(83,81,'编辑','Admin/User/edit','',0,1426580628,1426580628,2,1),
-	(84,81,'设置状态','Admin/User/setStatus','',0,1426580628,1426580628,3,1),
-	(85,12,'部门管理','Admin/UserGroup/index','fa fa-sitemap',0,1426580628,1438277438,2,1),
-	(86,85,'添加','Admin/UserGroup/add','',0,1426580628,1426580628,1,1),
-	(87,85,'编辑','Admin/UserGroup/edit','',0,1426580628,1426580628,2,1),
-	(88,85,'设置状态','Admin/UserGroup/setStatus','',0,1426580628,1426580628,3,1);
+	(67,64,'移动','Admin/Document/move','',0,1426580628,1426580628,3,1),
+	(68,64,'设置状态','Admin/Document/setStatus','',0,1426580628,1426580628,4,1),
+	(69,10,'标签列表','Admin/PublicTag/index','fa fa-tags',0,1426580628,1438277250,3,1),
+	(70,69,'添加','Admin/PublicTag/add','',0,1426580628,1426580628,1,1),
+	(71,69,'编辑','Admin/PublicTag/edit','',0,1426580628,1426580628,2,1),
+	(72,69,'设置状态','Admin/PublicTag/setStatus','',0,1426580628,1426580628,3,1),
+	(73,10,'万能评论','Admin/PublicComment/index','fa fa-comments',0,1426580628,1438277284,4,1),
+	(74,73,'添加','Admin/PublicComment/add','',0,1426580628,1426580628,1,1),
+	(75,73,'编辑','Admin/PublicComment/edit','',0,1426580628,1426580628,2,1),
+	(76,73,'设置状态','Admin/PublicComment/setStatus','',0,1426580628,1426580628,3,1),
+	(77,10,'回收站','Admin/Document/recycle','fa fa-trash',0,1427475588,1438277313,5,1),
+	(78,11,'上传管理','Admin/PublicUpload/index','fa fa-upload',0,1427475588,1438277518,1,1),
+	(79,78,'上传文件','Admin/PublicUpload/upload','',0,1427475588,1427475588,1,1),
+	(80,78,'删除文件','Admin/PublicUpload/delete','',0,1427475588,1427475588,2,1),
+	(81,78,'设置状态','Admin/PublicUpload/setStatus','',0,1426580628,1426580628,3,1),
+	(82,78,'下载图片','Admin/PublicUpload/downremoteimg','',0,1427475588,1427475588,4,1),
+	(83,78,'文件浏览','Admin/PublicUpload/fileManager','',0,1427475588,1427475588,5,1),
+	(84,12,'用户列表','Admin/User/index','fa fa-user',0,1426580628,1438277505,1,1),
+	(85,84,'添加','Admin/User/add','',0,1426580628,1426580628,1,1),
+	(86,84,'编辑','Admin/User/edit','',0,1426580628,1426580628,2,1),
+	(87,84,'设置状态','Admin/User/setStatus','',0,1426580628,1426580628,3,1),
+	(88,12,'部门管理','Admin/UserGroup/index','fa fa-sitemap',0,1426580628,1438277438,2,1),
+	(89,88,'添加','Admin/UserGroup/add','',0,1426580628,1426580628,1,1),
+	(90,88,'编辑','Admin/UserGroup/edit','',0,1426580628,1426580628,2,1),
+	(89,88,'设置状态','Admin/UserGroup/setStatus','',0,1426580628,1426580628,3,1);
 
 /*!40000 ALTER TABLE `ct_system_menu` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -662,7 +665,8 @@ CREATE TABLE `ct_user_group` (
   `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上级部门ID',
   `title` varchar(32) NOT NULL DEFAULT '' COMMENT '部门名称',
   `icon` varchar(32) NOT NULL COMMENT '图标',
-  `auth` varchar(1024) NOT NULL DEFAULT '' COMMENT '权限',
+  `menu_auth` text COMMENT '菜单权限',
+  `category_auth` text COMMENT '栏目分类权限',
   `ctime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `utime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '修改时间',
   `sort` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '排序（同级有效）',
@@ -673,9 +677,9 @@ CREATE TABLE `ct_user_group` (
 LOCK TABLES `ct_user_group` WRITE;
 /*!40000 ALTER TABLE `ct_user_group` DISABLE KEYS */;
 
-INSERT INTO `ct_user_group` (`id`, `pid`, `title`, `icon`, `auth`, `ctime`, `utime`, `sort`, `status`)
+INSERT INTO `ct_user_group` (`id`, `pid`, `title`, `icon`, `menu_auth`, `category_auth`, `ctime`, `utime`, `sort`, `status`)
 VALUES
-	(1,0,'管理员','','',1426881003,1427552428,0,1);
+	(1,0,'管理员','','','',1426881003,1427552428,0,1);
 
 /*!40000 ALTER TABLE `ct_user_group` ENABLE KEYS */;
 UNLOCK TABLES;

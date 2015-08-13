@@ -21,7 +21,7 @@ class UserGroupModel extends Model{
         array('title', 'require', '部门名称不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
         array('title', '1,32', '部门名称长度为1-32个字符', self::EXISTS_VALIDATE, 'length', self::MODEL_BOTH),
         array('title', '', '部门名称已经存在', self::VALUE_VALIDATE, 'unique', self::MODEL_BOTH),
-        array('auth', 'require', '权限不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
+        array('menu_auth', 'require', '权限不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
     );
 
     /**
@@ -35,16 +35,34 @@ class UserGroupModel extends Model{
     );
 
     /**
-     * 检查部门权限
+     * 检查部门功能权限
      * @author jry <598821125@qq.com>
      */
-    public function checkAuth(){
+    public function checkMenuAuth(){
         $current_menu = D('SystemMenu')->getCurrentMenu(); //当前菜单id
         $user_group = (int)D('User')->getFieldById(session('user_auth.uid'), 'group'); //获得当前登录用户信息
         if($user_group !== 1){
             $group_info = $this->find($user_group);
-            $group_auth = explode(',', $group_info['auth']); //获得当前登录用户所属部门的权限列表
+            $group_auth = explode(',', $group_info['menu_auth']); //获得当前登录用户所属部门的权限列表
             if(in_array($current_menu['id'], $group_auth)){
+                return true;
+            }
+        }else{
+            return true; //超级管理员无需验证
+        }
+        return false;
+    }
+
+    /**
+     * 检查部门分类权限
+     * @author jry <598821125@qq.com>
+     */
+    public function checkCategoryAuth($category_id){
+        $user_group = (int)D('User')->getFieldById(session('user_auth.uid'), 'group'); //获得当前登录用户信息
+        if($user_group !== 1){
+            $group_info = $this->find($user_group);
+            $group_auth = explode(',', $group_info['category_auth']); //获得当前登录用户所属部门的分类权限列表
+            if(in_array($category_id, $group_auth)){
                 return true;
             }
         }else{
