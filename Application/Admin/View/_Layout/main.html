@@ -18,7 +18,13 @@
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin.min.css?v={:C('STATIC_VERSION')}">
     <link rel="stylesheet" type="text/css" href="__ADMIN_CSS__/{:C('ADMIN_THEME')}.css">
     <block name="style"></block>
-    <script type="text/javascript" src="__PUBLIC__/libs/jquery/1.x/jquery-1.11.3.min.js"></script>
+
+    <!-- 如果配置里CDN静态资源列表则使用CDN否则使用静态资源 -->
+    <?php if(C('CDN_RESOURCE_LIST')): ?>
+        {:C('CDN_RESOURCE_LIST')}
+    <?php else: ?>
+        <script type="text/javascript" src="__PUBLIC__/libs/jquery/1.x/jquery-1.11.3.min.js"></script>
+    <?php endif; ?>
     <block name="libs"></block>
 </head>
 

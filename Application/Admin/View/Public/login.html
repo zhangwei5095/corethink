@@ -6,7 +6,13 @@
     <title>{$meta_title}｜{:C('WEB_SITE_TITLE')}后台管理</title>
 
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin.min.css?v={:C('STATIC_VERSION')}">
-    <script type="text/javascript" src="__PUBLIC__/libs/jquery/1.x/jquery-1.11.3.min.js"></script>
+
+    <!-- 如果配置里CDN静态资源列表则使用CDN否则使用静态资源 -->
+    <?php if(C('CDN_RESOURCE_LIST')): ?>
+        {:C('CDN_RESOURCE_LIST')}
+    <?php else: ?>
+        <script type="text/javascript" src="__PUBLIC__/libs/jquery/1.x/jquery-1.11.3.min.js"></script>
+    <?php endif; ?>
 </head>
 
 <body id="<?php echo 'body-'.$__CONTROLLER_NAME__.'-'.$__ACTION_NAME__; ?>" class="<?php echo 'body-'.$__CONTROLLER_NAME__.' body-'.$__CONTROLLER_NAME__.'-'.$__ACTION_NAME__; ?>">

@@ -18,7 +18,14 @@
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/home.min.css?v={:C('STATIC_VERSION')}"> <!-- 引入gulp合并压缩的css -->
     <link rel="stylesheet" type="text/css" href="__HOME_CSS__/main.css?v={:C('STATIC_VERSION')}"> <!-- 引入当前主题无需经过gulp并压缩的css -->
     <block name="style"></block>
-    <script type="text/javascript" src="__PUBLIC__/libs/jquery/1.x/jquery-1.11.3.min.js" charset="utf-8"></script>
+
+    <!-- 如果配置里CDN静态资源列表则使用CDN否则使用静态资源 -->
+    <?php if(C('CDN_RESOURCE_LIST')): ?>
+        {:C('CDN_RESOURCE_LIST')}
+    <?php else: ?>
+        <script type="text/javascript" src="__PUBLIC__/libs/jquery/1.x/jquery-1.11.3.min.js"></script>
+    <?php endif; ?>
+
     <block name="libs"></block>
     {:C('WEB_SITE_STATISTICS')} <!-- 站点统计代码 -->
 </head>
