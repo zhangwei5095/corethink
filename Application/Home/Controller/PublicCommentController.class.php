@@ -26,14 +26,13 @@ class PublicCommentController extends HomeController{
                 $id = $user_comment_object->add();
                 if($id){
                     //更新评论数
-                    D(C('TABLE_LIST.'.I('post.table')))->where(array('id'=> (int)$data['data_id']))->setInc('comment');
+                    D($user_comment_object->model_type(I('post.table')))->where(array('id'=> (int)$data['data_id']))->setInc('comment');
 
                     //获取当前被评论文档的详细信息
-                    $table_list = C('TABLE_LIST');
-                    $current_document_info = D($table_list[I('post.table')])->find(I('post.data_id'));
+                    $current_document_info = D($user_comment_object->model_type(I('post.table')))->find(I('post.data_id'));
 
                     //给文档标题加上链接以便于直接点击
-                    $current_document_title = '<a href="'.U($table_list[I('post.table')].'/detail', array('id' => $current_document_info['id'])).'">'.$current_document_info['title'].'</a>';
+                    $current_document_title = '<a href="'.U($user_comment_object->model_type(I('post.table')).'/detail', array('id' => $current_document_info['id'])).'">'.$current_document_info['title'].'</a>';
 
                     //当前发表评论的用户信息
                     $current_user_info = D('User')->find($uid);

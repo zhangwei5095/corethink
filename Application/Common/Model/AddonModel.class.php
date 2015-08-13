@@ -37,6 +37,16 @@ class AddonModel extends Model{
     );
 
     /**
+     * 插件类型
+     * @author jry <598821125@qq.com>
+     */
+    public function addon_type($id){
+        $list[0] = '系统插件';
+        $list[1] = '微＋插件';
+        return $id ? $list[$id] : $list;
+    }
+
+    /**
      * 获取插件列表
      * @param string $addon_dir
      * @author jry <598821125@qq.com>

@@ -76,18 +76,20 @@ class UserController extends AdminController{
                 $this->error($user_object->getError());
             }
         }else{
+            $user_object = D('User');
+
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
             $builder->setMetaTitle('新增用户') //设置页面标题
                     ->setPostUrl(U('add')) //设置表单提交地址
                     ->addFormItem('reg_type', 'hidden', '注册方式', '注册方式')
-                    ->addFormItem('usertype', 'radio', '用户类型', '用户类型', C('USER_TYPE_LIST'))
+                    ->addFormItem('usertype', 'radio', '用户类型', '用户类型', $user_object->user_type())
                     ->addFormItem('username', 'text', '用户名', '用户名')
                     ->addFormItem('email', 'text', '邮箱', '邮箱')
                     ->addFormItem('mobile', 'text', '手机号码', '手机号码')
                     ->addFormItem('password', 'password', '密码', '密码')
                     ->addFormItem('avatar', 'picture', '用户头像', '用户头像')
-                    ->addFormItem('vip', 'radio', 'VIP等级', 'VIP等级', C('USER_VIP_LEVEL'))
+                    ->addFormItem('vip', 'radio', 'VIP等级', 'VIP等级', $user_object->user_vip_level())
                     ->setFormData(array('reg_type' => 1)) //注册方式为后台添加
                     ->display();
         }
@@ -122,20 +124,21 @@ class UserController extends AdminController{
                 $this->error('更新失败', $user_object->getError());
             }
         }else{
-            $info = D('User')->find($id);
+            $user_object = D('User');
+            $info = $user_object->find($id);
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
             $builder->setMetaTitle('编辑用户') //设置页面标题
                     ->setPostUrl(U('edit')) //设置表单提交地址
                     ->addFormItem('id', 'hidden', 'ID', 'ID')
-                    ->addFormItem('usertype', 'radio', '用户类型', '用户类型', C('USER_TYPE_LIST'))
+                    ->addFormItem('usertype', 'radio', '用户类型', '用户类型', $user_object->user_type())
                     ->addFormItem('group', 'select', '部门', '所属部门', select_list_as_tree('UserGroup', null, '默认部门'))
                     ->addFormItem('username', 'text', '用户名', '用户名')
                     ->addFormItem('email', 'text', '邮箱', '邮箱')
                     ->addFormItem('mobile', 'text', '手机号码', '手机号码')
                     ->addFormItem('password', 'password', '密码', '密码')
                     ->addFormItem('avatar', 'picture', '用户头像', '用户头像')
-                    ->addFormItem('vip', 'radio', 'VIP等级', 'VIP等级', C('USER_VIP_LEVEL'))
+                    ->addFormItem('vip', 'radio', 'VIP等级', 'VIP等级', $user_object->user_vip_level())
                     ->setFormData($info)
                     ->display();
         }

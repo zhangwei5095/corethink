@@ -126,6 +126,7 @@ EOF;
             }
         }else{
             //获取前台模版供选择
+            $category_object = D('Category');
             $current_theme = D('SystemTheme')->where(array('current' => 1))->order('id asc')->getField('name'); //从系统主题数据表获取当前主题的名称
             $template_list = \Common\Util\File::get_dirs(getcwd().'/Application/Home/View/'.$current_theme.'/Document');
             foreach($template_list['file'] as $val){
@@ -151,7 +152,7 @@ EOF;
                     ->addFormItem('detail_template', 'select', '详情页模版', '单页使用的模版或其他模型文档详情页模版', $template_list_detail, 'hidden')
                     ->addFormItem('icon', 'icon', '图标', '菜单图标')
                     ->addFormItem('sort', 'num', '排序', '用于显示的顺序')
-                    ->addFormItem('post_auth', 'radio', '投稿权限', '前台用户投稿权限', C('CATEGORY_POST_AUTH'))
+                    ->addFormItem('post_auth', 'radio', '投稿权限', '前台用户投稿权限', $category_object->post_auth())
                     ->setFormData(array('group' => $group, 'post_auth' => 1))
                     ->setExtraHtml($this->extra_html)
                     ->display();
@@ -177,7 +178,8 @@ EOF;
             }
         }else{
             //获取分类信息
-            $info = D('Category')->find($id);
+            $category_object = D('Category');
+            $info = $category_object->find($id);
 
             //获取前台模版供选择
             $current_theme = D('SystemTheme')->where(array('current' => 1))->order('id asc')->getField('name'); //从系统主题数据表获取当前主题的名称
@@ -206,7 +208,7 @@ EOF;
                     ->addFormItem('detail_template', 'select', '详情页模版', '单页使用的模版或其他模型文档详情页模版', $template_list_detail, $info['doc_type'] > 1 ? : 'hidden')
                     ->addFormItem('icon', 'icon', '图标', '菜单图标')
                     ->addFormItem('sort', 'num', '排序', '用于显示的顺序')
-                    ->addFormItem('post_auth', 'radio', '投稿权限', '前台用户投稿权限', C('CATEGORY_POST_AUTH'))
+                    ->addFormItem('post_auth', 'radio', '投稿权限', '前台用户投稿权限', $category_object->post_auth())
                     ->setFormData($info)
                     ->setExtraHtml($this->extra_html)
                     ->display();

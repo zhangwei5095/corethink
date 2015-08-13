@@ -40,6 +40,28 @@ class PublicCommentModel extends Model{
     );
 
     /**
+     * 评论模型
+     * @author jry <598821125@qq.com>
+     */
+    public function model_type($id){
+        $list[1] = 'Document';
+        $list[2] = 'Category';
+        $list[3] = 'User';
+        return $id ? $list[$id] : $list;
+    }
+
+    /**
+     * 评论模型
+     * @author jry <598821125@qq.com>
+     */
+    public function model_type_id($name){
+        $list['Document'] = '1';
+        $list['Category'] = '2';
+        $list['User']     = '3';
+        return $name ? $list[$name] : $list;
+    }
+
+    /**
      * 验证评论内容
      * @author jry <598821125@qq.com>
      */

@@ -36,6 +36,16 @@ class CategoryModel extends Model{
     );
 
     /**
+     * 前台用户投稿权限(不影响后台)
+     * @author jry <598821125@qq.com>
+     */
+    public function post_auth($id){
+        $list[0] = '禁止投稿';
+        $list[1] = '允许投稿';
+        return $id ? $list[$id] : $list;
+    }
+
+    /**
      * 检查同一分组下是否有相同的字段
      * @author jry <598821125@qq.com>
      */

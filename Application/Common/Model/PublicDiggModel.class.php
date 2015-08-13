@@ -34,4 +34,15 @@ class PublicDiggModel extends Model{
         array('utime', NOW_TIME, self::MODEL_BOTH),
         array('status', '1', self::MODEL_INSERT),
     );
+
+    /**
+     * Digg类型
+     * @author jry <598821125@qq.com>
+     */
+    public function digg_type($id){
+        $list[1] = 'good'; //赞
+        $list[2] = 'bad';  //踩
+        $list[3] = 'mark'; //收藏
+        return $id ? $list[$id] : $list;
+    }
 }

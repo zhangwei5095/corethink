@@ -86,6 +86,38 @@ class UserModel extends Model{
     );
 
     /**
+     * 用户性别
+     * @author jry <598821125@qq.com>
+     */
+    public function user_sex($id){
+        $list[0] = '保密';
+        $list[1] = '男';
+        $list[1] = '男';
+        return $id ? $list[$id] : $list;
+    }
+
+    /**
+     * 用户VIP等级
+     * @author jry <598821125@qq.com>
+     */
+    public function user_vip_level($id){
+        $list[0] = '普通用户';
+        $list[1] = '普通VIP';
+        $list[1] = '高级VIP';
+        return $id ? $list[$id] : $list;
+    }
+
+    /**
+     * 用户类型
+     * @author jry <598821125@qq.com>
+     */
+    public function user_type($id){
+        $list[0] = '个人';
+        $list[1] = '企业';
+        return $id ? $list[$id] : $list;
+    }
+
+    /**
      * 更新用户信息（前台用户使用，后台管理员更改用户信息不使用create及此方法）
      * @param  array $data 用户信息
      * @return bool

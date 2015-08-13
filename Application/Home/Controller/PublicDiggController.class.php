@@ -67,9 +67,9 @@ class PublicDiggController extends HomeController{
         unset($con['uid']);
         $con['status'] = 1;
         $return['digg_count'] = $public_digg_object->where($con)->count();
-        $current_digg_object = D(C('TABLE_LIST.'.I('table')));
+        $current_digg_object = D(D('PublicComment')->model_type(I('table')));
         $result = $current_digg_object->where(array('id' => (int)I('data_id')))
-            ->setField(C('DIGG_TYPE_LIST.'.I('type')), $return['digg_count']); // 更新Digg计数
+            ->setField($public_digg_object->digg_type(I('type')), $return['digg_count']); // 更新Digg计数
         if(!$result){
             $return['status'] = 0;
             $return['info'] = '操作失败'.$current_digg_object->getError();

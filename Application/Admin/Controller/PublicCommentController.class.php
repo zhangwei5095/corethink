@@ -69,11 +69,13 @@ class PublicCommentController extends AdminController{
                 $this->error($user_comment_object->getError());
             }
         }else{
+            $user_comment_object = D('PublicComment');
+
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
             $builder->setMetaTitle('新增评论')  //设置页面标题
                     ->setPostUrl(U('add')) //设置表单提交地址
-                    ->addFormItem('table', 'radio', '数据表', '数据表ID',C('TABLE_LIST'))
+                    ->addFormItem('table', 'radio', '数据表', '数据表ID', $user_comment_object->model_type())
                     ->addFormItem('data_id', 'num', '数据ID', '数据ID')
                     ->addFormItem('content', 'textarea', '评论内容', '评论内容')
                     ->addFormItem('pictures', 'pictures', '图片列表', '图片列表')
@@ -102,12 +104,14 @@ class PublicCommentController extends AdminController{
                 $this->error($user_comment_object->getError());
             }
         }else{
+            $user_comment_object = D('PublicComment');
+
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
             $builder->setMetaTitle('编辑评论')  //设置页面标题
                     ->setPostUrl(U('edit')) //设置表单提交地址
                     ->addFormItem('id', 'hidden', 'ID', 'ID')
-                    ->addFormItem('table', 'radio', '数据表', '数据表ID',C('TABLE_LIST'))
+                    ->addFormItem('table', 'radio', '数据表', '数据表ID', $user_comment_object->model_type())
                     ->addFormItem('data_id', 'num', '数据ID', '数据ID')
                     ->addFormItem('content', 'textarea', '评论内容', '评论内容')
                     ->addFormItem('pictures', 'pictures', '图片列表', '图片列表')

@@ -73,7 +73,8 @@ class UserController extends HomeController{
                 $this->error($user_object->getError());
             }
         }else{
-            $user_info = D('User')->find($this->is_login());
+            $user_object = D('User');
+            $user_info = $user_object->find($this->is_login());
 
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
@@ -81,7 +82,7 @@ class UserController extends HomeController{
                     ->setPostUrl(U('')) //设置表单提交地址
                     ->addFormItem('username', 'text', '用户名', '')
                     ->addFormItem('avatar', 'picture', '头像', '')
-                    ->addFormItem('sex', 'radio', '性别', '', C('USER_SEX_LIST'))
+                    ->addFormItem('sex', 'radio', '性别', '', $user_object->user_sex())
                     ->addFormItem('age', 'num', '年龄', '')
                     ->addFormItem('birthday', 'date', '生日', '生日')
                     ->addFormItem('summary', 'text', '签名', '一句话介绍')
