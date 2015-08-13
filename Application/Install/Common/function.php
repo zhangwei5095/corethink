@@ -85,7 +85,7 @@ function check_dirfile(){
     $items = array(
         '0' => array(
             'type'  => 'file',
-            'path'  => APP_PATH . 'Common/Conf/config.php',
+            'path'  => APP_PATH . 'Common/Conf/db.php',
             'title' => '可写',
             'icon'  => 'glyphicon-ok text-success',
         ),
@@ -246,7 +246,7 @@ function write_config($config, $auth){
         $conf = str_replace('[AUTH_KEY]', $auth, $conf);
         //写入应用配置文件
 
-        if(file_put_contents(APP_PATH . 'Common/Conf/config.php', $conf)){
+        if(file_put_contents(APP_PATH . 'Common/Conf/db.php', $conf)){
             show_msg('配置文件写入成功');
         }else{
             show_msg('配置文件写入失败！', 'error');

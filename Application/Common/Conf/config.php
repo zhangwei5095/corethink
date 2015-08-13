@@ -11,7 +11,8 @@
  * CoreThink全局配置文件
  */
 const THINK_ADDON_PATH = './Addons/';
-$_config = array(
+$_config = array (
+//加载扩展配置文件
     /**
      * 产品配置
      * 系统升级需要此配置
@@ -31,21 +32,14 @@ $_config = array(
     //公司简介
     'COMPANY_INFO'    => '南京科斯克网络科技有限公司(CoreThink)是一家新兴的互联网+项目技术解决方案提供商。我们用敏锐的视角洞察IT市场的每一次变革,我们顶着时代变迁的浪潮站在了前沿,以开拓互联网行业新渠道为己任。',
 
-    //数据库配置
-    'DB_TYPE'   => $_SERVER[ENV_PRE.'DB_TYPE'] ? : 'mysql', // 数据库类型
-    'DB_HOST'   => $_SERVER[ENV_PRE.'DB_HOST'] ? : '127.0.0.1', // 服务器地址
-    'DB_NAME'   => $_SERVER[ENV_PRE.'DB_NAME'] ? : 'corethink', // 数据库名
-    'DB_USER'   => $_SERVER[ENV_PRE.'DB_USER'] ? : 'root', // 用户名
-    'DB_PWD'    => $_SERVER[ENV_PRE.'DB_PWD']  ? : '', // 密码
-    'DB_PORT'   => $_SERVER[ENV_PRE.'DB_PORT'] ? : '3306', // 端口
-    'DB_PREFIX' => $_SERVER[ENV_PRE.'DB_PREFIX'] ? : 'ct_', // 数据库表前缀
-    'DB_PARAMS' => array(\PDO::ATTR_CASE => \PDO::CASE_NATURAL), //如果数据表字段名采用大小写混合需配置此项
+    //系统主页地址配置
+    'HOME_PAGE'       => 'http://'.$_SERVER['HTTP_HOST'].__ROOT__,
 
     //URL模式
     'URL_MODEL' => '3',
 
     //全局过滤配置
-    'DEFAULT_FILTER' => '', //默认为htmlspecialchars
+    'DEFAULT_FILTER' => '', //TP默认为htmlspecialchars
 
     //预先加载的标签库
     'TAGLIB_PRE_LOAD' => 'Home\\TagLib\\Corethink',
@@ -58,6 +52,17 @@ $_config = array(
     'MODULE_DENY_LIST'   => array('Common'),
     'MODULE_ALLOW_LIST'  => array('Home','Admin','Install'),
     'AUTOLOAD_NAMESPACE' => array('Addons' => THINK_ADDON_PATH), //扩展模块列表
+
+    //模板相关配置
+    'TMPL_PARSE_STRING' => array (
+        '__PUBLIC__'    => __ROOT__.'/Public',
+        '__ADMIN_IMG__' => __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/img',
+        '__ADMIN_CSS__' => __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/css',
+        '__ADMIN_JS__'  => __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/js',
+        '__HOME_IMG__'  => __ROOT__.'/'.APP_PATH.'Home/View/default/_Resource/img',
+        '__HOME_CSS__'  => __ROOT__.'/'.APP_PATH.'Home/View/default/_Resource/css',
+        '__HOME_JS__'   => __ROOT__.'/'.APP_PATH.'Home/View/default/_Resource/js',
+    ),
 
     //文件上传相关配置
     'UPLOAD_CONFIG' => array(
@@ -72,6 +77,12 @@ $_config = array(
         'replace'  => false, //存在同名是否覆盖
         'hash'     => true, //是否生成hash编码
         'callback' => false, //检测文件是否存在回调函数，如果存在返回文件信息数组
-    )
+    ),
 );
-return array_merge($_config, include APP_PATH.'/Common/Builder/config.php');
+
+//返回合并的配置
+return array_merge (
+    $_config, //系统全局默认配置
+    include APP_PATH.'/Common/conf/db.php', //包含数据库连接配置
+    include APP_PATH.'/Common/Builder/config.php' //包含Builder配置
+);

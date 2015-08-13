@@ -24,25 +24,8 @@ class InitConfigBehavior extends Behavior{
         //安装模式下直接返回
         if(defined('BIND_MODULE') && BIND_MODULE === 'Install') return;
 
-        //系统主页地址配置
-        $config['HOME_PAGE'] = 'http://'.$_SERVER['HTTP_HOST'].__ROOT__;
-
-        //获取ThinkPHP控制器分级时控制器名称
-        $controller_name = explode('/', CONTROLLER_NAME);
-
-        /**
-         * 前缀设置避免冲突
-         * 用于将各个模块的缓存、Cookie等数据分开防止冲突
-         */
-         $config['DATA_CACHE_PREFIX'] = ENV_PRE.MODULE_NAME.'_'; //数据缓存前缀
-        if(MODULE_NAME === 'Admin' || $controller_name[0] === 'Admin'){
-            $config['SESSION_PREFIX']    = ENV_PRE.'Admin_'; //Session前缀
-            $config['COOKIE_PREFIX']     = ENV_PRE.'Admin_'; //Cookie前缀
-        }elseif(MODULE_NAME === 'Home' || $controller_name[0] === 'Home'){
-            $config['SESSION_PREFIX']    = ENV_PRE.'Home_'; //Session前缀
-            $config['COOKIE_PREFIX']     = ENV_PRE.'Home_'; //Cookie前缀
-        }
-        C($config); //添加配置
+        //数据缓存前缀
+        C('DATA_CACHE_PREFIX', ENV_PRE.MODULE_NAME.'_');
 
         //读取数据库中的配置
         $system_config = S('DB_CONFIG_DATA');
@@ -50,29 +33,31 @@ class InitConfigBehavior extends Behavior{
             //获取所有系统配置
             $system_config = D('SystemConfig')->lists();
 
-            /**
-             * 获取系统所有主题名称并配置THEME_LIST
-             * 根据ThinkPHP规则如果开启自动侦测模板主题功能(TMPL_DETECT_THEME)
-             * 则必须配置THEME_LIST，否则TP会调用默认主题(DEFAULT_THEME)导致主题功能失效
-             */
-            $system_theme_list = D('SystemTheme')->getfield('name', true);
-            $system_config['THEME_LIST'] = implode(',', $system_theme_list);
+            //SESSIONCOOKIE与前缀设置避免冲突
+            //不直接在config里配置而要在这里配置是为了支持功能模块的相关架构
+            $controller_name = explode('/', CONTROLLER_NAME); //获取ThinkPHP控制器分级时控制器名称
+            if(MODULE_NAME === 'Admin' || $controller_name[0] === 'Admin'){
+                $config['SESSION_PREFIX']    = ENV_PRE.'Admin_'; //Session前缀
+                $config['COOKIE_PREFIX']     = ENV_PRE.'Admin_'; //Cookie前缀
+            }elseif(MODULE_NAME === 'Home' || $controller_name[0] === 'Home'){
+                $config['SESSION_PREFIX']    = ENV_PRE.'Home_'; //Session前缀
+                $config['COOKIE_PREFIX']     = ENV_PRE.'Home_'; //Cookie前缀
+            }
 
             //从系统主题数据表获取当前主题的名称
             $current_theme = D('SystemTheme')->where(array('current' => 1))->order('id asc')->getField('name');
-            if(MODULE_NAME === 'Home'){
-                $system_config['DEFAULT_THEME'] = $current_theme; //默认主题设为当前主题
-                cookie('think_template', $current_theme); //默认主题设为当前主题
+            if(MODULE_NAME === 'Home' || $controller_name[0] === 'Home'){
+                $current_theme_path = APP_PATH.MODULE_NAME.'/View/'.$current_theme; //当前主题文件夹路径
+                if(is_dir($current_theme_path)){
+                    //默认主题设为当前主题
+                    $system_config['DEFAULT_THEME'] = $current_theme;
+                    $system_config['TMPL_PARSE_STRING']['__HOME_IMG__']  = __ROOT__.'/'.APP_PATH.'Home/View/'.$current_theme.'/_Resource/img';
+                    $system_config['TMPL_PARSE_STRING']['__HOME_CSS__']  = __ROOT__.'/'.APP_PATH.'Home/View/'.$current_theme.'/_Resource/css';
+                    $system_config['TMPL_PARSE_STRING']['__HOME_JS__']   = __ROOT__.'/'.APP_PATH.'Home/View/'.$current_theme.'/_Resource/js';
+                }else{
+                    $system_config['DEFAULT_THEME'] = 'default'; //如果当前主题文件夹不存在则设为default
+                }
             }
-
-            //模板相关配置
-            $system_config['TMPL_PARSE_STRING']['__PUBLIC__']    = __ROOT__.'/Public';
-            $system_config['TMPL_PARSE_STRING']['__ADMIN_IMG__'] = __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/img';
-            $system_config['TMPL_PARSE_STRING']['__ADMIN_CSS__'] = __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/css';
-            $system_config['TMPL_PARSE_STRING']['__ADMIN_JS__']  = __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/js';
-            $system_config['TMPL_PARSE_STRING']['__HOME_IMG__']  = __ROOT__.'/'.APP_PATH.'Home/View/'.$current_theme.'/_Resource/img';
-            $system_config['TMPL_PARSE_STRING']['__HOME_CSS__']  = __ROOT__.'/'.APP_PATH.'Home/View/'.$current_theme.'/_Resource/css';
-            $system_config['TMPL_PARSE_STRING']['__HOME_JS__']   = __ROOT__.'/'.APP_PATH.'Home/View/'.$current_theme.'/_Resource/js';
 
             S('DB_CONFIG_DATA', $system_config, 3600); //缓存配置
         }

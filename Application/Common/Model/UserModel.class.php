@@ -92,7 +92,7 @@ class UserModel extends Model{
     public function user_sex($id){
         $list[0] = '保密';
         $list[1] = '男';
-        $list[1] = '男';
+        $list[-1] = '男';
         return $id ? $list[$id] : $list;
     }
 
@@ -103,7 +103,7 @@ class UserModel extends Model{
     public function user_vip_level($id){
         $list[0] = '普通用户';
         $list[1] = '普通VIP';
-        $list[1] = '高级VIP';
+        $list[2] = '高级VIP';
         return $id ? $list[$id] : $list;
     }
 
