@@ -12,13 +12,13 @@ use Think\Controller;
  * 上传控制器
  * @author jry <598821125@qq.com>
  */
-class UploadController extends HomeController{
+class PublicUploadController extends HomeController{
     /**
      * 上传
      * @author jry <598821125@qq.com>
      */
     public function upload(){
-        exit(D('Upload')->upload());
+        exit(D('PublicUpload')->upload());
     }
 
     /**
@@ -26,7 +26,7 @@ class UploadController extends HomeController{
      * @author jry <598821125@qq.com>
      */
     public function downremoteimg(){
-        exit(D('Upload')->downremoteimg());
+        exit(D('PublicUpload')->downremoteimg());
     }
 
     /**
@@ -34,6 +34,6 @@ class UploadController extends HomeController{
      * @author jry <598821125@qq.com>
      */
     public function fileManager(){
-        exit(D('Upload')->fileManager());
+        exit(D('PublicUpload')->fileManager());
     }
 }

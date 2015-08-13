@@ -12,7 +12,7 @@ use Think\Controller;
  * 后台标签控制器
  * @author jry <598821125@qq.com>
  */
-class TagController extends AdminController{
+class PublicTagController extends AdminController{
     /**
      * 标签列表
      * @author jry <598821125@qq.com>
@@ -25,8 +25,8 @@ class TagController extends AdminController{
 
         //获取所有标签
         $map['status'] = array('egt', '0'); //禁用和正常状态
-        $data_list = D('Tag')->page(!empty($_GET["p"])?$_GET["p"]:1, C('ADMIN_PAGE_ROWS'))->where($map)->order('sort desc,id desc')->select();
-        $page = new \Common\Util\Page(D('Tag')->where($map)->count(), C('ADMIN_PAGE_ROWS'));
+        $data_list = D('PublicTag')->page(!empty($_GET["p"])?$_GET["p"]:1, C('ADMIN_PAGE_ROWS'))->where($map)->order('sort desc,id desc')->select();
+        $page = new \Common\Util\Page(D('PublicTag')->where($map)->count(), C('ADMIN_PAGE_ROWS'));
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
@@ -56,7 +56,7 @@ class TagController extends AdminController{
      */
     public function add(){
         if(IS_POST){
-            $tag_object = D('Tag');
+            $tag_object = D('PublicTag');
             $data = $tag_object->create();
             if($data){
                 $id = $tag_object->add();
@@ -85,7 +85,7 @@ class TagController extends AdminController{
      */
     public function edit($id){
         if(IS_POST){
-            $tag_object = D('Tag');
+            $tag_object = D('PublicTag');
             $data = $tag_object->create();
             if($data){
                 if($tag_object->save()!== false){
@@ -104,7 +104,7 @@ class TagController extends AdminController{
                     ->addFormItem('id', 'hidden', 'ID', 'ID')
                     ->addFormItem('title', 'text', '标签名称', '标签名称')
                     ->addFormItem('sort', 'num', '排序', '用于显示的顺序')
-                    ->setFormData(D('Tag')->find($id))
+                    ->setFormData(D('PublicTag')->find($id))
                     ->display();
         }
     }

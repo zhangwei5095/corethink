@@ -12,7 +12,7 @@ use Think\Model;
  * 评论模型
  * @author jry <598821125@qq.com>
  */
-class UserCommentModel extends Model{
+class PublicCommentModel extends Model{
     /**
      * 自动验证规则
      * @author jry <598821125@qq.com>

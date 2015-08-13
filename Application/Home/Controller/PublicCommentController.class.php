@@ -12,7 +12,7 @@ use Think\Controller;
  * 评论控制器
  * @author jry <598821125@qq.com>
  */
-class UserCommentController extends HomeController{
+class PublicCommentController extends HomeController{
     /**
      * 新增评论
      * @author jry <598821125@qq.com>
@@ -20,7 +20,7 @@ class UserCommentController extends HomeController{
     public function add(){
         if(IS_POST){
             $uid = $this->is_login();
-            $user_comment_object = D('UserComment');
+            $user_comment_object = D('PublicComment');
             $data = $user_comment_object->create();
             if($data){
                 $id = $user_comment_object->add();
@@ -43,7 +43,7 @@ class UserCommentController extends HomeController{
 
                     //如果是对别人的评论进行回复则获取被评论的那个人的UID以便于发消息骚扰他
                     if(I('post.pid')){
-                        $previous_comment_uid = D('UserComment')->getFieldById(I('post.pid'), 'id');
+                        $previous_comment_uid = D('PublicComment')->getFieldById(I('post.pid'), 'id');
                     }
 
                     //如果是Document的则发消息

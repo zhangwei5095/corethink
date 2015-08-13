@@ -12,7 +12,7 @@ use Think\Model;
  * 标签模型
  * @author jry <598821125@qq.com>
  */
-class TagModel extends Model{
+class PublicTagModel extends Model{
     /**
      * 自动验证规则
      * @author jry <598821125@qq.com>

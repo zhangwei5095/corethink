@@ -344,7 +344,7 @@ function get_user_info($id, $field){
  * @author jry <598821125@qq.com>
  */
 function get_cover($id, $type){
-    $url = D('Upload')->getPath($id);
+    $url = D('PublicUpload')->getPath($id);
     if(!$url){
         switch($type){
             case 'default' : //默认图片
@@ -367,7 +367,7 @@ function get_cover($id, $type){
  * @author jry <598821125@qq.com>
  */
 function get_upload_info($id, $field){
-    $upload_info = D('Upload')->where('status = 1')->find($id);
+    $upload_info = D('PublicUpload')->where('status = 1')->find($id);
     if($field){
         if(!$upload_info[$field]){
             return $upload_info['id'];

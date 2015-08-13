@@ -12,7 +12,7 @@ use Think\Controller;
  * 后台评论控制器
  * @author jry <598821125@qq.com>
  */
-class UserCommentController extends AdminController{
+class PublicCommentController extends AdminController{
     /**
      * 评论列表
      * @author jry <598821125@qq.com>
@@ -25,8 +25,8 @@ class UserCommentController extends AdminController{
 
         //获取所有评论
         $map['status'] = array('egt', '0'); //禁用和正常状态
-        $data_list = D('UserComment')->page(!empty($_GET["p"])?$_GET["p"]:1, C('ADMIN_PAGE_ROWS'))->where($map)->order('sort desc,id desc')->select();
-        $page = new \Common\Util\Page(D('UserComment')->where($map)->count(), C('ADMIN_PAGE_ROWS'));
+        $data_list = D('PublicComment')->page(!empty($_GET["p"])?$_GET["p"]:1, C('ADMIN_PAGE_ROWS'))->where($map)->order('sort desc,id desc')->select();
+        $page = new \Common\Util\Page(D('PublicComment')->where($map)->count(), C('ADMIN_PAGE_ROWS'));
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
@@ -56,7 +56,7 @@ class UserCommentController extends AdminController{
      */
     public function add(){
         if(IS_POST){
-            $user_comment_object = D('UserComment');
+            $user_comment_object = D('PublicComment');
             $data = $user_comment_object->create();
             if($data){
                 $id = $user_comment_object->add();
@@ -90,7 +90,7 @@ class UserCommentController extends AdminController{
      */
     public function edit($id){
         if(IS_POST){
-            $user_comment_object = D('UserComment');
+            $user_comment_object = D('PublicComment');
             $data = $user_comment_object->create();
             if($data){
                 if($user_comment_object->save()!== false){
@@ -114,7 +114,7 @@ class UserCommentController extends AdminController{
                     ->addFormItem('rate', 'num', '评分', '评分')
                     ->addFormItem('pid', 'num', '父评论ID', '父评论ID')
                     ->addFormItem('sort', 'num', '排序', '用于显示的顺序')
-                    ->setFormData(D('UserComment')->find($id))
+                    ->setFormData(D('PublicComment')->find($id))
                     ->display();
         }
     }

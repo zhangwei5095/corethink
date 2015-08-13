@@ -12,7 +12,7 @@ use Think\Model;
  * 上传模型
  * @author jry <598821125@qq.com>
  */
-class UploadModel extends Model{
+class publicUploadModel extends Model{
     /**
      * 自动验证规则
      * @author jry <598821125@qq.com>

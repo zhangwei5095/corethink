@@ -454,19 +454,19 @@ VALUES
 	(65,64,'添加','Admin/Document/add','',0,1426580628,1426580628,1,1),
 	(66,64,'编辑','Admin/Document/edit','',0,1426580628,1426580628,2,1),
 	(67,64,'设置状态','Admin/Document/setStatus','',0,1426580628,1426580628,3,1),
-	(68,10,'标签列表','Admin/Tag/index','fa fa-tags',0,1426580628,1438277250,3,1),
-	(69,68,'添加','Admin/Tag/add','',0,1426580628,1426580628,1,1),
-	(70,68,'编辑','Admin/Tag/edit','',0,1426580628,1426580628,2,1),
-	(71,68,'设置状态','Admin/Tag/setStatus','',0,1426580628,1426580628,3,1),
-	(72,10,'万能评论','Admin/UserComment/index','fa fa-comments',0,1426580628,1438277284,4,1),
-	(73,72,'添加','Admin/UserComment/add','',0,1426580628,1426580628,1,1),
-	(74,72,'编辑','Admin/UserComment/edit','',0,1426580628,1426580628,2,1),
-	(75,72,'设置状态','Admin/UserComment/setStatus','',0,1426580628,1426580628,3,1),
+	(68,10,'标签列表','Admin/PublicTag/index','fa fa-tags',0,1426580628,1438277250,3,1),
+	(69,68,'添加','Admin/PublicTag/add','',0,1426580628,1426580628,1,1),
+	(70,68,'编辑','Admin/PublicTag/edit','',0,1426580628,1426580628,2,1),
+	(71,68,'设置状态','Admin/PublicTag/setStatus','',0,1426580628,1426580628,3,1),
+	(72,10,'万能评论','Admin/PublicComment/index','fa fa-comments',0,1426580628,1438277284,4,1),
+	(73,72,'添加','Admin/PublicComment/add','',0,1426580628,1426580628,1,1),
+	(74,72,'编辑','Admin/PublicComment/edit','',0,1426580628,1426580628,2,1),
+	(75,72,'设置状态','Admin/PublicComment/setStatus','',0,1426580628,1426580628,3,1),
 	(76,10,'回收站','Admin/Document/recycle','fa fa-trash',0,1427475588,1438277313,5,1),
-	(77,11,'上传管理','Admin/Upload/index','fa fa-upload',0,1427475588,1438277518,1,1),
-	(78,77,'上传文件','Admin/Upload/upload','',0,1427475588,1427475588,1,1),
-	(79,77,'下载图片','Admin/Upload/downremoteimg','',0,1427475588,1427475588,2,1),
-	(80,77,'文件浏览','Admin/Upload/fileManager','',0,1427475588,1427475588,3,1),
+	(77,11,'上传管理','Admin/PublicUpload/index','fa fa-upload',0,1427475588,1438277518,1,1),
+	(78,77,'上传文件','Admin/PublicUpload/upload','',0,1427475588,1427475588,1,1),
+	(79,77,'下载图片','Admin/PublicUpload/downremoteimg','',0,1427475588,1427475588,2,1),
+	(80,77,'文件浏览','Admin/PublicUpload/fileManager','',0,1427475588,1427475588,3,1),
 	(81,12,'用户列表','Admin/User/index','fa fa-user',0,1426580628,1438277505,1,1),
 	(82,81,'添加','Admin/User/add','',0,1426580628,1426580628,1,1),
 	(83,81,'编辑','Admin/User/edit','',0,1426580628,1426580628,2,1),
@@ -534,12 +534,12 @@ UNLOCK TABLES;
 
 
 
-# Dump of table ct_tag
+# Dump of table ct_public_tag
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `ct_tag`;
+DROP TABLE IF EXISTS `ct_public_tag`;
 
-CREATE TABLE `ct_tag` (
+CREATE TABLE `ct_public_tag` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `title` varchar(32) NOT NULL COMMENT '标签',
   `count` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '数量',
@@ -554,12 +554,12 @@ CREATE TABLE `ct_tag` (
 
 
 
-# Dump of table ct_upload
+# Dump of table ct_public_upload
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `ct_upload`;
+DROP TABLE IF EXISTS `ct_public_upload`;
 
-CREATE TABLE `ct_upload` (
+CREATE TABLE `ct_public_upload` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '上传ID',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '文件名',
   `path` varchar(255) NOT NULL DEFAULT '' COMMENT '文件路径',
@@ -624,12 +624,12 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table ct_user_comment
+# Dump of table ct_public_comment
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `ct_user_comment`;
+DROP TABLE IF EXISTS `ct_public_comment`;
 
-CREATE TABLE `ct_user_comment` (
+CREATE TABLE `ct_public_comment` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '评论ID',
   `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '评论父ID',
   `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
@@ -647,7 +647,7 @@ CREATE TABLE `ct_user_comment` (
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态',
   `ip` varchar(15) NOT NULL COMMENT '来源IP',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='评论表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='评论表';
 
 
 

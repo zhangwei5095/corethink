@@ -83,7 +83,7 @@
                         <php>if(C('TOGGLE_USER_COMMENT')):</php>
                             <div class="comment margin-bottom">
                                 <notempty name="__USER__">
-                                    <form action="{:U('UserComment/add')}" method="post" class="form comment-form">
+                                    <form action="{:U('PublicComment/add')}" method="post" class="form comment-form">
                                         <div class="form-group">
                                             <textarea name="content" class="form-control new-comment-text" rows="3" placeholder="留言是一种态度..."></textarea>
                                         </div>
@@ -117,7 +117,7 @@
                                             <script type="text/javascript">
                                                 $(function(){
                                                     $('#upload_comment_picture').Huploadify({
-                                                        uploader:'{:U("Upload/upload")}',
+                                                        uploader:'{:U("PublicUpload/upload")}',
                                                         fileTypeExts:'*.gif;*.jpg;*.jpeg;*.png;*.bmp',
                                                         fileSizeLimit:{:C('UPLOAD_IMAGE_SIZE')}*1024,
                                                         buttonText:'<span class="fa fa-plus"></span>',

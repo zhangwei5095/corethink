@@ -12,7 +12,7 @@ use Think\Controller;
  * 后台标签控制器
  * @author jry <598821125@qq.com>
  */
-class TagController extends HomeController{
+class PublicTagController extends HomeController{
     /**
      * 标签列表
      * @author jry <598821125@qq.com>
@@ -20,7 +20,7 @@ class TagController extends HomeController{
     public function index(){
         //获取所有标签
         $map['status'] = array('eq', '1'); //禁用和正常状态
-        $tag_list = D('Tag')->where($map)->order('sort desc,id desc')->group('`group`')->select();
+        $tag_list = D('PublicTag')->where($map)->order('sort desc,id desc')->group('`group`')->select();
         $this->assign('tag_list', $tag_list);
         $this->assign('meta_title', '标签');
         $this->display();
@@ -32,7 +32,7 @@ class TagController extends HomeController{
      */
     public function add(){
         if(IS_POST){
-            $tag_object = D('Tag');
+            $tag_object = D('PublicTag');
             $data = $tag_object->create();
             if($data){
                 $id = $tag_object->add();
@@ -55,7 +55,7 @@ class TagController extends HomeController{
      */
     public function searchTags(){
         $map["title"] = array("like", "%".I('get.q')."%");
-        $tags = D('Tag')->field('id,title')->where($map)->select();
+        $tags = D('PublicTag')->field('id,title')->where($map)->select();
         foreach($tags as $value){
             $data[] = array('id' => $value['title'], 'title'=> $value['title']);
         }

@@ -72,7 +72,7 @@ class CoreThink extends TagLib{
         $parse  .= '$map["table"] = array("eq", '.$table.');';
         $parse  .= '$map["group"] = array("eq", '.$group.');';
         $parse  .= '$map["data_id"] = array("eq", '.$data_id.');';
-        $parse  .= '$__COMMENT_LIST__ = D(\'UserComment\')->getCommentList($map);';
+        $parse  .= '$__COMMENT_LIST__ = D(\'PublicComment\')->getCommentList($map);';
         $parse  .= ' ?>';
         $parse  .= '<volist name="__COMMENT_LIST__" id="'. $name .'">';
         $parse  .= $content;

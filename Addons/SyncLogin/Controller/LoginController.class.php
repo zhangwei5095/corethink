@@ -63,7 +63,7 @@ class LoginController extends AddonController{
         //获取用户名、密码
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $upload_object = D('Upload');
+        $upload_object = D('PublicUpload');
 
         //上传头像，发现相同文件直接返回
         $con['url'] = $_POST['avatar'];

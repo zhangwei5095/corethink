@@ -13,7 +13,7 @@ use Think\Storage;
  * 后台上传控制器
  * @author jry <598821125@qq.com>
  */
-class UploadController extends AdminController{
+class PublicUploadController extends AdminController{
     /**
      * 上传列表
      * @author jry <598821125@qq.com>
@@ -26,8 +26,8 @@ class UploadController extends AdminController{
 
         //获取所有上传
         $map['status'] = array('egt', '0'); //禁用和正常状态
-        $data_list = D('Upload')->page(!empty($_GET["p"])?$_GET["p"]:1, C('ADMIN_PAGE_ROWS'))->where($map)->order('sort desc,id desc')->select();
-        $page = new \Common\Util\Page(D('Upload')->where($map)->count(), C('ADMIN_PAGE_ROWS'));
+        $data_list = D('PublicUpload')->page(!empty($_GET["p"])?$_GET["p"]:1, C('ADMIN_PAGE_ROWS'))->where($map)->order('sort desc,id desc')->select();
+        $page = new \Common\Util\Page(D('PublicUpload')->where($map)->count(), C('ADMIN_PAGE_ROWS'));
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
@@ -68,7 +68,7 @@ class UploadController extends AdminController{
                     $id_list = $ids;
                 }
                 foreach($id_list as $id){
-                    $upload_info = D('Upload')->find($id);
+                    $upload_info = D('PublicUpload')->find($id);
                     if($upload_info){
                         $realpath = realpath('.'.$upload_info['path']);
                         if($realpath){
@@ -76,11 +76,11 @@ class UploadController extends AdminController{
                             if(count(glob($realpath))){
                                 $this->error('删除失败！');
                             }else{
-                                $resut = D('Upload')->delete($id);
+                                $resut = D('PublicUpload')->delete($id);
                                 $this->success('删除成功！');
                             }
                         }else{
-                            $resut = D('Upload')->delete($id);
+                            $resut = D('PublicUpload')->delete($id);
                             $this->success('删除成功！');
                         }
                     }
