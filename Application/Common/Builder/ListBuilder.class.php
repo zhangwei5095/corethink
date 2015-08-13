@@ -445,7 +445,7 @@ class ListBuilder extends Controller{
                     case 'time':
                         $data[$column['name']] = time_format($data[$column['name']]);
                         break;
-                    case 'image':
+                    case 'picture':
                         $data[$column['name']] = '<img src="'.get_cover($data[$column['name']]).'">';
                         break;
                     case 'type':

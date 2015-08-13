@@ -21,9 +21,6 @@ class DocumentModel extends Model{
         array('doc_type', 'require', '文档类型不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_INSERT),
         array('cid', 'require', '分类不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
         array('cid', 'checkPostAuth', '该分类禁止投稿', self::MUST_VALIDATE, 'callback', self::MODEL_BOTH),
-        array('title', 'require', '文档标题不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
-        array('title', '1,127', '文档标题长度为1-127个字符', self::MUST_VALIDATE, 'length', self::MODEL_BOTH),
-        array('title', '', '文档标题已经存在', self::MUST_VALIDATE, 'unique', self::MODEL_BOTH),
     );
 
     /**

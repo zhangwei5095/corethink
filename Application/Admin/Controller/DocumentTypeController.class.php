@@ -97,6 +97,7 @@ class DocumentTypeController extends AdminController{
      */
     public function edit($id){
         if(IS_POST){
+            $_POST['list_field'] = implode(',', $_POST['list_field']);
             $document_type_object = D('DocumentType');
             $data = $document_type_object->create();
             if($data){
@@ -118,6 +119,10 @@ class DocumentTypeController extends AdminController{
             $map['show'] = array('eq', '1');
             $map['doc_type'] = array('in', '0,'.$id);
             $attribute_list = D('DocumentAttribute')->where($map)->select();
+
+            //获取用于列表显示字段表单复选框的内容
+            $map['doc_type'] = array('eq', $id);
+            $attribute_list_checkbox = select_list_as_tree('DocumentAttribute', $map);
 
             //解析字段
             $new_attribute_list = array();
@@ -154,10 +159,12 @@ class DocumentTypeController extends AdminController{
                     ->addFormItem('id', 'hidden', 'ID', 'ID')
                     ->addFormItem('name', 'text', '类型名称', '类型名称')
                     ->addFormItem('title', 'text', '类型标题', '类型标题')
+                    ->addFormItem('main_field', 'radio', '主要字段', '该模型的主要字段，如：文章的标题，商品的名称，用于前台列表及搜索列表显示', $attribute_list_checkbox)
+                    ->addFormItem('list_field', 'checkbox', '列表显示字段', '后台文档列表需要显示字段及搜索字段，如：文章的标题，商品的名称', $attribute_list_checkbox)
                     ->addFormItem('field_group', 'textarea', '字段分组', '字段分组')
+                    ->addFormItem('field_sort', 'board', '字段排序', '字段排序', $field)
                     ->addFormItem('icon', 'icon', '图标', '类型图标')
                     ->addFormItem('sort', 'num', '排序', '用于显示的顺序')
-                    ->addFormItem('field_sort', 'board', '字段排序', '字段排序', $field)
                     ->setFormData(D('DocumentType')->find($id))
                     ->display();
         }

@@ -24,14 +24,6 @@
         <div class="row">
             <div class="col-xs-12 col-sm-9">
                 <article class="article">
-                    <!-- 文章摘要 -->
-                    <notempty name="info.abstract">
-                        <div class="article-abstract">
-                            <blockquote class="abstract">
-                                <small>{$info.abstract}</small>
-                            </blockquote>
-                        </div>
-                    </notempty>
                     <!-- 文章正文 -->
                     <div class="article-body">
                         {$info.content|parse_content}

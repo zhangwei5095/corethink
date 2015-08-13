@@ -56,7 +56,7 @@ CREATE TABLE `ct_addon_hook` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '钩子ID',
   `name` varchar(32) NOT NULL DEFAULT '' COMMENT '钩子名称',
   `description` text NOT NULL COMMENT '描述',
-  `addons` varchar(256) NOT NULL COMMENT '钩子挂载的插件 ''，''分割',
+  `addons` varchar(255) NOT NULL COMMENT '钩子挂载的插件 ''，''分割',
   `type` tinyint(4) unsigned NOT NULL DEFAULT '1' COMMENT '类型',
   `ctime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `utime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
@@ -114,7 +114,7 @@ CREATE TABLE `ct_category` (
   `group` tinyint(4) NOT NULL DEFAULT '0' COMMENT '分组',
   `doc_type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '分类模型',
   `title` varchar(32) NOT NULL DEFAULT '' COMMENT '分类名称',
-  `url` varchar(128) NOT NULL COMMENT '链接地址',
+  `url` varchar(127) NOT NULL COMMENT '链接地址',
   `content` text NOT NULL COMMENT '内容',
   `index_template` varchar(32) NOT NULL DEFAULT '' COMMENT '列表封面模版',
   `detail_template` varchar(32) NOT NULL DEFAULT '' COMMENT '详情页模版',
@@ -166,7 +166,6 @@ CREATE TABLE `ct_document` (
   `cid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '分类ID',
   `doc_type` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '文档类型ID',
   `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '发布者ID',
-  `title` char(127) NOT NULL DEFAULT '' COMMENT '标题',
   `view` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '阅读量',
   `comment` int(11) NOT NULL DEFAULT '0' COMMENT '评论数',
   `good` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '赞数',
@@ -195,7 +194,7 @@ CREATE TABLE `ct_document_attribute` (
   `value` varchar(100) NOT NULL DEFAULT '' COMMENT '字段默认值',
   `tip` varchar(100) NOT NULL DEFAULT '' COMMENT '备注',
   `show` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否显示',
-  `options` varchar(256) NOT NULL DEFAULT '' COMMENT '参数',
+  `options` varchar(255) NOT NULL DEFAULT '' COMMENT '参数',
   `doc_type` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '文档模型',
   `ctime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `utime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
@@ -210,19 +209,20 @@ INSERT INTO `ct_document_attribute` (`id`, `name`, `title`, `field`, `type`, `va
 VALUES
 	(1, 'cid', '分类', 'int(11) unsigned NOT NULL ', 'select', '0', '所属分类', 1, '', 0, 1383891233, 1384508336, 1),
 	(2, 'uid', '用户ID', 'int(11) unsigned NOT NULL ', 'num', '0', '用户ID', 0, '', 0, 1383891233, 1384508336, 1),
-	(3, 'title', '标题', 'char(127) NOT NULL ', 'text', '', '文档标题', 1, '', 0, 1383891233, 1383894778, 1),
-	(4, 'view', '阅读量', 'varchar(256) NOT NULL', 'num', '0', '标签', 0, '', 0, 1413303715, 1413303715, 1),
-	(5, 'comment', '评论数', 'int(11) unsigned NOT NULL ', 'num', '0', '评论数', 0, '', 0, 1383891233, 1383894927, 1),
-	(6, 'good', '赞数', 'int(11) unsigned NOT NULL ', 'num', '0', '赞数', 0, '', 0, 1383891233, 1384147827, 1),
-	(7, 'bad', '踩数', 'int(11) unsigned NOT NULL ', 'num', '0', '踩数', 0, '', 0, 1407646362, 1407646362, 1),
-	(8, 'ctime', '创建时间', 'int(11) unsigned NOT NULL ', 'time', '0', '创建时间', 1, '', 0, 1383891233, 1383895903, 1),
-	(9, 'utime', '更新时间', 'int(11) unsigned NOT NULL ', 'time', '0', '更新时间', 0, '', 0, 1383891233, 1384508277, 1),
-	(10, 'sort', '排序', 'int(11) unsigned NOT NULL ', 'num', '0', '用于显示的顺序', 1, '', 0, 1383891233, 1383895757, 1),
-	(11, 'status', '数据状态', 'tinyint(4) NOT NULL ', 'radio', '1', '', 0, '-1:删除\r\n0:禁用\r\n1:正常', 0, 1383891233, 1384508496, 1),
-	(12, 'abstract', '简介', 'varchar(256) NOT NULL', 'textarea', '', '文档简介', 1, '', 3, 1383891233, 1384508496, 1),
+	(3, 'view', '阅读量', 'varchar(255) NOT NULL', 'num', '0', '标签', 0, '', 0, 1413303715, 1413303715, 1),
+	(4, 'comment', '评论数', 'int(11) unsigned NOT NULL ', 'num', '0', '评论数', 0, '', 0, 1383891233, 1383894927, 1),
+	(5, 'good', '赞数', 'int(11) unsigned NOT NULL ', 'num', '0', '赞数', 0, '', 0, 1383891233, 1384147827, 1),
+	(6, 'bad', '踩数', 'int(11) unsigned NOT NULL ', 'num', '0', '踩数', 0, '', 0, 1407646362, 1407646362, 1),
+	(7, 'ctime', '创建时间', 'int(11) unsigned NOT NULL ', 'time', '0', '创建时间', 1, '', 0, 1383891233, 1383895903, 1),
+	(8, 'utime', '更新时间', 'int(11) unsigned NOT NULL ', 'time', '0', '更新时间', 0, '', 0, 1383891233, 1384508277, 1),
+	(9, 'sort', '排序', 'int(11) unsigned NOT NULL ', 'num', '0', '用于显示的顺序', 1, '', 0, 1383891233, 1383895757, 1),
+	(10, 'status', '数据状态', 'tinyint(4) NOT NULL ', 'radio', '1', '', 0, '-1:删除\r\n0:禁用\r\n1:正常', 0, 1383891233, 1384508496, 1),
+	(11, 'title', '标题', 'char(127) NOT NULL ', 'text', '', '文档标题', 1, '', 3, 1383891233, 1383894778, 1),
+	(12, 'abstract', '简介', 'varchar(255) NOT NULL', 'textarea', '', '文档简介', 1, '', 3, 1383891233, 1384508496, 1),
 	(13, 'content', '正文内容', 'text', 'kindeditor', '', '文章正文内容', 1, '', 3, 1383891233, 1384508496, 1),
-	(14, 'tags', '文章标签', 'varchar(128) NOT NULL', 'tags', '', '标签', 1, '', 3, 1383891233, 1384508496, 1),
-	(15, 'cover', '封面', 'int(11) unsigned NOT NULL ', 'picture', '0', '文档封面', 1, '', 3, 1383891233, 1384508496, 1);
+	(14, 'cover', '封面', 'int(11) unsigned NOT NULL ', 'picture', '0', '文档封面', 1, '', 3, 1383891233, 1384508496, 1),
+	(15, 'tags', '文章标签', 'varchar(127) NOT NULL', 'tags', '', '标签', 1, '', 3, 1383891233, 1384508496, 1);
+	
 
 /*!40000 ALTER TABLE `ct_document_attribute` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -235,10 +235,11 @@ DROP TABLE IF EXISTS `ct_document_extend_article`;
 
 CREATE TABLE `ct_document_extend_article` (
   `id` int(11) unsigned NOT NULL COMMENT '文档ID',
-  `tags` varchar(128) NOT NULL DEFAULT '' COMMENT '标签',
-  `abstract` varchar(256) NOT NULL DEFAULT '' COMMENT '简介',
+  `title` varchar(127) NOT NULL DEFAULT '' COMMENT '标题',
+  `abstract` varchar(255) NOT NULL DEFAULT '' COMMENT '简介',
   `content` text NOT NULL COMMENT '正文内容',
   `cover` int(11) NOT NULL DEFAULT '0' COMMENT '封面图片ID',
+  `tags` varchar(127) NOT NULL COMMENT '标签',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章类型扩展表';
 
@@ -254,8 +255,10 @@ CREATE TABLE `ct_document_type` (
   `name` char(16) NOT NULL DEFAULT '' COMMENT '模型名称',
   `title` char(16) NOT NULL DEFAULT '' COMMENT '模型标题',
   `icon` varchar(32) NOT NULL DEFAULT '' COMMENT '缩略图',
-  `field_sort` varchar(256) NOT NULL COMMENT '表单字段排序',
-  `field_group` varchar(256) NOT NULL DEFAULT '' COMMENT '表单字段分组',
+  `main_field` int(11) NOT NULL DEFAULT '0' COMMENT '主要字段',
+  `list_field` varchar(127) NOT NULL DEFAULT '' COMMENT '列表显示字段',
+  `field_sort` varchar(255) NOT NULL COMMENT '表单字段排序',
+  `field_group` varchar(255) NOT NULL DEFAULT '' COMMENT '表单字段分组',
   `system` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '系统类型',
   `ctime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `utime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '修改时间',
@@ -267,11 +270,11 @@ CREATE TABLE `ct_document_type` (
 LOCK TABLES `ct_document_type` WRITE;
 /*!40000 ALTER TABLE `ct_document_type` DISABLE KEYS */;
 
-INSERT INTO `ct_document_type` (`id`, `name`, `title`, `icon`, `field_sort`, `field_group`, `system`, `ctime`, `utime`, `sort`, `status`)
+INSERT INTO `ct_document_type` (`id`, `name`, `title`, `icon`, `main_field`,`list_field`, `field_sort`, `field_group`, `system`, `ctime`, `utime`, `sort`, `status`)
 VALUES
-	(1,'link','链接','fa fa-link','','',1,1426580628,1426580628,0,1),
-	(2,'page','单页','fa fa-file-text','','',1,1426580628,1426580628,0,1),
-	(3,'article','文章','fa fa-file-word-o','{\"1\":[\"1\",\"3\",\"12\",\"13\",\"14\",\"15\"],\"2\":[\"10\",\"8\"]}','1:基础\n2:扩展',0,1426580628,1426580628,0,1);
+	(1,'link','链接','fa fa-link',0,'','','',1,1426580628,1426580628,0,1),
+	(2,'page','单页','fa fa-file-text',0,'','','',1,1426580628,1426580628,0,1),
+	(3,'article','文章','fa fa-file-word-o',11,'11','{\"1\":[\"1\",\"11\",\"12\",\"13\",\"15\",\"14\"],\"2\":[\"9\",\"7\"]}','1:基础\n2:扩展',0,1426580628,1426580628,0,1);
 
 /*!40000 ALTER TABLE `ct_document_type` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -310,7 +313,7 @@ CREATE TABLE `ct_system_config` (
   `value` text NOT NULL COMMENT '配置值',
   `group` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '配置分组',
   `type` varchar(16) NOT NULL DEFAULT '' COMMENT '配置类型',
-  `options` varchar(256) NOT NULL DEFAULT '' COMMENT '配置额外值',
+  `options` varchar(255) NOT NULL DEFAULT '' COMMENT '配置额外值',
   `tip` varchar(100) NOT NULL DEFAULT '' COMMENT '配置说明',
   `ctime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `utime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
@@ -369,7 +372,7 @@ CREATE TABLE `ct_system_menu` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
   `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上级菜单ID',
   `title` varchar(32) NOT NULL DEFAULT '' COMMENT '菜单名称',
-  `url` varchar(128) NOT NULL DEFAULT '' COMMENT '链接地址',
+  `url` varchar(127) NOT NULL DEFAULT '' COMMENT '链接地址',
   `icon` varchar(64) NOT NULL COMMENT '图标',
   `dev` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否开发模式可见',
   `ctime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
@@ -485,7 +488,7 @@ CREATE TABLE `ct_system_module` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `name` varchar(32) NOT NULL DEFAULT '' COMMENT '名称',
   `title` varchar(64) NOT NULL DEFAULT '' COMMENT '标题',
-  `description` varchar(128) NOT NULL DEFAULT '' COMMENT '描述',
+  `description` varchar(127) NOT NULL DEFAULT '' COMMENT '描述',
   `developer` varchar(32) NOT NULL DEFAULT '' COMMENT '开发者',
   `version` varchar(8) NOT NULL DEFAULT '' COMMENT '版本',
   `admin_menu` text NOT NULL COMMENT '菜单节点',
@@ -507,7 +510,7 @@ CREATE TABLE `ct_system_theme` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `name` varchar(32) NOT NULL DEFAULT '' COMMENT '名称',
   `title` varchar(64) NOT NULL DEFAULT '' COMMENT '标题',
-  `description` varchar(128) NOT NULL DEFAULT '' COMMENT '描述',
+  `description` varchar(127) NOT NULL DEFAULT '' COMMENT '描述',
   `developer` varchar(32) NOT NULL DEFAULT '' COMMENT '开发者',
   `version` varchar(8) NOT NULL DEFAULT '' COMMENT '版本',
   `config` text NOT NULL COMMENT '主题配置',
@@ -558,9 +561,9 @@ DROP TABLE IF EXISTS `ct_upload`;
 
 CREATE TABLE `ct_upload` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '上传ID',
-  `name` varchar(256) NOT NULL DEFAULT '' COMMENT '文件名',
-  `path` varchar(256) NOT NULL DEFAULT '' COMMENT '文件路径',
-  `url` varchar(256) NOT NULL DEFAULT '' COMMENT '文件链接',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '文件名',
+  `path` varchar(255) NOT NULL DEFAULT '' COMMENT '文件路径',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '文件链接',
   `ext` char(4) NOT NULL DEFAULT '' COMMENT '文件类型',
   `size` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '文件大小',
   `md5` char(32) NOT NULL DEFAULT '' COMMENT '文件md5',

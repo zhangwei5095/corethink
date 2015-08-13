@@ -17,20 +17,55 @@ class DocumentController extends AdminController{
      * 默认方法
      * @author jry <598821125@qq.com>
      */
-    public function index($cid = null){
-        //搜索
-        $keyword = I('keyword', '', 'string');
-        $condition = array('like','%'.$keyword.'%');
-        $map['id|title'] = array($condition, $condition,'_multi'=>true);
+    public function index($cid){
+        //获取分类信息
+        $category_info = D('Category')->find($cid);
 
-        if($cid){
-            $map['cid'] = $cid;
-            $category = D('Category')->find($cid);
-        }
+        //获取该分类绑定文档模型的主要字段
+        $document_type_object = D('DocumentType');
+        $document_type = $document_type_object->find($category_info['doc_type']);
+        $document_type_main_field = D('DocumentAttribute')->getFieldById($document_type['main_field'], 'name');
+
+        //获取分类绑定模型定义的列表需要显示的字段
+        $doc_type_list_field = explode(',', $document_type['list_field']);
+
+        //获取文档字段
+        $map = array();
+        $map['status'] = array('eq', '1');
+        $map['show'] = array('eq', '1');
+        $map['id'] = array('in', $doc_type_list_field); //只获取列表定义的字段
+        $map['doc_type'] = array('eq', $category_info['doc_type']);
+        $attribute_list = D('DocumentAttribute')->where($map)->select();
+        $attribute_list_search = D('DocumentAttribute')->where($map)->getField('name', true);
+
+        //获取文档信息
+        $map = array();
+        $map['cid'] = $cid;
         $map['status'] = array('egt', 0);
+
+        //搜索条件这里用了TP的复合查询
+        //封装了一个新的查询条件$map_field，然后并入原来的查询条件$map之中，所以可以完成比较复杂的查询条件组装
+        $keyword = I('keyword', '', 'string');
+        if($attribute_list_search && $keyword){
+            foreach($attribute_list_search as $attribute){
+                $map_field[$attribute] = array('like','%'.$keyword.'%'); //搜索条件
+            }
+            $map_field['_logic'] = 'or';
+            $map['_complex'] = $map_field;
+        }
+
+        $document_extend_table = C('DB_PREFIX').'document_extend_'.strtolower($document_type['name']);
         $document_list = D('Document')->page(!empty($_GET["p"])?$_GET["p"]:1, C('ADMIN_PAGE_ROWS'))
-                                      ->order('sort desc,id desc')->where($map)->select();
-        $page = new \Common\Util\Page(D('Document')->where($map)->count(), C('ADMIN_PAGE_ROWS'));
+                                      ->order(C('DB_PREFIX').'document.sort desc,'.C('DB_PREFIX').'document.id desc')
+                                      ->join($document_extend_table.' ON __DOCUMENT__.id = '.$document_extend_table.'.id')
+                                      ->fetchSql(false)
+                                      ->where($map)
+                                      ->select();
+
+        //分页
+        $page = new \Common\Util\Page(D('Document')->where($map)
+                                                   ->join($document_extend_table.' ON __DOCUMENT__.id = '.$document_extend_table.'.id')
+                                                   ->count(), C('ADMIN_PAGE_ROWS'));
 
         //移动按钮属性
         $move_attr['title'] = '移 动';
@@ -40,7 +75,7 @@ class DocumentController extends AdminController{
         //构造移动文档所需内容
         $map = array();
         $map['status'] = array('eq', 1);
-        $map['doc_type'] = array('eq', $category['doc_type']); //文档类型相同的分类才能移动
+        $map['doc_type'] = array('eq', $category_info['doc_type']); //文档类型相同的分类才能移动
         $category_list = D('Category')->where($map)->select();
         $tree = new \Common\Util\Tree();
         $category_list = $tree->toFormatTree($category_list);
@@ -97,21 +132,27 @@ EOF;
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->setMetaTitle($category['title']) //设置页面标题
+        $builder->setMetaTitle($category_info['title']) //设置页面标题
                 ->addTopButton('self', array( //添加返回按钮
                     'title' => '<i class="fa fa-reply"></i> 返回分类',
-                     'class' => 'btn btn-warning',
-                     'onclick' => 'javascript:history.back(-1);return false;')
+                    'class' => 'btn btn-warning',
+                    'onclick' => 'javascript:history.back(-1);return false;')
                 )
                 ->addTopButton('addnew', array('href' => U('add', array('cid' => $cid)))) //添加新增按钮
                 ->addTopButton('resume')  //添加启用按钮
                 ->addTopButton('forbid')  //添加禁用按钮
                 ->addTopButton('recycle') //添加回收按钮
                 ->addTopButton('self', $move_attr) //添加移动按钮
-                ->setSearch('请输入ID/标题', U('index'))
-                ->addTableColumn('id', 'ID')
-                ->addTableColumn('title', '标题')
-                ->addTableColumn('ctime', '发布时间', 'time')
+                ->setSearch('请输入ID/标题', U('index', array('cid' => $cid)))
+                ->addTableColumn('id', 'ID');
+
+        //动态生成列表显示的字段
+        foreach($attribute_list as $attribute){
+            $builder->addTableColumn($attribute['name'], $attribute['title'], $attribute['type']);
+        }
+
+        //继续使用Builder快速建立列表页面
+        $builder->addTableColumn('ctime', '发布时间', 'time')
                 ->addTableColumn('sort', '排序', 'text')
                 ->addTableColumn('status', '状态', 'status')
                 ->addTableColumn('right_button', '操作', 'btn')
