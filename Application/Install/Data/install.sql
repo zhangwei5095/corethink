@@ -216,13 +216,13 @@ VALUES
 	(7, 'ctime', '创建时间', 'int(11) unsigned NOT NULL ', 'time', '0', '创建时间', 1, '', 0, 1383891233, 1383895903, 1),
 	(8, 'utime', '更新时间', 'int(11) unsigned NOT NULL ', 'time', '0', '更新时间', 0, '', 0, 1383891233, 1384508277, 1),
 	(9, 'sort', '排序', 'int(11) unsigned NOT NULL ', 'num', '0', '用于显示的顺序', 1, '', 0, 1383891233, 1383895757, 1),
-	(10, 'status', '数据状态', 'tinyint(4) NOT NULL ', 'radio', '1', '', 0, '-1:删除\r\n0:禁用\r\n1:正常', 0, 1383891233, 1384508496, 1),
+	(10, 'status', '数据状态', 'tinyint(4) NOT NULL ', 'radio', '1', '数据状态', 0, '-1:删除\r\n0:禁用\r\n1:正常', 0, 1383891233, 1384508496, 1),
 	(11, 'title', '标题', 'char(127) NOT NULL ', 'text', '', '文档标题', 1, '', 3, 1383891233, 1383894778, 1),
 	(12, 'abstract', '简介', 'varchar(255) NOT NULL', 'textarea', '', '文档简介', 1, '', 3, 1383891233, 1384508496, 1),
 	(13, 'content', '正文内容', 'text', 'kindeditor', '', '文章正文内容', 1, '', 3, 1383891233, 1384508496, 1),
-	(14, 'cover', '封面', 'int(11) unsigned NOT NULL ', 'picture', '0', '文档封面', 1, '', 3, 1383891233, 1384508496, 1),
-	(15, 'tags', '文章标签', 'varchar(127) NOT NULL', 'tags', '', '标签', 1, '', 3, 1383891233, 1384508496, 1);
-	
+	(14, 'tags', '文章标签', 'varchar(127) NOT NULL', 'tags', '', '标签', 1, '', 3, 1383891233, 1384508496, 1),
+	(15, 'cover', '封面', 'int(11) unsigned NOT NULL ', 'picture', '0', '文档封面', 1, '', 3, 1383891233, 1384508496, 1),
+	(16, 'file', '附件', 'int(11) unsigned NOT NULL ', 'file', '0', '附件', 1, '', 3, 1439454552, 1439454552, 1);
 
 /*!40000 ALTER TABLE `ct_document_attribute` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -238,8 +238,9 @@ CREATE TABLE `ct_document_extend_article` (
   `title` varchar(127) NOT NULL DEFAULT '' COMMENT '标题',
   `abstract` varchar(255) NOT NULL DEFAULT '' COMMENT '简介',
   `content` text NOT NULL COMMENT '正文内容',
-  `cover` int(11) NOT NULL DEFAULT '0' COMMENT '封面图片ID',
   `tags` varchar(127) NOT NULL COMMENT '标签',
+  `cover` int(11) NOT NULL DEFAULT '0' COMMENT '封面图片ID',
+  `file` int(11) NOT NULL DEFAULT '0' COMMENT '附件ID',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章类型扩展表';
 
@@ -274,7 +275,7 @@ INSERT INTO `ct_document_type` (`id`, `name`, `title`, `icon`, `main_field`,`lis
 VALUES
 	(1,'link','链接','fa fa-link',0,'','','',1,1426580628,1426580628,0,1),
 	(2,'page','单页','fa fa-file-text',0,'','','',1,1426580628,1426580628,0,1),
-	(3,'article','文章','fa fa-file-word-o',11,'11','{\"1\":[\"1\",\"11\",\"12\",\"13\",\"15\",\"14\"],\"2\":[\"9\",\"7\"]}','1:基础\n2:扩展',0,1426580628,1426580628,0,1);
+	(3,'article','文章','fa fa-file-word-o',11,'11','{\"1\":[\"1\",\"11\",\"12\",\"13\",\"14\",\"15\",\"16\"],\"2\":[\"9\",\"7\"]}','1:基础\n2:扩展',0,1426580628,1426580628,0,1);
 
 /*!40000 ALTER TABLE `ct_document_type` ENABLE KEYS */;
 UNLOCK TABLES;
