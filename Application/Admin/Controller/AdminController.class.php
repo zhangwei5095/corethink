@@ -69,14 +69,13 @@ class AdminController extends CommonController{
         foreach($parent_menu as $key => $val){
             $parent_menu_id[] = $val['id'];
         }
-        $current_root_menu = D('SystemMenu')->getRootMenuById($current_menu['id']); //当前菜单的顶级菜单
-        $side_menu_list = $all_menu_list[$current_root_menu['id']]['_child']; //左侧菜单
+        $side_menu_list = $all_menu_list[$parent_menu[0]['id']]['_child']; //左侧菜单
 
         $this->assign('__ALL_MENU_LIST__', $all_menu_list); //所有菜单
         $this->assign('__SIDE_MENU_LIST__', $side_menu_list); //左侧菜单
         $this->assign('__PARENT_MENU__', $parent_menu); //当前菜单的所有父级菜单
         $this->assign('__PARENT_MENU_ID__', $parent_menu_id); //当前菜单的所有父级菜单的ID
-        $this->assign('__CURRENT_ROOTMENU__', $current_root_menu['id']); //当前主菜单
+        $this->assign('__CURRENT_ROOTMENU__', $parent_menu[0]['id']); //当前主菜单
         $this->assign('__USER__', session('user_auth')); //用户登录信息
         $this->assign('__CONTROLLER_NAME__', strtolower(CONTROLLER_NAME)); //当前控制器名称
         $this->assign('__ACTION_NAME__', strtolower(ACTION_NAME)); //当前方法名称
