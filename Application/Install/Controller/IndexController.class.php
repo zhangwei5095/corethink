@@ -144,10 +144,11 @@ class IndexController extends Controller{
         $conf = write_config($db_config, $auth);
 
         //根据加密字符串更新admin密码的加密结果
-        $sql = 'UPDATE `'.$db_config["DB_PREFIX"].'user` SET `password`="'.user_md5('admin', $auth).'" WHERE `id` = 1';
+        $sql = 'UPDATE `'.$db_config["DB_PREFIX"].'system_config` SET `value`="'.$auth.'" WHERE `name` = "AUTH_KEY";';
+        $sql .= 'UPDATE `'.$db_config["DB_PREFIX"].'user` SET `password`="'.user_md5('admin', $auth).'" WHERE `id` = 1;';
         $result = $db_instance->execute($sql);
         if(!$result){
-            $this->error('写入加密后密码出错！');
+            $this->error('写入系统加密KEY或管理员新密码出错！');
         }
 
         if(session('error')){

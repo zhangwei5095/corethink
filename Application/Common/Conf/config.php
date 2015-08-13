@@ -40,9 +40,6 @@ return array(
     'DB_PORT'   => $_SERVER[ENV_PRE.'DB_PORT'] ? : '3306', // 端口
     'DB_PREFIX' => $_SERVER[ENV_PRE.'DB_PREFIX'] ? : 'ct_', // 数据库表前缀
 
-    //系统加密字符串
-    'AUTH_KEY'  => '_XRORJs!qajdwqRCEnb`yLd=UK{g@wG"?Ufa(zWFoQU+=Bf<YSDnAY/m.C%gPgnV',
-
     //URL模式
     'URL_MODEL' => '3',
 
