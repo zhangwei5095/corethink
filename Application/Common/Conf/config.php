@@ -54,14 +54,16 @@ $_config = array (
     'AUTOLOAD_NAMESPACE' => array('Addons' => THINK_ADDON_PATH), //扩展模块列表
 
     //模板相关配置
-    'TMPL_PARSE_STRING' => array (
-        '__PUBLIC__'    => __ROOT__.'/Public',
-        '__ADMIN_IMG__' => __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/img',
-        '__ADMIN_CSS__' => __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/css',
-        '__ADMIN_JS__'  => __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/js',
-        '__HOME_IMG__'  => __ROOT__.'/'.APP_PATH.'Home/View/default/_Resource/img',
-        '__HOME_CSS__'  => __ROOT__.'/'.APP_PATH.'Home/View/default/_Resource/css',
-        '__HOME_JS__'   => __ROOT__.'/'.APP_PATH.'Home/View/default/_Resource/js',
+    'TMPL_PARSE_STRING'  => array (
+        '__PUBLIC__'     => __ROOT__.'/Public',
+        '__ADMIN_IMG__'  => __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/img',
+        '__ADMIN_CSS__'  => __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/css',
+        '__ADMIN_JS__'   => __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/js',
+        '__ADMIN_LIBS__' => __ROOT__.'/'.APP_PATH.'Admin/View/_Resource/libs',
+        '__HOME_IMG__'   => __ROOT__.'/'.APP_PATH.'Home/View/default/_Resource/img',
+        '__HOME_CSS__'   => __ROOT__.'/'.APP_PATH.'Home/View/default/_Resource/css',
+        '__HOME_JS__'    => __ROOT__.'/'.APP_PATH.'Home/View/default/_Resource/js',
+        '__HOME_LIBS__'  => __ROOT__.'/'.APP_PATH.'Home/View/default/_Resource/libs',
     ),
 
     //文件上传相关配置
