@@ -228,12 +228,12 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table ct_document_extend_article
+# Dump of table ct_document_article
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `ct_document_extend_article`;
+DROP TABLE IF EXISTS `ct_document_article`;
 
-CREATE TABLE `ct_document_extend_article` (
+CREATE TABLE `ct_document_article` (
   `id` int(11) unsigned NOT NULL COMMENT '文档ID',
   `title` varchar(127) NOT NULL DEFAULT '' COMMENT '标题',
   `abstract` varchar(255) NOT NULL DEFAULT '' COMMENT '简介',

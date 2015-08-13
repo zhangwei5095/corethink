@@ -9,12 +9,12 @@
 namespace Admin\Controller;
 use Think\Controller;
 /**
- * 后台类型控制器
+ * 后台文档模型控制器
  * @author jry <598821125@qq.com>
  */
 class DocumentTypeController extends AdminController{
     /**
-     * 类型列表
+     * 模型列表
      * @author jry <598821125@qq.com>
      */
     public function index(){
@@ -23,7 +23,7 @@ class DocumentTypeController extends AdminController{
         $condition = array('like','%'.$keyword.'%');
         $map['id|title|name'] = array($condition, $condition, $condition,'_multi'=>true);
 
-        //获取所有类型
+        //获取所有模型
         $map['status'] = array('egt', '0'); //禁用和正常状态
         $data_list = D('DocumentType')->page(!empty($_GET["p"])?$_GET["p"]:1, C('ADMIN_PAGE_ROWS'))->where($map)->order('sort asc,id asc')->select();
         $page = new \Common\Util\Page(D('DocumentType')->where($map)->count(), C('ADMIN_PAGE_ROWS'));
@@ -34,11 +34,11 @@ class DocumentTypeController extends AdminController{
 
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
-        $builder->setMetaTitle('类型列表')  //设置页面标题
+        $builder->setMetaTitle('模型列表')  //设置页面标题
                 ->addTopButton('addnew') //添加新增按钮
                 ->addTopButton('resume') //添加启用按钮
                 ->addTopButton('forbid') //添加禁用按钮
-                ->setSearch('请输入ID/类型标题', U('index'))
+                ->setSearch('请输入ID/模型标题', U('index'))
                 ->addTableColumn('id', 'ID')
                 ->addTableColumn('icon', '图标', 'icon')
                 ->addTableColumn('name', '名称')
@@ -61,7 +61,7 @@ class DocumentTypeController extends AdminController{
     }
 
     /**
-     * 新增类型
+     * 新增模型
      * @author jry <598821125@qq.com>
      */
     public function add(){
@@ -81,18 +81,18 @@ class DocumentTypeController extends AdminController{
         }else{
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->setMetaTitle('新增类型')  //设置页面标题
+            $builder->setMetaTitle('新增模型')  //设置页面标题
                     ->setPostUrl(U('add')) //设置表单提交地址
-                    ->addFormItem('name', 'text', '类型名称', '类型名称')
-                    ->addFormItem('title', 'text', '类型标题', '类型标题')
-                    ->addFormItem('icon', 'icon', '图标', '类型图标')
+                    ->addFormItem('name', 'text', '模型名称', '模型名称')
+                    ->addFormItem('title', 'text', '模型标题', '模型标题')
+                    ->addFormItem('icon', 'icon', '图标', '模型图标')
                     ->addFormItem('sort', 'num', '排序', '用于显示的顺序')
                     ->display();
         }
     }
 
     /**
-     * 编辑类型
+     * 编辑模型
      * @author jry <598821125@qq.com>
      */
     public function edit($id){
@@ -154,16 +154,16 @@ class DocumentTypeController extends AdminController{
 
             //使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
-            $builder->setMetaTitle('编辑类型')  //设置页面标题
+            $builder->setMetaTitle('编辑模型')  //设置页面标题
                     ->setPostUrl(U('edit')) //设置表单提交地址
                     ->addFormItem('id', 'hidden', 'ID', 'ID')
-                    ->addFormItem('name', 'text', '类型名称', '类型名称')
-                    ->addFormItem('title', 'text', '类型标题', '类型标题')
+                    ->addFormItem('name', 'text', '模型名称', '模型名称')
+                    ->addFormItem('title', 'text', '模型标题', '模型标题')
                     ->addFormItem('main_field', 'radio', '主要字段', '该模型的主要字段，如：文章的标题，商品的名称，用于前台列表及搜索列表显示', $attribute_list_checkbox)
                     ->addFormItem('list_field', 'checkbox', '列表显示字段', '后台文档列表需要显示字段及搜索字段，如：文章的标题，商品的名称', $attribute_list_checkbox)
                     ->addFormItem('field_group', 'textarea', '字段分组', '字段分组')
                     ->addFormItem('field_sort', 'board', '字段排序', '字段排序', $field)
-                    ->addFormItem('icon', 'icon', '图标', '类型图标')
+                    ->addFormItem('icon', 'icon', '图标', '模型图标')
                     ->addFormItem('sort', 'num', '排序', '用于显示的顺序')
                     ->setFormData(D('DocumentType')->find($id))
                     ->display();
@@ -194,7 +194,7 @@ class DocumentTypeController extends AdminController{
                     $con['doc_type'] = $ids;
                     $count = D('category')->where($con)->count();
                     if($count > 0){
-                        $this->error('存在该文档类型的分类，无法删除！');
+                        $this->error('存在该文档模型的分类，无法删除！');
                     }else{
                         $result = $document_type_object->where($map)->delete();
                         if($result){

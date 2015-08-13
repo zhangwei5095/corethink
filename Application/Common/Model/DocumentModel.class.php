@@ -77,17 +77,17 @@ class DocumentModel extends Model{
             $cid = I('post.cid');
             $category_info = D('Category')->find($cid);
             $doc_type = D('DocumentType')->where(array('id' => $category_info['doc_type']))->getField('name');
-            $document_extend_object = D('DocumentExtend'.ucfirst($doc_type));
-            $extend_data = $document_extend_object->create(); //子模型数据验证
+            $document_table_object = D('Document'.ucfirst($doc_type));
+            $extend_data = $document_table_object->create(); //子模型数据验证
             if(!$extend_data){
-                $this->error = $document_extend_object->getError();
+                $this->error = $document_table_object->getError();
             }
             if($extend_data){
                 if(empty($base_data['id'])){ //新增基础内容
                     $base_id = $this->add();
                     if($base_id){
                         $extend_data['id'] = $base_id;
-                        $extend_id = $document_extend_object->add($extend_data);
+                        $extend_id = $document_table_object->add($extend_data);
                         if(!$extend_id){
                             $this->delete($base_id);
                             $this->error = '新增扩展内容出错！';
@@ -101,7 +101,7 @@ class DocumentModel extends Model{
                 }else{
                     $status = $this->save(); //更新基础内容
                     if($status){
-                        $status = $document_extend_object->save(); //更新基础内容
+                        $status = $document_table_object->save(); //更新基础内容
                         if(false === $status){
                             $this->error = '更新扩展内容出错！';
                             return false;
@@ -132,8 +132,8 @@ class DocumentModel extends Model{
         //根据文档模型获取扩展表的息
         $category_info = D('Category')->find($info['cid']);
         $doc_type = D('DocumentType')->where(array('id' => $category_info['doc_type']))->getField('name');
-        $document_extend_object = D('DocumentExtend'.ucfirst($doc_type));
-        $extend_data = $document_extend_object->find($id);
+        $document_table_object = D('Document'.ucfirst($doc_type));
+        $extend_data = $document_table_object->find($id);
 
         //基础信息与扩展信息合并
         if(is_array($extend_data)){

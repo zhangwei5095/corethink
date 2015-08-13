@@ -54,17 +54,17 @@ class DocumentController extends AdminController{
             $map['_complex'] = $map_field;
         }
 
-        $document_extend_table = C('DB_PREFIX').'document_extend_'.strtolower($document_type['name']);
+        $document_table = C('DB_PREFIX').'document_'.strtolower($document_type['name']);
         $document_list = D('Document')->page(!empty($_GET["p"])?$_GET["p"]:1, C('ADMIN_PAGE_ROWS'))
                                       ->order(C('DB_PREFIX').'document.sort desc,'.C('DB_PREFIX').'document.id desc')
-                                      ->join($document_extend_table.' ON __DOCUMENT__.id = '.$document_extend_table.'.id')
+                                      ->join($document_table.' ON __DOCUMENT__.id = '.$document_table.'.id')
                                       ->fetchSql(false)
                                       ->where($map)
                                       ->select();
 
         //分页
         $page = new \Common\Util\Page(D('Document')->where($map)
-                                                   ->join($document_extend_table.' ON __DOCUMENT__.id = '.$document_extend_table.'.id')
+                                                   ->join($document_table.' ON __DOCUMENT__.id = '.$document_table.'.id')
                                                    ->count(), C('ADMIN_PAGE_ROWS'));
 
         //移动按钮属性

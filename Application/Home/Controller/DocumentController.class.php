@@ -63,7 +63,7 @@ class DocumentController extends HomeController{
                 foreach($document_list as &$doc){
                     $doc_type_name = $document_type_object->getFieldById($doc['doc_type'], 'name');
                     $temp = array();
-                    $temp = D('DocumentExtend'.ucfirst($doc_type_name))->find($doc['id']);
+                    $temp = D('Document'.ucfirst($doc_type_name))->find($doc['id']);
                     $doc = array_merge($doc, $temp);
 
                     //给文档主要字段赋值，如：文章标题、商品名称
@@ -104,7 +104,7 @@ class DocumentController extends HomeController{
         foreach($document_list as &$document){
             //合并基础信息与扩展信息
             $doc_type_info = D('DocumentType')->find($document['doc_type']);
-            $document = array_merge($document, D('DocumentExtend'.ucfirst($doc_type_info['name']))->find($document['id']));
+            $document = array_merge($document, D('Document'.ucfirst($doc_type_info['name']))->find($document['id']));
 
             //给主要字段赋值
             $main_field_name = D('DocumentAttribute')->getFieldById($doc_type_info['main_field'], 'name');
