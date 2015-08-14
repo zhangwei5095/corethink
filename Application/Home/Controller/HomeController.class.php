@@ -47,4 +47,24 @@ class HomeController extends CommonController{
             $this->error('请先登陆', U('Home/User/login'), $data);
         }
     }
+
+    /**
+     * 模板显示 调用内置的模板引擎显示方法
+     * @access protected
+     * @param string $templateFile 指定要调用的模板文件
+     * 默认为空 由系统自动定位模板文件
+     * @param string $charset 输出编码
+     * @param string $contentType 输出类型
+     * @param string $content 输出内容
+     * @param string $prefix 模板缓存前缀
+     * @return void
+     * @author jry <598821125@qq.com>
+     */
+    protected function display($templateFile='', $charset='utf-8', $contentType='', $content='', $prefix='') {
+        $controller_name = explode('/', CONTROLLER_NAME); //获取ThinkPHP控制器分级时控制器名称
+        if($controller_name[0] === 'Home'){
+            $templateFile = $controller_name[1].'/'.ACTION_NAME;
+        }
+        $this->view->display($templateFile, $charset, $contentType, $content, $prefix);
+    }
 }

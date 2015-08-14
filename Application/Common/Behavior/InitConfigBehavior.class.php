@@ -40,6 +40,13 @@ class InitConfigBehavior extends Behavior{
                 $system_config['SESSION_PREFIX'] = ENV_PRE.'Admin_'; //Session前缀
                 $system_config['COOKIE_PREFIX']  = ENV_PRE.'Admin_'; //Cookie前缀
 
+                //当前模块模版参数配置
+                $system_config['TMPL_PARSE_STRING'] = C('TMPL_PARSE_STRING'); //先取出配置文件中定义的否则会被覆盖
+                $system_config['TMPL_PARSE_STRING']['__IMG__']  = __ROOT__.'/'.APP_PATH.MODULE_NAME.'/View/_Resource/img';
+                $system_config['TMPL_PARSE_STRING']['__CSS__']  = __ROOT__.'/'.APP_PATH.MODULE_NAME.'/View/_Resource/css';
+                $system_config['TMPL_PARSE_STRING']['__JS__']   = __ROOT__.'/'.APP_PATH.MODULE_NAME.'/View/_Resource/js';
+                $system_config['TMPL_PARSE_STRING']['__LIBS__'] = __ROOT__.'/'.APP_PATH.MODULE_NAME.'/View/_Resource/libs';
+
                 //错误页面模板
                 $system_config['TMPL_ACTION_ERROR']   = APP_PATH.'Admin/View/_Think/error.html'; //错误跳转对应的模板文件
                 $system_config['TMPL_ACTION_SUCCESS'] = APP_PATH.'Admin/View/_Think/success.html'; //成功跳转对应的模板文件
@@ -56,8 +63,8 @@ class InitConfigBehavior extends Behavior{
                     $current_theme = 'default';
                 }
 
-                //默认主题设为当前主题
-                $system_config['DEFAULT_THEME'] = $current_theme;
+                //公共模版参数配置
+                $system_config['TMPL_PARSE_STRING'] = C('TMPL_PARSE_STRING'); //先取出配置文件中定义的否则会被覆盖
                 $system_config['TMPL_PARSE_STRING']['__HOME_IMG__']  = __ROOT__.'/'.APP_PATH.'Home/View/'.$current_theme.'/_Resource/img';
                 $system_config['TMPL_PARSE_STRING']['__HOME_CSS__']  = __ROOT__.'/'.APP_PATH.'Home/View/'.$current_theme.'/_Resource/css';
                 $system_config['TMPL_PARSE_STRING']['__HOME_JS__']   = __ROOT__.'/'.APP_PATH.'Home/View/'.$current_theme.'/_Resource/js';
@@ -67,6 +74,18 @@ class InitConfigBehavior extends Behavior{
                 $system_config['TMPL_ACTION_ERROR']   = APP_PATH.'Home/View/'.$current_theme.'/_Think/error.html'; //默认错误跳转对应的模板文件
                 $system_config['TMPL_ACTION_SUCCESS'] = APP_PATH.'Home/View/'.$current_theme.'/_Think/success.html'; //默认成功跳转对应的模板文件
                 $system_config['TMPL_EXCEPTION_FILE'] = APP_PATH.'Home/View/'.$current_theme.'/_Think/exception.html'; //异常页面的模板文件
+
+                //模块功能主题路径特殊处理(需要加上控制器分级的名称)
+                if($controller_name[0] === 'Home'){
+                    $current_theme = 'Home/'.$current_theme;
+                }
+                $system_config['DEFAULT_THEME'] = $current_theme; //默认主题设为当前主题
+
+                //当前模块模版参数配置
+                $system_config['TMPL_PARSE_STRING']['__IMG__']  = __ROOT__.'/'.APP_PATH.MODULE_NAME.'/View/'.$current_theme.'/_Resource/img';
+                $system_config['TMPL_PARSE_STRING']['__CSS__']  = __ROOT__.'/'.APP_PATH.MODULE_NAME.'/View/'.$current_theme.'/_Resource/css';
+                $system_config['TMPL_PARSE_STRING']['__JS__']   = __ROOT__.'/'.APP_PATH.MODULE_NAME.'/View/'.$current_theme.'/_Resource/js';
+                $system_config['TMPL_PARSE_STRING']['__LIBS__'] = __ROOT__.'/'.APP_PATH.MODULE_NAME.'/View/'.$current_theme.'/_Resource/libs';
             }
 
             S('DB_CONFIG_DATA', $system_config, 3600); //缓存配置

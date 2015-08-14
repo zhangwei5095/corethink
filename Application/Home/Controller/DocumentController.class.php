@@ -87,7 +87,6 @@ class DocumentController extends HomeController{
      */
     public function mydoc(){
         $uid = $this->is_login();
-        Cookie('__forward__', $_SERVER['REQUEST_URI']);
 
         //获取文档基础信息
         $map['uid'] = $uid;

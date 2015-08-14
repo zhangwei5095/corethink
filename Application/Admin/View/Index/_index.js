@@ -5,7 +5,7 @@ $(function() {
 
     // 用户增长曲线图
     var chart_data = {
-        labels: $universalObjectIndex.user_reg_date,
+        labels: $_var_index.user_reg_date,
         datasets: [{
             label: "用户增长曲线图",
             fillColor: "rgba(151,187,205,0.2)",
@@ -14,7 +14,7 @@ $(function() {
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(151,187,205,1)",
-            data: $universalObjectIndex.user_reg_count
+            data: $_var_index.user_reg_count
         }]
     };
     var chart_options = {
@@ -65,7 +65,7 @@ $(function() {
         },
 
         function(start, end, label) {
-            var url = $universalObjectIndex.index_url;
+            var url = $_var_index.index_url;
             var query = 'start_date=' + start + '&end_date=' + end;
             if (url.indexOf('?') > 0) {
                 url += '&' + query;
@@ -80,7 +80,7 @@ $(function() {
 
     //检测更新
     $.ajax({
-        url: $universalObjectIndex.check_version_url,
+        url: $_var_index.check_version_url,
         type: 'GET',
     }).done(function(data) {
         if (data.status == 1) {
