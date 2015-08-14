@@ -48,8 +48,8 @@ class Tree{
     * @param array $list
     * @param integer $level 进行递归时传递用的参数
     */
-    public function toFormatTree($list, $title = 'title', $pk='id', $pid = 'pid', $root = 0){
-        $list = $this->list_to_tree($list, $pk, $pid, '_child', $root);
+    public function toFormatTree($list, $title = 'title', $pk='id', $pid = 'pid', $root = 0, $strict = true){
+        $list = $this->list_to_tree($list, $pk, $pid, '_child', $root, $strict);
         $this->formatTree = array();
         $this->_toFormatTree($list, 0, $title);
         return $this->formatTree;
@@ -58,11 +58,14 @@ class Tree{
     /**
      * 将数据集转换成Tree（真正的Tree结构）
      * @param array $list 要转换的数据集
+     * @param string $pk ID标记字段
      * @param string $pid parent标记字段
-     * @param string $level level标记字段
+     * @param string $child 子代key名称
+     * @param string $root 返回的根节点ID
+     * @param string $strict 默认严格模式
      * @return array
      */
-    public function list_to_tree($list, $pk='id', $pid = 'pid', $child = '_child', $root = 0){
+    public function list_to_tree($list, $pk='id', $pid = 'pid', $child = '_child', $root = 0, $strict = true){
         // 创建Tree
         $tree = array();
         if(is_array($list)){
@@ -81,7 +84,7 @@ class Tree{
                         $parent =& $refer[$parent_id];
                         $parent[$child][] =& $list[$key];
                     }else{
-                        if(!$root){
+                        if($strict === false){
                             $tree[] =& $list[$key];
                         }
                     }

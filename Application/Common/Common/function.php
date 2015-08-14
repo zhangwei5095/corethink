@@ -391,9 +391,9 @@ function select_list_as_tree($model, $map = null, $extra = null){
     }
     $list = D($model)->where($con)->select();
 
-    //转换成树状列表
+    //转换成树状列表(非严格模式)
     $tree = new \Common\Util\Tree();
-    $list = $tree->toFormatTree($list);
+    $list = $tree->toFormatTree($list, 'title', 'id', 'pid', 0, false);
 
     if($extra){
         $result[0] = $extra;
