@@ -17,7 +17,7 @@ return array(
     'DB_NAME'   => $_SERVER[ENV_PRE.'DB_NAME'] ? : '[DB_NAME]', //数据库名
     'DB_USER'   => $_SERVER[ENV_PRE.'DB_USER'] ? : '[DB_USER]', //用户名
     'DB_PWD'    => $_SERVER[ENV_PRE.'DB_PWD']  ? : '[DB_PWD]',  //密码
-    'DB_PORT'   => $_SERVER[ENV_PRE.'DB_PORT'] ? : '[DB_PORT]', //端口
+    'DB_PORT'   => $_SERVER[ENV_PRE.'DB_PORT'] ? : '3306', //端口
     'DB_PREFIX' => $_SERVER[ENV_PRE.'DB_PREFIX'] ? : '[DB_PREFIX]', //数据库表前缀
     'DB_PARAMS' => array(\PDO::ATTR_CASE => \PDO::CASE_NATURAL), //如果数据表字段名采用大小写混合需配置此项
 );
