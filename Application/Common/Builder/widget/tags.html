@@ -17,7 +17,7 @@
                     });
                 }
             }
-            tags.tokenInput('{:U("Home/Tag/searchTags")}',{
+            tags.tokenInput('{:U(C("MODULE_MARK")."/Tag/searchTags")}',{
                 propertyToSearch    :   'title',
                 tokenValue          :   'title',
                 theme               :   'bootstrap',
@@ -31,7 +31,7 @@
                 searchingText       :   "查找中...",
                 prePopulate         :   tagsPre,
                 onAdd: function (item){ //新增系统没有的标签时提交到数据库
-                    $.post('{:U("Home/Tag/add")}', {'title': item.title});
+                    $.post('{:U(C("MODULE_MARK")."/Tag/add")}', {'title': item.title});
                 }
             });
         });

@@ -91,4 +91,28 @@ class PublicUploadController extends AdminController{
                 break;
         }
     }
+
+    /**
+     * 上传
+     * @author jry <598821125@qq.com>
+     */
+    public function upload(){
+        exit(D('PublicUpload')->upload());
+    }
+
+    /**
+     * KindEditor编辑器下载远程图片
+     * @author jry <598821125@qq.com>
+     */
+    public function downremoteimg(){
+        exit(D('PublicUpload')->downremoteimg());
+    }
+
+    /**
+     * KindEditor编辑器文件管理
+     * @author jry <598821125@qq.com>
+     */
+    public function fileManager(){
+        exit(D('PublicUpload')->fileManager());
+    }
 }

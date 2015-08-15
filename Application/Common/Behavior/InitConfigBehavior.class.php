@@ -28,7 +28,7 @@ class InitConfigBehavior extends Behavior{
         C('DATA_CACHE_PREFIX', ENV_PRE.MODULE_NAME.'_');
 
         //读取数据库中的配置
-        //$system_config = S('DB_CONFIG_DATA');
+        $system_config = S('DB_CONFIG_DATA');
         if(!$system_config){
             //获取所有系统配置
             $system_config = D('SystemConfig')->lists();
@@ -36,6 +36,9 @@ class InitConfigBehavior extends Behavior{
             //不直接在config里配置这些参数而要在这里配置是为了支持功能模块的相关架构
             $controller_name = explode('/', CONTROLLER_NAME); //获取ThinkPHP控制器分级时控制器名称
             if(MODULE_NAME === 'Admin' || $controller_name[0] === 'Admin'){
+                //Admin后台与模块后台标记
+                $system_config['MODULE_MARK'] = 'Admin';
+
                 //SESSION与COOKIE与前缀设置避免冲突
                 $system_config['SESSION_PREFIX'] = ENV_PRE.'Admin_'; //Session前缀
                 $system_config['COOKIE_PREFIX']  = ENV_PRE.'Admin_'; //Cookie前缀
@@ -52,6 +55,9 @@ class InitConfigBehavior extends Behavior{
                 $system_config['TMPL_ACTION_SUCCESS'] = APP_PATH.'Admin/View/_Think/success.html'; //成功跳转对应的模板文件
                 $system_config['TMPL_EXCEPTION_FILE'] = APP_PATH.'Admin/View/_Think/exception.html'; //异常页面的模板文件
             }elseif(MODULE_NAME === 'Home' || $controller_name[0] === 'Home'){
+                //Home前台与模块前台标记
+                $system_config['MODULE_MARK'] = 'Home';
+
                 //SESSION与COOKIE与前缀设置避免冲突
                 $system_config['SESSION_PREFIX'] = ENV_PRE.'Home_'; //Session前缀
                 $system_config['COOKIE_PREFIX']  = ENV_PRE.'Home_'; //Cookie前缀

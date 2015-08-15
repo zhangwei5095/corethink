@@ -12,7 +12,7 @@
     <script type="text/javascript">
         $(function(){
             $('#[type]{$group_k}_upload_{$[type]k}').Huploadify({
-                uploader:'{:U("Home/PublicUpload/upload")}',
+                uploader:'{:U(C("MODULE_MARK")."/PublicUpload/upload")}',
                 fileTypeExts:'*.gif;*.jpg;*.jpeg;*.png;*.bmp',
                 fileSizeLimit:{:C('UPLOAD_IMAGE_SIZE')}*1024,
                 buttonText:'上传图片',
