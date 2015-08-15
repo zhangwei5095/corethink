@@ -344,8 +344,8 @@ function get_user_info($id, $field){
  * @author jry <598821125@qq.com>
  */
 function get_cover($id, $type){
-    $url = D('PublicUpload')->find($id);
-    if(!$url){
+    $upload_info = D('PublicUpload')->find($id);
+    if(!$upload_info['real_path']){
         switch($type){
             case 'default' : //默认图片
                 $url = C('TMPL_PARSE_STRING.__HOME_IMG__').'/logo/default.png';
@@ -357,7 +357,7 @@ function get_cover($id, $type){
                 break;
         }
     }
-    return $url;
+    return $upload_info['real_path'];
 }
 
 /**

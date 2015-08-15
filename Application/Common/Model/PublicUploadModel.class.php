@@ -42,12 +42,12 @@ class publicUploadModel extends Model{
     protected function _after_find(&$result, $options){
         //获取上传文件的地址
         if($result['url']){
-            $result['path'] = $result['url'];
+            $result['real_path'] = $result['url'];
         }else{
-            $result['path'] = __ROOT__.$result['path'];
+            $result['real_path'] = __ROOT__.$result['path'];
         }
         if(in_array($result['ext'], array('jpg', 'jpeg', 'png', 'gif', 'bmp') )){
-            $result['show'] = '<img src="'.$result['path'].'">';
+            $result['show'] = '<img src="'.$result['real_path'].'">';
         }else{
             $result['show'] = '<img src="'.C('TMPL_PARSE_STRING.__HOME_IMG__').'/file/'.$result['ext'].'.png">';
         }
@@ -98,7 +98,7 @@ class publicUploadModel extends Model{
         if($upload){ //发现相同文件直接返回
             $return['id']   = $upload['id'];
             $return['name'] = $upload['name'];
-            $return['url']  = $upload['path'];
+            $return['url']  = $upload['real_path'];
         }else{
             //上传文件
             $upload_config['removeTrash'] = array($this, 'removeTrash');
