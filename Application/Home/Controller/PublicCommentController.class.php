@@ -42,28 +42,32 @@ class PublicCommentController extends HomeController{
 
                     //如果是对别人的评论进行回复则获取被评论的那个人的UID以便于发消息骚扰他
                     if(I('post.pid')){
-                        $previous_comment_uid = D('PublicComment')->getFieldById(I('post.pid'), 'id');
+                        $previous_comment_uid = D('PublicComment')->getFieldById(I('post.pid'), 'uid');
                     }
 
                     //如果是Document的则发消息
                     if(I('post.table') === '1'){
-                        //发送消息，以下集中特殊情况不发送
-                        //自己给自己发表的文档评论 要求$current_document_info['uid'] !== $current_user_info['id']
-                        //自己回复自己的评论 要求$current_document_info['uid'] === $previous_comment_uid
+                        //定义消息结构
+                        $msg_data['title'] = $current_username.'回复了您！'.$view_detail;
+                        $msg_data['type']  = 1;
+
+                        //给文档作者发送消息
+                        //自己给自己发表的文档评论时不发送 要求$current_document_info['uid'] !== $current_user_info['id']
                         if($current_document_info['uid'] !== $current_user_info['id']){
-                            //定义消息结构
-                            $msg_data['title'] = $current_username.'回复了您！'.$view_detail;
-                            $msg_data['type']  = 1;
-
-                            //给被回复者发送消息
-                            if(I('post.pid') && $current_document_info['uid'] !== $previous_comment_uid){
-                                $msg_data['to_uid'] = $previous_comment_uid;
-                                $result = D('UserMessage')->sendMessage($msg_data);
-                            }
-
                             //给文档发表者发消息
                             $msg_data['to_uid'] = $current_document_info['uid'];
                             $result = D('UserMessage')->sendMessage($msg_data);
+                        }
+
+                        //给被回复者发送消息
+                        //自己回复自己的评论时不发送 要求$current_document_info['uid'] !== $previous_comment_uid
+                        //如果是对别人的评论进行回复则获取被评论的那个人的UID以便于发消息骚扰他
+                        if(I('post.pid')){
+                            $previous_comment_uid = D('PublicComment')->getFieldById(I('post.pid'), 'uid');
+                            if($current_document_info['uid'] !== $previous_comment_uid){
+                                $msg_data['to_uid'] = $previous_comment_uid;
+                                $result = D('UserMessage')->sendMessage($msg_data);
+                            }
                         }
                     }
 
