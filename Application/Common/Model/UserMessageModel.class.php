@@ -51,10 +51,10 @@ class UserMessageModel extends Model{
      * @author jry <598821125@qq.com>
      */
     public function sendMessage($data){
-        $data['title']    = $data['title'];   //消息标题
-        $data['content']  = $data['content']; //消息内容
-        $data['to_uid']   = $data['to_uid'];  //消息收信人ID
-        $data['type']     = $data['type'] ? : 0;     //消息类型
+        $data['title']    = $data['title']; //消息标题
+        $data['content']  = $data['content'] ? : ''; //消息内容
+        $data['to_uid']   = $data['to_uid']; //消息收信人ID
+        $data['type']     = $data['type'] ? : 0; //消息类型
         $data['from_uid'] = $data['from_uid'] ? : 0; //消息发信人
         $result = $this->create($data);
         if($result){

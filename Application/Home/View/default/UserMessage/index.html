@@ -30,7 +30,7 @@
                     <ul class="nav-tabs nav">
                         <volist name="message_type" id="type">
                             <li class="<php>if($__CURRENT_MESSAGE_TYPE == $key) echo 'active';</php>">
-                                <a class="<php>if($new_message_type[$key]){echo 'red-dot';}</php>" href="{:U('UserMessage/index', array('type' => $key))}">系统消息</a>
+                                <a class="<php>if($new_message_type[$key]){echo 'red-dot';}</php>" href="{:U('UserMessage/index', array('type' => $key))}">{$type}</a>
                             </li>
                         </volist>
                     </ul>

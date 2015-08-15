@@ -28,11 +28,11 @@ class PublicCommentController extends HomeController{
                     //更新评论数
                     D($public_comment_object->model_type(I('post.table')))->where(array('id'=> (int)$data['data_id']))->setInc('comment');
 
-                    //获取当前被评论文档的详细信息
+                    //获取当前被评论文档的基础信息
                     $current_document_info = D($public_comment_object->model_type(I('post.table')))->find(I('post.data_id'));
 
-                    //给文档标题加上链接以便于直接点击
-                    $current_document_title = '<a href="'.U($public_comment_object->model_type(I('post.table')).'/detail', array('id' => $current_document_info['id'])).'">'.$current_document_info['title'].'</a>';
+                    //查看详情连接
+                    $view_detail = '<a href="'.U('Document/detail', array('id' => $current_document_info['id'])).'"> 查看详情... </a>';
 
                     //当前发表评论的用户信息
                     $current_user_info = D('User')->find($uid);
@@ -52,8 +52,8 @@ class PublicCommentController extends HomeController{
                         //自己回复自己的评论 要求$current_document_info['uid'] === $previous_comment_uid
                         if($current_document_info['uid'] !== $current_user_info['id']){
                             //定义消息结构
-                            $msg_data['title']  = $current_username.'在'.$current_document_title.'中回复了您！';
-                            $msg_data['type']   = 1;
+                            $msg_data['title'] = $current_username.'回复了您！'.$view_detail;
+                            $msg_data['type']  = 1;
 
                             //给被回复者发送消息
                             if(I('post.pid') && $current_document_info['uid'] !== $previous_comment_uid){
