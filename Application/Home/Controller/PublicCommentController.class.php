@@ -20,19 +20,19 @@ class PublicCommentController extends HomeController{
     public function add(){
         if(IS_POST){
             $uid = $this->is_login();
-            $user_comment_object = D('PublicComment');
-            $data = $user_comment_object->create();
+            $public_comment_object = D('PublicComment');
+            $data = $public_comment_object->create();
             if($data){
-                $id = $user_comment_object->add();
+                $id = $public_comment_object->add();
                 if($id){
                     //更新评论数
-                    D($user_comment_object->model_type(I('post.table')))->where(array('id'=> (int)$data['data_id']))->setInc('comment');
+                    D($public_comment_object->model_type(I('post.table')))->where(array('id'=> (int)$data['data_id']))->setInc('comment');
 
                     //获取当前被评论文档的详细信息
-                    $current_document_info = D($user_comment_object->model_type(I('post.table')))->find(I('post.data_id'));
+                    $current_document_info = D($public_comment_object->model_type(I('post.table')))->find(I('post.data_id'));
 
                     //给文档标题加上链接以便于直接点击
-                    $current_document_title = '<a href="'.U($user_comment_object->model_type(I('post.table')).'/detail', array('id' => $current_document_info['id'])).'">'.$current_document_info['title'].'</a>';
+                    $current_document_title = '<a href="'.U($public_comment_object->model_type(I('post.table')).'/detail', array('id' => $current_document_info['id'])).'">'.$current_document_info['title'].'</a>';
 
                     //当前发表评论的用户信息
                     $current_user_info = D('User')->find($uid);
@@ -51,10 +51,19 @@ class PublicCommentController extends HomeController{
                         //自己给自己发表的文档评论 要求$current_document_info['uid'] !== $current_user_info['id']
                         //自己回复自己的评论 要求$current_document_info['uid'] === $previous_comment_uid
                         if($current_document_info['uid'] !== $current_user_info['id']){
+                            //定义消息结构
+                            $msg_data['title']  = $current_username.'在'.$current_document_title.'中回复了您！';
+                            $msg_data['type']   = 1;
+
+                            //给被回复者发送消息
                             if(I('post.pid') && $current_document_info['uid'] !== $previous_comment_uid){
-                                $result = D('UserMessage')->sendMessage($current_username.'在'.$current_document_title.'中回复了您！', '' , $previous_comment_uid, 1);
+                                $msg_data['to_uid'] = $previous_comment_uid;
+                                $result = D('UserMessage')->sendMessage($msg_data);
                             }
-                            $result = D('UserMessage')->sendMessage($current_username.'在'.$current_document_title.'中回复了您！', '' , $current_document_info['uid'], 1);
+
+                            //给文档发表者发消息
+                            $msg_data['to_uid'] = $current_document_info['uid'];
+                            $result = D('UserMessage')->sendMessage($msg_data);
                         }
                     }
 
@@ -63,7 +72,7 @@ class PublicCommentController extends HomeController{
                     $this->error('提交失败');
                 }
             }else{
-                $this->error($user_comment_object->getError());
+                $this->error($public_comment_object->getError());
             }
         }
     }

@@ -258,20 +258,26 @@ class UserController extends HomeController{
      * @author jry <598821125@qq.com>
      */
     public function sendMailVerify(){
-        $receiver = I('post.email');
-        $title = I('post.title');
         $user_object = D('User');
         $result = $user_object->create($_POST, 5); //调用自动验证
         if(!$result){
             $this->error($user_object->getError());
         }
-        $reg_verify = \Org\Util\String::randString(6,1); //生成验证码
-        session('reg_verify', user_md5($reg_verify, $receiver));
-        $body = '少侠/女侠好：<br>听闻您正使用该邮箱'.$receiver.'【注册/修改密码】，请在验证码输入框中输入：
+
+        //生成验证码
+        $reg_verify = \Org\Util\String::randString(6,1);
+        session('reg_verify', user_md5($reg_verify, I('post.email')));
+
+        //构造邮件数据
+        $mail_data['receiver'] = I('post.email');
+        $mail_data['subject']  = '邮箱验证';
+        $mail_data['content'] = '少侠/女侠好：<br>听闻您正使用该邮箱'.I('post.email').'【注册/修改密码】，请在验证码输入框中输入：
         <span style="color:red;font-weight:bold;">'.$reg_verify.'</span>，以完成操作。<br>
         注意：此操作可能会修改您的密码、登录邮箱或绑定手机。如非本人操作，请及时登录并修改
         密码以保证帐户安全 （工作人员不会向您索取此验证码，请勿泄漏！)';
-        if(send_mail($receiver, $title, $body)){
+
+        //发送邮件
+        if(send_mail($mail_data)){
             $this->success('发送成功，请登陆邮箱查收！');
         }else{
             $this->error('发送失败！');
@@ -283,16 +289,20 @@ class UserController extends HomeController{
      * @author jry <598821125@qq.com>
      */
     public function sendMobileVerify(){
-        $receiver = I('post.mobile');
         $user_object = D('User');
         $result = $user_object->create($_POST, 5); //调用自动验证
         if(!$result){
             $this->error($user_object->getError());
         }
-        $reg_verify = \Org\Util\String::randString(6,1); //生成验证码
-        session('reg_verify', user_md5($reg_verify, $receiver));
-        $body = '短信验证码：'.$reg_verify;
-        if(send_mobile_message($receiver, $title, $body)){
+
+        //生成验证码
+        $reg_verify = \Org\Util\String::randString(6,1);
+        session('reg_verify', user_md5($reg_verify, I('post.mobile')));
+
+        //构造短信数据
+        $msg_data['receiver'] = I('post.mobile');
+        $msg_data['message'] = '短信验证码：'.$reg_verify;
+        if(send_mobile_message($msg_data)){
             $this->success('发送成功，请查收！');
         }else{
             $this->error('发送失败！');
