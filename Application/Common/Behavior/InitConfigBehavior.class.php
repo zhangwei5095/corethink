@@ -25,7 +25,12 @@ class InitConfigBehavior extends Behavior{
         if(defined('BIND_MODULE') && BIND_MODULE === 'Install') return;
 
         //数据缓存前缀
-        C('DATA_CACHE_PREFIX', ENV_PRE.MODULE_NAME.'_');
+        $controller_name = explode('/', CONTROLLER_NAME); //获取ThinkPHP控制器分级时控制器名称
+        if(sizeof($controller_name) === 2){
+            C('DATA_CACHE_PREFIX', ENV_PRE.MODULE_NAME.'_'.$controller_name[0].'_');
+        }else{
+            C('DATA_CACHE_PREFIX', ENV_PRE.MODULE_NAME.'_');
+        }
 
         //读取数据库中的配置
         $system_config = S('DB_CONFIG_DATA');
@@ -34,7 +39,6 @@ class InitConfigBehavior extends Behavior{
             $system_config = D('SystemConfig')->lists();
 
             //不直接在config里配置这些参数而要在这里配置是为了支持功能模块的相关架构
-            $controller_name = explode('/', CONTROLLER_NAME); //获取ThinkPHP控制器分级时控制器名称
             if(MODULE_NAME === 'Admin' || $controller_name[0] === 'Admin'){
                 //Admin后台与模块后台标记
                 $system_config['MODULE_MARK'] = 'Admin';
