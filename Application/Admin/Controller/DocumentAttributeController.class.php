@@ -42,7 +42,9 @@ EOF;
         }
         $map['status'] = array('egt', 0);
         $document_attribute_list = D('DocumentAttribute')->page(!empty($_GET["p"])?$_GET["p"]:1, C('ADMIN_PAGE_ROWS'))
-                                                         ->order('id desc')->where($map)->select();
+                                                         ->order('id desc')
+                                                         ->where($map)
+                                                         ->select();
         $page = new \Common\Util\Page(D('DocumentAttribute')->where($map)->count(), C('ADMIN_PAGE_ROWS'));
 
         $attr['title'] = '新 增';
@@ -54,8 +56,8 @@ EOF;
         $builder->setMetaTitle('字段管理') //设置页面标题
                 ->addTopButton('self', array( //添加返回按钮
                     'title' => '<i class="fa fa-reply"></i> 返回模型列表',
-                     'class' => 'btn btn-warning',
-                     'onclick' => 'javascript:history.back(-1);return false;')
+                    'class' => 'btn btn-warning',
+                    'onclick' => 'javascript:history.back(-1);return false;')
                 )
                 ->addTopButton('self', $attr) //添加新增按钮
                 ->addTopButton('resume') //添加启用按钮

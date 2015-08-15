@@ -85,6 +85,6 @@ $_config = array (
 //返回合并的配置
 return array_merge (
     $_config, //系统全局默认配置
-    include APP_PATH.'/Common/conf/db.php', //包含数据库连接配置
+    include APP_PATH.'/Common/Conf/db.php', //包含数据库连接配置
     include APP_PATH.'/Common/Builder/config.php' //包含Builder配置
 );
