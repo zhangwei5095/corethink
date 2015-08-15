@@ -74,6 +74,7 @@ class publicUploadModel extends Model{
 
         //根据上传文件类型改变上传大小限制
         $upload_config = C('UPLOAD_CONFIG');
+        $upload_driver = C('UPLOAD_DRIVER');
 
         if($dir == 'image'){
             $upload_config['maxSize'] = C('UPLOAD_IMAGE_SIZE')*1024*1024; //图片的上传大小限制
@@ -81,42 +82,35 @@ class publicUploadModel extends Model{
             $upload_config['maxSize'] = C('UPLOAD_FILE_SIZE')*1024*1024; //普通文件上传大小限制
         }
 
-        C('UPLOAD_CONFIG', $upload_config);
-
         //上传配置
         $ext_arr = array(
             'image' => array('gif', 'jpg', 'jpeg', 'png', 'bmp'),
             'flash' => array('swf', 'flv'),
             'media' => array('swf', 'flv', 'mp3', 'wav', 'wma', 'wmv', 'mid', 'avi', 'mpg', 'asf', 'rm', 'rmvb', 'mp4'),
-            'file'  => array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'wps', 'txt', 'zip', 'rar', 'gz', 'bz2', '7z'),
+            'file'  => array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'wps', 'txt', 'zip', 'rar', 'gz', 'bz2', '7z'),
         );
 
         //计算文件散列以查看是否已有相同文件上传过
-        $con['md5']  = md5_file($_FILES['imgFile']['tmp_name']);
-        $con['sha1'] = sha1_file($_FILES['imgFile']['tmp_name']);
+        $con['md5']  = md5_file($_FILES['file']['tmp_name']);
+        $con['sha1'] = sha1_file($_FILES['file']['tmp_name']);
+        $con['size'] = $_FILES['file']['size'];
         $upload = $this->where($con)->find();
         if($upload){ //发现相同文件直接返回
+            $return['id']   = $upload['id'];
             $return['name'] = $upload['name'];
-            $return['id'] = $upload['id'];
-            if($upload["url"]){
-                $return['url'] = $upload['url'];
-            }else{
-                $return['url'] = __ROOT__ . $upload['path'];
-            }
+            $return['url']  = $upload['path'];
         }else{
             //上传文件
-            $upload_config = C('UPLOAD_CONFIG');
-            $upload_driver  = C('UPLOAD_DRIVER');
             $upload_config['removeTrash'] = array($this, 'removeTrash');
             $upload = new \Think\Upload($upload_config, $upload_driver, C("UPLOAD_{$upload_driver}_CONFIG")); //实例化上传类
-            $upload->exts = $ext_arr[$dir]; //设置附件上传类型
+            $upload->exts = $ext_arr[$dir]; //设置附件上传允许的类型
             $info = $upload->upload($_FILES); //上传文件
             if(!$info){
                 $return['error'] = 1;
                 $return['message']  = '上传出错'.$upload->getError();
             }else{
                 //获取上传数据
-                $info = $info['imgFile'];
+                $info = $info['file'];
                 $upload_data['type'] = $info["type"];
                 $upload_data['name'] = $info["name"];
                 $upload_data['path'] = '/Uploads/' . $info['savepath'] . $info['savename'];

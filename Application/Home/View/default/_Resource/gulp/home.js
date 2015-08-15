@@ -25,7 +25,7 @@
 //import("../../../../../../Public/libs/jquery_easing/jquery.easing.js");
 //import("../../../../../../Public/libs/jquery_lazyload/jquery.lazyload.js");
 //import("../../../../../../Public/libs/jquery_tokeninput/js/jquery.tokeninput.js");
-//import("../../../../../../Public/libs/jquery_huploadify/jquery.HuploadifyMod.js");
+//import("../../../../../../Public/libs/jquery_huploadify/jquery.huploadify.js");
 
 
 //import("../../../../../../Application/Common/Builder/_builder.js");
