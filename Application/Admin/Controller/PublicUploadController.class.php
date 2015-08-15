@@ -29,6 +29,10 @@ class PublicUploadController extends AdminController{
         $data_list = D('PublicUpload')->page(!empty($_GET["p"])?$_GET["p"]:1, C('ADMIN_PAGE_ROWS'))->where($map)->order('sort desc,id desc')->select();
         $page = new \Common\Util\Page(D('PublicUpload')->where($map)->count(), C('ADMIN_PAGE_ROWS'));
 
+        foreach($data_list as &$data){
+            $data['name'] = get_str($data['name'], 0, 30).'<input class="form-control input-sm" value="'.$data['path'].'">';
+        }
+
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
         $builder->setMetaTitle('上传列表') //设置页面标题
@@ -37,7 +41,8 @@ class PublicUploadController extends AdminController{
                 ->addTopButton('delete') //添加删除按钮
                 ->setSearch('请输入ID/上传关键字', U('index'))
                 ->addTableColumn('id', 'ID')
-                ->addTableColumn('path', '路径')
+                ->addTableColumn('show', '文件')
+                ->addTableColumn('name', '文件名及路径')
                 ->addTableColumn('size', '大小')
                 ->addTableColumn('ctime', '创建时间', 'time')
                 ->addTableColumn('sort', '排序')

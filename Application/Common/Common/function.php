@@ -344,14 +344,14 @@ function get_user_info($id, $field){
  * @author jry <598821125@qq.com>
  */
 function get_cover($id, $type){
-    $url = D('PublicUpload')->getPath($id);
+    $url = D('PublicUpload')->find($id);
     if(!$url){
         switch($type){
             case 'default' : //默认图片
-                $url = C('TMPL_PARSE_STRING.__HOME_IMG__').'/default1.png';
+                $url = C('TMPL_PARSE_STRING.__HOME_IMG__').'/logo/default.png';
                 break;
             case 'avatar' : //用户头像
-                $url = C('TMPL_PARSE_STRING.__HOME_IMG__').'/avatar'.rand(1,7).'.png';
+                $url = C('TMPL_PARSE_STRING.__HOME_IMG__').'/avatar/avatar'.rand(1,7).'.png';
                 break;
             default: //文档列表默认图片
                 break;

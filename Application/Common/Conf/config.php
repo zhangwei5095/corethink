@@ -12,11 +12,13 @@
  */
 const THINK_ADDON_PATH = './Addons/';
 $_config = array (
-//加载扩展配置文件
     /**
      * 产品配置
      * 系统升级需要此配置
-     * 免费版不允许更改，授权版可更改产品名称及公司名称
+     * 根据CoreThink用户协议：
+     * 免费版您可以免费用于项目开发
+     * 但不允许更改本产品后台的版权信息，请您尊重我们的劳动成果及知识产权，违者追究法律责任。
+     * 商业授权版可更改产品名称及公司名称，授权联系：admin@corethink.cn
      */
     'PRODUCT_NAME'    => 'CoreThink',                  //产品名称
     'CURRENT_VERSION' => '1.0.2',                      //当前版本

@@ -36,23 +36,31 @@ class publicUploadModel extends Model{
     );
 
     /**
-     * 获取上传文件的地址
+     * 查找后置操作
      * @author jry <598821125@qq.com>
      */
-    public function getPath($id){
-        $map['id'] = array('eq', $id);
-        $map['status'] = array('eq', 1);
-        $upload = $this->where($map)->find();
-        if($upload){
-            if(!empty($upload['url'])){
-                $upload['path'] = $upload['url'];
-            }else{
-                $upload['path'] = __ROOT__.$upload['path'];
-            }
-        }else{ //随机图片
-            $upload['path'] = '';
+    protected function _after_find(&$result, $options){
+        //获取上传文件的地址
+        if($result['url']){
+            $result['path'] = $result['url'];
+        }else{
+            $result['path'] = __ROOT__.$result['path'];
         }
-        return $upload['path'];
+        if(in_array($result['ext'], array('jpg', 'jpeg', 'png', 'gif', 'bmp') )){
+            $result['show'] = '<img src="'.$result['path'].'">';
+        }else{
+            $result['show'] = '<img src="'.C('TMPL_PARSE_STRING.__HOME_IMG__').'/file/'.$result['ext'].'.png">';
+        }
+    }
+
+    /**
+     * 查找后置操作
+     * @author jry <598821125@qq.com>
+     */
+    protected function _after_select(&$result, $options){
+        foreach($result as &$record){
+            $this->_after_find($record, $options);
+        }
     }
 
     /**

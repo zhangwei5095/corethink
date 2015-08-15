@@ -15,12 +15,29 @@ use Think\Storage;
  */
 class SystemModuleModel extends Model{
     /**
-     * 安装描述文件名
+     * 自动验证规则
      * @author jry <598821125@qq.com>
      */
-    public function install_file(){
-        return 'corethink.php';
-    }
+    protected $_validate = array(
+        array('name', 'require', '模块名称不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
+        array('name', '', '该模块已存在', self::MUST_VALIDATE, 'unique', self::MODEL_BOTH),
+        array('title', 'require', '模块标题不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
+        array('description', 'require', '模块描述不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
+        array('developer', 'require', '模块开发者不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
+        array('version', 'require', '模块版本不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
+        array('admin_menu', 'require', '模块菜单节点不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
+    );
+
+    /**
+     * 自动完成规则
+     * @author jry <598821125@qq.com>
+     */
+    protected $_auto = array(
+        array('ctime', NOW_TIME, self::MODEL_INSERT),
+        array('utime', NOW_TIME, self::MODEL_BOTH),
+        array('sort', '0', self::MODEL_INSERT),
+        array('status', '1', self::MODEL_INSERT),
+    );
 
     /**
      * 查找后置操作
@@ -45,29 +62,12 @@ class SystemModuleModel extends Model{
     }
 
     /**
-     * 自动验证规则
+     * 安装描述文件名
      * @author jry <598821125@qq.com>
      */
-    protected $_validate = array(
-        array('name', 'require', '模块名称不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
-        array('name', '', '该模块已存在', self::MUST_VALIDATE, 'unique', self::MODEL_BOTH),
-        array('title', 'require', '模块标题不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
-        array('description', 'require', '模块描述不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
-        array('developer', 'require', '模块开发者不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
-        array('version', 'require', '模块版本不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
-        array('admin_menu', 'require', '模块菜单节点不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
-    );
-
-    /**
-     * 自动完成规则
-     * @author jry <598821125@qq.com>
-     */
-    protected $_auto = array(
-        array('ctime', NOW_TIME, self::MODEL_INSERT),
-        array('utime', NOW_TIME, self::MODEL_BOTH),
-        array('sort', '0', self::MODEL_INSERT),
-        array('status', '1', self::MODEL_INSERT),
-    );
+    public function install_file(){
+        return 'corethink.php';
+    }
 
     /**
      * 获取模块列表
