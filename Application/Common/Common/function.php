@@ -345,7 +345,8 @@ function get_user_info($id, $field){
  */
 function get_cover($id, $type){
     $upload_info = D('PublicUpload')->find($id);
-    if(!$upload_info['real_path']){
+    $url = $upload_info['real_path'];
+    if(!$url){
         switch($type){
             case 'default' : //默认图片
                 $url = C('TMPL_PARSE_STRING.__HOME_IMG__').'/logo/default.png';
@@ -357,7 +358,7 @@ function get_cover($id, $type){
                 break;
         }
     }
-    return $upload_info['real_path'];
+    return $url;
 }
 
 /**
