@@ -41,7 +41,7 @@
                     </button>
                     <php>if(C('WEB_SITE_LOGO')):</php>
                         <a class="navbar-brand" target="_blank" href="__ROOT__/">
-                            <img class="logo" src="{$Think.config.WEB_SITE_LOGO}">
+                            <img class="logo" src="{$Think.config.WEB_SITE_LOGO|get_cover}">
                         </a>
                     <php>else:</php>
                         <a class="navbar-brand" target="_blank" href="__ROOT__/">

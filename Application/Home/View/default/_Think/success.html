@@ -93,7 +93,7 @@
     <div class="message-box">
         <div class="message-header">
             <php>if(C('WEB_SITE_LOGO')):</php>
-                <a href="__ROOT__/"><img class="logo" src="{$Think.config.WEB_SITE_LOGO}"></a>
+                <a href="__ROOT__/"><img class="logo" src="{$Think.config.WEB_SITE_LOGO|get_cover}"></a>
             <php>else:</php>
                 <a href="__ROOT__/"><img class="logo" src="__HOME_IMG__/logo/logo_with_title.png"></a>
             <php>endif;</php>
