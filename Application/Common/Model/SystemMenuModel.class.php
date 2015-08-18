@@ -74,36 +74,41 @@ class SystemMenuModel extends Model{
             case 'Admin': //系统菜单
                 $map['status'] = array('eq', 1);
                 $map['url'] = array('like', MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME.'%');
-                $result = $this->where($map)->order('pid desc')->select();
+                $result = $this->where($map)->order('pid desc')->find();
                 break;
             default: //模块菜单
-                $current_module_admin_menu = json_decode(D('SystemModule')->getFieldByName(MODULE_NAME, 'admin_menu'), true);
-                $tree = new \Common\Util\Tree();
-                $map = array('url' => strtolower(MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME));
-                $result = $tree->list_search($current_module_admin_menu, $map);
+                $menus = json_decode(D('SystemModule')->getFieldByName(MODULE_NAME, 'admin_menu'), true);
+                foreach($menus as $key => $val){
+                    if($val['url']){
+                        $config_url = U($val['url']);
+                        $current_url = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME);
+                        if($config_url === $current_url){
+                            $result = $val;
+                        }
+                    }
+                }
                 break;
         }
-        return $result[0];
+        return $result;
     }
 
     /**
      * 根据菜单ID的获取其所有父级菜单
-     * @param int $cid 菜单id
+     * @param array $current 当前菜单信息
      * @return array 父级菜单集合
      * @author jry <598821125@qq.com>
      */
-    public function getParentMenu($id){
-        if(empty($id)){
+    public function getParentMenu($current){
+        if(empty($current)){
             return false;
         }
         switch(MODULE_NAME){
             case 'Admin': //系统菜单
                 $map['status'] = array('eq', 1);
                 $menus = $this->where($map)->select();
-                $child = $this->field('id,pid,title,url')->find($id); //获取信息
-                $pid   = $child['pid'];
+                $pid   = $current['pid'];
                 $temp  = array();
-                $res[] = $child;
+                $res[] = $current;
                 while(true){
                     foreach ($menus as $key => $val){
                         if($val['id'] == $pid){
@@ -118,13 +123,9 @@ class SystemMenuModel extends Model{
                 break;
             default: //模块菜单
                 $menus = json_decode(D('SystemModule')->getFieldByName(MODULE_NAME, 'admin_menu'), true);
-                $tree = new \Common\Util\Tree();
-                $map = array('url' => strtolower(MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME));
-                $child = $tree->list_search($menus, $map);
-                $child = $child[0]; //获取信息
-                $pid   = $child['pid'];
+                $pid   = $current['pid'];
                 $temp  = array();
-                $res[] = $child;
+                $res[] = $current;
                 while(true){
                     foreach ($menus as $key => $val){
                         if($val['id'] == $pid){

@@ -65,11 +65,13 @@ class AdminController extends CommonController{
         }
 
         $current_menu = D('SystemMenu')->getCurrentMenu(); //当前菜单
-        $parent_menu = D('SystemMenu')->getParentMenu($current_menu['id']); //获取面包屑导航
-        foreach($parent_menu as $key => $val){
-            $parent_menu_id[] = $val['id'];
+        if($current_menu){
+            $parent_menu = D('SystemMenu')->getParentMenu($current_menu); //获取面包屑导航
+            foreach($parent_menu as $key => $val){
+                $parent_menu_id[] = $val['id'];
+            }
+            $side_menu_list = $all_menu_list[$parent_menu[0]['id']]['_child']; //左侧菜单
         }
-        $side_menu_list = $all_menu_list[$parent_menu[0]['id']]['_child']; //左侧菜单
 
         $this->assign('__ALL_MENU_LIST__', $all_menu_list); //所有菜单
         $this->assign('__SIDE_MENU_LIST__', $side_menu_list); //左侧菜单
