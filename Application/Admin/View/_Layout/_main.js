@@ -1,4 +1,7 @@
 $(function() {
+    //一次性初始化所有弹出框
+    $('[data-toggle="popover"]').popover();
+
     //切换左侧菜单
     var result = window.matchMedia("(min-width: 768px)");
     if (result.matches) {

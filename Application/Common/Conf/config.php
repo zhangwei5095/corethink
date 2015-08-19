@@ -18,15 +18,16 @@ $_config = array (
      * 根据CoreThink用户协议：
      * 免费版您可以免费用于项目开发
      * 但不允许更改本产品后台的版权信息，请您尊重我们的劳动成果及知识产权，违者追究法律责任。
-     * 商业授权版可更改产品名称及公司名称，授权联系：admin@corethink.cn
+     * 为了您更加方便使用本系统，后台特别设置了当前项目开发团队名称：DEVELOP_TEAM允许您自由更改来展示您的信息
+     * 商业授权版可更改所有的产品名称及公司名称，授权联系：admin@corethink.cn
      */
+
     'PRODUCT_NAME'    => 'CoreThink',                  //产品名称
     'CURRENT_VERSION' => '1.0.2',                      //当前版本
     'WEBSITE_DOMAIN'  => 'http://www.corethink.cn',    //官方网址
     'UPDATE_URL'      => '/appstore/home/core/update', //官方更新网址
     'COMPANY_NAME'    => '南京科斯克网络科技有限公司',   //公司名称
-    'COMPANY_EMAIL'   => 'admin@corethink.cn',         //公司邮箱
-    'COMPANY_TEL'     => '15005173785',                //公司电话
+    'DEVELOP_TEAM'    => '南京科斯克网络科技有限公司',   //当前项目开发团队名称［未授权版仅允许修改此项］
 
     //产品简介
     'PRODUCT_INFO'    => 'CoreThink是一套的互联网+解决方案云框架。致力于搭建一个完善的企业级应用生态环境以适应不同行业用户的需求,第三方开发者可以将自己的功能模块发布到官方的应用商城，最终达到“Enterprise One Solution”的目标。',
