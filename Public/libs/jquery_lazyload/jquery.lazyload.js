@@ -240,3 +240,7 @@
     });
 
 })(jQuery, window, document);
+
+$(function(){
+    $('img.lazy').lazyload({effect: 'fadeIn'}); //图片lazyload
+});

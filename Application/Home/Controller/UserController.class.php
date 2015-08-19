@@ -38,7 +38,7 @@ class UserController extends HomeController{
     public function home(){
         $uid = I('get.uid');
         if(!$uid){
-            $uid  = is_login();
+            $uid  = $this->is_login();
         }
         $user_info = D('User')->where($con)->find($uid);
         if($user_info['status'] !== '1'){
@@ -54,6 +54,7 @@ class UserController extends HomeController{
      * @author jry <598821125@qq.com>
      */
     public function center(){
+        $uid  = is_login();
         $this->assign('meta_title', '个人中心');
         $this->display();
     }

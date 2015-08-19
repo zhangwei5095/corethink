@@ -135,7 +135,7 @@
             <block name="jumbotron"></block>
 
             <block name="breadcrumb">
-                <div class="container">
+                <div id="breadcrumb" class="container">
                     <ul class="breadcrumb">
                         <li><a href="__ROOT__/"><span class="fa fa-home"></span></a></li>
                         <corethink:breadcrumb name="_breadcrumb" cid="$__CURRENT_CATEGORY__" group="$__CURRENT_CATEGORY_GROUP__">
@@ -152,7 +152,7 @@
 
         <div class="clearfix full-foooter">
             <block name="footer">
-                <footer class="footer">
+                <footer class="footer hidden-xs">
                     <hr>
                     <div class="container">
                         <div class="row">
@@ -195,7 +195,7 @@
         <block name="nav-tabs-bottom">
             <nav class="nav-tabs-bottom navbar-fixed-bottom">
                 <a class="item" href="__ROOT__/"><i class="fa fa-home fa-2x nav-icon"></i> 首页</a>
-                <a class="item" href="{:U('Home/User/home')}"><i class="fa fa-credit-card fa-2x nav-icon"></i> 余额</a>
+                <a class="item" href="{:U('Home/User/center')}"><i class="fa fa-credit-card fa-2x nav-icon"></i> 余额</a>
                 <a class="item" href="{:U('Home/UserMessage/index')}"><i class="fa fa-envelope-o fa-2x nav-icon"></i> 消息</a>
                 <div class="item has_nav" onclick="$(this).find('.more-nav').toggle();">
                     <i class="fa fa-user fa-2x nav-icon"></i> 我

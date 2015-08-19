@@ -10,13 +10,16 @@
             margin: 0;
             box-sizing: border-box;
         }
-        body{
+        img {
+            max-width: 100%;
+        }
+        body {
             background: #30333F;
             font-family: '微软雅黑';
             color: #fff;
             font-size: 16px;
         }
-        .message-box{
+        .message-box {
             width: 500px;
             padding: 20px;
             margin: 8% auto;
@@ -26,38 +29,33 @@
         .message-box .message-header {
             margin-bottom: 20px;
         }
-        .message-box .message-header .logo{
+        .message-box .message-header .logo {
             width: 350px;
         }
-        .message-box .message-body h1{
-            font-size: 70px;
+        .message-box .message-body h1 {
+            font-size: 50px;
             font-weight: normal;
             line-height: 60px;
             margin-bottom: 12px
         }
-        .message-box .jump{
+        .message-box .message-body .jump {
             padding-top: 10px;
             margin-bottom:20px
         }
-        .message-box .jump a{
+        .message-box .message-body .jump a {
              color: #333;
          }
-        .message-box .success,
-        .message-box .error {
-            line-height: 1.8em;
+        .message-box .message-body .success,
+        .message-box .message-body .error {
             font-size: 36px
         }
-        .message-box .detail{
+        .message-box .message-body .detail {
             font-size: 12px;
             line-height: 20px;
-            margin-top: 12px;
+            margin-bottom: 12px;
             display:none
         }
-        #wait {
-            font-size:46px;
-        }
-        #btn-stop,
-        #href{
+        .message-box .message-action .btn {
             display: inline-block;
             margin-right: 10px;
             font-size: 16px;
@@ -73,18 +71,26 @@
             border-color: transparent;
             text-decoration:none;
         }
-        #btn-stop:hover,#href:hover{
+        .message-box .message-action .btn:hover {
             background-color: #43BD08;
         }
         @media (max-width: 768px) {
             .message-box {
                 width: 100%;
             }
-            .message-box .message-header .logo{
-                width: 320px;
+            .message-box .message-header .logo {
+                width: 200px;
             }
-            .message-box .message-body h1{
-                font-size: 60px;
+            .message-box .message-body h1 {
+                display: none;
+            }
+            .message-box .message-body {
+                margin-bottom: 60px;
+            }
+            .message-box .message-action .btn{
+                display: block;
+                width: 100%;
+                margin-bottom: 10px;
             }
         }
     </style>
@@ -100,29 +106,29 @@
         </div>
         <div class="message-body">
             <h1>恭喜您!</h1>
-            <p class="success"><?php echo($error); ?></p>
+            <p class="success"><?php echo($message); ?></p>
             <p class="detail"></p>
             <p class="jump">
                 <b id="wait"><?php echo($waitSecond); ?></b> 秒后页面将自动跳转
             </p>
         </div>
         <div class="message-action">
-            <a id="href" id="btn-now" href="<?php echo($jumpUrl); ?>">立即跳转</a>
-            <button id="btn-stop" type="button" onclick="stop()">停止跳转</button>
+            <a class="btn" id="btn-now" href="<?php echo($jumpUrl); ?>">立即跳转</a>
+            <a class="btn" id="btn-stop" onclick="stop()">停止跳转</a>
         </div>
     </div>
     <script type="text/javascript">
         (function(){
-            var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+            var wait = document.getElementById('wait');
+            var btn = document.getElementById('btn-now').href;
             var interval = setInterval(function(){
                 var time = --wait.innerHTML;
                 if(time <= 0) {
-                    location.href = href;
+                    location.href = btn;
                     clearInterval(interval);
                 };
             }, 1000);
             window.stop = function (){
-                console.log(111);
                 clearInterval(interval);
             }
         })();

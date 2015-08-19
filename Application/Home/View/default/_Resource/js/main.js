@@ -1,5 +1,4 @@
 $(function(){
-    $('img.lazy').lazyload({effect: 'fadeIn'}); //图片lazyload
     $('[data-toggle="popover"]').popover(); //一次性初始化所有弹出框
 
     //背景粒子效果
@@ -25,11 +24,11 @@ $(function(){
                     rotateX: 600,
                     rotateY: 600
                     }
-            },
-            anim: {
-                enable: true,
-                speed: 1
-            }
+                },
+                anim: {
+                    enable: true,
+                    speed: 1
+                }
             },
             interactivity: {
                 enable: true,
@@ -39,15 +38,15 @@ $(function(){
             detect_on: 'canvas', // "canvas" or "window"
                 mode: 'grab',
                 line_linked: {
-                opacity: .5
-            },
-            events: {
-                onclick: {
-                enable: true,
-                mode: 'push', // "push" or "remove" (particles)
-                nb: 4
+                    opacity: .5
+                },
+                events: {
+                    onclick: {
+                    enable: true,
+                    mode: 'push', // "push" or "remove" (particles)
+                    nb: 4
+                    }
                 }
-            }
             },
             /* Retina Display Support */
             retina_detect: true
