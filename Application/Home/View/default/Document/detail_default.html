@@ -14,6 +14,22 @@
         .article-info ul {
             margin-bottom: 0px;
         }
+        .article-body {
+            margin-bottom: 25px;
+        }
+        .article-download .down-icon img {
+            width: 20px;
+        }
+        .article-download .down-name {
+            font-size: 16px;
+            vertical-align: middle;
+        }
+        .article-download .badge {
+            margin-top: 2px;
+        }
+        .article-download .list-group-item {
+            border-style: dashed;
+        }
     </style>
 </block>
 
@@ -53,6 +69,20 @@
                     <div class="article-body">
                         {$info.content|parse_content}
                     </div>
+                    <!-- 文件下载-->
+                    <notempty name="info.file_list">
+                        <div class="article-download">
+                            <ul class="list-group">
+                                <volist name="info.file_list" id="file">
+                                    <a class="list-group-item" href="{:U('Home/PublicUpload/download', array('id' => $file['id']))}" title="点击下载">
+                                        <span class="badge">下载次数：{$file.download}</span>
+                                        <span class="down-icon">{$file.show}</span>
+                                        <span class="down-name text-muted">{$file.name}</span>
+                                    </a>
+                                </volist>
+                            </ul>
+                        </div>
+                    </notempty>
                     <!-- 文章导航 -->
                     <div class="article-pager">
                         <hr>

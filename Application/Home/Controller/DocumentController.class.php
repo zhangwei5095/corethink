@@ -314,6 +314,14 @@ class DocumentController extends HomeController{
         //给文档主要字段赋值，如：文章标题、商品名称
         $info['main_field'] = $info[$document_type_main_field];
 
+        if($info['file']){
+            $file_list = explode(',', $info['file']);
+            foreach($file_list as &$file){
+                $file = D('PublicUpload')->find($file);
+            }
+            $info['file_list'] = $file_list;
+        }
+
         //设置文档显示模版
         $template = $category_info['detail_template'] ? 'Document/'.$category_info['detail_template'] : 'Document/detail_default';
 

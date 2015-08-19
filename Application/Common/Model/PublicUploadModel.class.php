@@ -119,6 +119,7 @@ class publicUploadModel extends Model{
                 $upload_data['size'] = $info["size"];
                 $upload_data['md5']  = $info['md5'];
                 $upload_data['sha1']  = $info['sha1'];
+                $upload_data['location']  = $upload_driver;
 
                 $result = $this->create($upload_data);
                 $result = $this->add($result);
@@ -137,6 +138,63 @@ class publicUploadModel extends Model{
             }
         }
         return json_encode($return);
+    }
+    
+    /**
+     * 下载指定文件
+     * @param  number  $root 文件存储根目录
+     * @param  integer $id   文件ID
+     * @param  string  $args 回调函数参数
+     * @return boolean false-下载失败，否则输出下载文件
+     */
+    public function download($id, $callback = null, $args = null){
+        //获取下载文件信息
+        $file = $this->find($id);
+        if(!$file){
+            $this->error = '不存在该文件！';
+            return false;
+        }
+        /* 下载文件 */
+        switch ($file['location']) {
+            case 'Local': //下载本地文件
+                return $this->downLocalFile($file, $callback, $args);
+            default:
+                $this->error = '不支持的文件存储类型！';
+                return false;
+        }
+    }
+
+    /**
+     * 下载本地文件
+     * @param  array    $file     文件信息数组
+     * @param  callable $callback 下载回调函数
+     * @param  string   $args     回调函数参数
+     * @return boolean            下载失败返回false
+     */
+    private function downLocalFile($file, $callback = null, $args = null){
+        $fiel_path = '.'.$file['path'];
+        if(file_exists($fiel_path)){
+            //调用回调函数
+            is_callable($callback) && call_user_func($callback, $args);
+
+            //新增下载数
+            $this->where(array('id' => $file['id']))->setInc('download');
+
+            //执行下载
+            header("Content-Description: File Transfer");
+            header('Content-type: ' . $file['type']);
+            header('Content-Length:' . $file['size']);
+            if (preg_match('/MSIE/', $_SERVER['HTTP_USER_AGENT'])) { //for IE
+                header('Content-Disposition: attachment; filename="' . rawurlencode($file['name']) . '"');
+            } else {
+                header('Content-Disposition: attachment; filename="' . $file['name'] . '"');
+            }
+            readfile($fiel_path);
+            exit;
+        }else{
+            $this->error = '文件已被删除！';
+            return false;
+        }
     }
 
     /**

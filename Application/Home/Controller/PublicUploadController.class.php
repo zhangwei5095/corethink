@@ -14,11 +14,36 @@ use Think\Controller;
  */
 class PublicUploadController extends HomeController{
     /**
+     * 初始化方法
+     * @author jry <598821125@qq.com>
+     */
+    protected function _initialize(){
+        parent::_initialize();
+        $this->is_login();
+    }
+
+    /**
      * 上传
      * @author jry <598821125@qq.com>
      */
     public function upload(){
         exit(D('PublicUpload')->upload());
+    }
+
+    /**
+     * 下载
+     * @author jry <598821125@qq.com>
+     */
+    public function download($id){
+        if(empty($id) || !is_numeric($id)){
+            $this->error('参数错误！');
+        }
+
+        $public_upload_object = D('PublicUpload');
+        if(!$public_upload_object->download($id)){
+            $this->error($public_upload_object->getError());
+        }
+
     }
 
     /**

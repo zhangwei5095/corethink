@@ -365,9 +365,11 @@ CREATE TABLE `ct_public_upload` (
   `size` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '文件大小',
   `md5` char(32) NOT NULL DEFAULT '' COMMENT '文件md5',
   `sha1` char(40) NOT NULL DEFAULT '' COMMENT '文件sha1编码',
+  `location` varchar(15) NOT NULL DEFAULT '' COMMENT '文件存储位置',
+  `download` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '下载次数',
   `ctime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上传时间',
-  `utime` int(11) NOT NULL DEFAULT '0' COMMENT '修改时间',
-  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `utime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '修改时间',
+  `sort` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文件上传表';

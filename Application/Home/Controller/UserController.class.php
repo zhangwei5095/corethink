@@ -54,7 +54,7 @@ class UserController extends HomeController{
      * @author jry <598821125@qq.com>
      */
     public function center(){
-        $uid  = is_login();
+        $uid  = $this->is_login();
         $this->assign('meta_title', '个人中心');
         $this->display();
     }
