@@ -87,12 +87,10 @@ class CoreThink extends TagLib{
     public function _document_list($tag, $content){
         $name   = $tag['name'];
         $cid    = $tag['cid'];
-        $limit  = $tag['limit'] ? : 10;
-        $order  = $tag['sort'] ? : 'sort desc,id desc';
+        $limit  = $tag['limit']?:10;
         $parse  = '<?php ';
-        $parse .= '$map["cid"] = array("eq", '.$cid.');';
         $parse .= '$map["status"] = array("eq", "1");';
-        $parse .= '$__DOCUMENT_LIST__ = D(\'Document\')->page(!empty($_GET["p"])?$_GET["p"]:1, '.$limit.')->order('.$order.')->where($map)->select();';
+        $parse .= '$__DOCUMENT_LIST__ = D("Document")->getDocumentList('.$cid.', '.$limit.', "'.$order.'", $map);';
         $parse .= ' ?>';
         $parse .= '<volist name="__DOCUMENT_LIST__" id="'. $name .'">';
         $parse .= $content;

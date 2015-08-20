@@ -59,13 +59,9 @@ class DocumentController extends AdminController{
             $map['_complex'] = $map_field;
         }
 
+        //获取文档列表
+        $document_list = D('Document')->getDocumentList($cid, C('ADMIN_PAGE_ROWS'), null,$map);
         $document_table = C('DB_PREFIX').'document_'.strtolower($document_type['name']);
-        $document_list = D('Document')->page(!empty($_GET["p"])?$_GET["p"]:1, C('ADMIN_PAGE_ROWS'))
-                                      ->order(C('DB_PREFIX').'document.sort desc,'.C('DB_PREFIX').'document.id desc')
-                                      ->join($document_table.' ON __DOCUMENT__.id = '.$document_table.'.id')
-                                      ->fetchSql(false)
-                                      ->where($map)
-                                      ->select();
 
         //分页
         $page = new \Common\Util\Page(D('Document')->where($map)

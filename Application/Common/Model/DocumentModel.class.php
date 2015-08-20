@@ -118,6 +118,35 @@ class DocumentModel extends Model{
     }
 
     /**
+     * 获取文档列表
+     * @author jry <598821125@qq.com>
+     */
+    public function getDocumentList($cid, $limit = 10, $order = null, $map = null){
+        //获取分类信息
+        $category_info = D('Category')->find($cid);
+
+        //获取该分类绑定文档模型的主要字段
+        $document_type_object = D('DocumentType');
+        $document_type = $document_type_object->find($category_info['doc_type']);
+
+        $con["cid"] = array("eq", $cid);
+        $con["status"] = array("eq", '1');
+        if($map){
+            $map = array_merge($con, $map);
+        }
+        if(!$order){
+            $order = 'sort desc,'.C('DB_PREFIX').'document.id desc';
+        }
+        $document_table = C('DB_PREFIX').'document_'.strtolower($document_type['name']);
+        $document_list = $this->page(!empty($_GET["p"]) ? $_GET["p"] : 1, $limit)
+                              ->order($order)
+                              ->join($document_table.' ON __DOCUMENT__.id = '.$document_table.'.id')
+                              ->where($map)
+                              ->select();
+        return $document_list;
+    }
+
+    /**
      * 获取文章详情
      * @author jry <598821125@qq.com>
      */
