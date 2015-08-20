@@ -23,7 +23,7 @@ $_config = array (
      */
 
     'PRODUCT_NAME'    => 'CoreThink',                  //产品名称
-    'CURRENT_VERSION' => '1.0.2',                      //当前版本
+    'CURRENT_VERSION' => '1.0.3',                      //当前版本
     'WEBSITE_DOMAIN'  => 'http://www.corethink.cn',    //官方网址
     'UPDATE_URL'      => '/appstore/home/core/update', //官方更新网址
     'COMPANY_NAME'    => '南京科斯克网络科技有限公司',   //公司名称
