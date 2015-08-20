@@ -63,16 +63,11 @@ class UserMessageController extends AdminController{
     public function add(){
         if(IS_POST){
             $user_message_object = D('UserMessage');
-            $data = $user_message_object->create();
-            if($data){
-                $id = $user_message_object->add();
-                if($id){
-                    $this->success('新增成功', U('index'));
-                }else{
-                    $this->error('新增失败');
-                }
+            $result = $user_message_object->sendMessage($_POST);
+            if($result){
+                 $this->success('发送消息成功', U('index'));
             }else{
-                $this->error($user_message_object->getError());
+                $this->error('发送消息失败'.$user_message_object->getError());
             }
         }else{
             //使用FormBuilder快速建立表单页面。

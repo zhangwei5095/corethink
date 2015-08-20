@@ -126,7 +126,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-6 col-lg-5">
-                                <h3 class="text-primary">{:C('WEB_SITE_TITLE')}</h3>
+                                <h3 class="text-primary inline-block">{:C('WEB_SITE_TITLE')}</h3>
                                 <p>{:C('WEB_SITE_DESCRIPTION')}</p>
                             </div>
                             <div class="col-sm-6 col-lg-6 col-lg-offset-1">
@@ -147,11 +147,38 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <ul class="copyright list-inline text-center">
+                        <div class="copyright">
+                            <ul class="list-inline text-center pull-left">
                                 <li>{:C('WEB_SITE_COPYRIGHT')}</li>
                                 <li><a class="icp" href="http://www.miibeian.gov.cn/" target="_blank">{:C('WEB_SITE_ICP')}</a></li>
-                                <li><a href="{:C('WEBSITE_DOMAIN')}" title="轻量级WEB产品开发框架"><span class="label label-default">CorerThink</span></a></li>
+                                <li>
+                                    <span>
+                                        <a class="text-muted" href="mailto:admin@corethink.cn"><i class="fa fa-envelope"></i></a>
+                                    </span>
+                                    <span>
+                                        <a class="text-muted" href="#" tabindex="0" role="button" data-toggle="popover" data-trigger="hover" data-placement="top"
+                                            title="QQ联系" data-html="true" data-content="<div style='width:120px;'><ul class='list-unstyled'><li>技术：598821125</li><li>销售：603550095</li><li>市场：550138282</li></ul></div>">
+                                            <i class="fa fa-qq"></i>
+                                        </a>
+                                    </span>
+                                    <span>
+                                        <a class="text-muted" href="#" data-html="true" tabindex="0" role="button" data-toggle="popover" data-trigger="hover" data-placement="top"
+                                            data-template='<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content" style="padding:0px;width:200px;"></div></div>'
+                                            title="微信扫一扫" data-html="true" data-content="<img class='img-responsive' src='__HOME_IMG__/logo/weixin_gh_ce5447812a60.jpg'>">
+                                            <i class="fa fa-weixin"></i>
+                                        </a>
+                                    </span>
+                                    <span>
+                                        <a class="text-muted" target="_blank" href="http://weibo.com/u/5667168319"><i class="fa fa-weibo"></i></a>
+                                    </span>
+                                </li>
+                            </ul>
+                            <ul class="list-inline text-center pull-right">
+                                <li class="pull-right">
+                                    <a href="{:C('WEBSITE_DOMAIN')}" title="轻量级WEB产品开发框架">
+                                        <span class="label label-default">CorerThink v{:C('CURRENT_VERSION')}</span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
