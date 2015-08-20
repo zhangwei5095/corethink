@@ -554,7 +554,11 @@ VALUES
 	(89,12,'部门管理','Admin/UserGroup/index','fa fa-sitemap',0,1426580628,1438277438,2,1),
 	(90,89,'添加','Admin/UserGroup/add','',0,1426580628,1426580628,1,1),
 	(91,89,'编辑','Admin/UserGroup/edit','',0,1426580628,1426580628,2,1),
-	(92,89,'设置状态','Admin/UserGroup/setStatus','',0,1426580628,1426580628,3,1);
+	(92,89,'设置状态','Admin/UserGroup/setStatus','',0,1426580628,1426580628,3,1),
+	(93,12,'消息列表','Admin/UserMessage/index','fa fa-envelope-o',0,1440050363,1440050363,3,1),
+	(94,93,'添加','Admin/UserMessage/add','',0,1426580628,1426580628,1,1),
+	(95,93,'编辑','Admin/UserMessage/edit','',0,1426580628,1426580628,2,1),
+	(96,93,'设置状态','Admin/UserMessage/setStatus','',0,1426580628,1426580628,3,1);
 
 /*!40000 ALTER TABLE `ct_system_menu` ENABLE KEYS */;
 UNLOCK TABLES;
