@@ -27,6 +27,12 @@ class SyncLoginAddon extends Addon{
     );
 
     /**
+     * 自定义插件后台
+     * @author jry <598821125@qq.com>
+     */
+    //public $custom_adminlist = './Addons/SyncLogin/admin.html';
+
+    /**
      * 插件后台数据表配置
      * @author jry <598821125@qq.com>
      */

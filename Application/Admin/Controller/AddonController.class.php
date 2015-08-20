@@ -240,61 +240,68 @@ class AddonController extends AdminController {
             $addon = new $addon_class();
         }
 
-        //获取插件的$admin_list配置
-        $admin_list = $addon->admin_list;
-        $tab_list = array();
-        foreach($admin_list as $key => $val){
-            $tab_list[$key]['title'] = $val['title'];
-            $tab_list[$key]['href']  = U('Admin/Addon/adminList/name/'.$name.'/tab/'.$key);
-        }
-        $admin = $admin_list[$tab];
-        $param = D('Addons://'.$name.'/'.$admin['model'].'')->adminList;
-        if($param){
-            //搜索
-            $keyword   = (string)I('keyword');
-            $condition = array('like','%'.$keyword.'%');
-            $map['id|'.$param['search_key']] = array($condition, $condition,'_multi'=>true);
-
-            //获取数据列表
-            $data_list = M($param['model'])->page(!empty($_GET["p"])?$_GET["p"]:1, C('ADMIN_PAGE_ROWS'))
-                                           ->where($map)->field(true)->order($param['order'])->select();
-            $page = new \Common\Util\Page(M($param['model'])->where($map)->count(), C('ADMIN_PAGE_ROWS'));
-
-            //使用Builder快速建立列表页面。
-            $builder = new \Common\Builder\ListBuilder();
-            $builder->setMetaTitle($addon->info['title']) //设置页面标题
-                    ->AddTopButton('addnew', array('href'  => U('Admin/Addon/adminAdd/name/'.$name.'/tab/'.$tab))) //添加新增按钮
-                    ->AddTopButton('resume', array('model' => $param['model'])) //添加启用按钮
-                    ->AddTopButton('forbid', array('model' => $param['model'])) //添加禁用按钮
-                    ->setSearch('请输入关键字', U('Admin/Addon/adminList/name/'.$name, array('tab' => $tab)))
-                    ->SetTabNav($tab_list, $tab) //设置Tab按钮列表
-                    ->setTableDataList($data_list) //数据列表
-                    ->setTableDataPage($page->show()); //数据列表分页
-
-            //根据插件的list_grid设置后台列表字段信息
-            foreach($param['list_grid'] as $key => $val){
-                $builder->addTableColumn($key, $val['title'], $val['type']);
-            }
-
-            //根据插件的right_button设置后台列表右侧按钮
-            foreach($param['right_button'] as $key => $val){
-                $builder->addRightButton('self', $val);
-            }
-
-            //定义编辑按钮
-            $attr = array();
-            $attr['title'] = '编辑';
-            $attr['class'] = 'label label-info';
-            $attr['href']  = U('Admin/Addon/adminEdit', array('name' => $name, 'tab' => $tab, 'id' => '__data_id__'));
-
-            //显示列表
-            $builder->addTableColumn('right_button', '操作', 'btn')
-                    ->addRightButton('self', $attr) //添加编辑按钮
-                    ->addRightButton('forbid', array('model' => $param['model'])) //添加禁用/启用按钮
-                    ->addRightButton('delete', array('model' => $param['model'])) //添加删除按钮
-                    ->display();
+        //自定义插件后台页面
+        if($addon->custom_adminlist){
+            $this->assign('custom_adminlist', $this->fetch($addon->custom_adminlist));
+            $this->display($addon->custom_adminlist);
         }else{
-            $this->error('插件列表信息不正确');
+
+            //获取插件的$admin_list配置
+            $admin_list = $addon->admin_list;
+            $tab_list = array();
+            foreach($admin_list as $key => $val){
+                $tab_list[$key]['title'] = $val['title'];
+                $tab_list[$key]['href']  = U('Admin/Addon/adminList/name/'.$name.'/tab/'.$key);
+            }
+            $admin = $admin_list[$tab];
+            $param = D('Addons://'.$name.'/'.$admin['model'].'')->adminList;
+            if($param){
+                //搜索
+                $keyword   = (string)I('keyword');
+                $condition = array('like','%'.$keyword.'%');
+                $map['id|'.$param['search_key']] = array($condition, $condition,'_multi'=>true);
+
+                //获取数据列表
+                $data_list = M($param['model'])->page(!empty($_GET["p"])?$_GET["p"]:1, C('ADMIN_PAGE_ROWS'))
+                                               ->where($map)->field(true)->order($param['order'])->select();
+                $page = new \Common\Util\Page(M($param['model'])->where($map)->count(), C('ADMIN_PAGE_ROWS'));
+
+                //使用Builder快速建立列表页面。
+                $builder = new \Common\Builder\ListBuilder();
+                $builder->setMetaTitle($addon->info['title']) //设置页面标题
+                        ->AddTopButton('addnew', array('href'  => U('Admin/Addon/adminAdd/name/'.$name.'/tab/'.$tab))) //添加新增按钮
+                        ->AddTopButton('resume', array('model' => $param['model'])) //添加启用按钮
+                        ->AddTopButton('forbid', array('model' => $param['model'])) //添加禁用按钮
+                        ->setSearch('请输入关键字', U('Admin/Addon/adminList/name/'.$name, array('tab' => $tab)))
+                        ->SetTabNav($tab_list, $tab) //设置Tab按钮列表
+                        ->setTableDataList($data_list) //数据列表
+                        ->setTableDataPage($page->show()); //数据列表分页
+
+                //根据插件的list_grid设置后台列表字段信息
+                foreach($param['list_grid'] as $key => $val){
+                    $builder->addTableColumn($key, $val['title'], $val['type']);
+                }
+
+                //根据插件的right_button设置后台列表右侧按钮
+                foreach($param['right_button'] as $key => $val){
+                    $builder->addRightButton('self', $val);
+                }
+
+                //定义编辑按钮
+                $attr = array();
+                $attr['title'] = '编辑';
+                $attr['class'] = 'label label-info';
+                $attr['href']  = U('Admin/Addon/adminEdit', array('name' => $name, 'tab' => $tab, 'id' => '__data_id__'));
+
+                //显示列表
+                $builder->addTableColumn('right_button', '操作', 'btn')
+                        ->addRightButton('self', $attr) //添加编辑按钮
+                        ->addRightButton('forbid', array('model' => $param['model'])) //添加禁用/启用按钮
+                        ->addRightButton('delete', array('model' => $param['model'])) //添加删除按钮
+                        ->display();
+            }else{
+                $this->error('插件列表信息不正确');
+            }
         }
     }
 

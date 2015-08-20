@@ -24,6 +24,7 @@ $(function() {
         if($.bootstrapGrowl){
             $.bootstrapGrowl(message, {
                 type: type,
+                delay: 2000,
                 align: 'center',
                 width: 'auto'
             });
@@ -52,6 +53,7 @@ $(function() {
             }
         }
         if ((target = $(this).attr('href')) || (target = $(this).attr('url'))) {
+            $(this).addClass('disabled').attr('autocomplete', 'off').prop('disabled', true);
             $.get(target).success(function(data) {
                 if (data.status == 1) {
                     if (data.url) {
@@ -76,7 +78,7 @@ $(function() {
                     }
                     setTimeout(function() {
                         $(that).removeClass('disabled').prop('disabled', false);
-                    }, 2000);
+                    }, 5000);
                 }
             });
         }
