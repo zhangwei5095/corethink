@@ -68,13 +68,21 @@ class publicUploadModel extends Model{
      * @author jry <598821125@qq.com>
      */
     public function upload(){
-        /* 返回标准数据 */
+        //返回标准数据
         $return = array('error' => 0);
         $dir = I('post.dir'); //上传类型image、flash、media、file
+
+        //上传文件钩子，用于七牛云、又拍云等第三方文件上传的扩展
+        hook('UploadFile', $dir);
 
         //根据上传文件类型改变上传大小限制
         $upload_config = C('UPLOAD_CONFIG');
         $upload_driver = C('UPLOAD_DRIVER');
+        if(!$upload_driver){
+            $return['error'] = 1;
+            $return['message'] = '无效的文件上传驱动';
+            return json_encode($return);
+        }
 
         if($dir == 'image'){
             $upload_config['maxSize'] = C('UPLOAD_IMAGE_SIZE')*1024*1024; //图片的上传大小限制

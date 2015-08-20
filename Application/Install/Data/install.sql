@@ -77,9 +77,9 @@ VALUES
 	(5,'DocumentListAfter','文档列表页面底部钩子','',1,1407681961,1407681961,1),
 	(6,'DocumentDetailBefore','文档详情页面顶部钩子','',1,1407681961,1407681961,1),
 	(7,'DocumentDetailAfter','文档详情页面底部钩子','',1,1407681961,1407681961,1),
-	(8,'SendMessage','发送消息钩子','',1,1407681961,1407681961,1),
-	(9,'SyncLogin','第三方登陆','SyncLogin',1,1407681961,1407681961,1);
-
+	(8,'UploadFile','上传文件钩子','',1,1407681961,1407681961,1),
+	(9,'SendMessage','发送消息钩子','',1,1407681961,1407681961,1),
+	(10,'SyncLogin','第三方登陆','SyncLogin',1,1407681961,1407681961,1);
 
 /*!40000 ALTER TABLE `ct_addon_hook` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -425,15 +425,9 @@ VALUES
 	(21,'静态资源版本标识','STATIC_VERSION','20150803',3,'text','','静态资源版本标识可以防止服务器缓存',1438564784,1438564784,5,1),
 	(22,'CDN静态资源列表','CDN_RESOURCE_LIST','',3,'textarea','','配置此项后系统自带的jquery等类库将不会再重复加载',1438564784,1438564784,6,1),
 	(23,'系统加密KEY','AUTH_KEY','CoreThink',3,'textarea','','轻易不要修改此项，否则容易造成用户无法登录；如要修改，务必备份原key',1438647773,1438647815,7,1),
-	(24,'配置分组','CONFIG_GROUP_LIST','1:基本\r\n2:用户\r\n3:系统\r\n4:上传\r\n',3,'array','','配置分组',1379228036,1426930700,8,1),
+	(24,'配置分组','CONFIG_GROUP_LIST','1:基本\r\n2:用户\r\n3:系统\r\n',3,'array','','配置分组',1379228036,1426930700,8,1),
 	(25,'分页数量','ADMIN_PAGE_ROWS','10',3,'num','','分页时每页的记录数',1434019462,1434019481,9,1),
-	(26,'栏目分组','CATEGORY_GROUP_LIST','1:默认\r\n3:导航\r\n',3,'array','','栏目分类分组',1433602137,1433602165,10,1),
-	(27,'文件上传驱动类型','UPLOAD_DRIVER','Local',4,'select','Local:Local-本地\r\nFtp:FTP空间\r\nSae:Sae-Storage\r\nBcs:Bcs云存储\r\nUpyun:又拍云\r\nQiniu:七牛云存储','需要配置相应的UPLOAD_{driver}_CONFIG 配置方可使用，不然默认Local本地',1393073505,1393073505,1,1),
-	(28,'FTP上传配置','UPLOAD_FTP_CONFIG','host:\r\nusername:\r\npassword:',4,'array','','FTP上传配置',1393073559,1393073559,2,1),
-	(29,'Sae上传配置','UPLOAD_SAE_CONFIG','domain:',4,'array','','Sae上传配置',1393073998,1393073998,3,1),
-	(30,'Bcs上传配置','UPLOAD_BCS_CONFIG','AccessKey:\r\nSecretKey:\r\nbucket:',4,'array','','Bcs上传配置',1393073559,1393073559,4,1),
-	(31,'又拍云上传配置','UPLOAD_UPYUN_CONFIG','host:\r\nusername:\r\npassword:\r\nbucket:',4,'array','','又拍云上传配置',1393073559,1393073559,5,1),
-	(32,'七牛云存储上传配置','UPLOAD_QINIU_CONFIG','secrectKey:\r\naccessKey:\r\ndomain:\r\nbucket:',4,'array','','七牛云存储上传配置',1393074989,1416637334,6,1);
+	(26,'栏目分组','CATEGORY_GROUP_LIST','1:默认\r\n3:导航\r\n',3,'array','','栏目分类分组',1433602137,1433602165,10,1);
 
 /*!40000 ALTER TABLE `ct_system_config` ENABLE KEYS */;
 UNLOCK TABLES;

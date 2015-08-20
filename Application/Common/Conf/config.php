@@ -69,6 +69,9 @@ $_config = array (
         '__HOME_LIBS__'  => __ROOT__.'/'.APP_PATH.'Home/View/default/_Resource/libs',
     ),
 
+    //文件上传默认驱动
+    'UPLOAD_DRIVER' => 'Local',
+
     //文件上传相关配置
     'UPLOAD_CONFIG' => array(
         'mimes'    => '', //允许上传的文件MiMe类型
