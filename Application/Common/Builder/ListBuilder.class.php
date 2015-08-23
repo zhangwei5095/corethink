@@ -34,7 +34,7 @@ class ListBuilder extends Controller{
      * @author jry <598821125@qq.com>
      */
     public function setMetaTitle($meta_title){
-        $this->meta_title = $this->_meta_title = $meta_title;
+        $this->meta_title = $meta_title;
         return $this;
     }
 
@@ -75,8 +75,8 @@ class ListBuilder extends Controller{
                 $my_attribute['title'] = '启用';
                 $my_attribute['target-form'] = 'ids';
                 $my_attribute['class'] = 'btn btn-success ajax-post confirm';
-                $my_attribute['data-model'] = CONTROLLER_NAME; //要操作的数据模型
-                $my_attribute['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'resume', 'model' => $my_attribute['data-model']));
+                $my_attribute['model'] = CONTROLLER_NAME; //要操作的数据模型
+                $my_attribute['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'resume', 'model' => $my_attribute['model']));
 
                 //如果定义了属性数组则与默认的进行合并，详细使用方法参考上面的新增按钮
                 if($attribute){
@@ -91,8 +91,8 @@ class ListBuilder extends Controller{
                 $my_attribute['title'] = '禁用';
                 $my_attribute['target-form'] = 'ids';
                 $my_attribute['class'] = 'btn btn-warning ajax-post confirm';
-                $my_attribute['data-model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
-                $my_attribute['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'forbid', 'model' => $my_attribute['data-model']));
+                $my_attribute['model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
+                $my_attribute['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'forbid', 'model' => $my_attribute['model']));
 
                 //如果定义了属性数组则与默认的进行合并，详细使用方法参考上面的新增按钮
                 if($attribute){
@@ -107,8 +107,8 @@ class ListBuilder extends Controller{
                 $my_attribute['title'] = '回收';
                 $my_attribute['target-form'] = 'ids';
                 $my_attribute['class'] = 'btn btn-danger ajax-post confirm';
-                $my_attribute['data-model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
-                $my_attribute['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'recycle', 'model' => $my_attribute['data-model']));
+                $my_attribute['model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
+                $my_attribute['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'recycle', 'model' => $my_attribute['model']));
 
                 //如果定义了属性数组则与默认的进行合并，详细使用方法参考上面的新增按钮
                 if($attribute){
@@ -123,8 +123,8 @@ class ListBuilder extends Controller{
                 $my_attribute['title'] = '还原';
                 $my_attribute['target-form'] = 'ids';
                 $my_attribute['class'] = 'btn btn-success ajax-post confirm';
-                $my_attribute['data-model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
-                $my_attribute['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'restore', 'model' => $my_attribute['data-model']));
+                $my_attribute['model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
+                $my_attribute['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'restore', 'model' => $my_attribute['model']));
 
                 //如果定义了属性数组则与默认的进行合并，详细使用方法参考上面的新增按钮
                 if($attribute){
@@ -139,8 +139,8 @@ class ListBuilder extends Controller{
                 $my_attribute['title'] = '删除';
                 $my_attribute['target-form'] = 'ids';
                 $my_attribute['class'] = 'btn btn-danger ajax-post confirm';
-                $my_attribute['data-model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
-                $my_attribute['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'delete', 'model' => $my_attribute['data-model']));
+                $my_attribute['model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
+                $my_attribute['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'delete', 'model' => $my_attribute['model']));
 
                 //如果定义了属性数组则与默认的进行合并，详细使用方法参考上面的新增按钮
                 if($attribute){
@@ -259,13 +259,13 @@ class ListBuilder extends Controller{
             case 'forbid': //改变记录状态按钮，会更具数据当前的状态自动选择应该显示启用/禁用
                 //预定义按钮属
                 $my_attribute['type'] = 'forbid';
-                $my_attribute['data-model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
+                $my_attribute['model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
                 $my_attribute['0']['title'] = '启用';
                 $my_attribute['0']['class'] = 'label label-success ajax-get confirm';
-                $my_attribute['0']['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'resume', 'ids' => '__data_id__', 'model' => $my_attribute['data-model']));
+                $my_attribute['0']['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'resume', 'ids' => '__data_id__', 'model' => $my_attribute['model']));
                 $my_attribute['1']['title'] = '禁用';
                 $my_attribute['1']['class'] = 'label label-warning ajax-get confirm';
-                $my_attribute['1']['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'forbid', 'ids' => '__data_id__', 'model' => $my_attribute['data-model']));
+                $my_attribute['1']['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'forbid', 'ids' => '__data_id__', 'model' => $my_attribute['model']));
 
                 //这个按钮定义好了把它丢进按钮池里
                 $this->_right_button_list[] = $my_attribute;
@@ -273,13 +273,13 @@ class ListBuilder extends Controller{
             case 'hide': //改变记录状态按钮，会更具数据当前的状态自动选择应该显示隐藏/显示
                 //预定义按钮属
                 $my_attribute['type'] = 'hide';
-                $my_attribute['data-model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
+                $my_attribute['model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
                 $my_attribute['2']['title'] = '显示';
                 $my_attribute['2']['class'] = 'label label-success ajax-get confirm';
-                $my_attribute['2']['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'show', 'ids' => '__data_id__', 'model' => $my_attribute['data-model']));
+                $my_attribute['2']['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'show', 'ids' => '__data_id__', 'model' => $my_attribute['model']));
                 $my_attribute['1']['title'] = '隐藏';
                 $my_attribute['1']['class'] = 'label label-info ajax-get confirm';
-                $my_attribute['1']['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'hide', 'ids' => '__data_id__', 'model' => $my_attribute['data-model']));
+                $my_attribute['1']['href']  = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'hide', 'ids' => '__data_id__', 'model' => $my_attribute['model']));
 
                 //这个按钮定义好了把它丢进按钮池里
                 $this->_right_button_list[] = $my_attribute;
@@ -288,8 +288,8 @@ class ListBuilder extends Controller{
                 //预定义按钮属性以简化使用
                 $my_attribute['title'] = '回收';
                 $my_attribute['class'] = 'label label-danger ajax-get confirm';
-                $my_attribute['data-model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
-                $my_attribute['href'] = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'recycle', 'ids' => '__data_id__', 'model' => $my_attribute['data-model']));
+                $my_attribute['model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
+                $my_attribute['href'] = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'recycle', 'ids' => '__data_id__', 'model' => $my_attribute['model']));
 
                 //如果定义了属性数组则与默认的进行合并，详细使用方法参考上面的顶部按钮
                 if($attribute){
@@ -303,8 +303,8 @@ class ListBuilder extends Controller{
                 //预定义按钮属性以简化使用
                 $my_attribute['title'] = '还原';
                 $my_attribute['class'] = 'label label-success ajax-get confirm';
-                $my_attribute['data-model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
-                $my_attribute['href'] = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'restore', 'ids' => '__data_id__', 'model' => $my_attribute['data-model']));
+                $my_attribute['model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
+                $my_attribute['href'] = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'restore', 'ids' => '__data_id__', 'model' => $my_attribute['model']));
 
                 //如果定义了属性数组则与默认的进行合并，详细使用方法参考上面的顶部按钮
                 if($attribute){
@@ -318,8 +318,8 @@ class ListBuilder extends Controller{
                 //预定义按钮属性以简化使用
                 $my_attribute['title'] = '删除';
                 $my_attribute['class'] = 'label label-danger ajax-get confirm';
-                $my_attribute['data-model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
-                $my_attribute['href'] = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'delete', 'ids' => '__data_id__', 'model' => $my_attribute['data-model']));
+                $my_attribute['model'] = $attribute['model'] ? : CONTROLLER_NAME; //要操作的数据模型
+                $my_attribute['href'] = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus', array('status' => 'delete', 'ids' => '__data_id__', 'model' => $my_attribute['model']));
 
                 //如果定义了属性数组则与默认的进行合并，详细使用方法参考上面的顶部按钮
                 if($attribute){

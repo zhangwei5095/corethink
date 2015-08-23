@@ -90,9 +90,9 @@ class UserModel extends Model{
      * @author jry <598821125@qq.com>
      */
     public function user_sex($id){
-        $list[0] = '保密';
-        $list[1] = '男';
-        $list[-1] = '男';
+        $list[0]  = '保密';
+        $list[1]  = '男';
+        $list[-1] = '女';
         return $id ? $list[$id] : $list;
     }
 

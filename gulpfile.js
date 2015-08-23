@@ -77,7 +77,7 @@ var corethink_admin_script_files = [CORETHINK.ADMIN.GULP + "admin.js"];    //加
 var corethink_admin_style_files  = [CORETHINK.ADMIN.GULP + "admin.less"];  //加载后台所有需要编译的less或者css文件
 var corethink_home_script_files  = [CORETHINK.HOME.GULP  + "home.js"];     //加载前台所有需要压缩js文件
 var corethink_home_style_files   = [CORETHINK.HOME.GULP  + "home.less"];   //加载前台所有需要编译的less或者css文件
-var banner = '/*! ---- builder on ' + strftime('%F %T') + ' by corethink ---- */\n\n'; //包含当前时间的附加头部信息
+var banner = '/*! ---- build on ' + strftime('%F %T') + ' by corethink ---- */\n\n'; //包含当前时间的附加头部信息
 //
 //
 //

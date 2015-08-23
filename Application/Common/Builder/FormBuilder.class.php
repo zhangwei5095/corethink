@@ -20,7 +20,7 @@ class FormBuilder extends Controller{
     private $_form_items = array();  //表单项目
     private $_extra_items = array(); //额外已经构造好的表单项目
     private $_form_data = array();   //表单数据
-    private $_extra_html; //额外功能代码
+    private $_extra_html;            //额外功能代码
     private $_template = '_Builder/formbuilder'; //模版
 
     /**
@@ -30,7 +30,7 @@ class FormBuilder extends Controller{
      * @author jry <598821125@qq.com>
      */
     public function setMetaTitle($meta_title){
-        $this->meta_title = $this->_meta_title = $meta_title;
+        $this->meta_title = $meta_title;
         return $this;
     }
 
