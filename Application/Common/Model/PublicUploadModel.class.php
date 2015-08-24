@@ -147,7 +147,7 @@ class publicUploadModel extends Model{
         }
         return json_encode($return);
     }
-    
+
     /**
      * 下载指定文件
      * @param  number  $root 文件存储根目录
@@ -163,7 +163,7 @@ class publicUploadModel extends Model{
             return false;
         }
         /* 下载文件 */
-        switch ($file['location']) {
+        switch ($file['location']){
             case 'Local': //下载本地文件
                 return $this->downLocalFile($file, $callback, $args);
             default:
@@ -192,7 +192,7 @@ class publicUploadModel extends Model{
             header("Content-Description: File Transfer");
             header('Content-type: ' . $file['type']);
             header('Content-Length:' . $file['size']);
-            if (preg_match('/MSIE/', $_SERVER['HTTP_USER_AGENT'])) { //for IE
+            if(preg_match('/MSIE/', $_SERVER['HTTP_USER_AGENT'])){ //for IE
                 header('Content-Disposition: attachment; filename="' . rawurlencode($file['name']) . '"');
             } else {
                 header('Content-Disposition: attachment; filename="' . $file['name'] . '"');
@@ -248,7 +248,7 @@ class publicUploadModel extends Model{
      * KindEditor编辑器文件管理
      * @author jry <598821125@qq.com>
      */
-    public function fileManager(){
+    public function fileManager($only_image = false){
         //根目录路径，可以指定绝对路径，比如 /var/www/attached/
         $root_path = './Uploads/';
         //根目录URL，可以指定绝对路径，比如 http://www.yoursite.com/attached/
@@ -256,16 +256,16 @@ class publicUploadModel extends Model{
         //图片扩展名
         $ext_arr = array('gif', 'jpg', 'jpeg', 'png', 'bmp');
 
-        if ($dir_name !== '') {
+        if($dir_name !== ''){
             $root_path .= $dir_name . "/";
             $root_url .= $dir_name . "/";
-            if (!file_exists($root_path)) {
+            if(!file_exists($root_path)){
                 mkdir($root_path);
             }
         }
 
         //根据path参数，设置各路径和URL
-        if (empty($_GET['path'])) {
+        if(empty($_GET['path'])){
             $current_path = realpath($root_path) . '/';
             $current_url = $root_url;
             $current_dir_path = '';
@@ -285,7 +285,7 @@ class publicUploadModel extends Model{
             exit;
         }
         //最后一个字符不是/
-        if (!preg_match('/\/$/', $current_path)){
+        if(!preg_match('/\/$/', $current_path)){
             echo 'Parameter is not valid.';
             exit;
         }
@@ -297,12 +297,12 @@ class publicUploadModel extends Model{
 
         //遍历目录取得文件信息
         $file_list = array();
-        if ($handle = opendir($current_path)) {
+        if($handle = opendir($current_path)){
             $i = 0;
-            while (false !== ($filename = readdir($handle))) {
-                if ($filename{0} == '.') continue;
+            while (false !== ($filename = readdir($handle))){
+                if($filename{0} == '.') continue;
                 $file = $current_path . $filename;
-                if (is_dir($file)) {
+                if(is_dir($file)){
                     $file_list[$i]['is_dir'] = true; //是否文件夹
                     $file_list[$i]['has_file'] = (count(scandir($file)) > 2); //文件夹是否包含文件
                     $file_list[$i]['filesize'] = 0; //文件大小
@@ -317,9 +317,13 @@ class publicUploadModel extends Model{
                     $file_list[$i]['is_photo'] = in_array($file_ext, $ext_arr);
                     $file_list[$i]['filetype'] = $file_ext;
                 }
-                $file_list[$i]['filename'] = $filename; //文件名，包含扩展名
-                $file_list[$i]['datetime'] = date('Y-m-d H:i:s', filemtime($file)); //文件最后修改时间
-                $i++;
+                if($only_image === true && $file_list[$i]['is_dir'] === false && $file_list[$i]['is_photo'] === false){
+                    unset($file_list[$i]);
+                }else{
+                    $file_list[$i]['filename'] = $filename; //文件名，包含扩展名
+                    $file_list[$i]['datetime'] = date('Y-m-d H:i:s', filemtime($file)); //文件最后修改时间
+                    $i++;
+                }
             }
             closedir($handle);
         }

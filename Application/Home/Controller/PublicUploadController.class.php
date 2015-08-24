@@ -43,7 +43,6 @@ class PublicUploadController extends HomeController{
         if(!$public_upload_object->download($id)){
             $this->error($public_upload_object->getError());
         }
-
     }
 
     /**
@@ -58,7 +57,7 @@ class PublicUploadController extends HomeController{
      * KindEditor编辑器文件管理
      * @author jry <598821125@qq.com>
      */
-    public function fileManager(){
-        exit(D('PublicUpload')->fileManager());
+    public function fileManager($only_image = true){
+        exit(D('PublicUpload')->fileManager($only_image));
     }
 }
