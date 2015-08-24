@@ -236,7 +236,7 @@ class UserModel extends Model{
      * @return string       签名
      * @author jry <598821125@qq.com>
      */
-    public function dataAuthSign($data) {
+    public function dataAuthSign($data){
         //数据类型检测
         if(!is_array($data)){
             $data = (array)$data;
@@ -254,7 +254,7 @@ class UserModel extends Model{
      */
     public function isLogin(){
         $user = session('user_auth');
-        if (empty($user)) {
+        if(empty($user)){
             return 0;
         }else{
             return session('user_auth_sign') == $this->dataAuthSign($user) ? $user['uid'] : 0;

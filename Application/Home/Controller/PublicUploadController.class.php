@@ -34,13 +34,20 @@ class PublicUploadController extends HomeController{
      * 下载
      * @author jry <598821125@qq.com>
      */
-    public function download($id){
-        if(empty($id) || !is_numeric($id)){
-            $this->error('参数错误！');
+    public function download($token){
+        if(empty($token)){
+            $this->error('token参数错误！');
+        }
+
+        //解密下载token
+        $file_md5 = \Think\Crypt::decrypt($token, user_md5(is_login()));
+        if(!$file_md5){
+            $this->error('下载链接已过期，请刷新页面！');
         }
 
         $public_upload_object = D('PublicUpload');
-        if(!$public_upload_object->download($id)){
+        $file_id = $public_upload_object->getFieldByMd5($file_md5, 'id');
+        if(!$public_upload_object->download($file_id)){
             $this->error($public_upload_object->getError());
         }
     }

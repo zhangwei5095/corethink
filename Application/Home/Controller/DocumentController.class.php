@@ -318,6 +318,12 @@ class DocumentController extends HomeController{
             $file_list = explode(',', $info['file']);
             foreach($file_list as &$file){
                 $file = D('PublicUpload')->find($file);
+                $uid = is_login();
+                if($uid){
+                    $file['token'] = \Think\Crypt::encrypt($file['md5'], user_md5($uid), 60);
+                }else{
+                    $file['token'] = 'please login';
+                }
             }
             $info['file_list'] = $file_list;
         }

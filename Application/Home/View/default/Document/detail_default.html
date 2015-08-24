@@ -74,7 +74,7 @@
                         <div class="article-download">
                             <ul class="list-group">
                                 <volist name="info.file_list" id="file">
-                                    <a class="list-group-item" href="{:U('Home/PublicUpload/download', array('id' => $file['id']))}" title="点击下载">
+                                    <a rel="noflow" class="list-group-item" href="{:U('Home/PublicUpload/download', array('token' => $file['token']))}" title="点击下载">
                                         <span class="badge">下载次数：{$file.download}</span>
                                         <span class="down-icon">{$file.show}</span>
                                         <span class="down-name text-muted">{$file.name}</span>
