@@ -24,7 +24,7 @@ class WechatAuth {
     const MSG_TYPE_MUSIC      = 'music';
     const MSG_TYPE_NEWS       = 'news';
     const MSG_TYPE_EVENT      = 'event';
-    
+
     /* 二维码类型常量 */
     const QR_SCENE       = 'QR_SCENE';
     const QR_LIMIT_SCENE = 'QR_LIMIT_SCENE';

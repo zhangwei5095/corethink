@@ -34,7 +34,7 @@ class ListBuilder extends Controller{
      * @author jry <598821125@qq.com>
      */
     public function setMetaTitle($meta_title){
-        $this->meta_title = $meta_title;
+        $this->_meta_title = $meta_title;
         return $this;
     }
 

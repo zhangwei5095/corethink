@@ -251,7 +251,7 @@ class AddonController extends AdminController {
             $tab_list = array();
             foreach($admin_list as $key => $val){
                 $tab_list[$key]['title'] = $val['title'];
-                $tab_list[$key]['href']  = U('Admin/Addon/adminList/name/'.$name.'/tab/'.$key);
+                $tab_list[$key]['href']  = U('Admin/Addon/adminList', array('name' => $name, 'tab' => $key));
             }
             $admin = $admin_list[$tab];
             $param = D('Addons://'.$name.'/'.$admin['model'].'')->adminList;
@@ -269,10 +269,10 @@ class AddonController extends AdminController {
                 //使用Builder快速建立列表页面。
                 $builder = new \Common\Builder\ListBuilder();
                 $builder->setMetaTitle($addon->info['title']) //设置页面标题
-                        ->AddTopButton('addnew', array('href'  => U('Admin/Addon/adminAdd/name/'.$name.'/tab/'.$tab))) //添加新增按钮
+                        ->AddTopButton('addnew', array('href'  => U('Admin/Addon/adminAdd', array('name' => $name, 'tab' => $tab)))) //添加新增按钮
                         ->AddTopButton('resume', array('model' => $param['model'])) //添加启用按钮
                         ->AddTopButton('forbid', array('model' => $param['model'])) //添加禁用按钮
-                        ->setSearch('请输入关键字', U('Admin/Addon/adminList/name/'.$name, array('tab' => $tab)))
+                        ->setSearch('请输入关键字', U('Admin/Addon/adminList', array('name' => $name, 'tab' => $tab)))
                         ->SetTabNav($tab_list, $tab) //设置Tab按钮列表
                         ->setTableDataList($data_list) //数据列表
                         ->setTableDataPage($page->show()); //数据列表分页
@@ -333,7 +333,7 @@ class AddonController extends AdminController {
                     $this->error($addon_model_object->getError());
                 }
                 if($result){
-                    $this->success('新增成功', U('Admin/Addon/adminlist/name/'.$name.'/tab/'.$tab));
+                    $this->success('新增成功', U('Admin/Addon/adminlist', array('name' => $name, 'tab' => $tab)));
                 }else{
                     $this->error('更新错误');
                 }
@@ -341,7 +341,7 @@ class AddonController extends AdminController {
                 //使用FormBuilder快速建立表单页面。
                 $builder = new \Common\Builder\FormBuilder();
                 $builder->setMetaTitle('新增数据')  //设置页面标题
-                        ->setPostUrl(U('admin/addon/adminAdd/name/'.$name.'/tab/'.$tab)) //设置表单提交地址
+                        ->setPostUrl(U('Admin/Addon/adminAdd', array('name' => $name, 'tab' => $tab))) //设置表单提交地址
                         ->setExtraItems($param['field'])
                         ->display();
             }
@@ -378,7 +378,7 @@ class AddonController extends AdminController {
                     $this->error($addon_model_object->getError());
                 }
                 if($result){
-                    $this->success('更新成功', U('Admin/Addon/adminlist/name/'.$name.'/tab/'.$tab));
+                    $this->success('更新成功', U('Admin/Addon/adminlist', array('name' => $name, 'tab' => $tab)));
                 }else{
                     $this->error('更新错误');
                 }
@@ -386,7 +386,7 @@ class AddonController extends AdminController {
                 //使用FormBuilder快速建立表单页面。
                 $builder = new \Common\Builder\FormBuilder();
                 $builder->setMetaTitle('编辑数据')  //设置页面标题
-                        ->setPostUrl(U('admin/addon/adminedit/name/'.$name.'/tab/'.$tab)) //设置表单提交地址
+                        ->setPostUrl(U('admin/addon/adminedit', array('name' => $name, 'tab' => $tab))) //设置表单提交地址
                         ->addFormItem('id', 'hidden', 'ID', 'ID')
                         ->setExtraItems($param['field'])
                         ->setFormData(M($param['model'])->find($id))
@@ -395,5 +395,5 @@ class AddonController extends AdminController {
         }else{
             $this->error('插件列表信息不正确');
         }
-     }
+    }
 }
