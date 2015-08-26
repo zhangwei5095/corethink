@@ -98,7 +98,7 @@ class AddonController extends AdminController {
             $this->assign('form_items', $addon['config']);
             if($addon['custom_config']){
                 $this->assign('custom_config', $this->fetch($addon['addon_path'].$addon['custom_config']));
-                $this->display();
+                $this->display($addon['addon_path'].$addon['custom_config']);
             }else{
                 //使用FormBuilder快速建立表单页面。
                 $builder = new \Common\Builder\FormBuilder();

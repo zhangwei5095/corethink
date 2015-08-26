@@ -2,112 +2,78 @@
 
 <block name="style">
     <style type="text/css">
-        .body-user-login .background {
-            position: absolute;
-            right: 0px;
-            top: 0px;
-            bottom: 0px;
-            left: 0px;
-            background: #2472b4;
+        .login-box {
+            float: none;
+            margin: 2% auto;
         }
-        .body-user-login .login-panel {
-            margin-top: 5%;
+        .login-box .panel{
+            border-color: #eee;
+            padding: 20px 20px 0px 20px;
         }
-        .body-user-login .login-panel .panel-heading {
-            height: 150px;
-            background: transparent;
-        }
-        .body-user-login .login-panel .panel-heading .panel-title {
-            color: #fff;
-            font-size: 32px;
-            padding-top: 30px;
-            padding-bottom: 5px;
-            font-weight: lighter;
-        }
-        .body-user-login .login-panel .panel-heading .panel-title .logo {
-            height: 60px;
-            margin-top: -10px;
-        }
-        .body-user-login .login-panel .panel-heading .info {
-            margin-top: 18px;
-        }
-        .body-user-login .login-panel .panel-body {
-            padding: 20px;
-        }
-        .body-user-login .login-panel .panel-body .input-group input {
+        .login-box .input-group input {
             height: 40px;
         }
-        .body-user-login .login-panel .panel-body .input-group .input-group-addon .fa {
+        .login-box .input-group-addon .fa {
             width: 18px;
         }
-        .body-user-login .login-panel .panel-body .input-group .verifyimg-box {
+        .login-box .verifyimg-box {
             padding: 0px;
         }
-        .body-user-login .login-panel .panel-body .input-group .verifyimg-box .verifyimg {
+        .login-box .verifyimg-box .verifyimg {
             width: 138px;
             height: 38px;
             cursor: pointer;
             border-radius: 4px;
         }
-        .body-user-login .bottom {
-            margin-bottom: 10px;
-            color: #eee;
-            font-size: 12px;
-        }
-        .body-user-login .bottom a {
-            color: #eee;
-        }
-        @media (max-width: 768px) {
-            .body-user-login .login-panel .panel-body {
-                padding: 15px 0px;
-            }
-        }
     </style>
 </block>
 
-<block name="wrap">
-    <div id="particles-js" class="background"></div>
+<block name="breadcrumb"></block>
 
+<block name="main">
     <div class="container">
-        <div class="panel panel-default login-panel col-xs-12 col-md-4 col-md-offset-4">
-            <div class="panel-heading">
-                <h3 class="panel-title text-center">
-                    <php>if(C('WEB_SITE_LOGO')):</php>
-                        <a href="__ROOT__/"><img class="logo" src="{$Think.config.WEB_SITE_LOGO|get_cover}"></a>
-                    <php>else:</php>
-                        <a href="__ROOT__/"><img class="logo" src="__HOME_IMG__/logo/logo_with_title.png"></a>
-                    <php>endif;</php>
-                </h3>
-                <div class="info text-muted text-center">
-                    {:C('WEB_SITE_SLOGAN')}
-                </div>
-            </div>
-            <div class="panel-body">
-                <form class="login-form" action="{:U('')}" method="post">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                            <input type="text" class="form-control" placeholder="邮箱/手机号/用户名" name="username">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                            <input type="password" class="form-control" placeholder="请输入密码" name="password">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block submit ajax-post" target-form="login-form">登录</button>
-                    </div>
-                    {:hook('SyncLogin')} <!-- 第三方登陆钩子 -->
-                </form>
-            </div>
-        </div>
-    </div>
+        <div class="col-xs-12 col-md-5 login-box">
+			<div class="panel panel-default">
+				<h3 class="text-center">{$meta_title}</h3>
+				<div class="panel-body">
+					<form class="login-form" action="{:U('User/login')}" method="post">
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-user"></i></span>
+								<input type="text" class="form-control" placeholder="邮箱/手机号/用户名" name="username">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-key"></i></span>
+								<input type="password" class="form-control" placeholder="请输入密码" name="password">
+							</div>
+						</div>
+						<div class="form-group clearfix">
+							<label class="checkbox-inline" for="remember-login">
+								<input id="remember-login" type="checkbox" name="remember_login" checked="checked">
+								<span>保持登录</span>
+							</label>
+							<a class="text-muted pull-right" href="{:U('User/resetPassword')}">忘记密码？</a>
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary btn-block submit ajax-post" target-form="login-form">登录</button>
+						</div>
+						<div class="form-group">
+							{:hook('SyncLogin')} <!-- 第三方登陆钩子 -->
+						</div>
+						<div class="form-group text-center">
+							<a class="text-muted" href="{:U('User/register')}">没有帐号，极速注册</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</block>
 
-    <div class="bottom navbar-fixed-bottom text-center">
-        <span>Powered by {:C('PRODUCT_NAME')} v{:C('CURRENT_VERSION')}</span>
+<block name="footer">
+    <div class="text-muted text-center">
         <span>Copyright © <a href="{:C('WEBSITE_DOMAIN')}" target="_blank">{:C('COMPANY_NAME')}</a> All rights reserved.</span>
-        <script type="text/javascript" src="__PUBLIC__/libs/particles/particles.min.js"></script>
     </div>
 </block>

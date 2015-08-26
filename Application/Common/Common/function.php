@@ -290,6 +290,9 @@ function sql_split($sql, $tablepre){
  */
 function execute_sql_from_file($file){
     $sql_data = file_get_contents($file);
+    if(!$sql_data){
+        return true;
+    }
     $sql_format = sql_split($sql_data, C('DB_PREFIX'));
     $counts = count($sql_format);
     for($i = 0; $i < $counts; $i++){

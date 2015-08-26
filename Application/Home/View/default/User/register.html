@@ -2,218 +2,183 @@
 
 <block name="style">
     <style type="text/css">
-        .body-user-register .background {
-            position: absolute;
-            right: 0px;
-            top: 0px;
-            bottom: 0px;
-            left: 0px;
-            background: #2472b4;
+        .register-box {
+            float: none;
+            margin: 2% auto;
         }
-        .body-user-register .login-panel .panel-heading {
-            height: 150px;
-            background: transparent;
+        .register-box .panel{
+            border-color: #eee;
+            padding: 20px 20px 0px 20px;
         }
-        .body-user-register .login-panel .panel-heading .panel-title {
-            color: #fff;
-            font-size: 32px;
-            padding-top: 30px;
-            padding-bottom: 5px;
-            font-weight: lighter;
-        }
-        .body-user-register .login-panel .panel-heading .panel-title .logo {
-            height: 60px;
-            margin-top: -10px;
-        }
-        .body-user-register .login-panel .panel-heading .info {
-            margin-top: 18px;
-        }
-        .body-user-register .login-panel .panel-body {
-            padding: 20px;
-        }
-        .body-user-register .login-panel .panel-body .nav-tabs {
-            margin-bottom: 15px;
-        }
-        .body-user-register .login-panel .panel-body .input-group input,
-        .body-user-register .login-panel .panel-body .input-group button {
+        .register-box .input-group input,
+        .register-box .input-group button {
             height: 40px;
         }
-        .body-user-register .login-panel .panel-body .input-group .input-group-addon .fa {
+        .register-box .input-group-addon .fa {
             width: 18px;
         }
-        .body-user-register .login-panel .panel-body .input-group .verifyimg-box {
+        .register-box .verifyimg-box {
             padding: 0px;
         }
-        .body-user-register .login-panel .panel-body .input-group .verifyimg-box .verifyimg {
+        .register-box .verifyimg-box .verifyimg {
             width: 138px;
             height: 38px;
             cursor: pointer;
             border-radius: 4px;
         }
-        .body-user-register .bottom {
-            margin-bottom: 10px;
-            color: #eee;
-            font-size: 12px;
-        }
-        .body-user-register .bottom a {
-            color: #eee;
-        }
-        @media (max-width: 768px) {
-            .body-user-register .login-panel .panel-body {
-                padding: 15px 0px;
-            }
-        }
     </style>
 </block>
 
-<block name="wrap">
-    <div id="particles-js" class="background"></div>
+<block name="breadcrumb"></block>
 
+<block name="main">
     <div class="container">
-        <div class="panel panel-default login-panel col-xs-12 col-md-4 col-md-offset-4">
-            <div class="panel-heading">
-                <h3 class="panel-title text-center">
-                    <php>if(C('WEB_SITE_LOGO')):</php>
-                        <a href="__ROOT__/"><img class="logo" src="{$Think.config.WEB_SITE_LOGO|get_cover}"></a>
-                    <php>else:</php>
-                        <a href="__ROOT__/"><img class="logo" src="__HOME_IMG__/logo/logo_with_title.png"></a>
-                    <php>endif;</php>
-                </h3>
-                <div class="info text-muted text-center">
-                    {:C('WEB_SITE_SLOGAN')}
-                </div>
-            </div>
-            <div class="panel-body">
-                <div class="reg-box">
-                    <div class="login">
-                        <!-- 后台管理员允许注册方式才会显示 -->
-                        <php>$allow_reg_type = C('ALLOW_REG_TYPE');</php>
-                        <ul class="nav-tabs nav">
-                            <php>if(in_array('username', $allow_reg_type)):</php>
-                                <li data-tab="reg1" <php>if($allow_reg_type[0] === 'username') echo 'class="active"';</php>>
-                                    <a href="#reg1" data-toggle="tab">用户名注册</a>
-                                </li>
-                            <php>endif;</php>
-                            <php>if(in_array('email', $allow_reg_type)):</php>
-                                <li data-tab="reg2" <php>if($allow_reg_type[0] === 'email') echo 'class="active"';</php>>
-                                    <a href="#reg2" data-toggle="tab">邮箱注册</a>
-                                </li>
-                            <php>endif;</php>
-                            <php>if(in_array('mobile', $allow_reg_type)):</php>
-                                <li data-tab="reg3" <php>if($allow_reg_type[0] === 'mobile') echo 'class="active"';</php>>
-                                    <a href="#reg3" data-toggle="tab">手机号注册</a>
-                                </li>
-                            <php>endif;</php>
-                        </ul>
-                        <div class="tab-content">
-                            <div id="reg1" class='tab-pane active'>
-                                <form action="__SELF__" method="post" class="form reg-form-username">
-                                    <fieldset>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                                <input type="text" class="form-control" name="username" placeholder="请输入用户名">
+        <div class="col-xs-12 col-md-5 register-box">
+            <div class="panel panel-default">
+                <h3 class="text-center">{$meta_title}</h3>
+                <div class="panel-body">
+                    <div class="reg-box">
+                        <div class="login">
+                            <!-- 后台管理员允许注册方式才会显示 -->
+                            <php>$allow_reg_type = C('ALLOW_REG_TYPE');</php>
+                            <ul class="nav-tabs nav">
+                                <php>if(in_array('username', $allow_reg_type)):</php>
+                                    <li data-tab="reg1" <php>if($allow_reg_type[0] === 'username') echo 'class="active"';</php>>
+                                        <a href="#reg1" data-toggle="tab">用户名注册</a>
+                                    </li>
+                                <php>endif;</php>
+                                <php>if(in_array('email', $allow_reg_type)):</php>
+                                    <li data-tab="reg2" <php>if($allow_reg_type[0] === 'email') echo 'class="active"';</php>>
+                                        <a href="#reg2" data-toggle="tab">邮箱注册</a>
+                                    </li>
+                                <php>endif;</php>
+                                <php>if(in_array('mobile', $allow_reg_type)):</php>
+                                    <li data-tab="reg3" <php>if($allow_reg_type[0] === 'mobile') echo 'class="active"';</php>>
+                                        <a href="#reg3" data-toggle="tab">手机号注册</a>
+                                    </li>
+                                <php>endif;</php>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="reg1" class='tab-pane active'>
+                                    <form action="__SELF__" method="post" class="form reg-form-username">
+                                        <fieldset>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                                    <input type="text" class="form-control" name="username" placeholder="请输入用户名">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                                <input type="text" class="form-control" name="password" placeholder="请输入密码">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                                    <input type="text" class="form-control" name="password" placeholder="请输入密码">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-eye"></i></span>
-                                                <input type="text" class="form-control" name="verify" placeholder="请输入验证码">
-                                                <span class="input-group-addon verifyimg-box">
-                                                    <img class="verifyimg reload-verify" alt="验证码" src="{:U('verify')}" title="点击刷新">
-                                                </span>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-eye"></i></span>
+                                                    <input type="text" class="form-control" name="verify" placeholder="请输入验证码">
+                                                    <span class="input-group-addon verifyimg-box">
+                                                        <img class="verifyimg reload-verify" alt="验证码" src="{:U('verify')}" title="点击刷新">
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <label class="item-label small">点击下一步即表示您同意<a href="#">服务条款</a></label>
-                                        <div class="form-group">
-                                            <input type="hidden" name="reg_type" value="username">
-                                            <button class="btn btn-primary btn-block submit ajax-post" type="submit" target-form="reg-form-username">下 一 步</button>
-                                        </div>
-                                    </fieldset>
-                                </form>
+                                            <div class="form-group">
+                                                <span>点击下一步表示同意<a href="#">服务条款</a></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="hidden" name="reg_type" value="username">
+                                                <button class="btn btn-primary btn-block submit ajax-post" type="submit" target-form="reg-form-username">下 一 步</button>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                                <div id="reg2" class='tab-pane'>
+                                    <form action="__SELF__" method="post" class="form reg-form-email">
+                                        <fieldset>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                                    <input type="text" class="form-control" name="email" placeholder="请输入邮箱">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-eye"></i></span>
+                                                    <input type="text" class="form-control" name="verify" placeholder="请输入验证码">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default send-mail-verify">发送邮件验证码</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                                    <input type="text" class="form-control" name="password" placeholder="请输入密码">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <span>点击下一步表示同意<a href="#">服务条款</a></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="hidden" name="reg_type" value="email">
+                                                <button class="btn btn-primary btn-block submit ajax-post" type="submit" target-form="reg-form-email">下 一 步</button>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                                <div id="reg3" class='tab-pane'>
+                                    <form action="__SELF__" method="post" class="form reg-form-mobile">
+                                        <fieldset>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
+                                                    <input type="text" class="form-control" name="mobile" placeholder="请输入手机号">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-eye"></i></span>
+                                                    <input type="text" class="form-control" name="verify" placeholder="请输入验证码">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default send-mobile-verify">发送短信验证码</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                                    <input type="text" class="form-control" name="password" placeholder="请输入密码">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <span>点击下一步表示同意<a href="#">服务条款</a></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="hidden" name="reg_type" value="mobile">
+                                                <button class="btn btn-primary btn-block submit ajax-post" type="submit" target-form="reg-form-mobile">下 一 步</button>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
                             </div>
-                            <div id="reg2" class='tab-pane'>
-                                <form action="__SELF__" method="post" class="form reg-form-email">
-                                    <fieldset>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                                <input type="text" class="form-control" name="email" placeholder="请输入邮箱">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-eye"></i></span>
-                                                <input type="text" class="form-control" name="verify" placeholder="请输入验证码">
-                                                <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-default send-mail-verify">发送邮件验证码</button>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                                <input type="text" class="form-control" name="password" placeholder="请输入密码">
-                                            </div>
-                                        </div>
-                                        <label class="item-label small">点击下一步即表示您同意<a href="#">服务条款</a></label>
-                                        <div class="form-group">
-                                            <input type="hidden" name="reg_type" value="email">
-                                            <button class="btn btn-primary btn-block submit ajax-post" type="submit" target-form="reg-form-email">下 一 步</button>
-                                        </div>
-                                    </fieldset>
-                                </form>
+                            <div class="form-group">
+                                {:hook('SyncLogin')} <!-- 第三方登陆钩子 -->
                             </div>
-                            <div id="reg3" class='tab-pane'>
-                                <form action="__SELF__" method="post" class="form reg-form-mobile">
-                                    <fieldset>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
-                                                <input type="text" class="form-control" name="mobile" placeholder="请输入手机号">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-eye"></i></span>
-                                                <input type="text" class="form-control" name="verify" placeholder="请输入验证码">
-                                                <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-default send-mobile-verify">发送短信验证码</button>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                                <input type="text" class="form-control" name="password" placeholder="请输入密码">
-                                            </div>
-                                        </div>
-                                        <label class="item-label small">点击下一步即表示您同意<a href="#">服务条款</a></label>
-                                        <div class="form-group">
-                                            <input type="hidden" name="reg_type" value="mobile">
-                                            <button class="btn btn-primary btn-block submit ajax-post" type="submit" target-form="reg-form-mobile">下 一 步</button>
-                                        </div>
-                                    </fieldset>
-                                </form>
+                            <div class="form-group text-center">
+                                <a class="text-muted" href="{:U('User/login')}">已有帐号，直接登录</a>
                             </div>
                         </div>
-                        {:hook('SyncLogin')} <!-- 第三方登陆钩子 -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</block>
 
-    <div class="bottom navbar-fixed-bottom text-center">
-        <span>Powered by {:C('PRODUCT_NAME')} v{:C('CURRENT_VERSION')}</span>
+<block name="footer">
+    <div class="text-muted text-center">
         <span>Copyright © <a href="{:C('WEBSITE_DOMAIN')}" target="_blank">{:C('COMPANY_NAME')}</a> All rights reserved.</span>
-        <script type="text/javascript" src="__PUBLIC__/libs/particles/particles.min.js"></script>
     </div>
 </block>
 

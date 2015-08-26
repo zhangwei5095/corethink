@@ -1,6 +1,6 @@
 <php>if(!empty($config['type'])){</php>
     <div class="synclogin">
-        <div><label class="item-label">第三方账号快速登录<span class="check-tips"></span></label></div>
+        <p class="text-muted">第三方账号快速登录</p>
         <php>if(in_array('Weixin',$config['type'])):</php>
                 <a class="btn btn-default" style="color:#44b549" href="<php>echo addons_url('SyncLogin://Login/login', array('type'=>'weixin'));</php>">
                     <i class="fa fa-weixin"></i> 微信登录
