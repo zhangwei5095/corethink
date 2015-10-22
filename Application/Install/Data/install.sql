@@ -544,7 +544,7 @@ VALUES
 	(86,85,'添加','Admin/User/add','',0,1426580628,1426580628,1,1),
 	(87,85,'编辑','Admin/User/edit','',0,1426580628,1426580628,2,1),
 	(88,85,'设置状态','Admin/User/setStatus','',0,1426580628,1426580628,3,1),
-	(89,12,'部门管理','Admin/UserGroup/index','fa fa-sitemap',0,1426580628,1438277438,2,1),
+	(89,12,'用户组管理','Admin/UserGroup/index','fa fa-sitemap',0,1426580628,1438277438,2,1),
 	(90,89,'添加','Admin/UserGroup/add','',0,1426580628,1426580628,1,1),
 	(91,89,'编辑','Admin/UserGroup/edit','',0,1426580628,1426580628,2,1),
 	(92,89,'设置状态','Admin/UserGroup/setStatus','',0,1426580628,1426580628,3,1),
@@ -623,7 +623,7 @@ CREATE TABLE `ct_user` (
   `email` varchar(32) DEFAULT NULL COMMENT '用户邮箱',
   `mobile` char(11) DEFAULT NULL COMMENT '手机号',
   `password` varchar(64) NOT NULL DEFAULT '' COMMENT '用户密码',
-  `group` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '部门/用户组ID',
+  `group` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户组ID',
   `vip` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT ' VIP等级',
   `avatar` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户头像',
   `score` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户积分',
@@ -664,9 +664,9 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `ct_user_group`;
 
 CREATE TABLE `ct_user_group` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '部门ID',
-  `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上级部门ID',
-  `title` varchar(32) NOT NULL DEFAULT '' COMMENT '部门名称',
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户组ID',
+  `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上级用户组ID',
+  `title` varchar(32) NOT NULL DEFAULT '' COMMENT '用户组名称',
   `icon` varchar(32) NOT NULL COMMENT '图标',
   `menu_auth` text COMMENT '菜单权限',
   `category_auth` text COMMENT '栏目分类权限',
@@ -675,7 +675,7 @@ CREATE TABLE `ct_user_group` (
   `sort` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '排序（同级有效）',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='部门信息表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户组信息表';
 
 LOCK TABLES `ct_user_group` WRITE;
 /*!40000 ALTER TABLE `ct_user_group` DISABLE KEYS */;
