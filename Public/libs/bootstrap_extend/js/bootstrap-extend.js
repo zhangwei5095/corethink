@@ -44,7 +44,7 @@ $(function() {
 
 
     //ajax get请求
-    $('body').on('click', '.ajax-get', function() {
+    $(document).on('click', '.ajax-get', function() {
         var target;
         var that = this;
         if ($(this).hasClass('confirm')) {
@@ -88,7 +88,7 @@ $(function() {
 
 
     //ajax post submit请求
-    $('body').on('click', '.ajax-post', function() {
+    $(document).on('click', '.ajax-post', function() {
         var target, query, form;
         var target_form = $(this).attr('target-form');
         var that = this;

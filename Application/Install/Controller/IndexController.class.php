@@ -50,26 +50,22 @@ class IndexController extends Controller{
             }
         }else{
             $step = session('step');
-            if($step != 1){
-                $this->error("请按顺序安装", U('step1'));
-            }else{
-                session('step', 2);
-                session('error', false);
+            session('step', 2);
+            session('error', false);
 
-                //环境检测
-                $this->assign('check_env', check_env());
+            //环境检测
+            $this->assign('check_env', check_env());
 
-                //目录文件读写检测
-                if(IS_WRITE){
-                    $this->assign('check_dirfile', check_dirfile());
-                }
+            //目录文件读写检测
+            if(IS_WRITE){
+                $this->assign('check_dirfile', check_dirfile());
+            }
 
-                //函数及扩展库检测
-                $this->assign('check_func_and_ext', check_func_and_ext());
+            //函数及扩展库检测
+            $this->assign('check_func_and_ext', check_func_and_ext());
 
-                $this->assign('meta_title', "step2");
-                $this->display();
-           }
+            $this->assign('meta_title', "step2");
+            $this->display();
         }
     }
 
