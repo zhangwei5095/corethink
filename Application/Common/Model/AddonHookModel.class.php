@@ -37,6 +37,26 @@ class AddonHookModel extends Model {
     );
 
     /**
+    * 获取件所需的钩子是否存在，没有则新增
+    * @param string $str  钩子名称
+    * @param string $addons  插件名称
+    * @param string $addons  件简介
+    * @author jry <598821125@qq.com>
+    */
+    public function existHook($name, $data){
+        $where['name'] = $name;
+        $gethook = $this->where($where)->find();
+        if (!$gethook || empty($gethook) || !is_array($gethook)) {
+            $data['name'] = $name;
+            $data['description'] = $data['description'];
+            $data['type'] = 1;
+            if (false !== $this->create($data)) {
+                $this->add();
+            }
+        }
+    }
+
+    /**
      * 更新插件里的所有钩子对应的插件
      * @alter jry <598821125@qq.com>
      */
