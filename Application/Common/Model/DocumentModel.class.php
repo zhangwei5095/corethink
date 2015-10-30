@@ -180,10 +180,19 @@ class DocumentModel extends Model{
      * @author jry <598821125@qq.com>
      */
     private function getPreviousDocument($info){
+        // 获取文档信息
         $map['status'] = array('eq', 1);
         $map['id'] = array('lt', $info['id']);
         $map['cid'] = array('eq', $info['cid']);
         $previous = $this->where($map)->order('id desc')->find();
+
+        // 获取扩展信息
+        if ($previous) {
+            $type = D('DocumentType')->find($previous['doc_type']);
+            $main_field_name = D('DocumentAttribute')->getFieldById($type['main_field'], 'name');
+            $previous['title'] = D('Document'.ucfirst($type['name']))->getFieldById($next['id'], $main_field_name);
+        }
+
         if(!$previous){
             $previous['title'] = '没有了';
             $previous['href'] = '#';
@@ -198,10 +207,19 @@ class DocumentModel extends Model{
      * @author jry <598821125@qq.com>
      */
     private function getNextDocument($info){
+        // 获取文档信息
         $map['status'] = array('eq', 1);
         $map['id'] = array('gt', $info['id']);
         $map['cid'] = array('eq', $info['cid']);
         $next = $this->where($map)->order('id asc')->find();
+
+        // 获取扩展信息
+        if ($next) {
+            $type = D('DocumentType')->find($next['doc_type']);
+            $main_field_name = D('DocumentAttribute')->getFieldById($type['main_field'], 'name');
+            $next['title'] = D('Document'.ucfirst($type['name']))->getFieldById($next['id'], $main_field_name);
+        }
+
         if(!$next){
             $next['title'] = '没有了';
             $next['href'] = '#';
