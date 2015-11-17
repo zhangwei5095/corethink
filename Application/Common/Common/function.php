@@ -7,6 +7,7 @@
 // | Author: jry <598821125@qq.com> <http://www.corethink.cn>
 // +----------------------------------------------------------------------
 
+require_once(APP_PATH . '/Common/Common/addon.php'); //加载插件相关公共函数库
 require_once(APP_PATH . '/Common/Common/developer.php'); //加载开发者二次开发公共函数库
 
 /**
@@ -14,22 +15,64 @@ require_once(APP_PATH . '/Common/Common/developer.php'); //加载开发者二次
  * @param  string $type  配置类型
  * @param  string  $value 配置值
  */
-function parse_attr($value, $type){
+function parse_attr($value, $type = null) {
     switch ($type) {
         default: //解析"1:1\r\n2:3"格式字符串为数组
             $array = preg_split('/[,;\r\n]+/', trim($value, ",;\r\n"));
-            if(strpos($value,':')){
+            if (strpos($value,':')) {
                 $value  = array();
                 foreach ($array as $val) {
                     list($k, $v) = explode(':', $val);
                     $value[$k]   = $v;
                 }
-            }else{
+            } else {
                 $value = $array;
             }
             break;
     }
     return $value;
+}
+
+/**
+ * 获取所有数据并转换成一维数组
+ * @author jry <598821125@qq.com>
+ */
+function select_list_as_tree($model, $map = null, $extra = null, $key = 'id') {
+    //获取列表
+    $con['status'] = array('eq', 1);
+    if ($map) {
+        $con = array_merge($con, $map);
+    }
+    $list = D($model)->where($con)->order('sort asc, id asc')->select();
+
+    //转换成树状列表(非严格模式)
+    $tree = new \Common\Util\Tree();
+    $list = $tree->toFormatTree($list, 'title', 'id', 'pid', 0, false);
+
+    if ($extra) {
+        $result[0] = $extra;
+    }
+
+    //转换成一维数组
+    foreach ($list as $val) {
+        $result[$val[$key]] = $val['title_show'];
+    }
+    return $result;
+}
+
+/**
+ * 解析文档内容
+ * @param string $str 待解析内容
+ * @return string
+ * @author jry <598821125@qq.com>
+ */
+function parse_content($str) {
+    // 将img标签的src改为lazy-src用户前台图片lazyload加载
+    if (C('STATIC_DOMAIN')) {
+        return preg_replace('/(<img.*?)src="/i', '$1 class="lazy img-responsive" style="display:inline-block;" data-lazy="'.C('STATIC_DOMAIN'), $str);
+    } else {
+        return preg_replace('/(<img.*?)src=/i', "$1 class='lazy img-responsive' style='display:inline-block;' data-lazy=", $str);
+    }
 }
 
 /**
@@ -43,71 +86,10 @@ function parse_attr($value, $type){
  * @param str $suffix 截断显示字符
  * @return str
  */
-function get_str($str, $start, $length, $charset='utf-8', $suffix=true) {
-    $str = trim($str);
-    $length = $length * 2;
-    if($length){
-        //截断字符
-        $wordscut = '';
-        if(strtolower($charset) == 'utf-8'){
-            //utf8编码
-            $n = 0;
-            $tn = 0;
-            $noc = 0;
-            while($n < strlen($str)){
-                $t = ord($str[$n]);
-                if($t == 9 || $t == 10 || (32 <= $t && $t <= 126)){
-                    $tn = 1;
-                    $n++;
-                    $noc++;
-                }elseif(194 <= $t && $t <= 223){
-                    $tn = 2;
-                    $n += 2;
-                    $noc += 2;
-                }elseif(224 <= $t && $t < 239){
-                    $tn = 3;
-                    $n += 3;
-                    $noc += 2;
-                }elseif(240 <= $t && $t <= 247){
-                    $tn = 4;
-                    $n += 4;
-                    $noc += 2;
-                }elseif(248 <= $t && $t <= 251){
-                    $tn = 5;
-                    $n += 5;
-                    $noc += 2;
-                }elseif($t == 252 || $t == 253){
-                    $tn = 6;
-                    $n += 6;
-                    $noc += 2;
-                }else{
-                    $n++;
-                }
-                if ($noc >= $length){
-                    break;
-                }
-            }
-            if($noc > $length){
-                $n -= $tn;
-            }
-            $wordscut = substr($str, 0, $n);
-        }else{
-            for($i = 0; $i < $length - 1; $i++){
-                if(ord($str[$i]) > 127) {
-                    $wordscut .= $str[$i].$str[$i + 1];
-                    $i++;
-                } else {
-                    $wordscut .= $str[$i];
-                }
-            }
-        }
-        if($wordscut == $str){
-            return $str;
-        }
-        return $suffix ? trim($wordscut).'...' : trim($wordscut);
-    }else{
-        return $str;
-    }
+function cut_str($str, $start, $length, $charset='utf-8', $suffix = true) {
+    return \Common\Util\Think\String::cutStr(
+        $str, $start, $length, $charset, $suffix
+    );
 }
 
 /**
@@ -116,55 +98,8 @@ function get_str($str, $start, $length, $charset='utf-8', $suffix=true) {
  * @return string 处理后内容
  * @author jry <598821125@qq.com>
  */
-function html2text($str){
-    $str = preg_replace("/<sty(.*)\\/style>|<scr(.*)\\/script>|<!--(.*)-->/isU","",$str);
-    $alltext = "";
-    $start = 1;
-    for($i=0;$i<strlen($str);$i++){
-        if($start==0 && $str[$i]==">"){
-            $start = 1;
-        }
-        else if($start==1){
-            if($str[$i]=="<"){
-                $start = 0;
-                $alltext .= " ";
-            }
-            else if(ord($str[$i])>31){
-                $alltext .= $str[$i];
-            }
-        }
-    }
-    $alltext = str_replace("　"," ",$alltext);
-    $alltext = preg_replace("/&([^;&]*)(;|&)/","",$alltext);
-    $alltext = preg_replace("/[ ]+/s"," ",$alltext);
-    return $alltext;
-}
-
-/**
- * 敏感词过滤替换
- * @param  string $text 待检测内容
- * @param  array $sensitive 待过滤替换内容
- * @param  string $suffix 替换后内容
- * @return bool
- * @author jry <598821125@qq.com>
- */
-function sensitive_filter($text, $sensitive = null, $suffix = '**'){
-    if(!$sensitive){
-        $sensitive = C('SENSITIVE_WORDS');
-    }
-    $sensitive_words = explode(',', $sensitive);
-    $sensitive_words_replace = array_combine($sensitive_words,array_fill(0,count($sensitive_words), $suffix));
-    return strtr($text, $sensitive_words_replace);
-}
-
-/**
- * 解析文档内容
- * @param string $str 待解析内容
- * @return string
- * @author jry <598821125@qq.com>
- */
-function parse_content($str){
-    return preg_replace('/(<img.*?)src=/i', "$1 class='lazy img-responsive' data-original=", $str);//将img标签的src改为data-original用户前台图片lazyload加载
+function html2text($str) {
+   return \Common\Util\Think\String::html2text($str);
 }
 
 /**
@@ -175,66 +110,9 @@ function parse_content($str){
  * @return string
  * @author jry <598821125@qq.com>
  */
-function friendly_date($sTime, $type = 'normal', $alt = 'false'){
-    if (!$sTime)
-        return '';
-    //sTime=源时间，cTime=当前时间，dTime=时间差
-    $cTime      =   time();
-    $dTime      =   $cTime - $sTime;
-    $dDay       =   intval(date("z",$cTime)) - intval(date("z",$sTime));
-    //$dDay     =   intval($dTime/3600/24);
-    $dYear      =   intval(date("Y",$cTime)) - intval(date("Y",$sTime));
-    //normal：n秒前，n分钟前，n小时前，日期
-    if($type=='normal'){
-        if( $dTime < 60 ){
-            if($dTime < 10){
-                return '刚刚';
-            }else{
-                return intval(floor($dTime / 10) * 10)."秒前";
-            }
-        }elseif( $dTime < 3600 ){
-            return intval($dTime/60)."分钟前";
-            //今天的数据.年份相同.日期相同.
-        }elseif( $dYear==0 && $dDay == 0  ){
-            //return intval($dTime/3600)."小时前";
-            return '今天'.date('H:i',$sTime);
-        }elseif($dYear==0){
-            return date("m月d日 H:i",$sTime);
-        }else{
-            return date("Y-m-d H:i",$sTime);
-        }
-    }elseif($type=='mohu'){
-        if( $dTime < 60 ){
-            return $dTime."秒前";
-        }elseif( $dTime < 3600 ){
-            return intval($dTime/60)."分钟前";
-        }elseif( $dTime >= 3600 && $dDay == 0  ){
-            return intval($dTime/3600)."小时前";
-        }elseif( $dDay > 0 && $dDay<=7 ){
-            return intval($dDay)."天前";
-        }elseif( $dDay > 7 &&  $dDay <= 30 ){
-            return intval($dDay/7) . '周前';
-        }elseif( $dDay > 30 ){
-            return intval($dDay/30) . '个月前';
-        }
-        //full: Y-m-d , H:i:s
-    }elseif($type=='full'){
-        return date("Y-m-d , H:i:s",$sTime);
-    }elseif($type=='ymd'){
-        return date("Y-m-d",$sTime);
-    }else{
-        if( $dTime < 60 ){
-            return $dTime."秒前";
-        }elseif( $dTime < 3600 ){
-            return intval($dTime/60)."分钟前";
-        }elseif( $dTime >= 3600 && $dDay == 0  ){
-            return intval($dTime/3600)."小时前";
-        }elseif($dYear==0){
-            return date("Y-m-d H:i:s",$sTime);
-        }else{
-            return date("Y-m-d H:i:s",$sTime);
-        }
-    }
+function friendly_date($sTime, $type = 'normal', $alt = 'false') {
+    $date = new \Common\Util\Think\Date($sTime);
+    return $date->friendlyDate($type, $alt);
 }
 
 /**
@@ -243,65 +121,37 @@ function friendly_date($sTime, $type = 'normal', $alt = 'false'){
  * @return string 完整的时间显示
  * @author jry <598821125@qq.com>
  */
-function time_format($time = NULL, $format='Y-m-d H:i'){
+function time_format($time = NULL, $format='Y-m-d H:i') {
     $time = $time === NULL ? NOW_TIME : intval($time);
     return date($format, $time);
 }
 
 /**
- * 解析数据库语句函数
- * @param string $sql  sql语句   带默认前缀的
- * @param string $tablepre  自己的前缀
- * @return multitype:string 返回最终需要的sql语句
+ * 判断是否日期时间
+ * @return string
  */
-function sql_split($sql, $tablepre){
-    if($tablepre != "ct_"){
-        $sql = str_replace("ct_", $tablepre, $sql);
+function check_date_time($str_time, $format="Y-m-d H:i:s") {
+    $unix_time = strtotime($str_time);
+    $check_date= date($format, $unix_time);
+    if ($check_date == $str_time) {
+        return true;
+    } else {
+        return false;
     }
-    $sql = preg_replace("/TYPE=(InnoDB|MyISAM|MEMORY)( DEFAULT CHARSET=[^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=utf8", $sql);
-    if($r_tablepre != $s_tablepre){
-        $sql = str_replace($s_tablepre, $r_tablepre, $sql);
-    }
-    $sql = str_replace("\r", "\n", $sql);
-    $ret = array();
-    $num = 0;
-    $queriesarray = explode(";\n", trim($sql));
-    unset($sql);
-    foreach($queriesarray as $query){
-        $ret[$num] = '';
-        $queries = explode("\n", trim($query));
-        $queries = array_filter($queries);
-        foreach($queries as $query){
-            $str1 = substr($query, 0, 1);
-            if($str1 != '#' && $str1 != '-'){
-                $ret[$num] .= $query;
-            }
-        }
-        $num++;
-    }
-    return $ret;
 }
 
 /**
- * 执行文件中SQL语句函数
- * @param string $file sql语句文件路径
- * @param string $tablepre  自己的前缀
- * @return multitype:string 返回最终需要的sql语句
+ * 格式化字节大小
+ * @param  number $size      字节数
+ * @param  string $delimiter 数字和单位分隔符
+ * @return string            格式化后的带单位的大小
+ * @author 麦当苗儿 <zuojiazi@vip.qq.com>
  */
-function execute_sql_from_file($file){
-    $sql_data = file_get_contents($file);
-    if(!$sql_data){
-        return true;
-    }
-    $sql_format = sql_split($sql_data, C('DB_PREFIX'));
-    $counts = count($sql_format);
-    for($i = 0; $i < $counts; $i++){
-        $sql = trim($sql_format[$i]);
-        D()->execute($sql);
-    }
-    return true;
+function format_bytes($size, $delimiter = '') {
+    $units = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
+    for ($i = 0; $size >= 1024 && $i < 5; $i++) $size /= 1024;
+    return round($size, 2) . $delimiter . $units[$i];
 }
-
 
 /**
  * 系统非常规MD5加密方法
@@ -309,9 +159,9 @@ function execute_sql_from_file($file){
  * @return string
  * @author jry <598821125@qq.com>
  */
-function user_md5($str, $auth_key){
-    if(!$auth_key){
-        $auth_key = C('AUTH_KEY');
+function user_md5($str, $auth_key) {
+    if (!$auth_key) {
+        $auth_key = C('AUTH_KEY') ? : 'CoreThink';
     }
     return '' === $str ? '' : md5(sha1($str) . $auth_key);
 }
@@ -321,8 +171,8 @@ function user_md5($str, $auth_key){
  * @return integer 0-未登录，大于0-当前登录用户ID
  * @author jry <598821125@qq.com>
  */
-function is_login(){
-    return D('User')->isLogin();
+function is_login() {
+    return D('Admin/User')->is_login();
 }
 
 /**
@@ -332,10 +182,10 @@ function is_login(){
  * @return array  用户信息
  * @author jry <598821125@qq.com>
  */
-function get_user_info($id, $field){
-    $userinfo = D('User')->find($id);
-    if($field){
-        $userinfo[$field];
+function get_user_info($id, $field) {
+    $userinfo = D('Admin/User')->find($id);
+    if ($userinfo[$field]) {
+        return $userinfo[$field];
     }
     return $userinfo;
 }
@@ -346,16 +196,18 @@ function get_user_info($id, $field){
  * @return string
  * @author jry <598821125@qq.com>
  */
-function get_cover($id, $type){
-    $upload_info = D('PublicUpload')->find($id);
-    $url = $upload_info['real_path'];
-    if(!$url){
-        switch($type){
+function get_cover($id, $type) {
+    if ((int)$id) {
+        $upload_info = D('Admin/Upload')->find($id);
+        $url = $upload_info['real_path'];
+    }
+    if (!$url) {
+        switch ($type) {
             case 'default' : //默认图片
                 $url = C('TMPL_PARSE_STRING.__HOME_IMG__').'/logo/default.gif';
                 break;
             case 'avatar' : //用户头像
-                $url = C('TMPL_PARSE_STRING.__HOME_IMG__').'/avatar/avatar'.rand(1,7).'.png';
+                $url = C('TMPL_PARSE_STRING.__HOME_IMG__').'/avatar/avatar.gif';
                 break;
             default: //文档列表默认图片
                 break;
@@ -370,98 +222,93 @@ function get_cover($id, $type){
  * @return string
  * @author jry <598821125@qq.com>
  */
-function get_upload_info($id, $field){
-    $upload_info = D('PublicUpload')->where('status = 1')->find($id);
-    if($field){
-        if(!$upload_info[$field]){
+function get_upload_info($id, $field) {
+    $upload_info = D('Admin/Upload')->where('status = 1')->find($id);
+    if ($field) {
+        if (!$upload_info[$field]) {
             return $upload_info['id'];
-        }else{
+        } else {
             return $upload_info[$field];
         }
     }
     return $upload_info;
 }
 
-
 /**
- * 获取所有数据并转换成一维数组
+ * 是否微信访问
+ * @return bool
  * @author jry <598821125@qq.com>
  */
-function select_list_as_tree($model, $map = null, $extra = null){
-    //获取列表
-    $con['status'] = array('eq', 1);
-    if($map){
-        $con = array_merge($con, $map);
+function is_weixin() {
+    if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
+        return true;
+    } else {
+        return false;
     }
-    $list = D($model)->where($con)->select();
+}
 
-    //转换成树状列表(非严格模式)
-    $tree = new \Common\Util\Tree();
-    $list = $tree->toFormatTree($list, 'title', 'id', 'pid', 0, false);
-
-    if($extra){
-        $result[0] = $extra;
+/**
+ * 是否手机访问
+ * @return bool
+ * @author jry <598821125@qq.com>
+ */
+function is_wap() {
+    // 如果有HTTP_X_WAP_PROFILE则一定是移动设备
+    if (isset ($_SERVER['HTTP_X_WAP_PROFILE'])) {
+        return true;
     }
-
-    //转换成一维数组
-    foreach($list as $val){
-        $result[$val['id']] = $val['title_show'];
+    // 如果via信息含有wap则一定是移动设备,部分服务商会屏蔽该信息
+    if (isset ($_SERVER['HTTP_VIA'])) {
+        // 找不到为flase,否则为true
+        return stristr($_SERVER['HTTP_VIA'], "wap") ? true : false;
     }
-    return $result;
-}
-
-/**
- * 系统邮件发送函数
- * @param string $receiver 收件人
- * @param string $subject 邮件主题
- * @param string $body 邮件内容
- * @param string $attachment 附件列表
- * @return boolean
- * @author jry <598821125@qq.com>
- */
-function send_mail($receiver, $subject, $body, $attachment){
-    return R('Addons://Email/Email/sendMail', array($receiver, $subject, $body, $attachment));
-}
-
-/**
- * 短信发送函数
- * @param string $receiver 接收短信手机号码
- * @param string $body 短信内容
- * @return boolean
- * @author jry <598821125@qq.com>
- */
-function send_mobile_message($receiver, $body){
-    return false; //短信功能待开发
-}
-
-
-/**
- * 处理插件钩子
- * @param string $hook   钩子名称
- * @param mixed $params 传入参数
- * @return void
- * @author jry <598821125@qq.com>
- */
-function hook($hook, $params = array()){
-    \Think\Hook::listen($hook,$params);
-}
-
-/**
- * 获取插件类的类名
- * @param strng $name 插件名
- * @author jry <598821125@qq.com>
- */
-function get_addon_class($name){
-    $class = "Addons\\{$name}\\{$name}Addon";
-    return $class;
-}
-
-/**
- * 插件显示内容里生成访问插件的url
- * @param string $url url
- * @param array $param 参数
- * @author jry <598821125@qq.com>
- */
-function addons_url($url, $param = array()){
-    return D('Addon')->getAddonUrl($url, $param);
+    // 脑残法，判断手机发送的客户端标志,兼容性有待提高
+    if (isset ($_SERVER['HTTP_USER_AGENT'])) {
+        $clientkeywords = array ('nokia',
+            'sony',
+            'ericsson',
+            'mot',
+            'samsung',
+            'htc',
+            'sgh',
+            'lg',
+            'sharp',
+            'sie-',
+            'philips',
+            'panasonic',
+            'alcatel',
+            'lenovo',
+            'iphone',
+            'ipod',
+            'blackberry',
+            'meizu',
+            'android',
+            'netfront',
+            'symbian',
+            'ucweb',
+            'windowsce',
+            'palm',
+            'operamini',
+            'operamobi',
+            'openwave',
+            'nexusone',
+            'cldc',
+            'midp',
+            'wap',
+            'mobile'
+        );
+        // 从HTTP_USER_AGENT中查找手机浏览器的关键字
+        if (preg_match("/(" . implode('|', $clientkeywords) . ")/i", strtolower($_SERVER['HTTP_USER_AGENT']))) {
+            return true;
+        }
+    }
+    // 协议法，因为有可能不准确，放到最后判断
+    if (isset ($_SERVER['HTTP_ACCEPT'])) {
+        // 如果只支持wml并且不支持html那一定是移动设备
+        // 如果支持wml和html但是wml在html之前则是移动设备
+        if ((strpos($_SERVER['HTTP_ACCEPT'], 'vnd.wap.wml') !== false) && (strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false || (strpos($_SERVER['HTTP_ACCEPT'], 'vnd.wap.wml') < strpos($_SERVER['HTTP_ACCEPT'], 'text/html')))) {
+            return true;
+        }
+    }
+    return false;
 }

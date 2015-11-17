@@ -1,0 +1,22 @@
+<extend name="./Application/Home/View/Public/layout.html"/>
+
+<block name="jumbotron">
+    <include file="Home/default/nav" />
+</block>
+
+<block name="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel">
+                    <article class="article panel-body">
+                        <!-- 文章正文 -->
+                        <div class="article-body">
+                            {$info.content|parse_content}
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

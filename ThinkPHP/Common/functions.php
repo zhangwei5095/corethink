@@ -946,6 +946,19 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
             $varAction      =   C('VAR_ACTION');
             $var[$varAction]       =   !empty($path)?array_pop($path):ACTION_NAME;
             $var[$varController]   =   !empty($path)?array_pop($path):CONTROLLER_NAME;
+
+            /**
+             * 控制器分级时自动省略地址中的默认分级名
+             * @author jry <598821125@qq.com>
+             */
+            if (C('CONTROLLER_LEVEL') > 1) {// 控制器层次
+                // 控制器分级时自动省略地址中的默认分级名
+                $controller_name = explode($depr, $var[$varController]);
+                if (count($controller_name) > 1 && $controller_name[0] === C('DEFAULT_CONTROLLER_LEVEL')) {
+                    $var[$varController] = array_pop($controller_name);
+                }
+            }
+
             if($maps = C('URL_ACTION_MAP')) {
                 if(isset($maps[strtolower($var[$varController])])) {
                     $maps    =   $maps[strtolower($var[$varController])];
@@ -965,7 +978,12 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
             $module =   '';
             
             if(!empty($path)) {
-                $var[$varModule]    =   implode($depr,$path);
+                if (C('CONTROLLER_LEVEL') > 1 && count($path) > 1 &&  ($path[1] === C('DEFAULT_CONTROLLER_LEVEL'))) {// 控制器层次
+                    $var[$varModule] = array_shift($path);
+                } else {
+                    $var[$varModule] = implode($depr,$path);
+
+                }
             }else{
                 if(C('MULTI_MODULE')) {
                     if(MODULE_NAME != C('DEFAULT_MODULE') || !C('MODULE_ALLOW_LIST')){
@@ -1000,7 +1018,20 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
             $url    =   __APP__.'/'.rtrim($url,$depr);
         }else{
             $module =   (defined('BIND_MODULE') && BIND_MODULE==$module )? '' : $module;
-            $url    =   __APP__.'/'.($module?$module.MODULE_PATHINFO_DEPR:'').implode($depr,array_reverse($var));
+            $url    = __APP__.'/'.($module?$module.MODULE_PATHINFO_DEPR:'').implode($depr,array_reverse($var));
+
+            /**
+             * 配置路由时反解析路由规则生成URL
+             * @author jry <598821125@qq.com>
+             */
+            $path = implode($depr, array_reverse($var));
+            if(C('URL_ROUTER_ON')) {
+                $temp = Think\Route::reverse($path, $vars, $depr, $suffix);
+                if ($temp) {
+                    $url = __APP__.'/'.($module?$module.MODULE_PATHINFO_DEPR:'').$temp; 
+                }
+            }
+            
         }
         if($urlCase){
             $url    =   strtolower($url);

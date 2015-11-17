@@ -1,0 +1,232 @@
+<extend name="./Application/Home/View/Public/layout.html"/>
+
+<block name="style">
+    <link href="__CSS__/naver.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            background: #fff;
+        }
+        @media (max-width: 768px) {
+            .col-xs-12 {
+                padding: 0 15px !important;
+            }
+        }
+
+        /* 产品 */
+        @media (min-width: 768px) {
+            #product-menu .title {
+                margin-top: 20px;
+            }
+        }
+        @media (min-width: 992px) {
+            #product-menu .title {
+                margin-top: 30px;
+            }
+        }
+
+        /* 新闻资讯 */
+        .news ul li {
+            padding: 5px 0;
+        }
+
+        /*优势*/
+        .advantages img {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        @media (min-width: 768px) {
+            .advantages img {
+                height: 80px;
+            }
+        }
+        @media (min-width: 992px) {
+            .advantages img {
+                height: 115px;
+            }
+        }
+        @media (max-width: 768px) {
+            .advantages img {
+                height: 100px;
+            }
+        }
+
+        /* 幻灯片 */
+        @media (min-width: 992px) {
+            .slider-img {
+                width: 100%;
+                height:500px !important;
+            }
+        }
+        @media (max-width: 992px) {
+            .slider-img {
+                width: 100%;
+                height:300px !important;
+            }
+        }
+        @media (max-width: 768px) {
+            .slider-img {
+                width: 100%;
+                height:200px !important;
+            }
+        }
+
+        /* 合作伙伴 */
+        .partner img {
+            width: 100%;
+            height:60px;
+            margin-bottom:15px;
+            border: 1px solid #eee;
+        }
+
+        /* 友情链接 */
+        .friendly_link {
+            min-height: 100px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .friendly_link .list-unstyled {
+            padding: 10px 0;
+        }
+        .friendly_link .list-unstyled li a {
+            margin-right: 15px;
+        }
+    </style>
+</block>
+
+<block name="jumbotron">
+    <div id="my-slider" class="carousel slide" data-ride="carousel" >
+        <ol class="carousel-indicators">
+            <article:slider_list name="slider" limit="5">
+                <li data-target="#my-slider" data-slide-to="{$key}" class=" <php>if($i==1) echo 'active';</php>"></li>
+            </article:slider_list>
+        </ol>
+        <!-- 轮播（Carousel）项目 -->
+        <div class="carousel-inner">
+            <article:slider_list name="slider" limit="5">
+                <div class="item <php>if($i==1) echo 'active';</php>">
+                    <a href="{$slider.url}" target="_blank">
+                        <img class="slider-img" src="{$slider.cover|get_cover}" alt="{$slider.title}">
+                    </a>
+                </div>
+            </article:slider_list>
+        </div>
+        <a class="left carousel-control hidden-xs" href="#my-slider" data-slide="prev"><span class="fa fa-chevron-left"></span></a>
+        <a class="right carousel-control hidden-xs" href="#my-slider" data-slide="next"><span class="fa fa-chevron-right"></span></a>
+    </div>
+</block>
+
+<block name="main">
+    <div class="container">
+        <!-- 产品 -->
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <h3>产品 <small>／Products</small></h3>
+                <div class="contain">
+                    <nav id="product-menu" class="naver">
+                        <ul>
+                            <article:category_list name="pd" pid="1" limit="6">
+                                <li>
+                                    <a href="{:U('Article/Home/Article/index', array('cid' => $pd['id']))}">
+                                        <span class="icon"></span>
+                                        <i class="fa {$pd.icon}"></i>
+                                        <span class="title">{$pd.title}</span>
+                                    </a>
+                                </li>
+                            </article:category_list>
+                        </ul>
+                    </nav>
+               </div>
+            </div>
+        </div>
+
+        <!-- 资讯 -->
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 news">
+                <h3>新闻资讯 <small>／News</small></h3>
+                <ul class="list-unstyled">
+                    <article:article_list name="vo" cid="9" limit="8">
+                        <li>
+                            <a class="text-muted" href="{:U('Article/Home/Article/detail', array('id' => $vo['id']))}">
+                                <i class="fa {$vo.icon}"></i>
+                                <span>{$vo.title|cut_str=0,20}</span>
+                                <span class="pull-right visible-lg">{$vo.create_time|time_format}</span>
+                            </a>
+                        </li>
+                    </article:article_list>
+                </ul>
+            </div>
+
+            <div class="col-xs-12 col-sm-6">
+                <h3>资质优势 <small>／Advantages</small></h3>
+                <div class="row advantages">
+                    <article:article_list name="vo" cid="8" limit="4">
+                        <div class="col-xs-6 col-sm-6">
+                            <div class="media">
+                                <a href="{:U('Article/Home/Article/detail', array('id' => $vo['id']))}">
+                                    <img class="img-responsive lazy" data-lazy="{$vo.cover|get_cover}" alt="{$vo.title}">
+                                </a>
+                            </div>
+                        </div>
+                    </article:article_list>
+                </div>
+            </div>
+        </div>
+
+        <!-- 合作伙伴 -->
+        <div class="row partner">
+            <div class="col-xs-12 col-sm-12">
+                <h3>合作伙伴 <small>／Partner</small></h3>
+                <div class="row">
+                    <article:friendly_link name="fl2" type="2">
+                        <div class="col-xs-4 col-sm-2">
+                            <a rel="external nofollow" target="_blank" href="{$fl2.url}">
+                                <img class="img-responsive" src="{$fl2.logo|get_cover}">
+                            </a>
+                        </div>
+                    </article:friendly_link>
+                </div>
+            </div>
+        </div>
+
+        <!-- 友情链接 -->
+        <div class="row friendly_link">
+            <div class="col-xs-12 col-sm-12">
+                <h3>友情链接 <small>／Link</small></h3>
+                <ul class="list-unstyled list-inline">
+                    <article:friendly_link name="fl1" type="1">
+                        <li><a rel="external nofollow" target="_blank" href="{$fl1.url}">{$fl1.title}</a></li>
+                    </article:friendly_link>
+                </ul>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript" src="__JS__/modernizr.custom.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            // 在小屏幕上让naver变成一个按钮点击后显示内容
+            var changeClass = function (r,className1,className2) {
+                var regex = new RegExp("(?:^|\\s+)" + className1 + "(?:\\s+|$)");
+                if( regex.test(r.className) ) {
+                    r.className = r.className.replace(regex,' '+className2+' ');
+                }
+                else{
+                    r.className = r.className.replace(new RegExp("(?:^|\\s+)" + className2 + "(?:\\s+|$)"),' '+className1+' ');
+                }
+                return r.className;
+            };
+
+            //  Creating our button in JS for smaller screens
+            var menuElements = document.getElementById('product-menu');
+            menuElements.insertAdjacentHTML('afterBegin','<button type="button" id="menutoggle" class="navtoogle hidden" aria-hidden="true"><i aria-hidden="true" class="icon-menu"> </i> 产品</button>');
+
+            //  Toggle the class on click to show / hide the menu
+            document.getElementById('menutoggle').onclick = function() {
+                changeClass(this, 'navtoogle active', 'navtoogle');
+            }
+            document.getElementById('menutoggle').click();  // 自动点击
+        });
+    </script>
+</block>

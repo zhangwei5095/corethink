@@ -213,6 +213,11 @@ class Dispatcher {
 
             if(!defined('BIND_CONTROLLER')) {// 获取控制器
                 if(C('CONTROLLER_LEVEL')>1){// 控制器层次
+                    // 发现$paths的长度是偶数，说明URL省略了默认分级名，在这里加上
+                    if (count($paths)%2 == 0 && C('DEFAULT_CONTROLLER_LEVEL')) {
+                        array_unshift($paths, C('DEFAULT_CONTROLLER_LEVEL'));
+                    }
+
                     $_GET[$varController]   =   implode('/',array_slice($paths,0,C('CONTROLLER_LEVEL')));
                     $paths  =   array_slice($paths, C('CONTROLLER_LEVEL'));
                 }else{

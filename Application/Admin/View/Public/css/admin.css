@@ -1,0 +1,177 @@
+/* cui reset */
+.btn,
+.alert,
+.panel,
+.label,
+.navbar,
+.navside,
+.thumbnail,
+.form-control,
+.navbar-toggle,
+.nav-tabs>li>a,
+.dropdown-menu,
+.panel-heading,
+.pagination>li>a,
+.list-group-item,
+.input-group-addon,
+.panel-group .panel {
+    border-radius: 0 !important;
+    box-shadow: none;
+}
+.btn-pill {
+    border-radius: 1000em  !important;
+}
+/* 导航 */
+.navbar .navbar-brand img {
+    height: 32px;
+    margin: -6px 0px;
+}
+.navbar .dropdown-toggle>img {
+    height: 32px;
+    margin: -10px 0px;
+}
+@media (max-width: 768px) {
+    .col-xs-12 {
+        padding: 0 !important;
+    }
+    .panel,
+    .thumbnail {
+        margin-bottom: 10px;
+    }
+}
+@media (min-width: 768px) {
+    .panel,
+    .thumbnail {
+        margin-bottom: 15px;
+    }
+}
+.iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* 布局 */
+@media (min-width: 768px) {
+    .main-nav .navbar-header {
+        width: 220px;
+    }
+    #sidebar {
+        padding: 0px;
+        position: fixed;
+        top:  50px;;
+        bottom: 0;
+        overflow: auto;
+        background: #eee;
+        width: 220px;
+    }
+    #main {
+        padding: 0px;
+        position: fixed;
+        top:  50px;;
+        bottom: 0;
+        right: 0;
+        left: 220px;
+        overflow: hidden;
+        width: auto;
+    }
+    .ct-tab-content .tab-pane {
+        position: absolute;
+        top: 41px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+    .ct-tab-content #home {
+        position: absolute;
+        top: 41px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow-y: scroll;
+        margin-bottom: 20px;
+    }
+    .ct-tab-content #home .panel-body {
+        height: 300px;
+        overflow-y: scroll;
+    }
+}
+
+
+/* 标签切换 */
+.ct-tab-nav {
+    min-height: 20px;
+    background: #fff;
+    border-left: 0;
+}
+.ct-tab-nav .navbar-left {
+    border-right: 1px solid #eee;
+}
+.ct-tab-nav .navbar-right {
+    border-left: 1px solid #eee;
+}
+.ct-tab-nav .nav>li>a {
+    padding: 8px 10px;
+    background: #fff;
+    margin-bottom: -1px;
+    border-bottom: 1px solid #eee;
+}
+.ct-tab-nav .nav>li>a:hover {
+    background-color: #eee;
+}
+.ct-tab-wrap {
+    width: auto;
+    overflow: hidden;
+    display: inline-block;
+    overflow: hidden;
+    position: absolute;
+    left: 41px;
+    right:0;
+}
+.ct-tab {
+    position: relative;
+    left: 0;
+    right: 0;
+    width: auto;
+}
+.ct-tab>li.active>a {
+    padding-bottom: 9px;
+    border-left: 1px solid #eee;
+    border-right: 1px solid #eee;
+    border-bottom: 0;
+    background-color: #fff !important;
+}
+.dashboard {
+    padding-top: 20px;
+    padding-top: 20px;
+}
+
+
+/* 页面底部版权 */
+.footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.footer .navbar {
+    min-height: 10px;
+    border-radius: 0px;
+    margin-bottom: 0px;
+}
+.footer .navbar .navbar-brand {
+    padding: 2px 0px 0px 15px;
+    height: 17px;
+}
+.footer .navbar .navbar-brand img.logo {
+    height: 15px;
+    margin: 0px;
+}
+.footer .navbar .navbar-nav > li:first-child > a {
+    padding-left: 5px;
+}
+.footer .navbar .navbar-nav > li > a {
+    color: #aaa;
+    font-size: 11px;
+    padding: 0px 10px;
+}

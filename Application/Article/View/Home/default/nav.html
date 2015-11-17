@@ -1,0 +1,23 @@
+<nav class="module-nav navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".module-nav-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse module-nav-collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <article:category_list name="vo" pid="$__current_category__" group="1">
+                    <li>
+                        <a href="{:U('Article/Home/Article/index', array('cid' => $vo['id']))}">
+                            <span> {$vo.title}</span>
+                        </a>
+                    </li>
+                </article:category_list>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,10 @@
+<extend name="./Application/Admin/View/Public/layout.html"/>
+
+<block name="main">
+    <div class="col-xs-2">
+        <include file="Admin/builder/tree" />
+    </div>
+    <div class="col-xs-10">
+        <include file="./Application/Common/Builder/listbuilder.html" />
+    </div>
+</block>

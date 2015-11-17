@@ -29,7 +29,7 @@ return array(
                             '1'=>'内置函数发送',
                             '2'=>'SMTP模块发送',
                         ),
-                        'value'=>'1',
+                        'value'=>'2',
                         'tip'=>'邮件发信类型',
                     ),
                     'MAIL_SMTP_SECURE'=>array(
@@ -74,7 +74,7 @@ return array(
                     'default'=>array(
                         'title'=>'默认发信模版：',
                         'type'=>'kindeditor',
-                        'value'=>'',
+                        'value'=>'[MAILBODY]',
                         'tip'=>'默认发信模版',
                     )
                 )

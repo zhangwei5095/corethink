@@ -1,0 +1,127 @@
+<extend name="Public/layout"/>
+
+<block name="script">
+    <script type="text/javascript">
+        $(function(){
+            //遍历选中当前权限的子权限
+            $('.auth input[type="checkbox"]').on('change',function(){
+                $('.'+$(this).attr('data-module-name')+' .auth'+$(this).val()).find('input').prop('checked',this.checked);
+            });
+        });
+    </script>
+</block>
+
+<block name="main">
+    <div class="panel">
+        <div class="panel-body">
+            <form action="__SELF__" method="post" class="form">
+                <ul class="nav-tabs nav" style="margin-bottom: 20px;">
+                    <li class="active"><a href="#tab1" data-toggle="tab">部门信息</a></li>
+                    <neq name="info.id" value="1"><li><a href="#tab2" data-toggle="tab">系统权限</a></li></neq>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab1" class="tab-pane active">
+                        <neq name="info.id" value="1">
+                            <div class="form-group">
+                                <label class="item-label">上级部门<span class="check-tips">（所属的上级部门）</span></label>
+                                <div class="controls">
+                                    <select name="pid" class="form-control select">
+                                        <volist name="all_group" id="group">
+                                            <option value="{$key}"
+                                                <php>if($key == $info['pid']) echo 'selected="selected"';</php> >
+                                                {$group}
+                                            </option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                        <else />
+                            <div class="alert alert-success">{$info.title}拥有后台所有权限</div>
+                        </neq>
+                        <div class="form-group">
+                            <label class="item-label">部门名称<span class="check-tips">（部门名称）</span></label>
+                            <div class="controls">
+                                <input type="text" class="form-control input" name="title" value="{$info.title|default=''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="item-label">图标<span class="check-tips">（部门图标）</span></label>
+                            <div class="controls">
+                                <input type="text" class="form-control input icon" name="icon" value="{$info.icon|default=''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="item-label">排序<span class="check-tips">（用于分组显示的顺序）</span></label>
+                            <div class="controls">
+                                <input type="text" class="form-control input" name="sort" value="{$info.sort|default=0}">
+                            </div>
+                        </div>
+                    </div>
+                    <neq name="info.id" value="1">
+                        <div id="tab2" class="tab-pane">
+                            <div style="margin-left: 5px;">
+                                <div class="col-xs-12">
+                                    <div class="form-group auth">
+                                        <volist name="all_module_menu_list" id="vo1">
+                                            <?php $module_name = $key; ?>
+                                            <div class="{$module_name}">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="menu_auth[{$module_name}][]" data-module-name="{$module_name}" <php>if(in_array($vo1['id'], $info['menu_auth'][$module_name])) echo "checked";</php> value="{$vo1.id}">{$vo1.title}
+                                                </label>
+                                                <div class="auth{$vo1.id}" style="padding-left: 25px;">
+                                                    <volist name="vo1._child" id="vo2">
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" name="menu_auth[{$module_name}][]" data-module-name="{$module_name}" <php>if(in_array($vo2['id'], $info['menu_auth'][$module_name])) echo "checked";</php> value="{$vo2.id}">{$vo2.title}
+                                                        </label>
+                                                        <div class="auth{$vo2.id}" style="padding-left: 25px;">
+                                                            <foreach name="vo2._child" item="vo3">
+                                                                <label class="checkbox">
+                                                                    <input type="checkbox" name="menu_auth[{$module_name}][]" data-module-name="{$module_name}" <php>if(in_array($vo3['id'], $info['menu_auth'][$module_name])) echo "checked";</php> value="{$vo3.id}">{$vo3.title}
+                                                                </label>
+                                                                <notempty name="vo3._child">
+                                                                    <div class="auth{$vo3.id}" style="padding-left: 25px;">
+                                                                        <volist name="vo3._child" id="vo4">
+                                                                            <notempty name="vo4._child">
+                                                                                <div style="padding-top: 10px;">
+                                                                                <label class="checkbox-inline">
+                                                                                    <input type="checkbox" name="menu_auth[{$module_name}][]" data-module-name="{$module_name}" <php>if(in_array($vo4['id'], $info['menu_auth'][$module_name])) echo "checked";</php> value="{$vo4.id}">{$vo4.title}
+                                                                                </label>
+                                                                                </div>
+                                                                            <else />
+                                                                                 <label class="checkbox-inline">
+                                                                                    <input type="checkbox" name="menu_auth[{$module_name}][]" data-module-name="{$module_name}" <php>if(in_array($vo4['id'], $info['menu_auth'][$module_name])) echo "checked";</php> value="{$vo4.id}">{$vo4.title}
+                                                                                </label>
+                                                                            </notempty>
+                                                                            <notempty name="vo4._child">
+                                                                                <div class="auth{$vo4.id}" style="padding-left: 25px;">
+                                                                                    <foreach name="vo4._child" item="vo5">
+                                                                                        <label class="checkbox-inline">
+                                                                                            <input type="checkbox" name="menu_auth[{$module_name}][]" data-module-name="{$module_name}" <php>if(in_array($vo5['id'], $info['menu_auth'][$module_name])) echo "checked";</php> value="{$vo5.id}">{$vo5.title}
+                                                                                        </label>
+                                                                                    </foreach>
+                                                                                </div>
+                                                                            </notempty>
+                                                                        </volist>
+                                                                    </div>
+                                                                </notempty>
+                                                            </foreach>
+                                                        </div>
+                                                    </volist>
+                                                </div>
+                                            </div>
+                                        </volist>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </neq>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" name="id" value="{$info.id|default=''}">
+                    <button class="btn btn-primary submit ajax-post" type="submit" target-form="form">确定</button>
+                    <button class="btn btn-default return" onclick="javascript:history.back(-1);return false;">返回</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</block>

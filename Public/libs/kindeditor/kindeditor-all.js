@@ -256,13 +256,13 @@ K.options = {
     zIndex : 811213,
     items : [
         'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
-        'plainpaste', 'wordpaste', 'downremoteimg', '|', 'justifyleft', 'justifycenter', 'justifyright',
+        'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
         'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
         'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
         'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
         'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'multiimage',
         'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
-        'anchor', 'link', 'unlink', 'poll', '|', 'about'
+        'anchor', 'link', 'unlink', '|', 'about'
     ],
     noDisableItems : ['source', 'fullscreen'],
     colorTable : [
@@ -3540,44 +3540,44 @@ function _getInitHtml(themesPath, bodyClass, cssPath, cssData) {
         'noscript {display:none;}',
         'table.ke-zeroborder td {border:1px dotted #AAA;}',
         'img.ke-flash {',
-        '    border:1px solid #AAA;',
-        '    background-image:url(' + themesPath + 'common/flash.gif);',
-        '    background-position:center center;',
-        '    background-repeat:no-repeat;',
-        '    width:100px;',
-        '    height:100px;',
+        '   border:1px solid #AAA;',
+        '   background-image:url(' + themesPath + 'common/flash.gif);',
+        '   background-position:center center;',
+        '   background-repeat:no-repeat;',
+        '   width:100px;',
+        '   height:100px;',
         '}',
         'img.ke-rm {',
-        '    border:1px solid #AAA;',
-        '    background-image:url(' + themesPath + 'common/rm.gif);',
-        '    background-position:center center;',
-        '    background-repeat:no-repeat;',
-        '    width:100px;',
-        '    height:100px;',
+        '   border:1px solid #AAA;',
+        '   background-image:url(' + themesPath + 'common/rm.gif);',
+        '   background-position:center center;',
+        '   background-repeat:no-repeat;',
+        '   width:100px;',
+        '   height:100px;',
         '}',
         'img.ke-media {',
-        '    border:1px solid #AAA;',
-        '    background-image:url(' + themesPath + 'common/media.gif);',
-        '    background-position:center center;',
-        '    background-repeat:no-repeat;',
-        '    width:100px;',
-        '    height:100px;',
+        '   border:1px solid #AAA;',
+        '   background-image:url(' + themesPath + 'common/media.gif);',
+        '   background-position:center center;',
+        '   background-repeat:no-repeat;',
+        '   width:100px;',
+        '   height:100px;',
         '}',
         'img.ke-anchor {',
-        '    border:1px dashed #666;',
-        '    width:16px;',
-        '    height:16px;',
+        '   border:1px dashed #666;',
+        '   width:16px;',
+        '   height:16px;',
         '}',
         '.ke-script, .ke-noscript, .ke-display-none {',
-        '    display:none;',
-        '    font-size:0;',
-        '    width:0;',
-        '    height:0;',
+        '   display:none;',
+        '   font-size:0;',
+        '   width:0;',
+        '   height:0;',
         '}',
         '.ke-pagebreak {',
-        '    border:1px dotted #AAA;',
-        '    font-size:0;',
-        '    height:2px;',
+        '   border:1px dotted #AAA;',
+        '   font-size:0;',
+        '   height:2px;',
         '}',
         '</style>'
     ];
@@ -7589,51 +7589,51 @@ KindEditor.plugin('map', function(K) {
         var iframeHtml = ['<!doctype html><html><head>',
             '<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />',
             '<style>',
-            '    html { height: 100% }',
-            '    body { height: 100%; margin: 0; padding: 0; background-color: #FFF }',
-            '    #map_canvas { height: 100% }',
+            '   html { height: 100% }',
+            '   body { height: 100%; margin: 0; padding: 0; background-color: #FFF }',
+            '   #map_canvas { height: 100% }',
             '</style>',
             '<script src="http://maps.googleapis.com/maps/api/js?sensor=false&language=' + self.langType + '"></script>',
             '<script>',
             'var map, geocoder;',
             'function initialize() {',
-            '    var latlng = new google.maps.LatLng(31.230393, 121.473704);',
-            '    var options = {',
-            '        zoom: 11,',
-            '        center: latlng,',
-            '        disableDefaultUI: true,',
-            '        panControl: true,',
-            '        zoomControl: true,',
-            '        mapTypeControl: true,',
-            '        scaleControl: true,',
-            '        streetViewControl: false,',
-            '        overviewMapControl: true,',
-            '        mapTypeId: google.maps.MapTypeId.ROADMAP',
-            '    };',
-            '    map = new google.maps.Map(document.getElementById("map_canvas"), options);',
-            '    geocoder = new google.maps.Geocoder();',
-            '    geocoder.geocode({latLng: latlng}, function(results, status) {',
-            '        if (status == google.maps.GeocoderStatus.OK) {',
-            '            if (results[3]) {',
-            '                parent.document.getElementById("kindeditor_plugin_map_address").value = results[3].formatted_address;',
-            '            }',
-            '        }',
-            '    });',
+            '   var latlng = new google.maps.LatLng(31.230393, 121.473704);',
+            '   var options = {',
+            '       zoom: 11,',
+            '       center: latlng,',
+            '       disableDefaultUI: true,',
+            '       panControl: true,',
+            '       zoomControl: true,',
+            '       mapTypeControl: true,',
+            '       scaleControl: true,',
+            '       streetViewControl: false,',
+            '       overviewMapControl: true,',
+            '       mapTypeId: google.maps.MapTypeId.ROADMAP',
+            '   };',
+            '   map = new google.maps.Map(document.getElementById("map_canvas"), options);',
+            '   geocoder = new google.maps.Geocoder();',
+            '   geocoder.geocode({latLng: latlng}, function(results, status) {',
+            '       if (status == google.maps.GeocoderStatus.OK) {',
+            '           if (results[3]) {',
+            '               parent.document.getElementById("kindeditor_plugin_map_address").value = results[3].formatted_address;',
+            '           }',
+            '       }',
+            '   });',
             '}',
             'function search(address) {',
-            '    if (!map) return;',
-            '    geocoder.geocode({address : address}, function(results, status) {',
-            '        if (status == google.maps.GeocoderStatus.OK) {',
-            '            map.setZoom(11);',
-            '            map.setCenter(results[0].geometry.location);',
-            '            var marker = new google.maps.Marker({',
-            '                map: map,',
-            '                position: results[0].geometry.location',
-            '            });',
-            '        } else {',
-            '            alert("Invalid address: " + address);',
-            '        }',
-            '    });',
+            '   if (!map) return;',
+            '   geocoder.geocode({address : address}, function(results, status) {',
+            '       if (status == google.maps.GeocoderStatus.OK) {',
+            '           map.setZoom(11);',
+            '           map.setCenter(results[0].geometry.location);',
+            '           var marker = new google.maps.Marker({',
+            '               map: map,',
+            '               position: results[0].geometry.location',
+            '           });',
+            '       } else {',
+            '           alert("Invalid address: " + address);',
+            '       }',
+            '   });',
             '}',
             '</script>',
             '</head>',
@@ -8156,7 +8156,7 @@ window.SWFUpload = function (settings) {
 
 SWFUpload.prototype.initSWFUpload = function (settings) {
     try {
-        this.customSettings = {};    // A container where developers can place their own settings associated with this instance.
+        this.customSettings = {};   // A container where developers can place their own settings associated with this instance.
         this.settings = settings;
         this.eventQueue = [];
         this.movieName = "KindEditor_SWFUpload_" + SWFUpload.movieCount++;
@@ -8183,29 +8183,29 @@ SWFUpload.instances = {};
 SWFUpload.movieCount = 0;
 SWFUpload.version = "2.2.0 2009-03-25";
 SWFUpload.QUEUE_ERROR = {
-    QUEUE_LIMIT_EXCEEDED              : -100,
-    FILE_EXCEEDS_SIZE_LIMIT          : -110,
-    ZERO_BYTE_FILE                      : -120,
-    INVALID_FILETYPE                  : -130
+    QUEUE_LIMIT_EXCEEDED            : -100,
+    FILE_EXCEEDS_SIZE_LIMIT         : -110,
+    ZERO_BYTE_FILE                  : -120,
+    INVALID_FILETYPE                : -130
 };
 SWFUpload.UPLOAD_ERROR = {
-    HTTP_ERROR                          : -200,
-    MISSING_UPLOAD_URL                  : -210,
-    IO_ERROR                          : -220,
-    SECURITY_ERROR                      : -230,
-    UPLOAD_LIMIT_EXCEEDED              : -240,
-    UPLOAD_FAILED                      : -250,
-    SPECIFIED_FILE_ID_NOT_FOUND        : -260,
-    FILE_VALIDATION_FAILED              : -270,
-    FILE_CANCELLED                      : -280,
-    UPLOAD_STOPPED                    : -290
+    HTTP_ERROR                      : -200,
+    MISSING_UPLOAD_URL              : -210,
+    IO_ERROR                        : -220,
+    SECURITY_ERROR                  : -230,
+    UPLOAD_LIMIT_EXCEEDED           : -240,
+    UPLOAD_FAILED                   : -250,
+    SPECIFIED_FILE_ID_NOT_FOUND     : -260,
+    FILE_VALIDATION_FAILED          : -270,
+    FILE_CANCELLED                  : -280,
+    UPLOAD_STOPPED                  : -290
 };
 SWFUpload.FILE_STATUS = {
-    QUEUED         : -1,
-    IN_PROGRESS     : -2,
-    ERROR         : -3,
+    QUEUED       : -1,
+    IN_PROGRESS  : -2,
+    ERROR        : -3,
     COMPLETE     : -4,
-    CANCELLED     : -5
+    CANCELLED    : -5
 };
 SWFUpload.BUTTON_ACTION = {
     SELECT_FILE  : -100,
@@ -8267,7 +8267,7 @@ SWFUpload.prototype.initSettings = function () {
     // File Settings
     this.ensureDefault("file_types", "*.*");
     this.ensureDefault("file_types_description", "All Files");
-    this.ensureDefault("file_size_limit", 0);    // Default zero means "unlimited"
+    this.ensureDefault("file_size_limit", 0);   // Default zero means "unlimited"
     this.ensureDefault("file_upload_limit", 0);
     this.ensureDefault("file_queue_limit", 0);
 
@@ -8292,7 +8292,7 @@ SWFUpload.prototype.initSettings = function () {
 
     // Debug Settings
     this.ensureDefault("debug", false);
-    this.settings.debug_enabled = this.settings.debug;    // Here to maintain v2 API
+    this.settings.debug_enabled = this.settings.debug;  // Here to maintain v2 API
 
     // Event Handlers
     this.settings.return_upload_start_handler = this.returnUploadStart;
@@ -8321,7 +8321,7 @@ SWFUpload.prototype.initSettings = function () {
     }
 
     if (!this.settings.preserve_relative_urls) {
-        //this.settings.flash_url = SWFUpload.completeURL(this.settings.flash_url);    // Don't need to do this one since flash doesn't look at it
+        //this.settings.flash_url = SWFUpload.completeURL(this.settings.flash_url); // Don't need to do this one since flash doesn't look at it
         this.settings.upload_url = SWFUpload.completeURL(this.settings.upload_url);
         this.settings.button_image_url = SWFUpload.completeURL(this.settings.button_image_url);
     }
@@ -8347,7 +8347,7 @@ SWFUpload.prototype.loadFlash = function () {
 
     // Append the container and load the flash
     tempParent = document.createElement("div");
-    tempParent.innerHTML = this.getFlashHTML();    // Using innerHTML is non-standard but the only sensible way to dynamically add Flash in IE (and maybe other browsers)
+    tempParent.innerHTML = this.getFlashHTML(); // Using innerHTML is non-standard but the only sensible way to dynamically add Flash in IE (and maybe other browsers)
     targetElement.parentNode.replaceChild(tempParent.firstChild, targetElement);
 
     // Fix IE Flash/Form bug

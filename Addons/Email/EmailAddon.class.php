@@ -23,7 +23,8 @@ class EmailAddon extends Addon{
         'description' => '实现系统发邮件功能',
         'status' => 1,
         'author' => 'CoreThink',
-        'version' => '1.0'
+        'version'     => '1.1.0',
+        'beta'        => '3.0',
     );
 
     /**

@@ -1,0 +1,261 @@
+<extend name="Public/layout"/>
+
+<block name="title"><title>{:C('WEB_SITE_TITLE')}－{:C('WEB_SITE_SLOGAN')}</title></block>
+
+<block name="breadcrumb"></block>
+
+<block name="style">
+    <style type="text/css">
+        .main-nav {
+            margin-bottom: 0px;
+        }
+        .btn-default-inverse {
+            color: #fff;
+            border-color: #fff;
+            text-shadow: none;
+        }
+        .btn-default-inverse:hover,
+        .btn-default-inverse.hover,
+        .btn-default-inverse.active {
+            color: #333;
+            background: #fff;
+        }
+        #my-slide .slider1 .btn-default-inverse:hover,
+        #my-slide .slider1 .btn-default-inverse.hover,
+        #my-slide .slider1 .btn-default-inverse.active {
+            color: #65b72f;
+        }
+        #my-slide .slider2 .btn-default-inverse:hover,
+        #my-slide .slider2 .btn-default-inverse.hover,
+        #my-slide .slider2 .btn-default-inverse.active {
+            color: #047ecc;
+        }
+        .description {
+            font-size: 17px;
+            line-height:35px;
+        }
+        @media (min-width: 768px) {
+            .description {
+                width: 560px;
+            }
+        }
+        @media (max-width: 768px) {
+            #my-slide .btn {
+                margin-bottom: 8px;
+            }
+            .slider .title {
+                font-size: 20px;
+            }
+            .feature-list .thumbnail .caption p{
+                height: auto;
+            }
+        }
+
+        /* 特性 */
+        .feature-title {
+            margin-bottom: 15px;
+        }
+        .feature-list .thumbnail .lazy{
+            width: 100%;
+            height: 126px;
+        }
+        .feature-list .thumbnail .caption p{
+            height: 80px;
+            overflow: hidden;
+        }
+        @media (max-width: 768px) {
+            #my-slide .btn {
+                margin-bottom: 8px;
+            }
+            .feature-list .thumbnail .caption p{
+                height: auto;
+            }
+        }
+    </style>
+</block>
+
+<block name="script">
+    <script type="text/javascript" src="__PUBLIC__/libs/jquery_devrama_slider/jquery.devrama.slider.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('#my-slide').DrSlider({
+                width: '100%',
+                height: '500px',
+                userCSS: false,
+                transitionSpeed: 1000,
+                duration: 8000,
+                transition: 'random',
+                showNavigation: true,
+                navigationType: 'circle',
+                positionNavigation: 'in-center-bottom',
+                navigationColor: 'rgb(223,223,223)',
+                navigationHoverColor: '#00A4FF',
+                navigationHighlightColor: '#00A4FF',
+                showProgress: true,
+                progressColor: '#fff',
+                pauseOnHover: true
+            });
+        });
+    </script>
+</block>
+
+<block name="jumbotron">
+    <div id="my-slide" style="color:#fff;text-shadow: 0 1px 3px rgba(0,0,0,.4),0 0 30px rgba(0,0,0,.075);">
+        <div class="slider slider1" style="background:#65b72f;">
+            <div data-pos="['0%', '100%', '10%', '5%']" data-duration="300" data-effect="move">
+                <h1 class="title" style="display:inline-block;">{:C('WEB_SITE_TITLE')}</h1>
+                <label class="label label-danger margin-left">v1.1.0</label>
+            </div>
+            <div  class="description" data-pos="['0%', '110%', '30%', '5%']" data-duration="300" data-effect="move">
+                 {:C('WEB_SITE_DESCRIPTION')}
+            </div>
+            <div class="hidden-xs" data-pos="['0%', '100%', '70%', '5%']" data-duration="200" data-effect="move">
+                <a class="btn btn-default-inverse btn-pill" href="http://www.corethink.cn/publish/index.html" ><i class="fa fa-download"></i> 立即下载</a>
+                <a class="btn btn-default-inverse btn-pill" target="_blank" href="https://github.com/corethink"><i class="fa fa-github"></i> GitHub</a>
+                <a class="btn btn-default-inverse btn-pill" target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=1ac8801c2f274de186f5c52203f428a1726ba9e3018aa579399b4c6161ca63cd"><i class="fa fa-qq"></i> QQ群</a>
+                <a class="btn btn-default-inverse btn-pill" target="_blank" href="http://corethink.coding.io"><i class="fa fa-flask"></i> 演示</a>
+                <a class="btn btn-default-inverse btn-pill" href="{:U('Donate/Home/Default/index')}"><i class="fa fa-cny"></i> 支持</a>
+            </div>
+            <div data-pos="['100%', '0%', '88%', '5%']" data-duration="300" data-effect="move">
+                <span class="small">生态环境：CoreThink核心 、应用商店、可装卸模块、插件、模版主题、微＋微信平台、硬件设备、第三方开发者</span>
+            </div>
+            <div class="hidden-xs" data-pos="['0%', '110%', '6%', '66%']" data-duration="300" data-effect="move">
+                 <img style="height: 445px;" src="__HOME_IMG__/logo/logo_with_hat.png">
+            </div>
+        </div>
+        <div class="slider slider2" style="background:#047ecc;">
+            <div data-pos="['0%', '100%', '10%', '5%']" data-duration="300" data-effect="move">
+                <h1 class="title" style="display:inline-block;">{:C('WEB_SITE_TITLE')}</h1>
+                <label class="label label-danger margin-left">v1.1.0</label>
+            </div>
+            <div class="description" data-pos="['0%', '110%', '30%', '5%']" data-duration="300" data-effect="move">
+                 {:C('WEB_SITE_DESCRIPTION')}
+            </div>
+            <div class="hidden-xs" data-pos="['0%', '100%', '70%', '5%']" data-duration="200" data-effect="move">
+                <a class="btn btn-default-inverse btn-pill" href="http://www.corethink.cn/publish/index.html" ><i class="fa fa-download"></i> 立即下载</a>
+                <a class="btn btn-default-inverse btn-pill" target="_blank" href="https://github.com/JiangRuyi/corethink"><i class="fa fa-github"></i> GitHub</a>
+                <a class="btn btn-default-inverse btn-pill" target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=1ac8801c2f274de186f5c52203f428a1726ba9e3018aa579399b4c6161ca63cd"><i class="fa fa-qq"></i> QQ群</a>
+                <a class="btn btn-default-inverse btn-pill" target="_blank" href="http://corethink.coding.io"><i class="fa fa-flask"></i> 演示</a>
+                <a class="btn btn-default-inverse btn-pill" href="{:U('Donate/Home/Default/index')}"><i class="fa fa-cny"></i> 支持</a>
+            </div>
+            <div data-pos="['100%', '0%', '88%', '5%']" data-duration="300" data-effect="move">
+                <span class="small">生态环境：CoreThink核心 、应用商店、可装卸模块、插件、模版主题、微＋微信平台、硬件设备、第三方开发者</span>
+            </div>
+            <div class="hidden-xs" data-pos="['0%', '100%', '6%', '66%']" data-duration="300" data-effect="move">
+                 <img style="height: 445px;" src="__HOME_IMG__/logo/logo_with_hat.png">
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="main">
+    <div class="container">
+        <a class="btn btn-info btn-block feature-title">特性</a>
+        <div class="row feature-list">
+            <div class="col-xs-12 col-sm-4 col-md-3">
+                <div class="thumbnail">
+                    <a href="#"><img class="lazy" data-lazy="__HOME_IMG__/index/index01.png"></a>
+                    <div class="caption">
+                        <h3 class="text-center">
+                            <a href="#">框架简介<br><small>简单、轻量、高效</small></a>
+                        </h3>
+                        <p>
+                            CoreThink是一套轻量级WEB产品开发框架，追求简单、高效、卓越。可轻松实现移动互联网时代支持多终端的轻量级WEB产品快速开发。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3">
+                <div class="thumbnail">
+                    <a href="#"><img class="lazy" data-lazy="__HOME_IMG__/index/index02.png"></a>
+                    <div class="caption">
+                        <h3 class="text-center">
+                            <a href="#">开源免费<br><small>核心框架代码开源</small></a>
+                        </h3>
+                        <p>
+                            核心框架代码开源，并且免费使用，对商业用户友好。CoreThink将成为一面国产开源旗舰产品。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3">
+                <div class="thumbnail">
+                    <a href="#"><img class="lazy" data-lazy="__HOME_IMG__/index/index03.png"></a>
+                    <div class="caption">
+                        <h3 class="text-center">
+                            <a href="#">极易使用<br><small>容易上手</small></a>
+                        </h3>
+                        <p>
+                            CoreThink 极易使用：没有复杂的代码和新生语法，原生TP语言直接调用即可。后台Builder可快速扩展功能无需编写模版。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3">
+                <div class="thumbnail">
+                    <a href="#"><img class="lazy" data-lazy="__HOME_IMG__/index/index04.png"></a>
+                    <div class="caption">
+                        <h3 class="text-center">
+                            <a href="#">无限可能<br><small>想到做到</small></a>
+                        </h3>
+                        <p>
+                            CoreThink 可以用来开发企业网站、门户网站、多用户博客、O2O商城、微信公众号第三方平台，你想到的它都能办到。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3">
+                <div class="thumbnail">
+                    <a href="#"><img class="lazy" data-lazy="__HOME_IMG__/index/index05.png"></a>
+                    <div class="caption">
+                        <h3 class="text-center">
+                            <a href="#">通俗文档<br><small>通俗易懂</small></a>
+                        </h3>
+                        <p>
+                            CoreThink 通俗文档：文档通俗易懂，尽量规避专业术语，努力用最白话的形式表述。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3">
+                <div class="thumbnail">
+                    <a href="#"><img class="lazy" data-lazy="__HOME_IMG__/index/index06.png"></a>
+                    <div class="caption">
+                        <h3 class="text-center">
+                            <a href="#">ThinkPHP构建<br><small>大道至简</small></a>
+                        </h3>
+                        <p>
+                            依托新版ThinkPHP的功能优势和命名空间的特性，官方七年磨一剑，用心打造。更高，更快，更强！
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3">
+                <div class="thumbnail">
+                    <a href="#"><img class="lazy" data-lazy="__HOME_IMG__/index/index07.png"></a>
+                    <div class="caption">
+                        <h3 class="text-center">
+                            <a href="#">快速迭代<br><small>敏捷开发</small></a>
+                        </h3>
+                        <p>
+                            CoreThink 快速迭代：第一时间提交新功能的代码。当然也欢迎大家一起贡献代码。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3">
+                <div class="thumbnail">
+                    <a href="#"><img class="lazy" data-lazy="__HOME_IMG__/index/index08.png"></a>
+                    <div class="caption">
+                        <h3 class="text-center">
+                            <a href="#">加入我们<br><small>崇尚自由</small></a>
+                        </h3>
+                        <p>
+                            我们追求快乐，做真正喜欢做的事。我们追求效率，做正确有意义的事。我们追求成长，要成为最优秀的人。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

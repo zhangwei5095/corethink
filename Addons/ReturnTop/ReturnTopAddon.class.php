@@ -23,7 +23,8 @@ class ReturnTopAddon extends Addon{
         'description'=>'返回顶部',
         'status'=>1,
         'author'=>'CoreThink',
-        'version'=>'1.0'
+        'version'     => '1.1.0',
+        'beta'        => '3.0',
     );
 
     /**
@@ -42,7 +43,10 @@ class ReturnTopAddon extends Addon{
         return true;
     }
 
-    //实现的PageFooter钩子方法
+    /**
+     * 实现的PageFooter钩子方法
+     * @author jry <598821125@qq.com>
+     */
     public function PageFooter($param){
         $addons_config = $this->getConfig();
         if($addons_config['status']){

@@ -7,7 +7,7 @@
 // | Author: jry <598821125@qq.com> <http://www.corethink.cn>
 // +----------------------------------------------------------------------
 namespace Admin\Controller;
-use Common\Util\Page;
+use Common\Util\Think\Page;
 use Common\Util\Sql;
 /**
  * 扩展后台管理页面
@@ -24,12 +24,7 @@ class AddonController extends AdminController {
         $p = !empty($_GET["p"]) ? $_GET['p'] : 1;
         $addon_object = D('Addon');
         $addons = $addon_object
-                ->page($p, C('ADMIN_PAGE_ROWS'))
                 ->getAllAddon();
-        $page = new Page(
-            $addon_object->count(),
-            C('ADMIN_PAGE_ROWS')
-        );
 
         // 使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
@@ -44,7 +39,6 @@ class AddonController extends AdminController {
                 ->addTableColumn('version', '版本')
                 ->addTableColumn('right_button', '操作', 'btn')
                 ->setTableDataList($addons)        // 数据列表
-                ->setTableDataPage($page->show())  // 数据列表分页
                 ->display();
     }
 
@@ -150,7 +144,7 @@ class AddonController extends AdminController {
 
         // 检查该插件所需的钩子
         if ($hooks) {
-            $hook_object = D('AddonHook');
+            $hook_object = D('Hook');
             foreach ($hooks as $val) {
                 $hook_object->existHook($val, array('description' => $info['description']));
             }
@@ -434,7 +428,7 @@ class AddonController extends AdminController {
                 // 使用FormBuilder快速建立表单页面。
                 $builder = new \Common\Builder\FormBuilder();
                 $builder->setMetaTitle('编辑数据')  // 设置页面标题
-                        ->setPostUrl(U('admin/addon/adminedit', array('name' => $name, 'tab' => $tab))) // 设置表单提交地址
+                        ->setPostUrl(U('Admin/Addon/adminedit', array('name' => $name, 'tab' => $tab))) // 设置表单提交地址
                         ->addFormItem('id', 'hidden', 'ID', 'ID')
                         ->setExtraItems($param['field'])
                         ->setFormData(M($param['model'])->find($id))

@@ -1,0 +1,26 @@
+<div class="col-xs-12 col-sm-6 col-lg-6">
+	<div class="panel panel-default">
+	    <div class="panel-heading">
+            <i class="fa fa-music"></i> 虾米电台
+        </div>
+		<div class="panel-body text-center" style="padding-top:7px;padding-bottom:7px;">
+		    <div class="alert alert-warning" style="width:100%;height:286px;padding-top: 90px;">
+		        <a class="btn btn-warning-outline btn-pill open-xiami" style="padding: 30px;font-size: 20px">点击打开虾米电台</a>
+		    </div>
+		    <div class='xmflash hidden'>
+		       <embed src="http://www.xiami.com/res/kuang/xiamikuang0709.swf"
+		       allowFullScreen="true" quality="high" width="510" height="285"
+		       align="middle" allowScriptAccess="always" type="application/x-shockwave-flash" play="false" autostart=false >
+		       </embed>
+		    </div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		$(".open-xiami").on("click",function(){
+		    $('.xmflash').removeClass("hidden");
+	　　　　 $(this).closest('div').addClass("hidden");
+	　　});
+	});
+</script>

@@ -1,0 +1,96 @@
+<extend name="./Application/Home/View/Public/layout.html"/>
+
+<block name="style">
+    <style type="text/css">
+        .login-box {
+            float: none;
+            margin: 2% auto;
+        }
+        .login-box .panel {
+            border-color: #eee;
+            padding: 20px 20px 0px 20px;
+        }
+        .login-box .input-group input {
+            height: 40px;
+        }
+        .login-box .input-group-addon .fa {
+            width: 18px;
+        }
+        .login-box .verifyimg-box {
+            padding: 0px;
+        }
+        .login-box .verifyimg-box .verifyimg {
+            width: 138px;
+            height: 38px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        @media (max-width: 768px) {
+            .login,
+            .login-box {
+                padding: 0;
+            }
+            .login-box .panel {
+                padding: 0px;
+            }
+        }
+    </style>
+</block>
+
+<block name="jumbotron">
+    <div class="bg-white">
+        <div class="container">
+            <ol class="breadcrumb reg-breadcrumb bg-white">
+                <li>
+                    <a href="#"><i class="fa fa-home"></i></a>
+                </li>
+                <li>
+                    <a href="#">用户</a>
+                </li>
+                <li class="active">登录</li>
+            </ol>
+        </div>
+    </div>
+</block>
+
+<block name="main">
+    <div class="container login">
+        <div class="col-xs-12 col-md-5 login-box">
+            <div class="panel panel-default">
+                <h3 class="text-center">{$meta_title}</h3>
+                <div class="panel-body">
+                    <form class="login-form" action="__SELF__" method="post">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input type="text" class="form-control" placeholder="邮箱/手机号/用户名" name="username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                <input type="password" class="form-control" placeholder="请输入密码" name="password">
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="checkbox-inline" for="remember-login">
+                                <input id="remember-login" type="checkbox" name="remember_login" checked="checked">
+                                <span>保持登录</span>
+                            </label>
+                            <a class="text-muted pull-right" href="{:U('resetPassword')}">忘记密码？</a>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-pill btn-block submit ajax-post" target-form="login-form">登录</button>
+                        </div>
+                        <div class="form-group">
+                            {:hook('SyncLogin')} <!-- 第三方登陆钩子 -->
+                        </div>
+                        <div class="form-group text-center">
+                            <a class="text-muted" href="{:U('register')}">没有帐号，极速注册</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

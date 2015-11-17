@@ -245,7 +245,7 @@ KindEditor.plugin('table', function(K) {
                         if (bgColor !== '') {
                             style += 'background-color:' + bgColor + ';';
                         }
-                        var html = '<table';
+                        var html = '<table class="table"';
                         if (style !== '') {
                             html += ' style="' + style + '"';
                         }

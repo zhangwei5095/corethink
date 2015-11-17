@@ -149,7 +149,15 @@ class Route {
         if(isset($path)) {
             $var[C('VAR_ACTION')] = array_pop($path);
             if(!empty($path)) {
-                $var[C('VAR_CONTROLLER')] = array_pop($path);
+                if (C('CONTROLLER_LEVEL') > 1 ){// 控制器层次
+                    // 发现$paths的长度是偶数，说明URL省略了默认分级名，在这里加上
+                    if (count($path) == 1 && C('DEFAULT_CONTROLLER_LEVEL')) {
+                        array_unshift($path, C('DEFAULT_CONTROLLER_LEVEL'));
+                    }
+                    $var[C('VAR_CONTROLLER')] = implode('/', $path);
+                } else {
+                    $var[C('VAR_CONTROLLER')] = array_pop($path);
+                }   
             }
             if(!empty($path)) {
                 $var[C('VAR_MODULE')]  = array_pop($path);
@@ -313,4 +321,215 @@ class Route {
         return $reflect->invokeArgs($args);
     }
 
+    /**
+     * 路由反向解析
+     * @param  string $path  控制器/方法
+     * @param  array $vars  url参数
+     * @param  string $depr  分隔符
+     * @param  string|true $suffix  url后缀
+     * @return string|false
+     */
+    public static function reverse($path, &$vars, $depr, $suffix = true){
+        $_rules = array();
+        if ($rules = self::ruleCache()) {
+            foreach ($rules as $i => $rules2) {
+                foreach ($rules2 as $rule => $route) {
+                    if (is_array($route) && is_string($route[0]) && '/' != substr($route[0], 0, 1)) {
+                        $_rules[$i][$route[0]][$rule] = $route;
+                    }
+                }
+            }
+        }
+
+        if (isset($_rules[0][$path])) { // 静态路由
+            foreach ($_rules[0][$path] as $rule => $route) {
+                $args = array_pop($route);
+                if (count($vars) == count($args) && !empty($vars) && !array_diff($vars, $args)) {
+                    return str_replace('/', $depr, $rule);
+                }
+            }
+        }
+
+        if (isset($_rules[1][$path])) {
+            foreach ($_rules[1][$path] as $rule => $route) {
+                $args = array_pop($route);
+                $array = array();
+                if (isset($route[2])) { // 路由参数检查
+                    if (!checkOption($route[2], $suffix)) continue;
+                }
+                if ('/' != substr($rule, 0, 1)) { // 规则路由
+                    foreach ($args as $key => $val) {
+                        $flag = false;
+                        if ($val[0] == 0) { // 静态变量值
+                            $array[$key] = $key;
+                            continue;
+                        }
+                        if (isset($vars[$key])) {
+                            if (!empty($val[2])) { // 是否有过滤条件
+                                if ($val[2] == 'int') {
+                                    // 是否为数字
+                                    if (!is_numeric($vars[$key]) || !is_int($vars[$key]+0)) break; 
+                                } else {
+                                    // 排除的名称
+                                    if (in_array($vars[$key], $val[2])) break;
+                                }
+                            }
+                            $flag = true;
+                            $array[$key] = $vars[$key];
+                        } elseif ($val[0] == 1) { // 如果是必选项
+                            break; 
+                        }
+                    }
+                    if (!empty($flag)) { // 匹配成功
+                        foreach (array_keys($array) as $key) {
+                            unset($vars[$key]);
+                        }
+                        return implode($depr, $array);
+                    }
+                } else { // 正则路由
+                    $keys = !empty($args) ? array_keys($args) : array_keys($vars);
+                    $str = preg_replace_callback('/\(.+\)/', function($match) use(&$vars, &$keys){ 
+                        $k = array_shift($keys);
+                        return isset($vars[$k]) ? $vars[$k] : ''; 
+                    }, $rule);
+                    $str = substr($str, 1, -1);
+                    $str = rtrim(ltrim($str, '^'), '$');
+                    $str = str_replace('\\', '', $str);
+                    if (preg_match($rule, $str, $matches)) { // 匹配成功
+                        if ($args) {
+                            $keys = array_keys($args);
+                        }
+                        foreach ($keys as $key) {
+                            unset($vars[$key]);
+                        }
+                        return str_replace('/', $depr, $str);
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    // 规则路由定义方法：
+    // '路由规则'=>'[控制器/操作]?额外参数1=值1&额外参数2=值2...'
+    // '路由规则'=>array('[控制器/操作]','额外参数1=值1&额外参数2=值2...')
+    // '路由规则'=>'外部地址'
+    // '路由规则'=>array('外部地址','重定向代码')
+    // 路由规则中 :开头 表示动态变量
+    // 外部地址中可以用动态变量 采用 :1 :2 的方式
+    // 'news/:month/:day/:id'=>array('News/read?cate=1','status=1'),
+    // 'new/:id'=>array('/new.php?id=:1',301), 重定向
+    // 正则路由定义方法：
+    // '路由正则'=>'[控制器/操作]?参数1=值1&参数2=值2...'
+    // '路由正则'=>array('[控制器/操作]?参数1=值1&参数2=值2...','额外参数1=值1&额外参数2=值2...')
+    // '路由正则'=>'外部地址'
+    // '路由正则'=>array('外部地址','重定向代码')
+    // 参数值和外部地址中可以用动态变量 采用 :1 :2 的方式
+    // '/new\/(\d+)\/(\d+)/'=>array('News/read?id=:1&page=:2&cate=1','status=1'),
+    // '/new\/(\d+)/'=>array('/new.php?id=:1&page=:2&status=1','301'), 重定向
+    /**
+     * 读取规则缓存
+     * @param  boolean $update 是否更新
+     * @return array
+     */
+    public static function ruleCache($update = false) {
+        $module = defined('MODULE_NAME') ? '_'.MODULE_NAME : '';
+        if ($update || !$_rules = S('url_route_rules'.$module)) {
+            // 静态路由
+            $_rules[0] = C('URL_MAP_RULES');
+            if (!empty($_rules[0])) {
+                foreach ($_rules[0] as $rule => $route) {
+                    if (!is_array($route)) {
+                        $route = array($route);
+                    }
+                    if (strpos($route[0], '?')) { // 分离参数
+                        list($route[0], $args) = explode('?', $route[0], 2);
+                        parse_str($args, $args);
+                    } else {
+                        $args = array();
+                    }
+                    if (!empty($route[1]) && is_string($route[1])) { // 额外参数
+                        parse_str($route[1], $route[1]);
+                    }
+                    $route[] = $args;
+                    $_rules[0][$rule] = $route;
+                }
+            }
+            // 动态路由
+            $_rules[1] = C('URL_ROUTE_RULES');
+            if(!empty($_rules[1])) {
+                foreach ($_rules[1] as $rule=>$route){
+                    if (!is_array($route)) {
+                        $route = array($route);
+                    } elseif (is_numeric($rule)) {
+                        // 支持 array('rule','adddress',...) 定义路由
+                        $rule = array_shift($route);
+                    }
+                    if (!empty($route)) {
+                        $args = array();
+                        if (is_string($route[0])) {
+                            if (0===strpos($route[0], '/') || 0===strpos($route[0], 'http')) { // 重定向
+                                if (!isset($route[1])) {
+                                    $route[1] = 301;
+                                }
+                            } else {
+                                if (!empty($route[1]) && is_string($route[1])) { // 额外参数
+                                    parse_str($route[1], $route[1]);
+                                }
+                                if (strpos($route[0], '?')) { // 分离参数
+                                    list($route[0], $params) = explode('?', $route[0], 2);
+                                    if (!empty($params)) {
+                                        foreach (explode('&', $params) as $key => $val) {
+                                            if (0 === strpos($val, ':')) { // 动态参数
+                                                $val = substr($val, 1);
+                                                $args[$key] = strpos($val, '|') ? explode('|', $val, 2) : array($val);
+                                            } else {
+                                                $route[1][$key] = $val;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if('/' != substr($rule, 0, 1)) { // 规则路由
+                            foreach (explode('/', rtrim($rule, '$')) as $item){
+                                $filter = $fun = '';
+                                $type = 0;
+                                if (0 === strpos($item, '[:')) { // 可选变量
+                                    $type = 2;
+                                    $item = substr($item, 1, -1);
+                                }
+                                if (0 === strpos($item, ':')) { // 动态变量获取
+                                    $type = $type ?: 1;
+                                    if($pos = strpos($item, '|')) { 
+                                        // 支持函数过滤
+                                        $fun  = substr($item, $pos+1);
+                                        $item = substr($item, 1, $pos-1);
+                                    }
+                                    if ($pos = strpos($item, '^')) { // 排除项
+                                        $filter = explode('-',substr($item, $pos+1));
+                                        $item  = substr($item, 1, $pos-1);
+                                    } elseif (strpos($item, '\\')) {
+                                        if ('d' == substr($item,-1)) { // \d表示限制为数字
+                                            $filter = 'int';
+                                        }
+                                        $item = substr($item, 1, -2);
+                                    } else {
+                                        $item = substr($item, 1);
+                                    }
+                                }
+                                $args[$item] = array($type, $fun, $filter);
+                            }
+                        }
+                        $route[] = $args;
+                        $_rules[1][$rule] = $route;
+                    } else {
+                        unset($_rules[1][$rule]);
+                    }
+                }
+            }
+            S('url_route_rules'.$module, $_rules);
+        }
+        return $_rules;
+    }
 }

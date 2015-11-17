@@ -1,0 +1,89 @@
+<?php
+    // 获取用户信息
+    $user_info = D('User/User')->detail(is_login());
+
+    // 获取所有模块配置的用户导航
+    $mod_con['status'] = 1;
+    $_user_nav_center = array();
+    $_user_nav_list = D('Admin/Module')->where($mod_con)->getField('user_nav', true);
+    foreach ($_user_nav_list as $key => $val) {
+        if ($val) {
+            $val = json_decode($val, true);
+            $_user_nav_center = array_merge($_user_nav_center, $val['center']);
+        }
+    }
+?>
+
+<block name="style">
+    <style type="text/css">
+        .panel-profile table.info td{
+            width: 50%;
+            padding: 2px;
+            text-align: left;
+        }
+        .panel-profile-img-action {
+            color: #fff;
+            padding: 1px 2px;
+            font-size: 10px;
+            border-radius: 20px;
+            background: rgba(0,0,0,.5);
+            display: block;
+            position: absolute;
+            bottom: 5px;
+            left: 20%;
+            right: 20%;
+        }
+        .panel-profile-img-box {
+            position: relative;
+        }
+    </style>
+</block>
+
+<div class="panel panel-default panel-profile">
+    <div class="panel-heading" style="background-image: url('__IMG__/bg/bg9.jpg');"></div>
+    <div class="panel-body text-center">
+        <a class="panel-profile-img-box" href="{:U('User/Home/Center/avatar')}">
+            <img class="panel-profile-img" src="{$user_info.avatar|get_cover='avatar'}">
+            <span class="panel-profile-img-action" >修改头像</span>
+        </a>
+        <h5 class="panel-title">
+            {$user_info.nickname} 
+            <a href="{:U('User/Home/Center/nickname')}"><i class="fa fa-edit"></i></a>
+        </h5>
+        <p class="summary">{$user_info.summary}</p>
+        <table class="info">
+            <tbody>
+                <tr>
+                    <td class="border-none">关注：0</td>
+                    <td class="border-none">粉丝：0</td>
+                </tr>
+                <tr>
+                    <td class="border-none">积分：{$user_info.score}</td>
+                    <td class="border-none">余额：¥{$user_info.money} <a target="_blank" href="http://www.corethink.cn/appstore/app/detail/id/19.html">充值</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<nav class="menu menu-corethink" data-toggle="menu">
+    <!-- 侧边导航 -->
+    <div class="panel-group" role="tablist">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab">
+                <h4 class="panel-title">
+                    <a class="" data-toggle="collapse" href="#list1"><i class="fa fa-folder-open-o"></i> 个人中心</a>
+                </h4>
+            </div>
+            <div id="list1" class="panel-collapse collapse in" role="tabpanel">
+                <div class="list-group">
+                    <volist name="_user_nav_center" id="vo_nav_center">
+                        <a href="{:U($vo_nav_center['url'], null, true, true)}" class="list-group-item {$vo_nav_center.class}">
+                            <i class="{$vo_nav_center.icon}"></i> {$vo_nav_center.title}
+                        </a>
+                    </volist>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

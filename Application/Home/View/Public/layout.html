@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <block name="title"><title>{$meta_title}｜{:C('WEB_SITE_TITLE')}－{:C('WEB_SITE_SLOGAN')}</title></block>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="author" content="{:C('WEB_SITE_TITLE')}">
+    <meta name="keywords" content="{$meta_keywords}">
+    <meta name="description" content="{$meta_description}">
+    <meta name="generator" content="CoreThink">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="{:C('WEB_SITE_TITLE')}">
+    <meta name="format-detection" content="telephone=no,email=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/favicon.ico">
+    <link rel="apple-touch-icon" type="image/x-icon" href="__ROOT__/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="__CUI__/css/cui.min.css">
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/home.css?v={:C('STATIC_VERSION')}">
+    <block name="style"></block>
+    <!-- 如果配置里CDN静态资源列表则使用CDN否则使用静态资源 -->
+    <?php if(C('CDN_RESOURCE_LIST')): ?>
+        {:C('CDN_RESOURCE_LIST')}
+    <?php else: ?>
+        <script type="text/javascript" src="__PUBLIC__/libs/jquery/1.x/jquery.min.js"></script>
+    <?php endif; ?>
+</head>
+
+<body>
+    <div class="clearfix hook hook-page-header">
+        {:hook('PageHeader')} <!-- 文档开始钩子 -->
+    </div>
+
+    <block name="wrap">
+        <div class="clearfix full-wrap">
+            <div class="clearfix full-header">
+                <block name="header">
+                    <nav class="header navbar navbar-default hidden-xs hidden-sm" role="navigation">
+                        <div class="container">
+                            <div class="collapse navbar-collapse">
+                                <ul class="nav navbar-nav" style="margin-left:-15px">
+                                    <li><a href="#">您好，欢迎来到{:C('WEB_SITE_TITLE')} ！</a></li>
+                                    <li><a class="text-muted" href="mailto:admin@corethink.cn"><i class="fa fa-envelope"></i></a></li>
+                                    <li>
+                                        <a href="#" tabindex="0" role="button" data-toggle="popover" data-trigger="hover"
+                                        data-placement="bottom" title="QQ联系" data-html="true"
+                                        data-content="<div style='width:138px;'><ul class='list-unstyled'>
+                                        <li>客服1：209216005</li><li>客服2：1270686837</li><li>客服3：403081035</li>
+                                        <li>QQ群1：105108204</li><li>QQ群2：130747567</li><li>QQ群3：219842410</li>
+                                        <li>VIP群：300122100</li></ul></div>">
+                                        <i class="fa fa-qq"></i></a>
+                                    </li>
+                                    <li><a target="_blank" href="http://weibo.com/u/5667168319"><i class="fa fa-weibo"></i></a></li>
+                                    <li>
+                                        <a href="#" data-html="true" tabindex="0" role="button" data-toggle="popover" data-trigger="hover" data-placement="bottom"
+                                            data-template='<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content" style="padding:0px;width:200px;"></div></div>'
+                                            title="微信扫一扫" data-html="true" data-content="<img class='img-responsive' src='__HOME_IMG__/logo/weixin_gh_ce5447812a60.jpg'>">
+                                            <i class="fa fa-weixin"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="nav navbar-nav navbar-right">
+                                    <!-- 系统模块导航 -->
+                                    <corethink:nav_list name="vo" pid="0">
+                                        <li>
+                                            <a target="_blank" href="{$vo.href}">
+                                                <span> {$vo.title}</span>
+                                            </a>
+                                        </li>
+                                    </corethink:nav_list>
+                                    <present name="_user_auth">
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                <img class="nav-img img-circle" src="{$_user_auth.avatar|get_cover='avatar'}" alt="{$_user_auth.nickname}">
+                                                <span class="<notempty name='_new_message'>red-dot</notempty>">
+                                                    {$_user_auth.nickname}
+                                                </span>
+                                                <span class="caret"></span>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="{:U('User/Home/Default/home', array('uid' => $_user_auth['uid']), true, true)}"><i class="fa fa-home"></i> 个人主页</a></li>
+                                                <volist name="_user_nav_main" id="vo_nav">
+                                                    <li><a href="{:U($vo_nav['url'], null, true, true)}" class="{$vo_nav.class}"><i class="{$vo_nav.icon}"></i> {$vo_nav.title}</a></li>
+                                                </volist>
+                                                <li role="separator" class="divider"></li>
+                                                <li><a href="{:U('User/Home/User/logout', null, true, true)}" class="ajax-get"><i class="fa fa-sign-out"></i> 注销登录</a></li>
+                                            </ul>
+                                        </li>
+                                    <else />
+                                        <li><a href="{:U('User/Home/User/login', null, true, true)}">登录</a></li>
+                                        <li><a href="{:U('User/Home/User/register', null, true, true)}">注册</a></li>
+                                    </present>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </block>
+
+                <block name="main-nav">
+                    <nav class="main-nav navbar navbar-inverse" role="navigation">
+                        <div class="container">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-main">
+                                    <span class="sr-only">切换导航</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <php>if(C('WEB_SITE_LOGO')):</php>
+                                    <a class="navbar-brand" href="{:C('HOME_PAGE')}"><img alt="logo" class="logo" src="{$Think.config.WEB_SITE_LOGO|get_cover}"></a>
+                                <php>else:</php>
+                                    <a class="navbar-brand" href="{:C('HOME_PAGE')}"><img alt="logo" class="logo" src="__HOME_IMG__/logo/logo_with_title.png"></a>
+                                <php>endif;</php>
+                            </div>
+                            <div class="collapse navbar-collapse navbar-collapse-main">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a href="{:C('HOME_PAGE')}">首页</a></li>
+                                    <article:category_list name="vo" pid="0" group="1">
+                                        <php>if($vo['_child']):</php>
+                                            <li class="dropdown">
+                                                <a href="{:U('Article/Home/Article/index', array('cid' => $vo['id']))}" class="dropdown-toggle" role="button">
+                                                    {$vo.title} <span class="caret"></span>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <volist name="vo._child" id="vo1">
+                                                        <li>
+                                                            <a href="{:U('Article/Home/Article/index', array('cid' => $vo1['id']))}">{$vo1.title}</a>
+                                                        </li>
+                                                    </volist>
+                                                </ul>
+                                            </li>
+                                        <php>else:</php>
+                                            <li>
+                                                <a href="{:U('Article/Home/Article/index', array('cid' => $vo['id']))}">
+                                                    <span> {$vo.title}</span>
+                                                </a>
+                                            </li>
+                                        <php>endif;</php>
+                                    </article:category_list>
+                                    <present name="_user_auth">
+                                        <li class="dropdown visible-xs">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                <img class="nav-img img-circle" src="{$_user_auth.avatar|get_cover='avatar'}" alt="{$_user_auth.nickname}">
+                                                <span class="<notempty name='_new_message'>red-dot</notempty>">
+                                                    {$_user_auth.nickname}
+                                                </span>
+                                                <span class="caret"></span>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="{:U('User/Home/Default/home', array('uid' => $_user_auth['uid']), true, true)}"><i class="fa fa-home"></i> 个人主页</a></li>
+                                                <volist name="_user_nav_main" id="vo_nav">
+                                                    <li><a href="{:U($vo_nav['url'], null, true, true)}" class="{$vo_nav.class}"><i class="{$vo_nav.icon}"></i> {$vo_nav.title}</a></li>
+                                                </volist>
+                                                <li role="separator" class="divider"></li>
+                                                <li><a href="{:U('User/Home/User/logout', null, true, true)}" class="ajax-get"><i class="fa fa-sign-out"></i> 注销登录</a></li>
+                                            </ul>
+                                        </li>
+                                    <else />
+                                        <li class="visible-xs"><a href="{:U('User/Home/User/login', null, true, true)}">登录</a></li>
+                                        <li class="visible-xs"><a href="{:U('User/Home/User/register', null, true, true)}">注册</a></li>
+                                    </present>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </block>
+            </div>
+
+            <div class="clearfix full-container">
+                <block name="jumbotron"></block>
+
+                <div id="main" class="main">
+                    <block name="main">这里是内容</block>
+                </div>
+            </div>
+
+            <div class="clearfix full-foooter">
+                <block name="footer">
+                    <div class="footer">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-8">
+                                    <ul class="list-inline list-unstyled">
+                                        <article:category_list name="vo" pid="6" group="1">
+                                            <li>
+                                                <a href="{:U('Article/Home/Article/index', array('cid' => $vo['id']))}">
+                                                    <span> {$vo.title}</span>
+                                                </a>
+                                            </li>
+                                        </article:category_list>
+                                    </ul>
+                                    <p>
+                                        <a class="copyright">{:C('WEB_SITE_COPYRIGHT')}</a>
+                                        <a class="icp" href="http://www.miibeian.gov.cn/" target="_blank">苏ICP备1502009-2号</a>
+                                    </p>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <img src="__HOME_IMG__/logo/weixin_gh_ce5447812a60.jpg" height="80" width="80" title="二维码" alt="two-dimension code" style="margin-left: 50px;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </block>
+            </div>
+        </div>
+    </block>
+
+    <div class="clearfix hook hook-page-footer">
+        {:hook('PageFooter')} <!-- 文档末尾钩子 -->
+    </div>
+
+    <div class="clearfix full-script">
+        <div class="container-fluid">
+            <input type="hidden" id="corethink_home_img" value="__HOME_IMG__">
+            <script type="text/javascript" src="__CUI__/js/cui.min.js"></script>
+            <script type="text/javascript" src="__HOME_JS__/home.js?v={:C('STATIC_VERSION')}"></script>
+            <block name="script"></block>
+            {:C('WEB_SITE_STATISTICS')} <!-- 站点统计代码 -->
+        </div>
+    </div>
+</body>
+</html>
