@@ -147,6 +147,50 @@
 }
 
 
+/* 表单通用样式 */
+@media (min-width: 768px) {
+    .ct-form {
+        padding: 0 15px;
+    }
+    .ct-form.form-horizontal .control-label {
+        text-align: left;
+    }
+    .ct-form.form-horizontal .left {
+        width: 15%;
+        float: left;
+    }
+    .ct-form.form-horizontal .right {
+        width: 85%;
+        float: left;
+    }
+    .ct-form.form-horizontal .form-group {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .ct-form .input,
+    .ct-form .select,
+    .ct-form .textarea,
+    .ct-form .img-box,
+    .ct-form .file-box {
+        width: 70%;
+    }
+    .ct-form .submit,
+    .ct-form .return {
+        min-width: 120px;
+    }
+}
+@media (min-width: 992px) {
+    .ct-form.form-horizontal .left {
+        width: 12%;
+        float: left;
+    }
+    .ct-form.form-horizontal .right {
+        width: 88%;
+        float: left;
+    }
+}
+
+
 /* 页面底部版权 */
 .footer {
     position: absolute;

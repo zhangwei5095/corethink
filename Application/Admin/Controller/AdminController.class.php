@@ -26,7 +26,7 @@ class AdminController extends CommonController {
     protected function _initialize() {
         // 登录检测
         if (!is_login()) { //还没登录跳转到登录页面
-            $this->redirect('Admin/Account/login');
+            $this->redirect('Admin/Public/login');
         }
 
         // 权限检测

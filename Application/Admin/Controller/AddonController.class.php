@@ -428,7 +428,7 @@ class AddonController extends AdminController {
                 // 使用FormBuilder快速建立表单页面。
                 $builder = new \Common\Builder\FormBuilder();
                 $builder->setMetaTitle('编辑数据')  // 设置页面标题
-                        ->setPostUrl(U('Admin/Addon/adminedit', array('name' => $name, 'tab' => $tab))) // 设置表单提交地址
+                        ->setPostUrl(U('admin/addon/adminedit', array('name' => $name, 'tab' => $tab))) // 设置表单提交地址
                         ->addFormItem('id', 'hidden', 'ID', 'ID')
                         ->setExtraItems($param['field'])
                         ->setFormData(M($param['model'])->find($id))

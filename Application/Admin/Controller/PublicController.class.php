@@ -10,10 +10,10 @@ namespace Admin\Controller;
 use Common\Controller\CommonController;
 use Think\Verify;
 /**
- * 后台管理员账号控制器
+ * 后台唯一不需要权限验证的控制器
  * @author jry <598821125@qq.com>
  */
-class AccountController extends CommonController {
+class PublicController extends CommonController {
     /**
      * 后台登陆
      * @author jry <598821125@qq.com>
@@ -36,7 +36,7 @@ class AccountController extends CommonController {
             }
 
             // 验证管理员表里是否有该用户
-            $account_object = D('Admin/Account');
+            $account_object = D('Admin/Access');
             $where['uid'] = $user_info['id'];
             $account_info = $account_object->where($where)->find();
             if (!$account_info) {
@@ -65,7 +65,7 @@ class AccountController extends CommonController {
     public function logout() {
         session('user_auth', null);
         session('user_auth_sign', null);
-        $this->success('退出成功！', U('Admin/Account/login'));
+        $this->success('退出成功！', U('login'));
     }
 
     /**

@@ -41,10 +41,10 @@ CREATE TABLE `ct_addon_sync_login` (
 
 
 
-# Dump of table ct_admin_account
+# Dump of table ct_admin_access
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `ct_admin_account`;
+DROP TABLE IF EXISTS `ct_admin_access`;
 
 CREATE TABLE `ct_admin_account` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '管理员ID',
@@ -55,16 +55,16 @@ CREATE TABLE `ct_admin_account` (
   `sort` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='后台管理员账号表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='后台管理员与用户组对应关系表';
 
-LOCK TABLES `ct_admin_account` WRITE;
-/*!40000 ALTER TABLE `ct_admin_account` DISABLE KEYS */;
+LOCK TABLES `ct_admin_access` WRITE;
+/*!40000 ALTER TABLE `ct_admin_access` DISABLE KEYS */;
 
-INSERT INTO `ct_admin_account` (`id`, `uid`, `group`, `create_time`, `update_time`, `sort`, `status`)
+INSERT INTO `ct_admin_access` (`id`, `uid`, `group`, `create_time`, `update_time`, `sort`, `status`)
 VALUES
 	(1,1,1,1438651748,1438651748,0,1);
 
-/*!40000 ALTER TABLE `ct_admin_account` ENABLE KEYS */;
+/*!40000 ALTER TABLE `ct_admin_access` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
