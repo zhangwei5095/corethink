@@ -14,18 +14,10 @@
     <meta name="format-detection" content="telephone=no,email=no">
     <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/favicon.ico">
     <link rel="apple-touch-icon" type="image/x-icon" href="__ROOT__/favicon.ico">
-
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/home.min.css?v={:C('STATIC_VERSION')}"> <!-- 引入gulp合并压缩的css -->
-    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/main.css?v={:C('STATIC_VERSION')}"> <!-- 引入当前主题无需经过gulp并压缩的css -->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/home.min.css"> <!-- 引入gulp合并压缩的css -->
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/main.css"> <!-- 引入当前主题无需经过gulp并压缩的css -->
     <block name="style"></block>
-
-    <!-- 如果配置里CDN静态资源列表则使用CDN否则使用静态资源 -->
-    <?php if(C('CDN_RESOURCE_LIST')): ?>
-        {:C('CDN_RESOURCE_LIST')}
-    <?php else: ?>
-        <script type="text/javascript" src="__PUBLIC__/libs/jquery/1.x/jquery-1.11.3.min.js"></script>
-    <?php endif; ?>
-
+    <script type="text/javascript" src="__PUBLIC__/libs/jquery/1.x/jquery-1.11.3.min.js"></script>
     <block name="libs"></block>
     {:C('WEB_SITE_STATISTICS')} <!-- 站点统计代码 -->
 </head>
@@ -84,7 +76,6 @@
                                                     <span class="<notempty name='__NEW_MESSAGE__'>red-dot</notempty>"> 消息中心 </span>
                                                 </a>
                                             </li>
-                                            <li><a href="{:U('Home/Addon/index')}"><i class="fa fa-weixin"></i> 微＋平台</a></li>
                                             <li class="divider hidden-xs"></li>
                                             <li><a href="{:U('Home/User/logout')}" class="ajax-get"><i class="fa fa-sign-out"></i> 退出登录</a></li>
                                         </ul>
@@ -252,8 +243,8 @@
                 </script>
             </div>
 
-            <script type="text/javascript" src="__PUBLIC__/js/home.min.js?v={:C('STATIC_VERSION')}"></script> <!-- 引入gulp并压缩的js -->
-            <script type="text/javascript" src="__HOME_JS__/main.js?v={:C('STATIC_VERSION')}"></script> <!-- 引入当前主题无需经过gulp并压缩的js -->
+            <script type="text/javascript" src="__PUBLIC__/js/home.min.js"></script> <!-- 引入gulp并压缩的js -->
+            <script type="text/javascript" src="__HOME_JS__/main.js"></script> <!-- 引入当前主题无需经过gulp并压缩的js -->
             <block name="script"></block>
         </div>
     </div>
