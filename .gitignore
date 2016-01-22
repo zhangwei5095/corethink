@@ -6,17 +6,6 @@
 /Uploads/
 /node_modules/
 
-/Application/
-!/Application/Common/
-!/Application/Admin/
-!/Application/Home/
-!/Application/Install/
-
-/Addons/
-!/Addons/Email/
-!/Addons/ReturnTop/
-!/Addons/SyncLogin/
-
 /Public/css/*.css
 /Public/js/*.js
 !/Public/css/*.min.css

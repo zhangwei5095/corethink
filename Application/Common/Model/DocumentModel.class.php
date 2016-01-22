@@ -121,18 +121,33 @@ class DocumentModel extends Model{
      * 获取文档列表
      * @author jry <598821125@qq.com>
      */
-    public function getDocumentList($cid, $limit = 10, $order = null, $map = null){
+    public function getDocumentList($cid, $limit = 10, $order = null, $map = null, $child = false){
         //获取分类信息
-        $category_info = D('Category')->find($cid);
+        $category_object = D('Category');
+        $category_info = $category_object->find($cid);
 
         //获取该分类绑定文档模型的主要字段
         $document_type_object = D('DocumentType');
         $document_type = $document_type_object->find($category_info['doc_type']);
+        if (!$document_type) {
+            $this->error = '文档模型错误';
+        }
 
-        $con["cid"] = array("eq", $cid);
+        // 获取相同文档类型的子分类
+        if ($child) {
+            $child_cate_ids = $category_object->where(array('pid' => $cid, 'doc_type' => $category_info['doc_type']))->getField('id', true);
+            if ($child_cate_ids) {
+                $cid_list[] = $cid;
+                $cid_list = array_merge($cid_list, $child_cate_ids);
+            }
+        } else {
+            $cid_list[] = $cid;
+        }
+
+        $con["cid"] = array("in", $cid_list);
         $con["status"] = array("eq", '1');
         if($map){
-            $map = array_merge($con, $map);
+            $con = array_merge($con, $map);
         }
         if(!$order){
             $order = 'sort desc,'.C('DB_PREFIX').'document.id desc';
@@ -141,7 +156,7 @@ class DocumentModel extends Model{
         $document_list = $this->page(!empty($_GET["p"]) ? $_GET["p"] : 1, $limit)
                               ->order($order)
                               ->join($document_table.' ON __DOCUMENT__.id = '.$document_table.'.id')
-                              ->where($map)
+                              ->where($con)
                               ->select();
         return $document_list;
     }

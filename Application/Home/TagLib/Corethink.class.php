@@ -21,7 +21,7 @@ class CoreThink extends TagLib{
         'breadcrumb'    => array('attr' => 'name,cid', 'close' => 1), //面包屑导航列表
         'category_list' => array('attr' => 'name,pid,group', 'close' => 1), //栏目分类列表
         'comment_list'  => array('attr' => 'name,table,group,data_id', 'close' => 1), //评论列表
-        'document_list' => array('attr' => 'name,cid,limit,order', 'close' => 1), //文档列表
+        'document_list' => array('attr' => 'name,cid,limit,order,child', 'close' => 1), //文档列表
         'sql_query'     => array('attr' => 'sql,result', 'close' => 0), //SQL查询
     );
 
@@ -88,9 +88,10 @@ class CoreThink extends TagLib{
         $name   = $tag['name'];
         $cid    = $tag['cid'];
         $limit  = $tag['limit']?:10;
+        $child  = $tag['child']?:'';
         $parse  = '<?php ';
         $parse .= '$map["status"] = array("eq", "1");';
-        $parse .= '$__DOCUMENT_LIST__ = D("Document")->getDocumentList('.$cid.', '.$limit.', "'.$order.'", $map);';
+        $parse .= '$__DOCUMENT_LIST__ = D("Document")->getDocumentList('.$cid.', '.$limit.', "'.$order.'", $map, "'.$child.'");';
         $parse .= ' ?>';
         $parse .= '<volist name="__DOCUMENT_LIST__" id="'. $name .'">';
         $parse .= $content;

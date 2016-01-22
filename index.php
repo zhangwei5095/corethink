@@ -46,7 +46,7 @@ define('HTML_PATH', RUNTIME_PATH.'Html/');
 if(is_file(APP_PATH . 'Common/Conf/install.lock') === false && $_SERVER[ENV_PRE.'DEV_MODE'] !== 'true'){
     define('BIND_MODULE','Install');
 }else{
-    define('APP_DEBUG', $_SERVER[ENV_PRE.'APP_DEBUG']? : true); //系统调试设置, 项目正式部署后请设置为false
+    define('APP_DEBUG', $_SERVER[ENV_PRE.'APP_DEBUG'] ? : true); //系统调试设置, 项目正式部署后请设置为false
 }
 
 /**
