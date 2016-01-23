@@ -4,13 +4,13 @@
 // +----------------------------------------------------------------------
 namespace Common\Util;
 //文件处理类
-class File{
+class File {
     /**
      * 创建目录
      * @param $dir  目录名
      * @return boolean true 成功， false 失败
      */
-    static public function mk_dir($dir){
+    static public function mk_dir($dir) {
         $dir = rtrim($dir,'/').'/';
         if(!is_dir($dir))
         {
@@ -27,7 +27,7 @@ class File{
      * 基于数组创建目录和文件
      * @param array $files 文件名数组
      */
-    static public function create_dir_or_files($files){
+    static public function create_dir_or_files($files) {
         foreach ($files as $key => $value) {
             if(substr($value, -1) == '/'){
                 mkdir($value);
@@ -42,7 +42,7 @@ class File{
      * @param $filename  文件名
      * @return string 文件内容
      */
-    static public function read_file($filename){
+    static public function read_file($filename) {
         $content = '';
         if(function_exists('file_get_contents'))
         {
@@ -66,7 +66,7 @@ class File{
      * @param $openmod     打开方式
      * @return boolean true 成功, false 失败
      */
-    static function write_file($filename, $writetext, $openmod='w'){
+    static function write_file($filename, $writetext, $openmod='w') {
         if(@$fp = fopen($filename, $openmod))
         {
             flock($fp, 2);
@@ -85,7 +85,7 @@ class File{
      * @param $dirName      原目录
      * @return boolean true 成功, false 失败
      */
-    static function del_dir($dirName){
+    static function del_dir($dirName) {
         if (!file_exists($dirName))
         {
             return false;
@@ -117,7 +117,7 @@ class File{
      * @param $toDir      目标目录
      * @return boolean true 成功, false 失败
      */
-    static function copy_dir($surDir,$toDir){
+    static function copy_dir($surDir,$toDir) {
         $surDir = rtrim($surDir,'/').'/';
         $toDir = rtrim($toDir,'/').'/';
         if (!file_exists($surDir))
@@ -155,7 +155,7 @@ class File{
      * @param $dir  目录名
      * @return 目录数组。列出文件夹下内容，返回数组 $dirArray['dir']:存文件夹；$dirArray['file']：存文件
      */
-    static function get_dirs($dir){
+    static function get_dirs($dir) {
         $dir = rtrim($dir,'/').'/';
         $dirArray [][] = NULL;
         if (false != ($handle = opendir ( $dir )))
@@ -185,7 +185,7 @@ class File{
      * @param $dir  目录名
      * @return number 文件夹大小(单位 B)
      */
-    static function get_size($dir){
+    static function get_size($dir) {
         $dirlist = opendir($dir);
         $dirsize = 0;
         while (false !==  ($folderorfile = readdir($dirlist)))
@@ -211,7 +211,7 @@ class File{
      * @param $dir  目录名
      * @return boolean true 空， fasle 不为空
      */
-    static function empty_dir($dir){
+    static function empty_dir($dir) {
         return (($files = @scandir($dir)) && count($files) <= 2);
     }
 
@@ -223,7 +223,7 @@ class File{
      * @param $cached  是否缓存结果,默认缓存
      * @return 返回缓存内容
      */
-    function cache($name, $value='', $path=DATA_PATH,$cached=true){
+    function cache($name, $value='', $path=DATA_PATH,$cached=true) {
         static $_cache  = array();
         $filename       = $path . $name . '.php';
         if ('' !== $value) {

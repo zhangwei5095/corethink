@@ -1,13 +1,13 @@
 <?php
 // +----------------------------------------------------------------------
-// | CoreThink [ Simple Efficient Excellent ]
+// | OpenCMF [ Simple Efficient Excellent ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2014 http://www.corethink.cn All rights reserved.
+// | Copyright (c) 2014 http://www.opencmf.cn All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: jry <598821125@qq.com> <http://www.corethink.cn>
+// | Author: jry <598821125@qq.com>
 // +----------------------------------------------------------------------
 namespace Admin\Controller;
-use Common\Util\Page;
+use Common\Util\Think\Page;
 use Common\Util\Sql;
 /**
  * 扩展后台管理页面
@@ -24,12 +24,7 @@ class AddonController extends AdminController {
         $p = !empty($_GET["p"]) ? $_GET['p'] : 1;
         $addon_object = D('Addon');
         $addons = $addon_object
-                ->page($p, C('ADMIN_PAGE_ROWS'))
                 ->getAllAddon();
-        $page = new Page(
-            $addon_object->count(),
-            C('ADMIN_PAGE_ROWS')
-        );
 
         // 使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
@@ -44,7 +39,6 @@ class AddonController extends AdminController {
                 ->addTableColumn('version', '版本')
                 ->addTableColumn('right_button', '操作', 'btn')
                 ->setTableDataList($addons)        // 数据列表
-                ->setTableDataPage($page->show())  // 数据列表分页
                 ->display();
     }
 
@@ -150,7 +144,7 @@ class AddonController extends AdminController {
 
         // 检查该插件所需的钩子
         if ($hooks) {
-            $hook_object = D('AddonHook');
+            $hook_object = D('Hook');
             foreach ($hooks as $val) {
                 $hook_object->existHook($val, array('description' => $info['description']));
             }

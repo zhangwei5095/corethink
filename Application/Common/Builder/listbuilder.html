@@ -1,8 +1,7 @@
-<div class="builder builder-list-box">
-
+<div class="builder listbuilder-box panel-body">
     <!-- Tab导航 -->
     <notempty name="tab_nav">
-        <div class="builder-tabs builder-list-tabs">
+        <div class="builder-tabs">
             <div class="row">
                 <div class="col-xs-12">
                     <ul class="nav nav-tabs">
@@ -13,43 +12,48 @@
                 </div>
             </div>
         </div>
+        <div class="form-group"></div>
     </notempty>
 
     <!-- 顶部工具栏按钮 -->
     <notempty name="top_button_list">
-        <div class="builder-toolbar builder-list-toolbar">
+        <div class="builder-toolbar">
             <div class="row">
                 <!-- 工具栏按钮 -->
                 <notempty name="top_button_list">
-                    <div class="col-xs-12 col-sm-9 button-list">
-                        <volist name="top_button_list" id="button">
-                            <a {$button.attribute}>{$button.title}</a>&nbsp;
-                        </volist>
+                    <div class="col-xs-12 col-sm-9 button-list clearfix">
+                        <div class="form-group">
+                            <volist name="top_button_list" id="button">
+                                <a {$button.attribute}>{$button.title}</a>&nbsp;
+                            </volist>
+                        </div>
                     </div>
                 </notempty>
 
                 <!-- 搜索框 -->
                 <notempty name="search">
-                    <div class="col-xs-12 col-sm-3">
-                        <div class="input-group search-form">
-                            <input type="text" name="keyword" class="search-input form-control" value="{$_GET.keyword}" placeholder="{$search.title}">
-                            <span class="input-group-btn"><a class="btn btn-default" href="javascript:;" id="search" url="{$search.url}"><i class="fa fa-search"></i></a></span>
-                        </div>
+                    <div class="col-xs-12 col-sm-3 clearfix">
+                        <form class="form" method="get" action="{$search.url}">
+                            <div class="form-group">
+                                <div class="input-group search-form">
+                                    <input type="text" name="keyword" class="search-input form-control" value="{$_GET.keyword}" placeholder="{$search.title}">
+                                    <span class="input-group-btn"><a class="btn btn-default search-btn"><i class="fa fa-search"></i></a></span>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </notempty>
             </div>
         </div>
     </notempty>
 
-
     <!-- 数据列表 -->
-    <div class="builder-container builder-list-container">
+    <div class="builder-container">
         <div class="row">
             <div class="col-xs-12">
-
                 <div class="builder-table">
-                    <div class="panel panel-default">
-                        <table class="table table-bordered table-responsive table-striped table-hover">
+                    <div class="panel panel-default table-responsive">
+                        <table class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th><input class="check-all" type="checkbox"></th>
@@ -85,11 +89,9 @@
                         <ul class="pagination">{$table_data_page}</ul>
                     </notempty>
                 </div>
-
             </div>
         </div>
     </div>
-
 
     <!-- 额外功能代码 -->
     {$extra_html}

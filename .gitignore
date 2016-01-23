@@ -1,15 +1,9 @@
 .idea
 *.log
-.gitignore
 
 /Runtime/
 /Uploads/
+/Theme/
 /node_modules/
 
-/Public/css/*.css
-/Public/js/*.js
-!/Public/css/*.min.css
-!/Public/js/*.min.js
-
 !*.md
-!/.gitignore

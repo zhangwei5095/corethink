@@ -1,4 +1,4 @@
-<extend name="_Layout/main"/>
+<extend name="Public/layout"/>
 
 <block name="header">
     <li class="active"><a href="javascript:;">安装协议</a></li>
@@ -21,7 +21,7 @@
                 <div class="alert alert-danger margin-top">
                     后台管理员用户名密码默认均为admin，请尽快登录系统进行修改，防止系统被恶意攻击。
                 </div>
-                <a class="btn btn-primary" target="_blank" href="{:U('Admin/Index/index')}">登录后台</a>
+                <a class="btn btn-primary" target="_blank" href="__ROOT__/admin.php/admin/">登录后台</a>
                 <a class="btn btn-success" target="_blank" href="__ROOT__/">访问首页</a>
             </div>
             <div class="panel-footer">

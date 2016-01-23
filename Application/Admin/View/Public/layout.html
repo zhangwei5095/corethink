@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>{$meta_title}｜{:C('WEB_SITE_TITLE')}后台管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="author" content="{:C('WEB_SITE_TITLE')}">
+    <meta name="keywords" content="{$meta_keywords}">
+    <meta name="description" content="{$meta_description}">
+    <meta name="generator" content="CoreThink">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="{:C('WEB_SITE_TITLE')}">
+    <meta name="format-detection" content="telephone=no,email=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="apple-touch-icon" type="image/x-icon" href="__ROOT__/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="__ROOT__/logo.png">
+    <link rel="stylesheet" type="text/css" href="__CUI__/css/cui.min.css">
+    <link rel="stylesheet" type="text/css" href="__ADMIN_CSS__/admin.css">
+    <link rel="stylesheet" type="text/css" href="__ADMIN_CSS__/theme/{:C('ADMIN_THEME')}.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/libs/animate/animate.min.css">
+    <block name="style"></block>
+    <!--[if lt IE 9]>
+        <script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+        <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="__PUBLIC__/libs/jquery/1.x/jquery.min.js"></script>
+</head>
+<body>
+    <div class="clearfix full-header">
+        <block name="full-header"></block>
+    </div>
+
+    <div class="clearfix full-container">
+        <block name="main"></block>
+    </div>
+
+    <div class="clearfix full-footer">
+        <block name="full-footer"></block>
+    </div>
+
+    <div class="clearfix full-script">
+        <div class="container-fluid">
+            <input type="hidden" id="corethink_home_img" value="__HOME_IMG__">
+            <script type="text/javascript" src="__CUI__/js/cui.min.js"></script>
+            <script type="text/javascript" src="__ADMIN_JS__/admin.js"></script>
+            <block name="script"></block>
+        </div>
+    </div>
+</body>
+</html>

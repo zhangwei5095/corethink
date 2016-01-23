@@ -1,4 +1,4 @@
-<extend name="_Layout/main"/>
+<extend name="Public/layout"/>
 
 <block name="header">
     <li class="active"><a href="javascript:;">安装协议</a></li>
@@ -29,7 +29,7 @@
                             <tr>
                                 <td>{$item['title']}</td>
                                 <td>{$item['limit']}</td>
-                                <td><i class="glyphicon {$item['icon']}"></i> {$item['current']}</td>
+                                <td><i class="fa {$item['icon']}"></i> {$item['current']}</td>
                             </tr>
                         </volist>
                     </tbody>
@@ -49,7 +49,7 @@
                                 <tr>
                                     <td>{$item['path']}</td>
                                     <td><i class="fa fa-check text-success"></i> 可写</td>
-                                    <td><i class="glyphicon {$item['icon']}"></i> {$item['title']}</td>
+                                    <td><i class="fa {$item['icon']}"></i> {$item['title']}</td>
                                 </tr>
                             </volist>
                         </tbody>
@@ -67,7 +67,7 @@
                         <volist name="check_func_and_ext" id="item">
                             <tr>
                                 <td>{$item['name']}</td>
-                                <td><i class="glyphicon {$item['icon']}"></i> {$item['title']}</td>
+                                <td><i class="fa {$item['icon']}"></i> {$item['title']}</td>
                             </tr>
                         </volist>
                     </tbody>

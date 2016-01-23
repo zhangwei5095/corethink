@@ -1,16 +1,23 @@
 <?php
 // +----------------------------------------------------------------------
-// | CoreThink [ Simple Efficient Excellent ]
+// | OpenCMF [ Simple Efficient Excellent ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2014 http://www.corethink.cn All rights reserved.
+// | Copyright (c) 2014 http://www.opencmf.cn All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: jry <598821125@qq.com> <http://www.corethink.cn>
+// | Author: jry <598821125@qq.com>
 // +----------------------------------------------------------------------
+
+/**
+ * Content-type设置
+ */
+header("Content-type: text/html; charset=utf-8");
 
 /**
  * PHP版本检查
  */
-if(version_compare(PHP_VERSION,'5.3.0','<')) die('require PHP > 5.3.0 !');
+if (version_compare(PHP_VERSION,'5.3.0','<')) {
+    die('require PHP > 5.3.0 !');
+}
 
 /**
  * PHP报错设置
@@ -20,7 +27,12 @@ error_reporting(E_ALL^E_NOTICE^E_WARNING);
 /**
  * 开发模式环境变量前缀
  */
-define('ENV_PRE', 'CT_');
+define('ENV_PRE', 'OC_');
+
+/**
+ * 定义前台标记
+ */
+define('MODULE_MARK', 'Home');
 
 /**
  * 应用目录设置
@@ -41,12 +53,20 @@ define('RUNTIME_PATH', './Runtime/');
 define('HTML_PATH', RUNTIME_PATH.'Html/');
 
 /**
+ * 包含开发模式数据库连接配置
+ */
+if (@$_SERVER[ENV_PRE.'DEV_MODE'] !== 'true') {
+    @include './Data/dev.php'; 
+}
+
+/**
  * 系统安装及开发模式检测
  */
-if(is_file(APP_PATH . 'Common/Conf/install.lock') === false && $_SERVER[ENV_PRE.'DEV_MODE'] !== 'true'){
+if (is_file('./Data/install.lock') === false && @$_SERVER[ENV_PRE.'DEV_MODE'] !== 'true') {
     define('BIND_MODULE','Install');
-}else{
-    define('APP_DEBUG', $_SERVER[ENV_PRE.'APP_DEBUG'] ? : true); //系统调试设置, 项目正式部署后请设置为false
+} else {
+    // 系统调试设置, 项目正式部署后请设置为false
+    define('APP_DEBUG', @$_SERVER[ENV_PRE.'APP_DEBUG'] ? : true);
 }
 
 /**

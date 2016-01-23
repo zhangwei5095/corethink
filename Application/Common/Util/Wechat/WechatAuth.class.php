@@ -42,6 +42,12 @@ class WechatAuth {
     private $appSecret = '';
 
     /**
+     * 获取到的openid
+     * @var string
+     */
+    private $openid = '';
+
+    /**
      * 获取到的access_token
      * @var string
      */
@@ -84,7 +90,7 @@ class WechatAuth {
 
     public function getRequestCodeURL($redirect_uri, $state = null,
         $scope = 'snsapi_userinfo'){
-        
+
         $query = array(
             'appid'         => $this->appId,
             'redirect_uri'  => $redirect_uri,
@@ -134,6 +140,7 @@ class WechatAuth {
             if(isset($token['errcode'])){
                 throw new \Exception($token['errmsg']);
             } else {
+                $this->openid      = $token['openid'];
                 $this->accessToken = $token['access_token'];
                 return $token;
             }
@@ -151,7 +158,7 @@ class WechatAuth {
     public function getUserInfo($openid, $lang = 'zh_CN'){
         $query = array(
             'access_token' => $this->accessToken,
-            'openid'       => $openid,
+            'openid'       => $openid ? $openid : $this->openid,
             'lang'         => $lang,
         );
 
@@ -228,7 +235,6 @@ class WechatAuth {
      * @param  string $type    推送消息类型
      */
     public function messageCustomSend($openid, $content, $type = self::MSG_TYPE_TEXT){
-        
         //基础数据
         $data = array(
             'touser'=>$openid,
