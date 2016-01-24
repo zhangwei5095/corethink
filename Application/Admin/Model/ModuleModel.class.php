@@ -77,7 +77,7 @@ class ModuleModel extends Model {
         $admin_menu = $this->getFieldByName($module_name, 'admin_menu');
         $admin_menu = json_decode($admin_menu, true);
         foreach ($admin_menu as $key => $val) {
-            if ($val['url']) {
+            if (isset($val['url'])) {
                 $config_url  = U($val['url']);
                 $current_url = U(MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME);
                 if ($config_url === $current_url) {
@@ -89,13 +89,53 @@ class ModuleModel extends Model {
     }
 
     /**
+     * 获取所有模块菜单
+     * @param string $addon_dir
+     * @author jry <598821125@qq.com>
+     */
+    public function getAllMenu() {
+        $menu_list = S('MENU_LIST');
+        if (!$menu_list) {
+            $con['status'] = 1;
+            $system_module_list = $this->where($con)->order('sort asc, id asc')->select();
+            $tree = new tree();
+            $menu_list = array();
+            foreach ($system_module_list as $key => &$module) {
+                $temp = $tree->list_to_tree(json_decode($module['admin_menu'], true));
+                $menu_list[$module['name']] = $temp[0];
+                $menu_list[$module['name']]['id']   = $module['id'];
+                $menu_list[$module['name']]['name'] = $module['name'];
+            }
+
+            // 如果模块顶级菜单配置了top字段则移动菜单至top所指的模块下边
+            foreach ($menu_list as $key => &$value) {
+                if ($value['top']) {
+                    if ($menu_list[$value['top']]) {
+                        $menu_list[$value['top']]['_child'] = array_merge(
+                            $menu_list[$value['top']]['_child'],
+                            $value['_child']
+                        );
+                        unset($menu_list[$key]);
+                    }
+                }
+            }
+
+            S('MENU_LIST', $menu_list, 3600);  // 缓存配置
+        }
+        return $menu_list;
+    }
+
+    /**
      * 根据菜单ID的获取其所有父级菜单
      * @param array $current_menu 当前菜单信息
      * @return array 父级菜单集合
      * @author jry <598821125@qq.com>
      */
-    public function getParentMenu($current_menu, $module_name = MODULE_NAME) {
-        if (empty($current_menu)) {
+    public function getParentMenu($current_menu ='', $module_name = MODULE_NAME) {
+        if (!$current_menu) {
+            $current_menu = $this->getCurrentMenu();
+        }
+        if (!$current_menu) {
             return false;
         }
         $admin_menu = $this->getFieldByName($module_name, 'admin_menu');

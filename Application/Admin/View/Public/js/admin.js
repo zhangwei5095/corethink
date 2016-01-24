@@ -78,7 +78,6 @@ $(function(){
             $('.ct-tab').append(tab);
             $('.ct-tab-content').append(tab_content);
             $('.ct-tab a:last').tab('show');
-            $(this).closest('li').addClass('active');
         }
         return false;
     });

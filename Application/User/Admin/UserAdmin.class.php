@@ -91,7 +91,6 @@ class UserAdmin extends AdminController {
                 $this->error($user_object->getError());
             }
         } else {
-        $user_object = D('User/User');
             // 使用FormBuilder快速建立表单页面。
             $builder = new \Common\Builder\FormBuilder();
             $builder->setMetaTitle('新增用户') //设置页面标题

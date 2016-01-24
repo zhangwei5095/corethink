@@ -10,7 +10,7 @@ namespace Admin\Model;
 use Think\Model;
 use Common\Util\Tree;
 /**
- * 链接模型
+ * 快捷链接模型
  * @author jry <598821125@qq.com>
  */
 class LinkModel extends Model {
@@ -39,4 +39,23 @@ class LinkModel extends Model {
         array('sort', '0', self::MODEL_INSERT),
         array('status', '1', self::MODEL_INSERT),
     );
+
+    /**
+     * 获取所有快捷链接
+     * @param string $addon_dir
+     * @author jry <598821125@qq.com>
+     */
+    public function getAll() {
+        $con = array();
+        $con['status'] = 1;
+        $link_list = $this->where($con)->order('sort asc, id asc')->select();
+        foreach ($link_list as $key => &$value) {
+            if (!stristr($value['url'], 'http://') && !stristr($value['url'], 'https://')) {
+                $value['url'] = U($value['url']);
+            }
+        }
+        $tree = new tree();
+        $link_list = $tree->list_to_tree($link_list);
+        return $link_list;
+    }
 }

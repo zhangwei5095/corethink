@@ -139,6 +139,6 @@ class AddonModel extends Model {
             '_action'     => $action,
         );
         $params = array_merge($params, $param); //添加额外参数
-        return U('Addon/execute', $params);
+        return U(MODULE_MARK . '/Addon/execute', $params);
     }
 }

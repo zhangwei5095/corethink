@@ -29,39 +29,76 @@
                     </a>
                 </li>
                 <!-- 主导航 -->
-                <?php if (count($_menu_list) > 8): ?>
-                    <volist name="_menu_list" id="vo" offset="0" length="8">
-                        <li>
-                            <a href="#module{$vo.id}" role="tab" data-toggle="tab">
-                                <i class="fa {$vo.icon}"></i>
-                                <span>{$vo.title}</span>
+                <?php if (!C('ADMIN_TABS')): ?>
+                    <?php if (count($_main_menu_list) > 7): ?>
+                        <volist name="_main_menu_list" id="vo" offset="0" length="7">
+                            <li <?php if($_parent_menu_list[0]['title'] == $vo['title']) echo 'class="active"'; ?>>
+                                <a href="{:U($vo['name'].'/Index/index')}" target="{$vo.target}">
+                                    <i class="fa {$vo.icon}"></i>
+                                    <span>{$vo.title}</span>
+                                </a>
+                            </li>
+                        </volist>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-th-large"></i> 更多 <b class="caret"></b>
                             </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <volist name="_main_menu_list" id="vo" offset="7">
+                                    <li <?php if($_parent_menu_list[0]['title'] == $vo['title']) echo 'class="active"'; ?>>
+                                        <a href="{:U($vo['name'].'/Index/index')}" target="{$vo.target}">
+                                            <i class="fa {$vo.icon}"></i>
+                                            <span>{$vo.title}</span>
+                                        </a>
+                                    </li>
+                                </volist>
+                            </ul>
                         </li>
-                    </volist>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-th-large"></i> 更多 <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <volist name="_menu_list" id="vo" offset="8">
-                                <li>
-                                    <a href="#module{$vo.id}" role="tab" data-toggle="tab">
-                                        <i class="fa {$vo.icon}"></i>
-                                        <span>{$vo.title}</span>
-                                    </a>
-                                </li>
-                            </volist>
-                        </ul>
-                    </li>
+                    <?php else: ?>
+                        <volist name="_main_menu_list" id="vo">
+                            <li <?php if($_parent_menu_list[0]['title'] == $vo['title']) echo 'class="active"'; ?>>
+                                <a href="{:U($vo['name'].'/Index/index')}" target="{$vo.target}">
+                                    <i class="fa {$vo.icon}"></i>
+                                    <span>{$vo.title}</span>
+                                </a>
+                            </li>
+                        </volist>
+                    <?php endif; ?>
                 <?php else: ?>
-                    <volist name="_menu_list" id="vo">
-                        <li>
-                            <a href="#module{$vo.id}" role="tab" data-toggle="tab">
-                                <i class="fa {$vo.icon}"></i>
-                                <span>{$vo.title}</span>
+                     <?php if (count($_menu_list) > 7): ?>
+                        <volist name="_menu_list" id="vo" offset="0" length="7">
+                            <li>
+                                <a href="#module{$vo.id}" role="tab" data-toggle="tab">
+                                    <i class="fa {$vo.icon}"></i>
+                                    <span>{$vo.title}</span>
+                                </a>
+                            </li>
+                        </volist>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-th-large"></i> 更多 <b class="caret"></b>
                             </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <volist name="_menu_list" id="vo" offset="7">
+                                    <li>
+                                        <a href="#module{$vo.id}" role="tab" data-toggle="tab">
+                                            <i class="fa {$vo.icon}"></i>
+                                            <span>{$vo.title}</span>
+                                        </a>
+                                    </li>
+                                </volist>
+                            </ul>
                         </li>
-                    </volist>
+                    <?php else: ?>
+                        <volist name="_menu_list" id="vo">
+                            <li>
+                                <a href="#module{$vo.id}" role="tab" data-toggle="tab">
+                                    <i class="fa {$vo.icon}"></i>
+                                    <span>{$vo.title}</span>
+                                </a>
+                            </li>
+                        </volist>
+                    <?php endif; ?>
                 <?php endif; ?>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -80,103 +117,142 @@
     </div>
 </block>
 
-<block name="main">
+<block name="full-container">
     <input type="hidden" name="check_version_url" value="{:U('Admin/Update/checkVersion')}">
     <div class="container-fluid with-top-navbar">
         <div class="row">
             <!-- 后台左侧导航 -->
             <div id="sidebar" class="col-xs-12 col-sm-2 sidebar tab-content">
-                <!-- 快捷链接 -->
-                <div role="tabpanel" class="tab-pane fade in active" id="admin-index">
+                <?php if (!C('ADMIN_TABS')): ?>
+                    <!-- 模块菜单 -->
                     <nav class="navside navside-default" role="navigation">
-                        <ul class="nav navside-nav navside-first">
-                            <volist name="_link_list" id="lk" key="fkey">
-                                <li>
-                                    <a data-toggle="collapse" href="#navside-collapse-lk-{$lk.id}-{$fkey}">
-                                        <i class="fa {$lk.icon}"></i>
-                                        <span class="nav-label">{$lk.title}</span>
-                                        <span class="fa arrow"></span>
-                                    </a>
-                                    <notempty name="lk._child">
-                                        <ul class="nav navside-nav navside-second collapse in" id="navside-collapse-lk-{$lk.id}-{$fkey}">
-                                            <volist name="lk._child" id="_ns_second" key="skey">
+                        <?php if($_menu_list['_child']): ?>
+                            <ul class="nav navside-nav navside-first">
+                                <volist name="_menu_list._child" id="_ns_first" key="fkey">
+                                    <li>
+                                        <a data-toggle="collapse" href="#navside-collapse-{$_ns.id}-{$fkey}">
+                                            <i class="{$_ns_first.icon}"></i>
+                                            <span class="nav-label">{$_ns_first.title}</span>
+                                            <span class="fa arrow"></span>
+                                        </a>
+                                        <notempty name="_ns_first._child">
+                                            <ul class="nav navside-nav navside-second collapse in" id="navside-collapse-{$_ns.id}-{$fkey}">
+                                                <volist name="_ns_first._child" id="_ns_second" key="skey">
+                                                    <li <?php if($_parent_menu_list[2]['id'] == $_ns_second['id']) echo 'class="active"'; ?>>
+                                                        <a href="{:U($_ns_second['url'])}" >
+                                                            <i class="{$_ns_second.icon}"></i>
+                                                            <span class="nav-label">{$_ns_second.title}</span>
+                                                        </a>
+                                                    </li>
+                                                </volist>
+                                            </ul>
+                                        </notempty>
+                                    </li>
+                                </volist>
+                            </ul>
+                        <?php endif; ?>
+                    </nav>
+                <?php else: ?>
+                    <!-- 快捷链接 -->
+                    <div role="tabpanel" class="tab-pane fade in active" id="admin-index">
+                        <nav class="navside navside-default" role="navigation">
+                            <ul class="nav navside-nav navside-first">
+                                <volist name="_link_list" id="lk" key="fkey">
+                                    <li>
+                                        <a data-toggle="collapse" href="#navside-collapse-lk-{$lk.id}-{$fkey}">
+                                            <i class="fa {$lk.icon}"></i>
+                                            <span class="nav-label">{$lk.title}</span>
+                                            <span class="fa arrow"></span>
+                                        </a>
+                                        <notempty name="lk._child">
+                                            <ul class="nav navside-nav navside-second collapse in" id="navside-collapse-lk-{$lk.id}-{$fkey}">
+                                                <volist name="lk._child" id="_ns_second" key="skey">
+                                                    <li>
+                                                        <a href="{$_ns_second['url']}" class="open-tab" tab-name="navside-collapse-{$_ns.id}-{$fkey}-{$skey}">
+                                                            <i class="fa {$_ns_second.icon}"></i>
+                                                            <span class="nav-label">{$_ns_second.title}</span>
+                                                        </a>
+                                                    </li>
+                                                </volist>
+                                            </ul>
+                                        </notempty>
+                                    </li>
+                                </volist>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <!-- 模块菜单 -->
+                    <volist name="_menu_list" id="_ns">
+                        <?php if($_ns['_child']): ?>
+                            <div role="tabpanel" class="tab-pane fade" id="module{$_ns.id}">
+                                <nav class="navside navside-default" role="navigation">
+                                    <ul class="nav navside-nav navside-first">
+                                        <notempty name="_ns._child">
+                                            <volist name="_ns._child" id="_ns_first" key="fkey">
                                                 <li>
-                                                    <a href="{$_ns_second['url']}" class="open-tab" tab-name="navside-collapse-{$_ns.id}-{$fkey}-{$skey}">
-                                                        <i class="fa {$_ns_second.icon}"></i>
-                                                        <span class="nav-label">{$_ns_second.title}</span>
+                                                    <a data-toggle="collapse" href="#navside-collapse-{$_ns.id}-{$fkey}">
+                                                        <i class="{$_ns_first.icon}"></i>
+                                                        <span class="nav-label">{$_ns_first.title}</span>
+                                                        <span class="fa arrow"></span>
                                                     </a>
+                                                    <notempty name="_ns_first._child">
+                                                        <ul class="nav navside-nav navside-second collapse in" id="navside-collapse-{$_ns.id}-{$fkey}">
+                                                            <volist name="_ns_first._child" id="_ns_second" key="skey">
+                                                                <li>
+                                                                    <a href="{:U($_ns_second['url'])}" class="open-tab" tab-name="navside-collapse-{$_ns.id}-{$fkey}-{$skey}">
+                                                                        <i class="{$_ns_second.icon}"></i>
+                                                                        <span class="nav-label">{$_ns_second.title}</span>
+                                                                    </a>
+                                                                </li>
+                                                            </volist>
+                                                        </ul>
+                                                    </notempty>
                                                 </li>
                                             </volist>
-                                        </ul>
-                                    </notempty>
-                                </li>
-                            </volist>
-                        </ul>
-                    </nav>
-                </div>
-
-                <!-- 模块菜单 -->
-                <volist name="_menu_list" id="_ns">
-                    <?php if($_ns['_child']): ?>
-                        <div role="tabpanel" class="tab-pane fade" id="module{$_ns.id}">
-                            <nav class="navside navside-default" role="navigation">
-                                <ul class="nav navside-nav navside-first">
-                                    <notempty name="_ns._child">
-                                        <volist name="_ns._child" id="_ns_first" key="fkey">
-                                            <li>
-                                                <a data-toggle="collapse" href="#navside-collapse-{$_ns.id}-{$fkey}">
-                                                    <i class="{$_ns_first.icon}"></i>
-                                                    <span class="nav-label">{$_ns_first.title}</span>
-                                                    <span class="fa arrow"></span>
-                                                </a>
-                                                <notempty name="_ns_first._child">
-                                                    <ul class="nav navside-nav navside-second collapse in" id="navside-collapse-{$_ns.id}-{$fkey}">
-                                                        <volist name="_ns_first._child" id="_ns_second" key="skey">
-                                                            <li>
-                                                                <a href="{:U($_ns_second['url'])}" class="open-tab" tab-name="navside-collapse-{$_ns.id}-{$fkey}-{$skey}">
-                                                                    <i class="{$_ns_second.icon}"></i>
-                                                                    <span class="nav-label">{$_ns_second.title}</span>
-                                                                </a>
-                                                            </li>
-                                                        </volist>
-                                                    </ul>
-                                                </notempty>
-                                            </li>
-                                        </volist>
-                                    </notempty>
-                                </ul>
-                            </nav>
-                        </div>
-                    <?php endif; ?>
-                </volist>
+                                        </notempty>
+                                    </ul>
+                                </nav>
+                            </div>
+                        <?php endif; ?>
+                    </volist>
+                <?php endif; ?>
             </div>
 
             <!-- 右侧内容 -->
             <div id="main" class="col-xs-12 col-sm-10 main">
-                <!-- 多标签后台 -->
-                <nav class="navbar navbar-default ct-tab-nav" role="navigation">
-                    <div class="collapse navbar-collapse">
-                        <ul class="nav navbar-nav navbar-left">
-                            <li><a href="#" id="tab-left"><i class="fa fa-caret-left"></i></a></li>
-                        </ul>
-                        <div class="ct-tab-wrap clearfix">
-                            <ul class="nav navbar-nav nav-close ct-tab">
-                                <li href="#home" role="tab" data-toggle="tab">
-                                    <a href="#"><i class="fa fa-dashboard"></i> <span>首页</span></a>
+                <?php if (C('ADMIN_TABS')): ?>
+                    <!-- 多标签后台 -->
+                    <nav class="navbar navbar-default ct-tab-nav" role="navigation">
+                        <div class="collapse navbar-collapse">
+                            <ul class="nav navbar-nav navbar-left">
+                                <li><a href="#" id="tab-left"><i class="fa fa-caret-left"></i></a></li>
+                            </ul>
+                            <div class="ct-tab-wrap clearfix">
+                                <ul class="nav navbar-nav nav-close ct-tab">
+                                    <li href="#home" role="tab" data-toggle="tab">
+                                        <a href="#"><i class="fa fa-dashboard"></i> <span>首页</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#" id="tab-right"><i class="fa fa-caret-right"></i></a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">关闭操作 <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" class="close-all">关闭所有</a></li>
+                                    </ul>
                                 </li>
                             </ul>
                         </div>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#" id="tab-right"><i class="fa fa-caret-right"></i></a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">关闭操作 <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" class="close-all">关闭所有</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
+                    </nav>
+                <?php else: ?>
+                    <!-- 面包屑导航 -->
+                    <ul class="breadcrumb">
+                        <li><i class="fa fa-map-marker"></i></li>
+                        <li class="text-muted">首页</li>
+                    </ul>
+                <?php endif; ?>
 
                 <!-- 多标签后台内容部分 -->
                 <div class="tab-content ct-tab-content">

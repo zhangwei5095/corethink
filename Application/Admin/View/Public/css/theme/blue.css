@@ -6,6 +6,7 @@
 .navbar,
 .navside,
 .thumbnail,
+.breadcrumb,
 .form-control,
 .navbar-toggle,
 .nav-tabs>li>a,
@@ -76,8 +77,13 @@
 
 
 /* 左侧导航 */
-.navside .navside-nav > .active > a {
-    background-color: #fff;
+#sidebar .navside.navside-default .navside-nav>li>a:hover {
+    background-color: #f8f8f8;
+}
+#sidebar .navside.navside-default .navside-nav>.active > a,
+#sidebar .navside.navside-default .navside-nav>.active > a:hover {
+    color: #fff;
+    background-color: #3fa9f5;
 }
 
 

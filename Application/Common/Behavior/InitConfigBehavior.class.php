@@ -140,6 +140,11 @@ class InitConfigBehavior extends Behavior {
             S('DB_CONFIG_DATA', $system_config, 3600);  // 缓存配置
         }
 
+        // 移动端强制后台传统视图
+        if (is_wap()) {
+            $system_config['ADMIN_TABS'] = 0;
+        }
+
         C($system_config);  // 添加配置
     }
 }

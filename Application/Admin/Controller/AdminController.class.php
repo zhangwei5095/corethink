@@ -35,6 +35,18 @@ class AdminController extends CommonController {
             if (!D('Admin/Group')->checkMenuAuth()) {
                 $this->error('权限不足！', U('Admin/Index/index'));
             }
+            $this->assign('_admin_tabs', C('ADMIN_TABS'));
+        }
+
+        // 获取左侧导航
+        if (!C('ADMIN_TABS')) {
+            $module_object = D('Admin/Module');
+            $menu_list = $module_object->getAdminMenu();
+            $main_menu_list = $module_object->where('status = 1')->field('id,name,title,icon')->select();
+            $parent_menu_list = $module_object->getParentMenu();
+            $this->assign('_main_menu_list', $main_menu_list);  // 后台主菜单
+            $this->assign('_menu_list', $menu_list[0]);  // 后台左侧菜单
+            $this->assign('_parent_menu_list', $parent_menu_list);  // 后台父级菜单
         }
 
         $this->assign('_user_auth', session('user_auth'));                // 用户登录信息
