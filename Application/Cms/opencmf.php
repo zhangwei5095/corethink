@@ -17,7 +17,7 @@ return array(
         'description' => 'CMS门户模块',
         'developer'   => '南京科斯克网络科技有限公司',
         'website'     => 'http://www.opencmf.cn',
-        'version'     => '1.1.0',
+        'version'     => '1.2.0',
         'dependences' => array(
             'Admin'   => '1.1.0',
         )

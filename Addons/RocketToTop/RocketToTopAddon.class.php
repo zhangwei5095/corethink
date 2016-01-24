@@ -21,9 +21,9 @@ class RocketToTopAddon extends Addon{
         'name'        => 'RocketToTop',
         'title'       => '小火箭返回顶部',
         'description' => '小火箭返回顶部',
-        'status'      => 1,
+        'status'      => '1',
         'author'      => 'OpenCMF',
-        'version'     => '1.1.0',
+        'version'     => '1.2.0',
     );
 
     /**

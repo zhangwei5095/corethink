@@ -17,7 +17,7 @@ return array(
         'description' => '核心系统',
         'developer'   => '南京科斯克网络科技有限公司',
         'website'     => 'http://www.opencmf.cn',
-        'version'     => '1.1.0',
+        'version'     => '1.2.0',
     ),
 
     // 后台菜单及权限节点配置

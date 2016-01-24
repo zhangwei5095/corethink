@@ -33,7 +33,7 @@
                     <?php if (count($_main_menu_list) > 7): ?>
                         <volist name="_main_menu_list" id="vo" offset="0" length="7">
                             <li <?php if($_parent_menu_list[0]['title'] == $vo['title']) echo 'class="active"'; ?>>
-                                <a href="{:U($vo['name'].'/Index/index')}" target="{$vo.target}">
+                                <a href="{:U($vo['name'].'/Index/index')}" target="<php>echo C(strtolower($vo['name']).'_config.target');</php>">
                                     <i class="fa {$vo.icon}"></i>
                                     <span>{$vo.title}</span>
                                 </a>
@@ -46,7 +46,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 <volist name="_main_menu_list" id="vo" offset="7">
                                     <li <?php if($_parent_menu_list[0]['title'] == $vo['title']) echo 'class="active"'; ?>>
-                                        <a href="{:U($vo['name'].'/Index/index')}" target="{$vo.target}">
+                                        <a href="{:U($vo['name'].'/Index/index')}" target="<php>echo C(strtolower($vo['name']).'_config.target');</php>">
                                             <i class="fa {$vo.icon}"></i>
                                             <span>{$vo.title}</span>
                                         </a>
@@ -57,7 +57,7 @@
                     <?php else: ?>
                         <volist name="_main_menu_list" id="vo">
                             <li <?php if($_parent_menu_list[0]['title'] == $vo['title']) echo 'class="active"'; ?>>
-                                <a href="{:U($vo['name'].'/Index/index')}" target="{$vo.target}">
+                                <a href="{:U($vo['name'].'/Index/index')}" target="<php>echo C(strtolower($vo['name']).'_config.target');</php>">
                                     <i class="fa {$vo.icon}"></i>
                                     <span>{$vo.title}</span>
                                 </a>

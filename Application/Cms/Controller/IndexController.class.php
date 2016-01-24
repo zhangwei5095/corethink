@@ -222,6 +222,9 @@ class IndexController extends HomeController {
             // 给主要字段赋值
             $main_field_name = D('Attribute')->getFieldById($doc_type_info['main_field'], 'name');
             $document['main_field'] = $document[$main_field_name];
+
+            // 标题带链接
+            $val['title_url'] = '<a target="_blank" href="'.U(D('Index')->moduleName.'/Index/detail', array('id' => $document['id'])).'">'.$document['main_field'].'</a>';
         }
 
         // 使用Builder快速建立列表页面。
@@ -232,7 +235,7 @@ class IndexController extends HomeController {
                 ->addTopButton('forbid', array('model' => D('Index')->tableName))    // 添加禁用按钮
                 ->addTopButton('recycle', array('model' => D('Index')->tableName))   // 添加回收按钮
                 ->addTableColumn('id', 'ID')
-                ->addTableColumn('main_field', '标题')
+                ->addTableColumn('title_url', '标题')
                 ->addTableColumn('create_time', '发布时间', 'time')
                 ->addTableColumn('sort', '排序')
                 ->addTableColumn('status', '状态', 'status')

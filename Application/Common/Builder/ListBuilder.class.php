@@ -593,6 +593,13 @@ class ListBuilder extends CommonController {
             if ($this->_alter_data_list) {
                 foreach ($this->_alter_data_list as $alter) {
                     if ($data[$alter['condition']['key']] === $alter['condition']['value']) {
+                        foreach ($alter['alter_data'] as &$val) {
+                            $val = preg_replace(
+                                '/__data_id__/i',
+                                $data[$this->_table_data_list_key],
+                                $val
+                            );
+                        }
                         $data = array_merge($data, $alter['alter_data']);
                     }
                 }

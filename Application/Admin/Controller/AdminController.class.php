@@ -42,7 +42,7 @@ class AdminController extends CommonController {
         if (!C('ADMIN_TABS')) {
             $module_object = D('Admin/Module');
             $menu_list = $module_object->getAdminMenu();
-            $main_menu_list = $module_object->where('status = 1')->field('id,name,title,icon')->select();
+            $main_menu_list = $module_object->where('status = 1')->field('id,name,title,icon')->order('id asc')->select();
             $parent_menu_list = $module_object->getParentMenu();
             $this->assign('_main_menu_list', $main_menu_list);  // 后台主菜单
             $this->assign('_menu_list', $menu_list[0]);  // 后台左侧菜单

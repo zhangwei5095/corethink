@@ -157,7 +157,9 @@ EOF;
             //动态生成列表显示的字段
             if ($attribute_list) {
                 foreach($attribute_list as $attribute){
-                    $builder->addTableColumn($attribute['name'], $attribute['title'], $attribute['type']);
+                    if ($attribute['name'] !== $article_type_main_field) {
+                        $builder->addTableColumn($attribute['name'], $attribute['title'], $attribute['type']);
+                    }
                 }
             }
 

@@ -18,9 +18,9 @@ $_config = array(
      */
     'PRODUCT_NAME'    => 'OpenCMF',                      // 产品名称
     'PRODUCT_LOGO'    => '<b><span class="open" style="color: #a5aeb4;">Core</span><span class="cmf" style="color: #3fa9f5;">Think</span></b>',  // 产品Logo
-    'CURRENT_VERSION' => '1.1.0',                        // 当前版本号
+    'CURRENT_VERSION' => '1.2.0',                        // 当前版本号
     'DEVELOP_VERSION' => 'release',                      // 开发版本号
-    'BUILD_VERSION'   => '201601152000',                 // 编译标记
+    'BUILD_VERSION'   => '201601222050',                 // 编译标记
     'PRODUCT_MODEL'   => 'corethink',                    // 产品型号
     'PRODUCT_TITLE'   => '开源版',                        // 产品标题
     'WEBSITE_DOMAIN'  => 'http://www.corethink.cn',      // 官方网址

@@ -88,7 +88,7 @@ class MessageController extends HomeController{
         $map['to_uid']  = array('eq', is_login());
         $map['is_read'] = array('eq', 0);
         if($ids !== null){
-            $map['ids'] = array('in', $ids);
+            $map['id'] = array('in', $ids);
         }
         if($type !== null){
             $map['type'] = array('eq', $type);
