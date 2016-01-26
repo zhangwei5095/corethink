@@ -160,102 +160,117 @@ return array(
         ),
         '16' => array(
             'pid'   => '2',
-            'title' => '文章管理',
+            'title' => '文档管理',
             'icon'  => 'fa fa-edit',
             'url'   => 'Cms/Index/index',
         ),
         '17' => array(
+            'pid'   => '16',
+            'title' => '新增',
+            'url'   => 'Cms/Index/add',
+        ),
+        '18' => array(
+            'pid'   => '16',
+            'title' => '新增',
+            'url'   => 'Cms/Index/edit',
+        ),
+        '19' => array(
+            'pid'   => '16',
+            'title' => '新增',
+            'url'   => 'Cms/Index/setStatus',
+        ),
+        '20' => array(
             'pid'   => '2',
             'title' => '幻灯切换',
             'icon'  => 'fa fa-image',
             'url'   => 'Cms/Slider/index',
         ),
-        '18' => array(
-            'pid'   => '17',
+        '21' => array(
+            'pid'   => '20',
             'title' => '新增',
             'url'   => 'Cms/Slider/add',
         ),
-        '19' => array(
-            'pid'   => '17',
+        '22' => array(
+            'pid'   => '20',
             'title' => '编辑',
             'url'   => 'Cms/Slider/edit',
         ),
-        '20' => array(
-            'pid'   => '17',
+        '23' => array(
+            'pid'   => '20',
             'title' => '设置状态',
             'url'   => 'Cms/Slider/setStatus',
         ),
-        '21' => array(
+        '24' => array(
             'pid'   => '2',
             'title' => '通知公告',
             'icon'  => 'fa fa-bullhorn',
             'url'   => 'Cms/Notice/index',
         ),
-        '22' => array(
-            'pid'   => '21',
+        '25' => array(
+            'pid'   => '24',
             'title' => '新增',
             'url'   => 'Cms/Notice/add',
         ),
-        '23' => array(
-            'pid'   => '21',
+        '26' => array(
+            'pid'   => '24',
             'title' => '编辑',
             'url'   => 'Cms/Notice/edit',
         ),
-        '24' => array(
-            'pid'   => '21',
+        '27' => array(
+            'pid'   => '24',
             'title' => '设置状态',
             'url'   => 'Cms/Notice/setStatus',
         ),
-        '25' => array(
+        '28' => array(
             'pid'   => '2',
             'title' => '底部导航',
             'icon'  => 'fa fa-map-signs',
             'url'   => 'Cms/Footnav/index',
         ),
-        '26' => array(
-            'pid'   => '25',
+        '29' => array(
+            'pid'   => '28',
             'title' => '新增',
             'url'   => 'Cms/Footnav/add',
         ),
-        '27' => array(
-            'pid'   => '25',
+        '30' => array(
+            'pid'   => '28',
             'title' => '编辑',
             'url'   => 'Cms/Footnav/edit',
         ),
-        '28' => array(
-            'pid'   => '25',
+        '31' => array(
+            'pid'   => '28',
             'title' => '设置状态',
             'url'   => 'Cms/Footnav/setStatus',
         ),
-        '29' => array(
+        '32' => array(
             'pid'   => '2',
             'title' => '友情链接',
             'icon'  => 'fa fa-link',
             'url'   => 'Cms/FriendlyLink/index',
         ),
-        '30' => array(
-            'pid'   => '29',
+        '33' => array(
+            'pid'   => '32',
             'title' => '新增',
             'url'   => 'Cms/FriendlyLink/add',
         ),
-        '31' => array(
-            'pid'   => '29',
+        '34' => array(
+            'pid'   => '32',
             'title' => '编辑',
             'url'   => 'Cms/FriendlyLink/edit',
         ),
-        '32' => array(
-            'pid'   => '29',
+        '35' => array(
+            'pid'   => '32',
             'title' => '设置状态',
             'url'   => 'Cms/FriendlyLink/setStatus',
         ),
-        '33' => array(
+        '36' => array(
             'pid'   => '2',
             'title' => '回收站',
             'icon'  => 'fa fa-recycle',
             'url'   => 'Cms/Index/recycle',
         ),
-        '34' => array(
-            'pid'   => '33',
+        '37' => array(
+            'pid'   => '36',
             'title' => '设置状态',
             'url'   => 'Cms/Notice/setStatus',
         ),
