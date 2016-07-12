@@ -19,13 +19,6 @@ class IndexController extends HomeController {
      */
     public function index() {
         Cookie('__forward__', C('HOME_PAGE'));
-        if (C('INDEX_URL')) {
-            if (stristr(C('INDEX_URL'), 'http://') || stristr(C('INDEX_URL'), 'https://')) {
-                redirect(C('INDEX_URL'));
-            } else {
-                $this->redirect(C('INDEX_URL'));
-            }
-        }
         $this->assign('meta_title', "首页");
         $this->display();
     }
