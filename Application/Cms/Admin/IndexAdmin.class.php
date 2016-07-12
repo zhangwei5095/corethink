@@ -334,7 +334,7 @@ EOF;
                 if ($form_category_type === $to_category_type) {
                     $map['id'] = array('in',$ids);
                     $data = array('cid' => $to_cid);
-                    $this->editRow('Default', $data, $map, array('success'=>'移动成功','error'=>'移动失败'));
+                    $this->editRow('Index', $data, $map, array('success'=>'移动成功','error'=>'移动失败'));
                 } else {
                     $this->error('该分类模型不匹配');
                 }
