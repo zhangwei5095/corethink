@@ -45,7 +45,7 @@
                         auto: true,                                                                    // 选完文件后，是否自动上传
                         duplicate: true,                                                               // 同一文件是否可以重复上传
                         swf: '__CUI__/swf/uploader.swf',                                               // swf文件路径
-                        server: '{:U(MODULE_MARK."/Upload/upload", array("dir" => "file"))}',     // 文件接收服务端
+                        server: '{:U(MODULE_MARK."/Upload/upload", array("dir" => "file"))}',          // 文件接收服务端
                         pick: '#[type]{$group_k}_upload_{$[type]k}',                                   // 选择文件的按钮
                         resize: false,                                                                 // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
                         //fileNumLimit: 1,                                                             // 验证文件总数量, 超出则不允许加入队列
