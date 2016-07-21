@@ -49,9 +49,9 @@ class UpdateController extends AdminController{
             'website_domain'  => $_SERVER['HTTP_HOST'],
             'server_software' => php_uname().'_'.$_SERVER['SERVER_SOFTWARE'],
             'website_title'   => C('WEB_SITE_TITLE'),
-            'ct_sn'           => C('CT_SN'),
-            'ct_username'     => C('CT_USERNAME'),
-            'ct_password'     => C('CT_PASSWORD'),
+            'auth_sn'         => C('AUTH_SN'),
+            'autn_username'   => C('AUTH_USERNAME'),
+            'autn_password'   => C('AUTH_PASSWORD'),
         );
         $vars = http_build_query($params);
 

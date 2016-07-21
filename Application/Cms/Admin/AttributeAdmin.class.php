@@ -49,6 +49,7 @@ EOF;
                         ->select();
         $page = new Page(D('Attribute')->where($map)->count(), C('ADMIN_PAGE_ROWS'));
 
+        $attr['name']  = 'addnew';
         $attr['title'] = '新 增';
         $attr['class'] = 'btn btn-primary';
         $attr['href'] = U('add', array('doc_type' => $doc_type));

@@ -60,13 +60,15 @@ if (@$_SERVER[ENV_PRE.'DEV_MODE'] !== 'true') {
 }
 
 /**
+ * 系统调试设置, 项目正式部署后请设置为false
+ */
+define('APP_DEBUG', @$_SERVER[ENV_PRE.'APP_DEBUG'] ? : true);
+
+/**
  * 系统安装及开发模式检测
  */
 if (is_file('./Data/install.lock') === false && @$_SERVER[ENV_PRE.'DEV_MODE'] !== 'true') {
     define('BIND_MODULE','Install');
-} else {
-    // 系统调试设置, 项目正式部署后请设置为false
-    define('APP_DEBUG', @$_SERVER[ENV_PRE.'APP_DEBUG'] ? : true);
 }
 
 /**

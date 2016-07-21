@@ -19,16 +19,16 @@ class UserController extends HomeController {
      */
     public function login() {
         if (IS_POST) {
-            $username = I('username');
+            $account = I('username');
             $password = I('password');
-            if (!$username) {
+            if (!$account) {
                 $this->error('请输入账号！');
             }
             if (!$password) {
                 $this->error('请输入密码！');
             }
             $user_object = D('User/User');
-            $uid = $user_object->login($username, $password);
+            $uid = $user_object->login($account, $password);
             if ($uid) {
                 $this->success('登录成功！', Cookie('__forward__') ? : C('HOME_PAGE'), array('data' => D('User/User')->detail($uid)));
             } else {
@@ -122,7 +122,25 @@ class UserController extends HomeController {
                 if ($id) {
                     session('reg_verify', null);
                     $user_info = $user_object->login($data['username'], I('post.password'), true);
-                    $this->success('注册成功', U('register2'));
+
+                    // 构造消息数据
+                    $msg_data['to_uid'] = $user_info['id'];
+                    $msg_data['title']  = '注册成功';
+                    $msg_data['content'] = '少侠/女侠好：<br>'
+                                           .'恭喜您成功注册'.C('WEB_SITE_TITLE').'的帐号<br>'
+                                           .'您的帐号信息如下（请妥善保管）：<br>'
+                                           .'UID：'.$user_info['id'].'<br>'
+                                           .'昵称：'.$user_info['nickname'].'<br>'
+                                           .'用户名：'.$user_info['username'].'<br>'
+                                           .'密码：'.$_POST['password'].'<br>'
+                                           .'<br>';
+                    D('User/Message')->sendMessage($msg_data);
+                    if (is_wap()) {
+                        $url = U('User/Center/index');
+                    } else {
+                        $url = U('register2');
+                    }
+                    $this->success('注册成功', $url);
                 } else {
                     $this->error('注册失败'.$user_object->getError());
                 }
@@ -270,13 +288,16 @@ class UserController extends HomeController {
                     $username = I('post.email');
                     $condition['email'] = I('post.email');
                     $condition['email_bind'] = 1;
+                    $condition['status'] = 1;
                     break;
                 case 'mobile':
                     $username = I('post.mobile');
                     $condition['mobile'] = I('post.mobile');
                     $condition['mobile_bind'] = 1;
+                    $condition['status'] = 1;
                     break;
             }
+
             //验证码严格加盐加密验证
             if (user_md5(I('post.verify'), $username) !== session('reg_verify')) {
                 $this->error('验证码错误！');
@@ -292,11 +313,35 @@ class UserController extends HomeController {
             if (!$data) {
                 $this->error($user_object->getError());
             }
+
+            // 查找此用户
+            $exist = $user_object->where($condition)->find();
+            if (!$exist) {
+                $this->error('该邮箱不存在或未认证');
+            }
+
             $result = $user_object
                     ->where($condition)
-                    ->setField('password', user_md5($data['password']));  //重置密码
+                    ->setField('password', $data['password']);  //重置密码
+            if (!$result) {
+                $this->error('密码重置失败'.$user_object->getError());
+            }
             $user_info = $user_object->login($username, I('post.password'), true);  //自动登录
+
+            // 发送消息
             if ($user_info) {
+                // 构造消息数据
+                $msg_data['to_uid'] = $user_info['id'];
+                $msg_data['title']  = '密码重置成功';
+                $msg_data['content'] = '少侠/女侠好：<br>'
+                                      .'恭喜您成功重置您在'.C('WEB_SITE_TITLE').'的帐号密码<br>'
+                                      .'您的帐号信息如下（请妥善保管）：<br>'
+                                      .'UID：'.$user_info['id'].'<br>'
+                                      .'昵称：'.$user_info['nickname'].'<br>'
+                                      .'用户名：'.$user_info['username'].'<br>'
+                                      .'密码：'.$_POST['password'].'<br>'
+                                      .'<br>';
+                D('User/Message')->sendMessage($msg_data);
                 $this->success('密码重置成功', C('HOME_PAGE'));
             } else {
                 $this->error('密码重置失败');
@@ -332,6 +377,10 @@ class UserController extends HomeController {
      * @author jry <598821125@qq.com>
      */
     public function sendMailVerify(){
+        if((time()-session('limit_time')) < 30){
+            $this->error('30秒内不能重复发送');
+        }
+
         // 生成验证码
         $reg_verify = \Org\Util\String::randString(6,1);
         session('reg_verify', user_md5($reg_verify, I('post.email')));
@@ -347,6 +396,7 @@ class UserController extends HomeController {
 
         // 发送邮件
         if ($result) {
+            session('limit_time', time());
             $this->success('发送成功，请登陆邮箱查收！');
         } else {
             $this->error('发送失败！');
@@ -358,15 +408,22 @@ class UserController extends HomeController {
      * @author jry <598821125@qq.com>
      */
     public function sendMobileVerify() {
+        if((time()-session('limit_time')) < 30){
+            $this->error('30秒内不能重复发送');
+        }
+
         // 生成验证码
         $reg_verify = \Org\Util\String::randString(6,1);
         session('reg_verify', user_md5($reg_verify, I('post.mobile')));
 
         // 构造短信数据
-        $msg_data['receiver'] = I('post.mobile');
-        $msg_data['message'] = '短信验证码：'.$reg_verify;
-        $result = D('Addons://Message/Message')->sendMessage($msg_data);
+        $sms_data['RecNum'] = I('post.mobile');
+        $sms_data['code']   = $reg_verify;
+        $sms_data['SmsFreeSignName'] = '注册验证';
+        //$sms_data['SmsTemplateCode'] = '';
+        $result = D('Addons://Alidayu/Alidayu')->send($sms_data);
         if ($result) {
+            session('limit_time', time());
             $this->success('发送成功，请查收！');
         } else {
             $this->error('发送失败！');

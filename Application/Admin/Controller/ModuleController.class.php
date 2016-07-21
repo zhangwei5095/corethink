@@ -52,17 +52,12 @@ class ModuleController extends AdminController {
                 if (!$module_info) {
                     $this->error('该模块依赖'.$key.'模块');
                 }
-                $module_version = explode('.', $module_info['version']);
-                $need_version = explode('.', $val);
-
-                if (($module_version[0] - $need_version[0]) >= 0) {
-                    if (($module_version[1] - $need_version[1]) >= 0) {
-                        if (($module_version[2] - $need_version[2]) >= 0) {
-                            continue;
-                        }
-                    }
+                if ( version_compare ($module_info['version'] , $val) >=  0 ) {
+                    continue;
+                } else {
+                    $this->error($module_info['title'].'模块版本不得低于v'.$val);
+                    return false;
                 }
-                $this->error($module_info['title'].'模块版本不得低于v'.$val);
             }
             return true;
         }
@@ -163,7 +158,7 @@ class ModuleController extends AdminController {
                 $id = $module_object->add($data);
                 if ($id) {
                     // 安装成功后自动在前台新增导航
-                    $nav_data['name']  = strtolower($data['name']);
+                    $nav_data['group'] = 'top';
                     $nav_data['title'] = $data['title'];
                     $nav_data['type']  = 'module';
                     $nav_data['value'] = $data['name'];
@@ -171,7 +166,7 @@ class ModuleController extends AdminController {
                     $nav_object = D('Nav');
                     $nav_data_created = $nav_object->create($nav_data);
                     if ($nav_data_created) {
-                        $nav_add_result = D('Nav')->add($nav_data_created);
+                        $nav_add_result = $nav_object->add($nav_data_created);
                     }
                     $this->success('安装成功', U('index'));
                 } else {

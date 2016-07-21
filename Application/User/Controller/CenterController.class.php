@@ -28,8 +28,13 @@ class CenterController extends HomeController {
      */
     public function index() {
         $uid  = $this->is_login();
+        $user_info = get_user_info($uid);
+        $user_type_info = D('Type')->find($user_info['user_type']);
+        if ($user_type_info['center_template']) {
+            $template = 'Center/' . $user_type_info['center_template'];
+        }
         $this->assign('meta_title', '个人中心');
-        $this->display();
+        $this->display($template);
     }
 
     /**

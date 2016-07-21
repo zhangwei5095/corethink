@@ -327,6 +327,7 @@ class AddonController extends AdminController {
 
                 // 定义编辑按钮
                 $attr = array();
+                $attr['name'] = 'edit';
                 $attr['title'] = '编辑';
                 $attr['class'] = 'label label-info';
                 $attr['href']  = U('Admin/Addon/adminEdit', array(

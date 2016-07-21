@@ -15,6 +15,27 @@ use Common\Util\Think\Page;
  */
 class CategoryController extends HomeController {
     /**
+     * 分类列表
+     * @author jry <598821125@qq.com>
+     */
+    public function index($group = 1) {
+        // 获取所有分类
+        $map['status'] = array('eq', '1');  // 禁用和正常状态
+        if (I('get.pid')) {
+            $map['pid'] = array('eq', I('get.pid'));  // 父分类ID
+        }
+        $map['group'] = array('eq', $group);
+        $data_list = D('Category')->field('id,pid,group,doc_type,title,url,icon,create_time,sort,status')
+                                  ->where($map)->order('sort asc,id asc')->select();
+
+        // 转换成树状列表
+        $tree = new \Common\Util\Tree();
+        $category_list = $tree->list_to_tree($data_list);
+
+        $this->success('分类列表', ''. array('data' => $category_list));
+    }
+
+    /**
      * 分类详情
      * @author jry <598821125@qq.com>
      */

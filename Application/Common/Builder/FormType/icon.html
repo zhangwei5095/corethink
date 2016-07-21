@@ -1,12 +1,12 @@
 <case value="icon">
-    <div class="form-group item_{$[type]form.name} {$[type]form.extra_class}">
+    <div class="form-group item_{$[type]form.name} {$[type]form.extra.class}">
         <label class="left control-label">{$[type]form.title}：</label>
         <div class="right">
             <div class="input-group input" id="[type]{$group_k}_icon_{$[type]k}">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button"><i class="fa fa-fw fa-info-circle"></i> 点击选择图标</button>
                 </span>
-                <input type="text" class="form-control" name="{$[type]form.name}" value="{$[type]form.value}" {$[type]form.extra_attr}>
+                <input type="text" class="form-control" name="{$[type]form.name}" value="{$[type]form.value}" {$[type]form.extra.attr}>
             </div>
             <script type="text/javascript">
                 $(function(){

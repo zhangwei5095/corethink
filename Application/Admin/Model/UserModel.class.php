@@ -31,7 +31,7 @@ class UserModel extends Model {
         array('username', 'require', '用户名不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
         array('username', '3,32', '用户名长度为1-32个字符', self::MUST_VALIDATE, 'length', self::MODEL_BOTH),
         array('username', '', '用户名被占用', self::MUST_VALIDATE, 'unique', self::MODEL_BOTH),
-        array('username', '/^(?!_)(?!\d)(?!.*?_$)[\w\一-\龥]+$/', '用户名只可含有数字、字母、下划线且不以下划线开头结尾，不以数字开头！', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
+        array('username', '/^(?!_)(?!\d)(?!.*?_$)[\w]+$/', '用户名只可含有数字、字母、下划线且不以下划线开头结尾，不以数字开头！', self::MUST_VALIDATE, 'regex', self::MODEL_BOTH),
 
         //验证密码
         array('password', 'require', '密码不能为空', self::MUST_VALIDATE, 'regex', self::MODEL_INSERT),
@@ -66,21 +66,28 @@ class UserModel extends Model {
         array('score', '0', self::MODEL_INSERT),
         array('money', '0', self::MODEL_INSERT),
         array('reg_ip', 'get_client_ip', self::MODEL_INSERT, 'function', 1),
-        array('password', 'user_md5', self::MODEL_INSERT, 'function'),
+        array('password', 'user_md5', self::MODEL_BOTH, 'function'),
         array('create_time', 'time', self::MODEL_INSERT, 'function'),
         array('update_time', 'time', self::MODEL_BOTH, 'function'),
         array('status', '1', self::MODEL_INSERT),
     );
 
     /**
-     * 用户性别
+     * 查找后置操作
      * @author jry <598821125@qq.com>
      */
-    public function user_gender($id){
-        $list[0]  = '保密';
-        $list[1]  = '男';
-        $list[-1] = '女';
-        return $id ? $list[$id] : $list;
+    protected function _after_find(&$result, $options) {
+        $result['avatar_url'] = get_cover($result['avatar'], 'avatar');
+    }
+
+    /**
+     * 查找后置操作
+     * @author jry <598821125@qq.com>
+     */
+    protected function _after_select(&$result, $options) {
+        foreach($result as &$record){
+            $this->_after_find($record, $options);
+        }
     }
 
     /**

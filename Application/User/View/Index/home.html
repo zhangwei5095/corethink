@@ -33,8 +33,8 @@
                         <a href="{:U('User/Talk/index', array('to_uid' => $user_info['id']))}" class="btn btn-default btn-sm"><i class="fa fa-envelope"></i> 发私信</a>
                     </div>
                     <div class="col-xs-6 col-md-2">
-                        <?php if ($follow_status) :?>
-                            <button type="button" class="btn btn-default btn-sm ajax-follow"
+                        <?php if ($user_info['follow_status']) :?>
+                            <button type="button" class="btn btn-default active btn-sm ajax-follow"
                                 url="{:U('User/Follow/add', array('uid' => $user_info['id']))}">
                                     <i class="fa fa-check"></i> 已关注
                             </button>
@@ -65,14 +65,14 @@
     <script type="text/javascript">
         $(function(){
             //关注
-            $('.ajax-follow').click(function(){
+            $(document).delegate('.ajax-follow', 'click', function() {
                 var target;
                 var that = this;
                 if (target = $(this).attr('url')) {
                     $.get(target).success(function(data){
                         if (data.status == 1) {
                             if(data.follow_status == 1){
-                                $(that).removeClass('btn-defaul');
+                                $(that).removeClass('btn-default');
                                 $(that).addClass('active');
                                 $(that).html('<i class="fa fa-check"></i> 已关注');
                                 $.alertMessager(data.info, 'success');

@@ -95,7 +95,7 @@ class ModuleModel extends Model {
      */
     public function getAllMenu() {
         $menu_list = S('MENU_LIST');
-        if (!$menu_list) {
+        if (!$menu_list || APP_DEBUG === true) {
             $con['status'] = 1;
             $system_module_list = $this->where($con)->order('sort asc, id asc')->select();
             $tree = new tree();
@@ -131,7 +131,7 @@ class ModuleModel extends Model {
      * @return array 父级菜单集合
      * @author jry <598821125@qq.com>
      */
-    public function getParentMenu($current_menu ='', $module_name = MODULE_NAME) {
+    public function getParentMenu($current_menu = '', $module_name = MODULE_NAME) {
         if (!$current_menu) {
             $current_menu = $this->getCurrentMenu();
         }
@@ -192,25 +192,33 @@ class ModuleModel extends Model {
         foreach ($module_list as &$val) {
             switch($val['status']){
                 case '-2':  // 损坏
-                    $val['status_icon'] = '<span class="text-danger">损坏</span>';
-                    $val['right_button']  = '<a class="label label-danger ajax-get" href="'.U('setStatus', array('status' => 'delete', 'ids' => $val['id'])).'">删除记录</a>';
+                    $val['status_icon'] = '<span class="text-danger">删除记录</span>';
+                    $val['right_button']['damaged']['title'] = '删除记录';
+                    $val['right_button']['damaged']['attribute'] = 'class="label label-danger ajax-get" href="'.U('setStatus', array('status' => 'delete', 'ids' => $val['id'])).'"';
                     break;
                 case '-1':  // 未安装
                     $val['status_icon'] = '<i class="fa fa-download text-success"></i>';
-                    $val['right_button']  = '<a class="label label-success" href="'.U('install_before', array('name' => $val['name'])).'">安装</a>';
+                    $val['right_button']['install_before']['title'] = '安装';
+                    $val['right_button']['install_before']['attribute'] = 'class="label label-success" href="'.U('install_before', array('name' => $val['name'])).'"';
                     break;
                 case '0':  // 禁用
                     $val['status_icon'] = '<i class="fa fa-ban text-danger"></i>';
-                    $val['right_button'] .= '<a class="label label-info ajax-get" href="'.U('updateInfo', array('id' => $val['id'])).'">更新菜单</a> ';
-                    $val['right_button'] .= '<a class="label label-success ajax-get" href="'.U('setStatus', array('status' => 'resume', 'ids' => $val['id'])).'">启用</a> ';
-                    $val['right_button'] .= '<a class="label label-danger ajax-get" href="'.U('uninstall_before', array('id' => $val['id'])).'">卸载</a> ';
+                    $val['right_button']['update_info']['title'] = '更新菜单';
+                    $val['right_button']['update_info']['attribute'] = 'class="label label-info ajax-get" href="'.U('updateInfo', array('id' => $val['id'])).'"';
+                    $val['right_button']['forbid']['title'] = '启用';
+                    $val['right_button']['forbid']['attribute'] = 'class="label label-success ajax-get" href="'.U('setStatus', array('status' => 'resume', 'ids' => $val['id'])).'"';
+                    $val['right_button']['uninstall_before']['title'] = '卸载';
+                    $val['right_button']['uninstall_before']['attribute'] = 'class="label label-danger ajax-get" href="'.U('uninstall_before', array('id' => $val['id'])).'"';
                     break;
                 case '1':  // 正常
                     $val['status_icon'] = '<i class="fa fa-check text-success"></i>';
-                    $val['right_button'] .= '<a class="label label-info ajax-get" href="'.U('updateInfo?id='.$val['id']).'">更新菜单</a> ';
+                    $val['right_button']['update_info']['title'] = '更新菜单';
+                    $val['right_button']['update_info']['attribute'] = 'class="label label-info ajax-get" href="'.U('updateInfo', array('id' => $val['id'])).'"';
                     if (!$val['is_system']) {
-                        $val['right_button'] .= '<a class="label label-warning ajax-get" href="'.U('setStatus', array('status' => 'forbid', 'ids' => $val['id'])).'">禁用</a> ';
-                        $val['right_button'] .= '<a class="label label-danger" href="'.U('uninstall_before', array('id' => $val['id'])).'">卸载</a> ';
+                        $val['right_button']['forbid']['title'] = '禁用';
+                        $val['right_button']['forbid']['attribute'] = 'class="label label-warning ajax-get" href="'.U('setStatus', array('status' => 'forbid', 'ids' => $val['id'])).'"';
+                        $val['right_button']['uninstall_before']['title'] = '卸载';
+                        $val['right_button']['uninstall_before']['attribute'] = 'class="label label-danger ajax-get" href="'.U('uninstall_before', array('id' => $val['id'])).'"';
                     }
                     break;
             }

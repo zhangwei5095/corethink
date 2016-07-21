@@ -1,10 +1,10 @@
 <case value="file">
-    <div class="form-group item_{$[type]form.name} {$[type]form.extra_class}">
+    <div class="form-group item_{$[type]form.name} {$[type]form.extra.class}">
         <label class="left control-label">{$[type]form.title}：</label>
-        <div class="right row">
+        <div class="right">
             <div  id="[type]{$group_k}_upload_box_{$[type]k}" class="wu-example">
                 <!--用来存放文件信息-->
-                <div id="[type]{$group_k}_upload_list_{$[type]k}" class="uploader-list col-xs-12">
+                <div id="[type]{$group_k}_upload_list_{$[type]k}" class="uploader-list">
                     <notempty name="[type]form.value">
                         <div id="[type]{$group_k}_upload_preview_{$[type]k}">
                             <ul class="list-group file-box">
@@ -29,9 +29,9 @@
                         </div>
                     </notempty>
                 </div>
-                <div class="btns col-xs-12">
+                <div class="btns">
                     <input type="hidden" id="[type]{$group_k}_upload_input_{$[type]k}" name="{$[type]form.name}" value="{$[type]form.value}">
-                    <div id="[type]{$group_k}_upload_{$[type]k}">上传文件</div>
+                    <div id="[type]{$group_k}_upload_{$[type]k}" class="btn btn-primary">上传文件</div>
                     <button id="ctlBtn" class="btn btn-default hidden">开始上传</button>
                     <notempty name="[type]form.tip">
                         <span class="check-tips text-muted small">{$[type]form.tip}</span>
@@ -45,7 +45,7 @@
                         auto: true,                                                                    // 选完文件后，是否自动上传
                         duplicate: true,                                                               // 同一文件是否可以重复上传
                         swf: '__CUI__/swf/uploader.swf',                                               // swf文件路径
-                        server: '{:U(MODULE_MARK."/Upload/upload", array("dir" => "file"))}',          // 文件接收服务端
+                        server: '{:U(MODULE_MARK."/Upload/upload", array("dir" => "file"))}',     // 文件接收服务端
                         pick: '#[type]{$group_k}_upload_{$[type]k}',                                   // 选择文件的按钮
                         resize: false,                                                                 // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
                         //fileNumLimit: 1,                                                             // 验证文件总数量, 超出则不允许加入队列
@@ -53,7 +53,7 @@
                         // 文件过滤
                         accept: {
                             title: 'Files',
-                            extensions: 'doc,docx,xls,xlsx,ppt,pptx,pdf,wps,txt,zip,rar,gz,bz2,7z'
+                            extensions: 'doc,docx,xls,xlsx,ppt,pptx,pdf,wps,txt,zip,rar,gz,bz2,7z,ipa,apk,dmg,iso'
                         }
                     });
 

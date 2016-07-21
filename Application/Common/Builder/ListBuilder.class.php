@@ -287,6 +287,7 @@ class ListBuilder extends CommonController {
         switch ($type) {
             case 'edit':  // 编辑按钮
                 // 预定义按钮属性以简化使用
+                $my_attribute['name'] = 'edit';
                 $my_attribute['title'] = '编辑';
                 $my_attribute['class'] = 'label label-primary';
                 $my_attribute['href']  = U(
@@ -294,7 +295,6 @@ class ListBuilder extends CommonController {
                     array($this->_table_data_list_key => '__data_id__')
                 );
 
-                // 如果定义了属性数组则与默认的进行合并，详细使用方法参考上面的顶部按钮
                 /**
                 * 如果定义了属性数组则与默认的进行合并
                 * 用户定义的同名数组元素会覆盖默认的值
@@ -313,6 +313,7 @@ class ListBuilder extends CommonController {
                 //预定义按钮属
                 $my_attribute['type'] = 'forbid';
                 $my_attribute['model'] = $attribute['model'] ? : CONTROLLER_NAME;
+                $my_attribute['0']['name'] = 'forbid';
                 $my_attribute['0']['title'] = '启用';
                 $my_attribute['0']['class'] = 'label label-success ajax-get confirm';
                 $my_attribute['0']['href']  = U(
@@ -323,6 +324,7 @@ class ListBuilder extends CommonController {
                         'model' => $my_attribute['model']
                     )
                 );
+                $my_attribute['1']['name'] = 'forbid';
                 $my_attribute['1']['title'] = '禁用';
                 $my_attribute['1']['class'] = 'label label-warning ajax-get confirm';
                 $my_attribute['1']['href']  = U(
@@ -334,39 +336,26 @@ class ListBuilder extends CommonController {
                     )
                 );
 
-                // 这个按钮定义好了把它丢进按钮池里
-                $this->_right_button_list[] = $my_attribute;
-                break;
-            case 'hide':  // 改变记录状态按钮，会更具数据当前的状态自动选择应该显示隐藏/显示
-                // 预定义按钮属
-                $my_attribute['type'] = 'hide';
-                $my_attribute['model'] = $attribute['model'] ? : CONTROLLER_NAME;
-                $my_attribute['2']['title'] = '显示';
-                $my_attribute['2']['class'] = 'label label-success ajax-get confirm';
-                $my_attribute['2']['href']  = U(
-                    MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus',
-                    array(
-                        'status' => 'show',
-                        'ids' => '__data_id__',
-                        'model' => $my_attribute['model']
-                    )
-                );
-                $my_attribute['1']['title'] = '隐藏';
-                $my_attribute['1']['class'] = 'label label-info ajax-get confirm';
-                $my_attribute['1']['href']  = U(
-                    MODULE_NAME.'/'.CONTROLLER_NAME.'/setStatus',
-                    array(
-                        'status' => 'hide',
-                        'ids' => '__data_id__',
-                        'model' => $my_attribute['model']
-                    )
-                );
+                /**
+                * 如果定义了属性数组则与默认的进行合并
+                * 用户定义的同名数组元素会覆盖默认的值
+                * 比如$builder->addRightButton('edit', array('title' => '换个马甲'))
+                * '换个马甲'这个碧池就会使用山东龙潭寺的十二路谭腿第十一式“风摆荷叶腿”
+                * 把'新增'踢走自己霸占title这个位置，其它的属性同样道理
+                */
+                if ($attribute['0'] && is_array($attribute['0'])) {
+                    $my_attribute['0'] = array_merge($my_attribute['0'], $attribute['0']);
+                }
+                if ($attribute['1'] && is_array($attribute['1'])) {
+                    $my_attribute['1'] = array_merge($my_attribute['1'], $attribute['1']);
+                }
 
                 // 这个按钮定义好了把它丢进按钮池里
                 $this->_right_button_list[] = $my_attribute;
                 break;
             case 'recycle':
                 // 预定义按钮属性以简化使用
+                $my_attribute['name'] = 'recycle';
                 $my_attribute['title'] = '回收';
                 $my_attribute['class'] = 'label label-danger ajax-get confirm';
                 $my_attribute['model'] = $attribute['model'] ? : CONTROLLER_NAME;
@@ -389,6 +378,7 @@ class ListBuilder extends CommonController {
                 break;
             case 'restore':
                 // 预定义按钮属性以简化使用
+                $my_attribute['name'] = 'restore';
                 $my_attribute['title'] = '还原';
                 $my_attribute['class'] = 'label label-success ajax-get confirm';
                 $my_attribute['model'] = $attribute['model'] ? : CONTROLLER_NAME;
@@ -411,6 +401,7 @@ class ListBuilder extends CommonController {
                 break;
             case 'delete':
                 // 预定义按钮属性以简化使用
+                $my_attribute['name'] = 'delete';
                 $my_attribute['title'] = '删除';
                 $my_attribute['class'] = 'label label-danger ajax-get confirm';
                 $my_attribute['model'] = $attribute['model'] ? : CONTROLLER_NAME;
@@ -433,6 +424,7 @@ class ListBuilder extends CommonController {
                 break;
             case 'self':
                 // 预定义按钮属性以简化使用
+                $my_attribute['name'] = 'self';
                 $my_attribute['class'] = 'label label-default';
 
                 // 如果定义了属性数组则与默认的进行合并
@@ -509,7 +501,7 @@ class ListBuilder extends CommonController {
             if ($this->_right_button_list) {
                 foreach ($this->_right_button_list as $right_button) {
                     // 禁用按钮与隐藏比较特殊，它需要根据数据当前状态判断是显示禁用还是启用
-                    if ($right_button['type'] === 'forbid' || $right_button['type'] === 'hide'){
+                    if ($right_button['type'] === 'forbid'){
                         $right_button = $right_button[$data['status']];
                     }
 
@@ -522,8 +514,7 @@ class ListBuilder extends CommonController {
 
                     // 编译按钮属性
                     $right_button['attribute'] = $this->compileHtmlAttr($right_button);
-                    $data['right_button'] .= '<a '.$right_button['attribute']
-                                          .'>'.$right_button['title'].'</a> ';
+                    $data['right_button'][$right_button['name']] = $right_button;
                 }
             }
 
@@ -540,9 +531,6 @@ class ListBuilder extends CommonController {
                                 break;
                             case '1':
                                 $data[$column['name']] = '<i class="fa fa-check text-success"></i>';
-                                break;
-                            case '2':
-                                $data[$column['name']] = '<i class="fa fa-eye-slash text-warning"></i>';
                                 break;
                         }
                         break;
@@ -568,7 +556,9 @@ class ListBuilder extends CommonController {
                         $data[$column['name']] = '<img class="picture" src="'.get_cover($data[$column['name']]).'">';
                         break;
                     case 'pictures':
-                        $temp = explode(',', $data[$column['name']]);
+                        if (!is_array($data[$column['name']])) {
+                            $temp = explode(',', $data[$column['name']]);
+                        }
                         $data[$column['name']] = '<img class="picture" src="'.get_cover($temp[0]).'">';
                         break;
                     case 'type':
@@ -583,6 +573,9 @@ class ListBuilder extends CommonController {
                         }
                         break;
                 }
+                if (is_array($data[$column['name']]) && $column['name'] !== 'right_button') {
+                    $data[$column['name']] = implode(',', $data[$column['name']]);
+                }
             }
 
             /**
@@ -593,12 +586,14 @@ class ListBuilder extends CommonController {
             if ($this->_alter_data_list) {
                 foreach ($this->_alter_data_list as $alter) {
                     if ($data[$alter['condition']['key']] === $alter['condition']['value']) {
-                        foreach ($alter['alter_data'] as &$val) {
-                            $val = preg_replace(
-                                '/__data_id__/i',
-                                $data[$this->_table_data_list_key],
-                                $val
-                            );
+                        if ($alter['alter_data']['right_button']) {
+                            foreach ($alter['alter_data']['right_button'] as &$val) {
+                                $val['href'] = preg_replace(
+                                    '/__data_id__/i',
+                                    $data[$this->_table_data_list_key],
+                                    $val['href']
+                                );
+                            }
                         }
                         $data = array_merge($data, $alter['alter_data']);
                     }

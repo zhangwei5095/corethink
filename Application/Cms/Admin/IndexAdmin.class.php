@@ -18,21 +18,8 @@ class IndexAdmin extends AdminController {
      * 默认方法
      * @author jry <598821125@qq.com>
      */
-    public function index($cid = 0) {
-        if (!$cid) {
-            //使用Builder快速建立列表页面
-            $builder = new \Common\Builder\ListBuilder();
-            $builder->setMetaTitle('文章管理') //设置页面标题
-                    ->setSearch('请输入ID/标题', U('index', array('cid' => $cid)))
-                    ->addTableColumn('id', 'ID')
-                    ->addTableColumn('create_time', '发布时间', 'time')
-                    ->addTableColumn('sort', '排序', 'text')
-                    ->addTableColumn('status', '状态', 'status')
-                    ->addTableColumn('right_button', '操作', 'btn')
-                    ->setExtraHtml('<div class="alert alert-success">请点击左侧的列表树进行操作</div>')
-                    ->setTemplate('Builder/list')
-                    ->display();
-        } else {
+    public function index($cid) {
+        if ($cid) {
             //获取分类信息
             $category_info = D('Category')->find($cid);
 
@@ -110,14 +97,14 @@ class IndexAdmin extends AdminController {
                             <p class="modal-title">移动至</p>
                         </div>
                         <div class="modal-body">
-                            <form action="{$move_url}" method="post" class="form">
+                            <form action="{$move_url}" method="post" class="move-form">
                                 <div class="form-group">
                                     <select name="to_cid" class="form-control">{$options}</select>
                                 </div>
                                 <div class="form-group">
                                     <input type="hidden" name="ids">
                                     <input type="hidden" name="from_cid" value="{$cid}">
-                                    <button class="btn btn-primary btn-block submit ajax-post" type="submit" target-form="form">确 定</button>
+                                    <button class="btn btn-primary btn-block submit ajax-post" type="submit" target-form="move-form">确 定</button>
                                 </div>
                             </form>
                         </div>
@@ -152,7 +139,7 @@ EOF;
                     ->addTopButton('self', $move_attr) //添加移动按钮
                     ->setSearch('请输入ID/标题', U('index', array('cid' => $cid)))
                     ->addTableColumn('id', 'ID')
-                    ->addTableColumn('title_url', '标题');
+                    ->addTableColumn('title', '标题');
 
             //动态生成列表显示的字段
             if ($attribute_list) {
@@ -174,7 +161,6 @@ EOF;
                     ->addRightButton('forbid')  //添加禁用/启用按钮
                     ->addRightButton('recycle') //添加回收按钮
                     ->setExtraHtml($extra_html)
-                    ->setTemplate('Builder/list')
                     ->display();
         }
     }
@@ -239,7 +225,6 @@ EOF;
             $builder->setMetaTitle('新增文章') //设置页面标题
                     ->setPostUrl(U('add')) //设置表单提交地址
                     ->setExtraItems($new_attribute_list)
-                    ->setTemplate('Builder/form')
                     ->display();
         }
     }
@@ -310,7 +295,6 @@ EOF;
                     ->addFormItem('id', 'hidden', 'ID', 'ID')
                     ->setExtraItems($new_attribute_list)
                     ->setFormData($article_info)
-                    ->setTemplate('Builder/form')
                     ->display();
         }
     }
@@ -341,6 +325,8 @@ EOF;
             } else {
                 $this->error('请选择目标分类');
             }
+        } else {
+            $this->error('错误');
         }
     }
 
@@ -356,7 +342,6 @@ EOF;
         //使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
         $builder->setMetaTitle('回收站') //设置页面标题
-                ->addTopButton('delete', array('model' => D('Index')->tableName)) //添加删除按钮
                 ->addTopButton('restore', array('model' => D('Index')->tableName)) //添加还原按钮
                 ->setSearch('请输入ID/文档名称', U('recycle'))
                 ->addTableColumn('id', 'ID')

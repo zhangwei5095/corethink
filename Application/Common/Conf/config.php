@@ -14,13 +14,13 @@ $_config = array(
     /**
      * 产品配置
      * 根据OpenCMF用户协议：
-     * 任何情况下使用OpenCMF均需获取官方授权（除了开源版本即CoreThink），违者追究法律责任，授权联系：admin@opencmf.cn
+     * 任何情况下使用OpenCMF均需获取官方授权，违者追究法律责任，授权联系：admin@opencmf.cn
      */
     'PRODUCT_NAME'    => 'OpenCMF',                      // 产品名称
     'PRODUCT_LOGO'    => '<b><span class="open" style="color: #a5aeb4;">Core</span><span class="cmf" style="color: #3fa9f5;">Think</span></b>',  // 产品Logo
-    'CURRENT_VERSION' => '1.2.0',                        // 当前版本号
-    'DEVELOP_VERSION' => 'release',                      // 开发版本号
-    'BUILD_VERSION'   => '201601222050',                 // 编译标记
+    'CURRENT_VERSION' => '1.3.0',                        // 当前版本号
+    'DEVELOP_VERSION' => 'beta1',                        // 开发版本号
+    'BUILD_VERSION'   => '201607201705',                 // 编译标记
     'PRODUCT_MODEL'   => 'corethink',                    // 产品型号
     'PRODUCT_TITLE'   => '开源版',                        // 产品标题
     'WEBSITE_DOMAIN'  => 'http://www.corethink.cn',      // 官方网址
@@ -29,7 +29,7 @@ $_config = array(
     'DEVELOP_TEAM'    => '南京科斯克网络科技有限公司',     // 当前项目开发团队名称
 
     // 产品简介
-    'PRODUCT_INFO'    => 'OpenCMF是一套基于统一核心的通用互联网+信息化服务解决方案，追求简单、高效、卓越。可轻松实现支持多终端的WEB产品快速搭建、部署、上线。系统功能采用模块化、组件化、插件化等开放化低耦合设计，应用商城拥有丰富的功能模块、插件、主题，便于用户灵活扩展和二次开发。',
+    'PRODUCT_INFO'    => 'CoreThink是一套基于统一核心的通用互联网+信息化服务解决方案，追求简单、高效、卓越。可轻松实现支持多终端的WEB产品快速搭建、部署、上线。系统功能采用模块化、组件化、插件化等开放化低耦合设计，应用商城拥有丰富的功能模块、插件、主题，便于用户灵活扩展和二次开发。',
 
     // 公司简介
     'COMPANY_INFO'    => '南京科斯克网络科技有限公司是一家新兴的互联网+项目技术解决方案提供商。我们用敏锐的视角洞察IT市场的每一次变革,我们顶着时代变迁的浪潮站在了前沿,以开拓互联网行业新渠道为己任。',
@@ -39,6 +39,12 @@ $_config = array(
 
     // URL模式
     'URL_MODEL' => '3',
+
+    // Session支持
+    'SESSION_OPTIONS'=>array(
+        'expire' => 8640000,
+        'type'   => 'Db',
+    ),
 
     // 全局过滤配置
     'DEFAULT_FILTER' => '', //TP默认为htmlspecialchars
@@ -75,6 +81,8 @@ $_config = array(
     'USER_LOGIN_MODAL'    => APP_PATH.'User/View/User/login_modal.html',
     'HOME_PUBLIC_LAYOUT'  => APP_PATH.'Home/View/Public/layout.html',
     'ADMIN_PUBLIC_LAYOUT' => APP_PATH.'Admin/View/Public/layout.html',
+    'LISTBUILDER_LAYOUT'  => APP_PATH.'Common/Builder/listbuilder.html',
+    'FORMBUILDER_LAYOUT'  => APP_PATH.'Common/Builder/formbuilder.html',
 
     // 错误页面模板
     'TMPL_ACTION_ERROR'   => APP_PATH.'Home/View/Public/think/error.html',      // 错误跳转对应的模板文件
@@ -110,7 +118,7 @@ if (is_file('./Data/db.php')) {
         $db_config = array(
             'DB_TYPE'   => $_SERVER[ENV_PRE.'DB_TYPE'] ? : 'mysql',           // 数据库类型
             'DB_HOST'   => $_SERVER[ENV_PRE.'DB_HOST'] ? : '127.0.0.1',       // 服务器地址
-            'DB_NAME'   => $_SERVER[ENV_PRE.'DB_NAME'] ? : 'opencmf',       // 数据库名
+            'DB_NAME'   => $_SERVER[ENV_PRE.'DB_NAME'] ? : 'opencmf',         // 数据库名
             'DB_USER'   => $_SERVER[ENV_PRE.'DB_USER'] ? : 'root',            // 用户名
             'DB_PWD'    => $_SERVER[ENV_PRE.'DB_PWD']  ? : '',                // 密码
             'DB_PORT'   => $_SERVER[ENV_PRE.'DB_PORT'] ? : '3306',            // 端口
@@ -121,7 +129,7 @@ if (is_file('./Data/db.php')) {
         $db_config = array(
             'DB_TYPE'   => 'mysql',           // 数据库类型
             'DB_HOST'   => '127.0.0.1',       // 服务器地址
-            'DB_NAME'   => 'opencmf',       // 数据库名
+            'DB_NAME'   => 'opencmf',         // 数据库名
             'DB_USER'   => 'root',            // 用户名
             'DB_PWD'    => '',                // 密码
             'DB_PORT'   => '3306',            // 端口

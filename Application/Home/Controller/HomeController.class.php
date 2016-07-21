@@ -24,30 +24,8 @@ class HomeController extends CommonController {
             $this->error('站点已经关闭，请稍后访问~');
         }
 
-        // 获取所有模块配置的用户导航
-        $mod_con['status'] = 1;
-        $_user_nav_main = array();
-        $_user_nav_list = D('Admin/Module')->where($mod_con)->getField('user_nav', true);
-        foreach ($_user_nav_list as $key => $val) {
-            if ($val) {
-                $val = json_decode($val, true);
-                if ($val['main']) {
-                    $_user_nav_main = array_merge($_user_nav_main, $val['main']);
-                }
-            }
-        }
-
         // 监听行为扩展
         \Think\Hook::listen('corethink_behavior');
-
-        $this->assign('meta_keywords', C('WEB_SITE_KEYWORD'));
-        $this->assign('meta_description', C('WEB_SITE_DESCRIPTION'));
-        $this->assign('_new_message', cookie('_new_message'));          // 获取用户未读消息数量
-        $this->assign('_user_auth', session('user_auth'));              // 用户登录信息
-        $this->assign('_user_nav_main', $_user_nav_main);               // 用户导航信息
-        $this->assign('_user_center_side', C('USER_CENTER_SIDE'));      // 用户中心侧边
-        $this->assign('_user_login_modal', C('USER_LOGIN_MODAL'));      // 用户登录弹窗
-        $this->assign('_home_public_layout', C('HOME_PUBLIC_LAYOUT'));  // 页面公共继承模版
     }
 
     /**
@@ -60,13 +38,25 @@ class HomeController extends CommonController {
         if ($uid) {
             return $uid;
         } else {
-            if (IS_AJAX) {
-                $return['status']  = 0;
-                $return['info']    = '请先登录系统';
-                $return['login'] = 1;
-                $this->ajaxReturn($return);
+            $this->error('请先登录系统', U('User/User/login'), array('login' => 1));
+        }
+    }
+
+    /**
+     * 用户VIP权限检测
+     * @author jry <598821125@qq.com>
+     */
+    protected function is_vip($level = 1) {
+        if (is_dir('./Application/Vip/')) {
+            $vip = is_vip();
+            $vip_info = D('Vip/Index')->find($vip);
+            if ($vip && $vip_info['type_info']['level'] >= $level) {
+                return $vip;
             } else {
-                redirect(U('User/User/login', null, true, true));
+                $con['status'] = 1;
+                $con['level']  = $level;
+                $need_vip_info = D('Vip/Type')->where($con)->find();
+                $this->error('请先开通' . $need_vip_info['title'] . 'VIP', U('Vip/Index/index'));
             }
         }
     }
@@ -105,26 +95,6 @@ class HomeController extends CommonController {
                     $data,
                     $map,
                     array('success'=>'启用成功','error'=>'启用失败')
-                );
-                break;
-            case 'hide' :  // 隐藏条目
-                $data = array('status' => 2);
-                $map  = array_merge(array('status' => 1), $map);
-                $this->editRow(
-                    $model,
-                    $data,
-                    $map,
-                    array('success'=>'隐藏成功','error'=>'隐藏失败')
-                );
-                break;
-            case 'show' :  // 显示条目
-                $data = array('status' => 1);
-                $map  = array_merge(array('status' => 2), $map);
-                $this->editRow(
-                   $model,
-                   $data,
-                   $map,
-                   array('success'=>'显示成功','error'=>'显示失败')
                 );
                 break;
             case 'recycle' :  // 移动至回收站

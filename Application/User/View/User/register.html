@@ -28,34 +28,34 @@
                         <div class="panel-body">
                             <div class="reg-box">
                                 <!-- 后台管理员允许注册方式才会显示 -->
-                                <php>
+                                <?php
                                     $allow_reg_type = C('user_config.allow_reg_type');
                                     $user_type_list = D('User/Type')->where('status = 1')->select();
-                                </php>
+                                ?>
                                 <?php if(count($allow_reg_type) !== 1): ?>
                                     <ul class="nav nav-pills">
-                                        <php>if(in_array('username', $allow_reg_type)):</php>
+                                        <?php if(in_array('username', $allow_reg_type)): ?>
                                             <li data-tab="reg1" <php>if($allow_reg_type[0] === 'username') echo 'class="active"';</php>>
                                                 <a href="#reg1" data-toggle="tab">用户名注册</a>
                                             </li>
-                                        <php>endif;</php>
-                                        <php>if(in_array('email', $allow_reg_type)):</php>
+                                        <?php endif; ?>
+                                        <?php if(in_array('email', $allow_reg_type)): ?>
                                             <li data-tab="reg2" <php>if($allow_reg_type[0] === 'email') echo 'class="active"';</php>>
                                                 <a href="#reg2" data-toggle="tab">邮箱注册</a>
                                             </li>
-                                        <php>endif;</php>
-                                        <php>if(in_array('mobile', $allow_reg_type)):</php>
+                                        <?php endif; ?>
+                                        <?php if(in_array('mobile', $allow_reg_type)): ?>
                                             <li data-tab="reg3" <php>if($allow_reg_type[0] === 'mobile') echo 'class="active"';</php>>
                                                 <a href="#reg3" data-toggle="tab">手机号注册</a>
                                             </li>
-                                        <php>endif;</php>
+                                        <?php endif; ?>
                                     </ul>
                                 <?php endif; ?>
                                 <div class="form-group"></div>
                                 <div class="tab-content">
-                                    <php>if(in_array('username', $allow_reg_type)):</php>
+                                    <?php if(in_array('username', $allow_reg_type)): ?>
                                         <div id="reg1" class="tab-pane <?php if($allow_reg_type[0] === 'username') echo "active"; ?>">
-                                            <form action="{:U('User/User/register', null, true, true)}" method="post" class="form reg-form-username">
+                                            <form action="{:U('User/User/register')}" method="post" class="form reg-form-username">
                                                 <fieldset>
                                                     <?php if(count($user_type_list) !== 1): ?>
                                                         <div class="form-group">
@@ -92,10 +92,10 @@
                                                 </fieldset>
                                             </form>
                                         </div>
-                                    <php>endif;</php>
-                                    <php>if(in_array('email', $allow_reg_type)):</php>
+                                    <?php endif; ?>
+                                    <?php if(in_array('email', $allow_reg_type)): ?>
                                         <div id="reg2" class="tab-pane <?php if($allow_reg_type[0] === 'email') echo "active"; ?>">
-                                            <form action="{:U('User/User/register', null, true, true)}" method="post" class="form reg-form-email">
+                                            <form action="{:U('User/User/register')}" method="post" class="form reg-form-email">
                                                 <fieldset>
                                                    <?php if(count($user_type_list) !== 1): ?>
                                                         <div class="form-group">
@@ -132,10 +132,10 @@
                                                 </fieldset>
                                             </form>
                                         </div>
-                                    <php>endif;</php>
-                                    <php>if(in_array('mobile', $allow_reg_type)):</php>
+                                    <?php endif; ?>
+                                    <?php if(in_array('mobile', $allow_reg_type)): ?>
                                         <div id="reg3" class="tab-pane <?php if($allow_reg_type[0] === 'mobile') echo "active"; ?>">
-                                            <form action="{:U('User/User/register', null, true, true)}" method="post" class="form reg-form-mobile">
+                                            <form action="{:U('User/User/register')}" method="post" class="form reg-form-mobile">
                                                 <fieldset>
                                                     <?php if(count($user_type_list) !== 1): ?>
                                                         <div class="form-group">
@@ -172,7 +172,7 @@
                                                 </fieldset>
                                             </form>
                                         </div>
-                                    <php>endif;</php>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -366,16 +366,7 @@
                 }
             }
 
-            $(".reg-form-username .reload-verify").on('click', function() {
-                var verifyimg = $(".verifyimg").attr("src");
-                if (verifyimg.indexOf('?') > 0) {
-                    $(".verifyimg").attr("src", verifyimg + '&random=' + Math.random());
-                } else {
-                    $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
-                }
-            });
-
-            $('.reg-form-email .send-mail-verify').click(function(){
+            $(document).delegate('.reg-form-email .send-mail-verify', 'click', function() {
                 var url = '';
                 var that = this;
                 if(url = "{:U('User/User/SendMailVerify')}"){
@@ -401,7 +392,7 @@
                 return false;
             });
 
-            $('.reg-form-mobile .send-mobile-verify').click(function(){
+            $(document).delegate('.reg-form-mobile .send-mobile-verify', 'click', function() {
                 var url;
                 var that = this;
                 if(url = "{:U('User/User/sendMobileVerify')}"){

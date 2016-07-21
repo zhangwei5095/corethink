@@ -1,9 +1,20 @@
 /* CoreThink默认样式 */
+body {
+    word-wrap: break-word; 
+    word-break:break-all;
+}
 .panel {
     box-shadow: none;
 }
 .jumbotron {
     margin-bottom: 20px;
+}
+.badge-vip {
+    font-weight: 300;
+    font-size: 12px;
+    padding: 2px 5px;
+    transform:scale(0.9);
+    margin-top: -2px;
 }
 @media (max-width: 768px) {
     .panel {
@@ -22,7 +33,7 @@
     margin-bottom: 0;
     border-radius: 0;
     background: #fff;
-    border-color: #fff;
+    border-top: 0;
 }
 .full-header .navbar-nav>li>a:focus,
 .full-header .navbar-nav>li>a:hover{
@@ -45,6 +56,9 @@
         margin-top: 23px;
         margin-bottom: 23px
     }
+}
+.module-nav {
+    border-top: 0;
 }
 
 /* 页面底部 */

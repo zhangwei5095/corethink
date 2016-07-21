@@ -71,6 +71,24 @@ class UserModel extends Model {
     );
 
     /**
+     * 查找后置操作
+     * @author jry <598821125@qq.com>
+     */
+    protected function _after_find(&$result, $options) {
+        $result['avatar_url'] = get_cover($result['avatar'], 'avatar');
+    }
+
+    /**
+     * 查找后置操作
+     * @author jry <598821125@qq.com>
+     */
+    protected function _after_select(&$result, $options) {
+        foreach($result as &$record){
+            $this->_after_find($record, $options);
+        }
+    }
+
+    /**
      * 用户性别
      * @author jry <598821125@qq.com>
      */
@@ -78,7 +96,18 @@ class UserModel extends Model {
         $list[0]  = '保密';
         $list[1]  = '男';
         $list[-1] = '女';
-        return $id ? $list[$id] : $list;
+        return isset($id) ? $list[$id] : $list;
+    }
+
+    /**
+     * 用户性别图标
+     * @author jry <598821125@qq.com>
+     */
+    public function user_gender_icon($id) {
+        $list[0]  = '<i class="fa fa-genderless"></i>';
+        $list[1]  = '<i class="fa fa-mars text-primary color-blue"></i>';
+        $list[-1] = '<i class="fa fa-venus text-danger color-pink"></i>';
+        return isset($id) ? $list[$id] : '';
     }
 
     /**
@@ -101,24 +130,24 @@ class UserModel extends Model {
      * 用户登录
      * @author jry <598821125@qq.com>
      */
-    public function login($username, $password, $return = false) {
+    public function login($account, $password, $return = false) {
         if (is_login()) {
             $this->error = '已登录！';
             return false;
         }
 
         //去除前后空格
-        $username = trim($username);
+        $account = trim($account);
 
         //匹配登录方式
-        if (preg_match("/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/", $username)) {
-            $map['email'] = array('eq', $username);     // 邮箱登陆
+        if (preg_match("/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/", $account)) {
+            $map['email'] = array('eq', $account);     // 邮箱登陆
             $map['email_bind'] = array('eq', 1);
-        } elseif (preg_match("/^1\d{10}$/", $username)) {
-            $map['mobile'] = array('eq', $username);    // 手机号登陆
+        } elseif (preg_match("/^1\d{10}$/", $account)) {
+            $map['mobile'] = array('eq', $account);    // 手机号登陆
             $map['mobile_bind'] = array('eq', 1);
         } else {
-            $map['username'] = array('eq', $username);  // 用户名登陆
+            $map['username'] = array('eq', $account);  // 用户名登陆
         }
 
         $map['status']   = array('eq', 1);
@@ -146,16 +175,48 @@ class UserModel extends Model {
      * @author jry <598821125@qq.com>
      */
     public function auto_login($user) {
+        // VIP信息
+        if (is_dir('./Application/Vip/')) {
+            $con['status'] = 1;
+            $con['id'] = is_vip($user['id']);
+            $vip = D('Vip/Index')->where($con)->find();
+        }
+
         // 记录登录SESSION和COOKIES
         $auth = array(
-            'uid'      => $user['id'],
-            'username' => $user['username'],
-            'nickname' => $user['nickname'],
-            'avatar'   => $user['avatar'],
+            'uid'        => $user['id'],
+            'username'   => $user['username'],
+            'nickname'   => $user['nickname'],
+            'avatar'     => $user['avatar'],
             'avatar_url' => get_cover($user['avatar'], 'avatar'),
+            'vip'        => $vip,
         );
         session('user_auth', $auth);
         session('user_auth_sign', $this->data_auth_sign($auth));
+        return true;
+    }
+
+    /**
+     * 密码认证
+     * @author jry <598821125@qq.com>
+     */
+    public function password_auth($password) {
+        $user_info = $this->find(is_login());
+        if ($user_info) {
+            if ($user_info['password'] === user_md5($password)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 注销
+     * @author jry <598821125@qq.com>
+     */
+    public function logout() {
+        session('user_auth', null);
+        session('user_auth_sign', null);
         return true;
     }
 
@@ -199,6 +260,10 @@ class UserModel extends Model {
                 $user_info = array_merge($user_info, $extend_data);
             }
         }
+
+        // 获取粉丝关注性别等信息
+        $user_info['gender_icon'] = $this->user_gender_icon($user_info['gender']);
+
         return $user_info;
     }
 }

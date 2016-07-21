@@ -90,24 +90,33 @@ class AddonModel extends Model {
             switch ($val['status']) {
                 case '-1':  // 未安装
                     $val['status'] = '<i class="fa fa-trash" style="color:red"></i>';
-                    $val['right_button']  = '<a class="label label-success ajax-get" href="'.U('install?addon_name='.$val['name']).'">安装</a>';
+                    $val['right_button']['install']['title'] = '安装';
+                    $val['right_button']['install']['attribute'] = 'class="label label-success ajax-get" href="'.U('install', array('addon_name' => $val['name'])).'"';
                     break;
                 case '0':  // 禁用
                     $val['status'] = '<i class="fa fa-ban" style="color:red"></i>';
-                    $val['right_button']  = '<a class="label label-info " href="'.U('config',array('id'=>$val['id'])).'">设置</a> ';
-                    $val['right_button'] .= '<a class="label label-success ajax-get" href="'.U('setStatus',array('status'=>'resume', 'ids' => $val['id'])).'">启用</a> ';
-                    $val['right_button'] .= '<a class="label label-danger ajax-get" href="'.U('uninstall?id='.$val['id']).'">卸载</a> ';
+                    $val['right_button']['config']['title'] = '设置';
+                    $val['right_button']['config']['attribute'] = 'class="label label-info" href="'.U('config', array('id' => $val['id'])).'"';
+                    $val['right_button']['forbid']['title'] = '启用';
+                    $val['right_button']['forbid']['attribute'] = 'class="label label-success ajax-get" href="'.U('setStatus',array('status'=>'resume', 'ids' => $val['id'])).'"';
+                    $val['right_button']['uninstall']['title'] = '卸载';
+                    $val['right_button']['uninstall']['attribute'] = 'class="label label-danger ajax-get" href="'.U('uninstall', array('id' => $val['id'])).'"';
                     if ($val['adminlist']) {
-                        $val['right_button'] .= '<a class="label label-success " href="'.U('adminlist',array('name'=>$val['name'])).'">后台管理</a>';
+                        $val['right_button']['adminlist']['title'] = '数据管理';
+                        $val['right_button']['adminlist']['attribute'] = 'class="label label-success" href="'.U('adminlist', array('name' => $val['name'])).'"';
                     }
                     break;
                 case '1':  // 正常
                     $val['status'] = '<i class="fa fa-check" style="color:green"></i>';
-                    $val['right_button']  = '<a class="label label-info " href="'.U('config',array('id'=>$val['id'])).'">设置</a> ';
-                    $val['right_button'] .= '<a class="label label-warning ajax-get" href="'.U('setStatus',array('status'=>'forbid', 'ids' => $val['id'])).'">禁用</a> ';
-                    $val['right_button'] .= '<a class="label label-danger ajax-get" href="'.U('uninstall?id='.$val['id']).'">卸载</a> ';
+                    $val['right_button']['config']['title'] = '设置';
+                    $val['right_button']['config']['attribute'] = 'class="label label-info" href="'.U('config', array('id' => $val['id'])).'"';
+                    $val['right_button']['forbid']['title'] = '禁用';
+                    $val['right_button']['forbid']['attribute'] = 'class="label label-warning ajax-get" href="'.U('setStatus',array('status'=>'forbid', 'ids' => $val['id'])).'"';
+                    $val['right_button']['uninstall']['title'] = '卸载';
+                    $val['right_button']['uninstall']['attribute'] = 'class="label label-danger ajax-get" href="'.U('uninstall', array('id' => $val['id'])).'"';
                     if ($val['adminlist']) {
-                        $val['right_button'] .= '<a class="label label-success " href="'.U('adminlist',array('name'=>$val['name'])).'">后台管理</a>';
+                        $val['right_button']['adminlist']['title'] = '数据管理';
+                        $val['right_button']['adminlist']['attribute'] = 'class="label label-success" href="'.U('adminlist', array('name' => $val['name'])).'"';
                     }
                     break;
             }

@@ -52,7 +52,7 @@
                             <div class="media">
                                 <div class="media-left">
                                     <a href="{:U('detail', array('id' => $vo['id']))}">
-                                        <img class="list-cover lazy" data-lazy="{$vo.cover|get_cover='default'}">
+                                        <img class="list-cover lazy" data-src="{$vo.cover|get_cover='default'}">
                                     </a>
                                 </div>
                                 <div class="media-body">
@@ -94,7 +94,7 @@
                         <!-- 分类列表 -->
                         <div class="list-group">
                             <cms:category_list name="vo" pid="$_current_category['id']">
-                                <a class="list-group-item <if condition='$vo.id eq $_current_category.id'>active</if>" href="{:U('lists', array('cid' => $vo['id']))}">
+                                <a class="list-group-item <if condition='$vo.id eq $_current_category.id'>active</if>" href="{$vo.href}">
                                     {$vo.title}
                                 </a>
                             </cms:category_list>

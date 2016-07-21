@@ -11,7 +11,7 @@
  */
 return array(
     //产品配置
-    'INSTALL_PRODUCT_NAME'   => 'OpenCMF', //产品名称
+    'INSTALL_PRODUCT_NAME'   => 'CoreThink', //产品名称
     'INSTALL_WEBSITE_DOMAIN' => 'http://www.opencmf.cn', //官方网址
     'INSTALL_COMPANY_NAME'   => '南京科斯克网络科技有限公司', //公司名称
     'ORIGINAL_TABLE_PREFIX'  => 'oc_', //默认表前缀
@@ -23,6 +23,11 @@ return array(
         '__IMG__' => __ROOT__.'/Application/'.MODULE_NAME.'/View/Public/img',
         '__CSS__' => __ROOT__.'/Application/'.MODULE_NAME.'/View/Public/css',
         '__JS__'  => __ROOT__.'/Application/'.MODULE_NAME.'/View/Public/js',
+    ),
+
+    // Session支持
+    'SESSION_OPTIONS'=>array(
+        'type'   => '',
     ),
 
     //前缀设置避免冲突

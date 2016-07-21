@@ -24,9 +24,10 @@ class ThemeController extends AdminController {
         $data_list = $theme_object
                    ->getAll();
 
+        $attr['name']  = 'cencel';
         $attr['title'] = '取消多主题支持';
         $attr['class'] = 'btn btn-primary ajax-get';
-        $attr['href']  = U('Admin/Theme/cencel');
+        $attr['href']  = U('Admin/Theme/cancel');
 
         // 使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
@@ -159,7 +160,7 @@ class ThemeController extends AdminController {
      * 取消主题
      * @author jry <598821125@qq.com>
      */
-    public function cencel() {
+    public function cancel() {
         $theme_object = D('Theme');
         $theme_object->where(true)->setField('current', 0);
         $map = array();

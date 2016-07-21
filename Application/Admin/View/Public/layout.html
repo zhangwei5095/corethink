@@ -26,7 +26,7 @@
     <![endif]-->
     <script type="text/javascript" src="__PUBLIC__/libs/jquery/1.x/jquery.min.js"></script>
 </head>
-<body>
+<body class="{$_page_name}">
     <div class="clearfix full-header">
         <block name="full-header">
             <?php if (!C('ADMIN_TABS')): ?>
@@ -51,17 +51,11 @@
                 </div>
                 <div class="collapse navbar-collapse navbar-collapse-top">
                     <ul class="nav navbar-nav">
-                        <li>
-                            <a href="{:U('Admin/Index/index')}">
-                                <i class="fa fa-home"></i>
-                                <span>首页</span>
-                            </a>
-                        </li>
                         <!-- 主导航 -->
-                        <?php if (count($_main_menu_list) > 7): ?>
-                            <volist name="_main_menu_list" id="vo" offset="0" length="7">
+                        <?php if (count($_menu_list) > 7): ?>
+                            <volist name="_menu_list" id="vo" offset="0" length="7">
                                 <li <?php if($_parent_menu_list[0]['title'] == $vo['title']) echo 'class="active"'; ?>>
-                                    <a href="{:U($vo['name'].'/Index/index')}" target="<php>echo C(strtolower($vo['name']).'_config.target');</php>">
+                                    <a href="{:U($vo['_child'][0]['_child'][0]['url'])}" target="<php>echo C(strtolower($vo['name']).'_config.target');</php>">
                                         <i class="fa {$vo.icon}"></i>
                                         <span>{$vo.title}</span>
                                     </a>
@@ -72,9 +66,9 @@
                                     <i class="fa fa-th-large"></i> 更多 <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <volist name="_main_menu_list" id="vo" offset="7">
+                                    <volist name="_menu_list" id="vo" offset="7">
                                         <li <?php if($_parent_menu_list[0]['title'] == $vo['title']) echo 'class="active"'; ?>>
-                                            <a href="{:U($vo['name'].'/Index/index')}" target="<php>echo C(strtolower($vo['name']).'_config.target');</php>">
+                                            <a href="{:U($vo['_child'][0]['_child'][0]['url'])}" target="<php>echo C(strtolower($vo['name']).'_config.target');</php>">
                                                 <i class="fa {$vo.icon}"></i>
                                                 <span>{$vo.title}</span>
                                             </a>
@@ -83,9 +77,9 @@
                                 </ul>
                             </li>
                         <?php else: ?>
-                            <volist name="_main_menu_list" id="vo">
+                            <volist name="_menu_list" id="vo">
                                 <li <?php if($_parent_menu_list[0]['title'] == $vo['title']) echo 'class="active"'; ?>>
-                                    <a href="{:U($vo['name'].'/Index/index')}" target="<php>echo C(strtolower($vo['name']).'_config.target');</php>">
+                                    <a href="{:U($vo['_child'][0]['_child'][0]['url'])}" target="<php>echo C(strtolower($vo['name']).'_config.target');</php>">
                                         <i class="fa {$vo.icon}"></i>
                                         <span>{$vo.title}</span>
                                     </a>
@@ -94,7 +88,7 @@
                         <?php endif; ?>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{:U('Admin/Index/removeRuntime')}" class="ajax-get no-refresh"><i class="fa fa-trash"></i> 清空缓存</a></li>
+                        <li><a href="{:U('Admin/Index/removeRuntime')}" class="btn ajax-get no-refresh"><i class="fa fa-trash"></i> 清空缓存</a></li>
                         <li><a target="_blank" href="__ROOT__/"><i class="fa fa-external-link-square"></i> 打开前台</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -120,9 +114,9 @@
                         <div id="sidebar" class="col-xs-12 col-sm-2 sidebar tab-content">
                             <!-- 模块菜单 -->
                             <nav class="navside navside-default" role="navigation">
-                                <?php if($_menu_list['_child']): ?>
+                                <?php if($_current_menu_list['_child']): ?>
                                     <ul class="nav navside-nav navside-first">
-                                        <volist name="_menu_list._child" id="_ns_first" key="fkey">
+                                        <volist name="_current_menu_list._child" id="_ns_first" key="fkey">
                                             <li>
                                                 <a data-toggle="collapse" href="#navside-collapse-{$_ns.id}-{$fkey}">
                                                     <i class="{$_ns_first.icon}"></i>
@@ -163,7 +157,7 @@
                                 <block name="main"></block>
                             </div>
 
-                            <div class="clearfix footer">
+                            <div class="clearfix footer hidden-xs">
                                 <div class="navbar navbar-default" role="navigation">
                                     <div class="container-fluid">
                                         <div class="navbar-header">
@@ -203,8 +197,21 @@
         <div class="container-fluid">
             <input type="hidden" id="corethink_home_img" value="__HOME_IMG__">
             <script type="text/javascript" src="__CUI__/js/cui.min.js"></script>
+            <script type="text/javascript">
+                (function(){
+                    var OpenCMF = window.OpenCMF = {
+                        "ROOT"   : "__ROOT__", //当前网站地址
+                        "APP"    : "__APP__", //当前项目地址
+                        "PUBLIC" : "__PUBLIC__", //项目公共目录地址
+                        "DEEP"   : "{:C('URL_PATHINFO_DEPR')}", //PATHINFO分割符
+                        "MODEL"  : ["{:C('URL_MODEL')}", "{:C('URL_CASE_INSENSITIVE')}", "{:C('URL_HTML_SUFFIX')}"],
+                        "VAR"    : ["{:C('VAR_MODULE')}", "{:C('VAR_CONTROLLER')}", "{:C('VAR_ACTION')}"]
+                    }
+                })();
+            </script>
             <script type="text/javascript" src="__ADMIN_JS__/admin.js"></script>
             <script type="text/javascript">
+                // 如果是多标签方式自动跳转后台首页
                 var admin_tabs = '{$_admin_tabs}';
                 if(admin_tabs == '1' && !(self.frameElement != null && (self.frameElement.tagName == "IFRAME" || self.frameElement.tagName == "iframe"))){
                     parent.parent.location = "{:U('Admin/Index/index')}";

@@ -31,6 +31,8 @@ return array(
         'pictures'   => array('多张图片', 'varchar(32) NOT NULL'),
         'file'       => array('单个文件', 'varchar(32) NOT NULL'),
         'files'      => array('多个文件', 'varchar(32) NOT NULL'),
+        'media'      => array('单个媒体', 'varchar(32) NOT NULL'),
+        'medias'     => array('多个媒体', 'varchar(32) NOT NULL'),
         'kindeditor' => array('HTML编辑器 kindeditor', 'text'),
         'editormd'   => array('Markdown编辑器 editormd', 'text'),
         'tags'       => array('标签', 'varchar(128) NOT NULL'),

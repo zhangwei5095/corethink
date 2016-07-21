@@ -31,7 +31,10 @@
                             <input id="remember-login" type="checkbox" name="remember_login" checked="checked">
                             <span>保持登录</span>
                         </label>
-                        <a class="text-muted pull-right" href="{:U('User/User/resetPassword', null, true, true)}">忘记密码？</a>
+                        <span class="pull-right">
+                            <a class="text-muted" href="{:U('User/User/resetPassword', null, true, true)}">忘记密码</a>
+                            <a class="text-muted" data-toggle="modal" href="#register-modal">注册帐号</a>
+                        </span>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary-outline btn-lg btn-block submit ajax-post" target-form="login-form-model">登录</button>
@@ -385,16 +388,7 @@
             }
         }
 
-        $(".reg-form-username-modal .reload-verify").on('click', function() {
-            var verifyimg = $(".verifyimg").attr("src");
-            if (verifyimg.indexOf('?') > 0) {
-                $(".verifyimg").attr("src", verifyimg + '&random=' + Math.random());
-            } else {
-                $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
-            }
-        });
-
-        $('.reg-form-email-modal .send-mail-verify').click(function(){
+        $(document).delegate('.reg-form-email-modal .send-mail-verify', 'click', function() {
             var url = '';
             var that = this;
             if(url = "{:U('User/User/SendMailVerify')}"){
@@ -420,7 +414,7 @@
             return false;
         });
 
-        $('.reg-form-mobile-modal .send-mobile-verify').click(function(){
+        $(document).delegate('.reg-form-mobile-modal .send-mobile-verify', 'click', function() {
             var url;
             var that = this;
             if(url = "{:U('User/User/sendMobileVerify')}"){

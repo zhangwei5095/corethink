@@ -98,9 +98,9 @@ function select_list_as_tree($model, $map = null, $extra = null, $key = 'id') {
 function parse_content($str) {
     // 将img标签的src改为lazy-src用户前台图片lazyload加载
     if (C('STATIC_DOMAIN')) {
-        return preg_replace('/(<img.*?)src="/i', '$1 class="lazy img-responsive" style="display:inline-block;" data-lazy="'.C('STATIC_DOMAIN'), $str);
+        return preg_replace('/<img.*?src="(.*?Uploads.*?)"(.*?)>/i', "<img class='lazy lazy-fadein img-responsive' style='display:inline-block;' data-src='".C('STATIC_DOMAIN')."$1'>", $str);
     } else {
-        return preg_replace('/(<img.*?)src=/i', "$1 class='lazy img-responsive' style='display:inline-block;' data-lazy=", $str);
+        return preg_replace('/<img.*?src="(.*?Uploads.*?)"(.*?)>/i', "<img class='lazy lazy-fadein img-responsive' style='display:inline-block;' data-src='".C('HOME_PAGE')."$1'>", $str);
     }
 }
 
@@ -139,7 +139,7 @@ function html2text($str) {
  * @return string
  * @author jry <598821125@qq.com>
  */
-function friendly_date($sTime, $type = 'normal', $alt = 'false') {
+function friendly_date($sTime, $type = 'mohu', $alt = 'false') {
     $date = new \Common\Util\Think\Date((int)$sTime);
     return $date->friendlyDate($type, $alt);
 }
@@ -205,6 +205,19 @@ function is_login() {
 }
 
 /**
+ * 检测用户是否VIP
+ * @return integer VIP等级
+ * @author jry <598821125@qq.com>
+ */
+function is_vip($uid) {
+    if (D('Admin/Module')->where('name="Vip" and status="1"')->count()) {
+        $uid = $uid ? $uid : is_login();
+        return D('Vip/Index')->is_vip($uid);
+    }
+    return false;
+}
+
+/**
  * 根据用户ID获取用户信息
  * @param  integer $id 用户ID
  * @param  string $field
@@ -212,12 +225,20 @@ function is_login() {
  * @author jry <598821125@qq.com>
  */
 function get_user_info($id, $field) {
-    $userinfo = D('Admin/User')->find($id);
-    $userinfo['avatar_url'] = get_cover($userinfo['avatar'], 'avatar');
+    if (D('Admin/Module')->where('name="User" and status="1"')->count()) {
+        $user_onject= D('User/User');
+    } else {
+        $user_onject= D('Admin/User');
+    }
+    $userinfo = $user_onject->find($id);
+    if (!$field) {
+        return $userinfo;
+    }
     if ($userinfo[$field]) {
         return $userinfo[$field];
+    } else {
+        return false;
     }
-    return $userinfo;
 }
 
 /**
@@ -237,7 +258,7 @@ function get_cover($id, $type) {
                 $url = C('TMPL_PARSE_STRING.__HOME_IMG__').'/default/default.gif';
                 break;
             case 'avatar' : //用户头像
-                $url = C('TMPL_PARSE_STRING.__HOME_IMG__').'/default/avatar.gif';
+                $url = C('TMPL_PARSE_STRING.__HOME_IMG__').'/default/avatar.png';
                 break;
             default: //文档列表默认图片
                 break;
@@ -344,17 +365,11 @@ function is_wap() {
 }
 
 /**
- * 获取Http头信息
- * @return array
- * @author jry <598821125@qq.com>
+ * 生成订单号
+ * 可根据自身的业务需求更改
  */
-if (!function_exists('getallheaders')) {
-    function getallheaders() {
-       foreach ($_SERVER as $name => $value) {
-           if (substr($name, 0, 5) == 'HTTP_') {
-               $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
-           }
-       }
-       return $headers;
-    }
+function create_out_trade_no() {
+    $year_code = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
+    return 'CT'.$year_code[intval(date('Y')) - 2010] .strtoupper(dechex(date('m'))) .
+        date('d') .substr(time(), -5) . substr(microtime(), 2, 5) . sprintf('d', rand(0, 99));
 }

@@ -11,9 +11,9 @@
 
 <block name="main">
     <div class="container">
-        <div class="row">
+        <div class="row ucenter-row">
             <div class="col-xs-12 col-md-3">
-                <include file="$_user_center_side" />
+                <include file="$_user_center_side" /><!-- 包含用户中心侧边导航 -->
             </div>
             <div class="col-xs-12 col-md-9">
                 <div class="panel">
@@ -27,7 +27,7 @@
                         </ul>
                         <div class="form-group"></div>
                         <div class="toolbar">
-                            <a class="btn btn-info ajax-post" target-form="ids" href="{:U('setRead', array('type' => $current_type))}">设为已读</a>
+                            <a class="btn btn-info ajax-post" target-form="ids" href="{:U('setRead')}">设为已读</a>
                         </div>
                         <div class="form-group"></div>
                         <div class="tab-content">
@@ -44,17 +44,14 @@
                                         <volist name="message_list" id="vo">
                                             <tr>
                                                 <td><input class="ids" type="checkbox" value="{$vo.id}" name="ids[]"></td>
-                                                <td><span class="<php>if($vo['is_read']){echo 'is_read';}</php>">{$vo.title}</span></td>
+                                                <td>
+                                                    <a href="{:U('detail', array('id' => $vo['id']))}" class="<php>if($vo['is_read']){echo 'is_read';}</php>">
+                                                        {$vo.title}
+                                                    </a>
+                                                </td>
                                                 <td>{$vo.create_time|time_format}</td>
                                             </tr>
                                         </volist>
-                                        <empty name="message_list">
-                                            <tr class="builder-data-empty">
-                                                <td class="text-center empty-info" colspan="3">
-                                                    <i class="fa fa-database"></i> 暂时没有消息<br>
-                                                </td>
-                                            </tr>
-                                        </empty>
                                     </tbody>
                                 </table>
                             </div>

@@ -22,10 +22,8 @@ class Cms extends TagLib {
         'category_list' => array('attr' => 'name,pid,limit,page,group', 'close' => 1), //栏目分类列表
         'article_list'  => array('attr' => 'name,cid,limit,page,order,child', 'close' => 1), //文章列表
         'new_list'      => array('attr' => 'name,doc_type,limit,order', 'close' => 1), //最新文章列表
-        'slider_list'   => array('attr' => 'name,limit,page,order', 'close' => 1), //幻灯列表
-        'notice_list'   => array('attr' => 'name,limit,page,order', 'close' => 1), //公告列表
-        'footnav_list' => array('attr'  => 'name', 'close' => 1), //底部导航列表
-        'friendly_link' => array('attr' => 'name,type,limit,page,length', 'close' => 1), //友情链接列表
+        'comment_list'  => array('attr' => 'name,data_id,limit,page,order', 'close' => 1), //评论列表
+        'similar_list'  => array('attr' => 'name,tags,limit,order', 'close' => 1),  //相关列表
     );
 
     /**
@@ -106,72 +104,36 @@ class Cms extends TagLib {
     }
 
     /**
-     * 幻灯列表
+     * 评论列表
      * @author jry <598821125@qq.com>
      */
-    public function _slider_list($tag, $content) {
-        $name   = $tag['name'];
-        $limit  = $tag['limit'] ? : 10;
-        $page   = $tag['page'] ? : 1;
-        $order  = $tag['order'] ? : 'sort desc,id desc';
-        $parse  = '<?php ';
-        $parse .= '$map["status"] = array("eq", "1");';
-        $parse .= '$__SLIDER_LIST__ = D("Cms/slider")->getList('.$limit.', '.$page.', "'.$order.'", $map);';
-        $parse .= ' ?>';
-        $parse .= '<volist name="__SLIDER_LIST__" id="'. $name .'">';
-        $parse .= $content;
-        $parse .= '</volist>';
+    public function _comment_list($tag, $content) {
+        $name    = $tag['name'];
+        $data_id = $tag['data_id'];
+        $limit   = $tag['limit'] ? : 10;
+        $page    = $tag['page'] ? :1 ;
+        $order   = $tag['order'] ? : 'sort desc,id asc';
+        $parse   = '<?php ';
+        $parse  .= '$__COMMENT_LIST__ = D("Cms/Comment")->getCommentList('.$data_id.', '.$limit.', '.$page.', "'.$order.'");';
+        $parse  .= ' ?>';
+        $parse  .= '<volist name="__COMMENT_LIST__" id="'. $name .'">';
+        $parse  .= $content;
+        $parse  .= '</volist>';
         return $parse;
     }
 
     /**
-     * 公告列表
+     * 相关列表
      * @author jry <598821125@qq.com>
      */
-    public function _notice_list($tag, $content) {
+    public function _similar_list($tag, $content) {
         $name   = $tag['name'];
-        $limit  = $tag['limit'] ? : 10;
-        $page   = $tag['page'] ? : 1;
-        $order  = $tag['order'] ? : 'sort desc,id desc';
+        $tags   = $tag['tags'];
+        $limit  = $tag['limit'] ? : 4;
         $parse  = '<?php ';
-        $parse .= '$map["status"] = array("eq", "1");';
-        $parse .= '$__NOTICE_LIST__ = D("Cms/Notice")->getList('.$limit.', '.$page.', "'.$order.'", $map);';
+        $parse .= '$__SIMILARLIST__ = D("Cms/Index")->getSimilar('.$tags.','.$limit.');';
         $parse .= ' ?>';
-        $parse .= '<volist name="__NOTICE_LIST__" id="'. $name .'">';
-        $parse .= $content;
-        $parse .= '</volist>';
-        return $parse;
-    }
-
-    /**
-     * 底部导航
-     * @author jry <598821125@qq.com>
-     */
-    public function _footnav_list($tag, $content) {
-        $name   = $tag['name'];
-        $parse  = '<?php ';
-        $parse .= '$__FOOTNAVLIST__ = D("Cms/Footnav")->getTree();';
-        $parse .= ' ?>';
-        $parse .= '<volist name="__FOOTNAVLIST__" id="'. $name .'">';
-        $parse .= $content;
-        $parse .= '</volist>';
-        return $parse;
-    }
-
-    /**
-     * 友情链接
-     * @author jry <598821125@qq.com>
-     */
-    public function _friendly_link($tag, $content) {
-        $name   = $tag['name'];
-        $type   = $tag['type'] ? : 1;
-        $length  = $tag['length'];
-        $offset = $tag['offset'];
-        $parse  = '<?php ';
-        $parse .= '$map["type"] = '.$type.';';
-        $parse .= '$__LINKLIST__ = D("Cms/FriendlyLink")->where($map)->order("sort asc, id asc")->select();';
-        $parse .= ' ?>';
-        $parse .= '<volist name="__LINKLIST__" id="'. $name .'" length="' . $length . '" offset="' . $offset . '">';
+        $parse .= '<volist name="__SIMILARLIST__" id="'.$name.'">';
         $parse .= $content;
         $parse .= '</volist>';
         return $parse;

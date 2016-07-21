@@ -51,6 +51,36 @@ class CategoryModel extends Model {
     );
 
     /**
+     * 查找后置操作
+     * @author jry <598821125@qq.com>
+     */
+    protected function _after_find(&$result, $options) {
+        $result['cover_url'] = get_cover($result['cover'], 'default');
+        $doc_type_info = $result['doc_type_info'] = D($this->moduleName.'Type')->find($result['doc_type']);  // 获取当前文档类型
+        if ($doc_type_info['name'] === 'page') {
+            $result['href'] = U('Cms/Category/detail', array('id' => $result['id']));
+        } else if ($doc_type_info['name'] === 'link') {
+            if (!stristr($result['url'], 'http://') && !stristr($result['url'], 'https://')) {
+                $result['href'] = U($result['url']);
+            } else {
+                $result['href'] = 'javascript:window.open(\''.$result['url'].'\')';
+            }
+        } else if ($doc_type_info['system'] === '0') {
+            $result['href'] = U('Cms/Index/lists', array('cid' => $result['id']));
+        }
+    }
+
+    /**
+     * 查找后置操作
+     * @author jry <598821125@qq.com>
+     */
+    protected function _after_select(&$result, $options) {
+        foreach($result as &$record){
+            $this->_after_find($record, $options);
+        }
+    }
+
+    /**
      * 前台用户投稿权限(不影响后台)
      * @author jry <598821125@qq.com>
      */
@@ -129,11 +159,6 @@ class CategoryModel extends Model {
         $tree = new \Common\Util\Tree();
         $list = $this->field($field)->where($map)->order('sort asc, id asc')->select();
 
-        // 拼接分类地址
-        foreach ($list as $key => &$val) {
-            $val['href'] = U($this->moduleName.'/Index/lists', array('cid' => $val['id']));
-        }
-
         // 转换成树结构
         $list = $tree->list_to_tree($list, $pk = 'id', $pid = 'pid', $child = '_child', $root = (int)$id); //返回当前分类的子分类树
         if ($limit) {
@@ -158,16 +183,13 @@ class CategoryModel extends Model {
             $parent_info = $this->find($info['pid']);
             $id   = $info['id'];
         }
+
         //获取所有分类
         $map['status'] = array('eq', 1);
         $map['pid']    = array('eq', $info['pid']);
         $map['group']  = array('eq', $info['group']);
         $list = $this->field($field)->where($map)->order('sort asc')->select();
 
-        // 拼接分类地址
-        foreach ($list as $key => &$val) {
-            $val['href'] = U($this->moduleName.'/Index/lists', array('cid' => $val['id']));
-        }
         return $list;
     }
 }

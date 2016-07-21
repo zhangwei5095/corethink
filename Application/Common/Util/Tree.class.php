@@ -4,7 +4,7 @@
 // +----------------------------------------------------------------------
 // | Copyright (c) 2014 http://www.opencmf.cn All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: jry <59821125@qq.com>
+// | Author: jry <59821125@qq.com> <http://www.corethink.cn>
 // +----------------------------------------------------------------------
 namespace Common\Util;
 /**
@@ -108,7 +108,7 @@ class Tree {
                 $reffer = $value;
                 if (isset($reffer[$child])) {
                     unset($reffer[$child]);
-                    tree_to_list($value[$child], $child, $order, $list);
+                    $this->tree_to_list($value[$child], $child, $order, $list);
                 }
                 $list[] = $reffer;
             }

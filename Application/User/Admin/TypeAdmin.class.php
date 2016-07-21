@@ -25,6 +25,7 @@ class TypeAdmin extends AdminController {
         $data_list = $type_object->where($map)->order('id asc')->select();
 
         // 字段管理按钮
+        $attr['name']  = 'attribute';
         $attr['title'] = '字段管理';
         $attr['class'] = 'label label-success';
         $attr['href']  = U('User/Attribute/index', array('user_type' => __data_id__));
@@ -37,7 +38,7 @@ class TypeAdmin extends AdminController {
                 ->addTopButton('forbid', array('model' => 'user_type'))  // 添加禁用按钮
                 ->addTopButton('delete', array('model' => 'user_type'))  // 添加删除按钮
                 ->setSearch('请输入ID/用户名', U('index'))
-                ->addTableColumn('id', 'UID')
+                ->addTableColumn('id', 'ID')
                 ->addTableColumn('name', '名称')
                 ->addTableColumn('title', '标题')
                 ->addTableColumn('create_time', '注册时间', 'time')
@@ -62,6 +63,21 @@ class TypeAdmin extends AdminController {
             if ($data) {
                 $id = $type_object->add();
                 if ($id) {
+                    //新建表
+                    $table_name = strtolower(C('DB_PREFIX').'user_' . I('name'));
+                    $sql = <<<sql
+                        CREATE TABLE IF NOT EXISTS `{$table_name}` (
+                        `uid` int(11) UNSIGNED NOT NULL COMMENT 'UID' ,
+                        PRIMARY KEY (`uid`)
+                        )
+                        ENGINE=MyISAM
+                        DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+                        CHECKSUM=0
+                        ROW_FORMAT=DYNAMIC
+                        DELAY_KEY_WRITE=0
+                        ;
+sql;
+                    $res = M()->execute($sql);
                     $this->success('新增成功', U('index'));
                 } else {
                     $this->error('新增失败');
@@ -117,6 +133,7 @@ class TypeAdmin extends AdminController {
                     ->addFormItem('title', 'text', '标题', '用户类型标题')
                     ->addFormItem('list_field', 'checkbox', '前台查询搜索字段', '前台查询搜索字段', $attribute_list_checkbox)
                     ->addFormItem('home_template', 'text', '主页模版', '主页模版')
+                    ->addFormItem('center_template', 'text', '个人中心模版', '个人中心模版')
                     ->setFormData($info)
                     ->display();
         }

@@ -42,6 +42,24 @@ class MessageModel extends Model {
     );
 
     /**
+     * 查找后置操作
+     * @author jry <598821125@qq.com>
+     */
+    protected function _after_find(&$result, $options) {
+        $result['title'] = strip_tags($result['title']);
+    }
+
+    /**
+     * 查找后置操作
+     * @author jry <598821125@qq.com>
+     */
+    protected function _after_select(&$result, $options) {
+        foreach($result as &$record){
+            $this->_after_find($record, $options);
+        }
+    }
+
+    /**
      * 消息类型
      * @author jry <598821125@qq.com>
      */
@@ -55,7 +73,7 @@ class MessageModel extends Model {
      * 发送消息
      * @author jry <598821125@qq.com>
      */
-    public function sendMessage($send_data, $extra = true) {
+    public function sendMessage($send_data, $email = true, $weixin = true) {
         $msg_data['title']    = $send_data['title']; //消息标题
         $msg_data['content']  = $send_data['content'] ? : $send_data['title']; //消息内容
         $msg_data['to_uid']   = $send_data['to_uid']; //消息收信人ID
@@ -64,8 +82,16 @@ class MessageModel extends Model {
         $data = $this->create($msg_data);
         if($data){
             $result = $this->add($data);
-            if ($extra) {
-                hook('SendMessage', $msg_data); //发送消息钩子，用于消息发送途径的扩展
+            if ($result) {
+                $data['id'] = $result;
+            }
+            if ($email) {
+                hook('SendMessage', $data); //发送消息钩子，用于消息发送途径的扩展
+            }
+            if ($weixin) {
+                $data['from_username'] = get_user_info($data['from_uid'], 'nickname');
+                $data['to_openid']     = D('Weixin/UserBind')->getFieldByUid($data['to_uid'], 'openid');
+                D('Weixin/Index')->SendMessage($data);
             }
             return $result;
         }

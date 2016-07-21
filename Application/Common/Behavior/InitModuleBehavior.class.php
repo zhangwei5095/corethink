@@ -43,11 +43,6 @@ class InitModuleBehavior extends Behavior{
         }
         C('MODULE_ALLOW_LIST', $module_allow_list);
 
-        // 判断是否ajax请求
-        if ($_SERVER['HTTP_ACCEPT'] === 'application/json, text/plain, */*') {
-            $_SERVER['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest';
-        }
-
         C($config);
     }
 }

@@ -229,16 +229,6 @@
     <script src="__PUBLIC__/libs/particles/particles.min.js"></script>
     <script type="text/javascript">
         $(function(){
-            // 刷新验证码
-            $(".reload-verify").on('click', function() {
-                var verifyimg = $(".verifyimg").attr("src");
-                if (verifyimg.indexOf('?') > 0) {
-                    $(".verifyimg").attr("src", verifyimg + '&random=' + Math.random());
-                } else {
-                    $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
-                }
-            });
-
             //背景粒子效果
             particlesJS('particles-js', {
                 particles: {

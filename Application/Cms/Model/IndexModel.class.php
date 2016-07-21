@@ -248,11 +248,17 @@ class IndexModel extends Model {
         // 阅读量加1
         $result = $this->where(array('id' => $id))->SetInc('view');
 
+        // 获取收藏状态
+        $info['mark_status'] = D($this->moduleName.'/Mark')->get_mark_status($info['id']);
+
         // 获取作者信息
         $info['user'] = get_user_info($info['uid']);
 
         // 获取发帖数量
         $info['user']['post_count'] = $this->where(array('uid' => $info['uid']))->count();
+
+        // 获取评论数量
+        $info['user']['comment_count'] = D($this->moduleName.'/Comment')->where(array('uid' => $info['uid']))->count();
 
         // 获取文档模型相关信息
         $doc_type_info = D($this->moduleName.'/Type')->find($info['category_info']['doc_type']);
@@ -291,7 +297,7 @@ class IndexModel extends Model {
         if ($info['file']) {
             $file_list = explode(',', $info['file']);
             foreach ($file_list as &$file) {
-                $file = D('Home/Upload')->find($file);
+                $file = D('Admin/Upload')->find($file);
                 $uid = is_login();
                 if ($uid) {
                     $file['token'] = \Think\Crypt::encrypt($file['md5'], user_md5($uid), 3600);

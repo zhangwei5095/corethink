@@ -17,7 +17,7 @@ return array(
         'description' => '核心系统',
         'developer'   => '南京科斯克网络科技有限公司',
         'website'     => 'http://www.opencmf.cn',
-        'version'     => '1.2.0',
+        'version'     => '1.3.0',
     ),
 
     // 后台菜单及权限节点配置
@@ -67,24 +67,24 @@ return array(
         ),
         '9' => array(
             'pid'   => '2',
-            'title' => '快捷链接',
-            'icon'  => 'fa fa-link',
-            'url'   => 'Admin/Link/index',
+            'title' => '幻灯管理',
+            'icon'  => 'fa fa-image',
+            'url'   => 'Admin/Slider/index',
         ),
         '10' => array(
             'pid'   => '9',
             'title' => '新增',
-            'url'   => 'Admin/Link/add',
+            'url'   => 'Admin/Slider/add',
         ),
         '11' => array(
             'pid'   => '9',
             'title' => '编辑',
-            'url'   => 'Admin/Link/edit',
+            'url'   => 'Admin/Slider/edit',
         ),
         '12' => array(
             'pid'   => '9',
             'title' => '设置状态',
-            'url'   => 'Admin/Link/setStatus',
+            'url'   => 'Admin/Slider/setStatus',
         ),
         '13' => array(
             'pid'   => '2',

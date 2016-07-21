@@ -1,8 +1,8 @@
 <case value="kindeditor">
-    <div class="form-group item_{$[type]form.name} {$[type]form.extra_class}">
+    <div class="form-group item_{$[type]form.name} {$[type]form.extra.class}">
         <label class="left control-label">{$[type]form.title}：</label>
         <div class="right">
-            <textarea name="{$[type]form.name}" id="[type]{$group_k}_kindeditor_{$[type]k}" class="form-control" {$[type]form.extra_attr}>
+            <textarea name="{$[type]form.name}" id="[type]{$group_k}_kindeditor_{$[type]k}" class="form-control" {$[type]form.extra.attr}>
                 {$[type]form.value}
             </textarea>
             <script type="text/javascript" src="__PUBLIC__/libs/kindeditor/kindeditor-min.js" charset="utf-8"></script>
@@ -20,7 +20,8 @@
                             height : '500px',
                             resizeType: 1,
                             pasteType : 2,
-                            urlType : 'absolute',
+                            filterMode: <?php if(MODULE_MARK === 'Admin') {echo 'false';} else {echo 'true';} ?>,
+                            urlType : "",
                             fileManagerJson : '{:U(MODULE_MARK."/Upload/fileManager")}',
                             uploadJson : '{:U(MODULE_MARK."/Upload/upload")}',
                             extraFileUploadParams: {

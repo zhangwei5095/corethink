@@ -85,19 +85,24 @@ class FormBuilder extends CommonController {
      * @param $tip 表单提示说明
      * @param $name 表单名
      * @param $options 表单options
-     * @param $extra_class 表单项是否隐藏
+     * @param $extra 额外自定义项目
      * @param $extra_attr 表单项额外属性
      * @return $this
      * @author jry <598821125@qq.com>
      */
-    public function addFormItem($name, $type, $title, $tip, $options = array(), $extra_class = '', $extra_attr = '') {
+    public function addFormItem($name, $type, $title, $tip, $options = array(), $extra = '', $extra_attr = '') {
         $item['name'] = $name;
         $item['type'] = $type;
         $item['title'] = $title;
         $item['tip'] = $tip;
         $item['options'] = $options;
-        $item['extra_class'] = $extra_class;
-        $item['extra_attr'] = $extra_attr;
+        if (is_array($extra)) {
+            $item['extra']['class'] = $extra['class'];
+            $item['extra']['self']  = $extra['self'];
+        } else {
+            $item['extra']['class'] = $extra;
+        }
+        $item['extra']['attr'] = $extra_attr;
         $this->_form_items[] = $item;
         return $this;
     }

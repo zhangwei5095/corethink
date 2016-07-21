@@ -29,7 +29,6 @@ error_reporting(E_ALL^E_NOTICE^E_WARNING);
  */
 define('ENV_PRE', 'OC_');
 
-
 /**
  * 定义后台标记
  */
@@ -57,17 +56,19 @@ define('HTML_PATH', RUNTIME_PATH.'Html/');
  * 包含开发模式数据库连接配置
  */
 if (@$_SERVER[ENV_PRE.'DEV_MODE'] !== 'true') {
-    @include './Data/dev.php'; 
+    @include './Data/dev.php';
 }
+
+/**
+ * 系统调试设置, 项目正式部署后请设置为false
+ */
+define('APP_DEBUG', @$_SERVER[ENV_PRE.'APP_DEBUG'] ? : true);
 
 /**
  * 系统安装及开发模式检测
  */
 if (is_file('./Data/install.lock') === false && @$_SERVER[ENV_PRE.'DEV_MODE'] !== 'true') {
     define('BIND_MODULE','Install');
-} else {
-    // 系统调试设置, 项目正式部署后请设置为false
-    define('APP_DEBUG', @$_SERVER[ENV_PRE.'APP_DEBUG'] ? : true);
 }
 
 /**

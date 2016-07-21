@@ -20,7 +20,20 @@ class UserBehavior extends Behavior {
      * @author jry <598821125@qq.com>
      */
     public function run(&$content) {
-        // 获取用户未读消息数量
-        cookie('_new_message', D('User/Message')->newMessageCount() ? : null);
+        $uid = is_login();
+        if ($uid) {
+            // 获取用户未读消息数量
+            $_new_message = D('User/Message')->newMessageCount();
+            cookie('_new_message', $_new_message ? : null);
+
+            // 更新session用户信息
+            if((time()-session('user_auth_expire')) > 60){
+                $user_object = D('User/User');
+                $user_info = $user_object->find($uid);
+                if($user_object->auto_login($user_info)) {
+                    session('user_auth_expire', time());
+                }
+            }
+        }
     }
 }

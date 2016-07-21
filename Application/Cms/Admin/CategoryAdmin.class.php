@@ -80,10 +80,6 @@ EOF;
             $tab_list[$key]['href']  = U('index', array('group' => $key));
         }
 
-        $attr['title'] = '编辑';
-        $attr['class'] = 'label label-primary';
-        $attr['href']  = U('edit', array('group' => $group, 'id' => '__data_id__'));
-
         // 使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
         $builder->setMetaTitle('分类列表')  // 设置页面标题
@@ -100,8 +96,7 @@ EOF;
                 ->addTableColumn('status', '状态', 'status')
                 ->addTableColumn('right_button', '操作', 'btn')
                 ->setTableDataList($data_list)   // 数据列表
-                ->addRightButton('self', $attr)  // 添加编辑按钮
-                ->addRightButton('hide')    // 添加隐藏/显示按钮
+                ->addRightButton('edit', array('href' => U('edit', array('group' => $group, 'id' => '__data_id__'))))  // 添加编辑按钮
                 ->addRightButton('forbid')  // 添加禁用/启用按钮
                 ->addRightButton('delete')  // 添加删除按钮
                 ->display();
@@ -228,66 +223,6 @@ EOF;
                     ->addFormItem('post_auth', 'radio', '投稿权限', '前台用户投稿权限', $category_object->post_auth())
                     ->setFormData($info)
                     ->setExtraHtml($this->extra_html)
-                    ->display();
-        }
-    }
-
-    /**
-     * 编辑分类
-     * @author jry <598821125@qq.com>
-     */
-    public function edit_with_tree($id, $group = 1) {
-        if (IS_POST) {
-            $category_object = D('Category');
-            $data = $category_object->create();
-            if ($data) {
-                if ($category_object->save()!== false) {
-                    $this->success('更新成功', U('index', array('group' => I('post.group'))));
-                } else {
-                    $this->error('更新失败');
-                }
-            } else {
-                $this->error($category_object->getError());
-            }
-        } else {
-            // 获取分类信息
-            $category_object = D('Category');
-            $info = $category_object->find($id);
-
-            // 获取前台模版供选择
-            if(C('CURRENT_THEME')){
-                $template_list = \Common\Util\File::get_dirs(getcwd().'/Theme/'.C('CURRENT_THEME').'/Cms/Index');
-            } else {
-                $template_list = \Common\Util\File::get_dirs(getcwd().'/Application/Cms/View/Index');
-            }
-            foreach ($template_list['file'] as $val) {
-                $val = substr($val, 0, -5);
-                if (strstr($val, 'index')) {
-                    $template_list_index[$val] =  $val;
-                } elseif (strstr($val, 'detail')) {
-                    $template_list_detail[$val] =  $val;
-                }
-            }
-
-            // 使用FormBuilder快速建立表单页面。
-            $builder = new \Common\Builder\FormBuilder();
-            $builder->setMetaTitle('编辑分类')   // 设置页面标题
-                    ->setPostUrl(U('edit', array('id' => $id,'group' => $group)))  // 设置表单提交地址
-                    ->addFormItem('id', 'hidden', 'ID', 'ID')
-                    ->addFormItem('group', 'radio', '分组', '分组', D('Category')->group_list())
-                    ->addFormItem('pid', 'select', '上级分类', '所属的上级分类', select_list_as_tree('Category', array('group' => $group), '顶级分类'))
-                    ->addFormItem('title', 'text', '分类标题', '分类标题')
-                    ->addFormItem('doc_type', 'radio', '分类内容模型', '分类内容模型', select_list_as_tree('Type'))
-                    ->addFormItem('url', 'text', '链接', 'U函数解析的URL或者外链', null, $info['doc_type'] == 1 ? : 'hidden')
-                    ->addFormItem('content', 'kindeditor', '内容', '单页模型填写内容', null, $info['doc_type'] == 2 ? : 'hidden')
-                    ->addFormItem('index_template', 'select', '模版', '文档列表或封面模版', $template_list_index, $info['doc_type'] > 2 ? : 'hidden')
-                    ->addFormItem('detail_template', 'select', '详情页模版', '单页使用的模版或其他模型文档详情页模版', $template_list_detail, $info['doc_type'] > 1 ? : 'hidden')
-                    ->addFormItem('icon', 'icon', '图标', '菜单图标')
-                    ->addFormItem('sort', 'num', '排序', '用于显示的顺序')
-                    ->addFormItem('post_auth', 'radio', '投稿权限', '前台用户投稿权限', $category_object->post_auth())
-                    ->setFormData($info)
-                    ->setExtraHtml($this->extra_html)
-                    ->setTemplate('builder/form')
                     ->display();
         }
     }

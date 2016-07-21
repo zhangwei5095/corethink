@@ -52,7 +52,7 @@ class UserAdmin extends AdminController {
                 ->addTopButton('resume', array('model' => 'admin_user'))  // 添加启用按钮
                 ->addTopButton('forbid', array('model' => 'admin_user'))  // 添加禁用按钮
                 ->addTopButton('delete', array('model' => 'admin_user'))  // 添加删除按钮
-                ->setSearch('请输入ID/用户名', U('index'))
+                ->setSearch('请输入ID/用户名／邮箱／手机号', U('index'))
                 ->addTableColumn('id', 'UID')
                 ->addTableColumn('avatar', '头像', 'picture')
                 ->addTableColumn('nickname', '昵称')
@@ -101,8 +101,10 @@ class UserAdmin extends AdminController {
                     ->addFormItem('username', 'text', '用户名', '用户名')
                     ->addFormItem('password', 'password', '密码', '密码')
                     ->addFormItem('email', 'text', '邮箱', '邮箱')
+                    ->addFormItem('email_bind', 'radio', '邮箱绑定', '手机绑定', array('1' => '已绑定', '0' => '未绑定'))
                     ->addFormItem('mobile', 'text', '手机号', '手机号')
-                    ->addFormItem('gender', 'radio', '性别', '性别', D('Admin/User')->user_gender())
+                    ->addFormItem('mobile_bind', 'radio', '手机绑定', '手机绑定', array('1' => '已绑定', '0' => '未绑定'))
+                    ->addFormItem('gender', 'radio', '性别', '性别', D('User/User')->user_gender())
                     ->addFormItem('avatar', 'picture', '头像', '头像')
                     ->setFormData(array('reg_type' => 'admin'))
                     ->display();
@@ -125,7 +127,7 @@ class UserAdmin extends AdminController {
             $data = $user_object->create();
             if ($data) {
                 $result = $user_object
-                        ->field('id,nickname,username,password,email,mobile,gender,avatar,update_time')
+                        ->field('id,nickname,username,password,email,email_bind,mobile,mobile_bind,gender,avatar,update_time')
                         ->save($data);
                 if ($result) {
                     $this->success('更新成功', U('index'));
@@ -150,8 +152,10 @@ class UserAdmin extends AdminController {
                     ->addFormItem('username', 'text', '用户名', '用户名')
                     ->addFormItem('password', 'password', '密码', '密码')
                     ->addFormItem('email', 'text', '邮箱', '邮箱')
+                    ->addFormItem('email_bind', 'radio', '邮箱绑定', '手机绑定', array('1' => '已绑定', '0' => '未绑定'))
                     ->addFormItem('mobile', 'text', '手机号', '手机号')
-                    ->addFormItem('gender', 'radio', '性别', '性别', D('Admin/User')->user_gender())
+                    ->addFormItem('mobile_bind', 'radio', '手机绑定', '手机绑定', array('1' => '已绑定', '0' => '未绑定'))
+                    ->addFormItem('gender', 'radio', '性别', '性别', D('User/User')->user_gender())
                     ->addFormItem('avatar', 'picture', '头像', '头像')
                     ->setFormData($info)
                     ->display();

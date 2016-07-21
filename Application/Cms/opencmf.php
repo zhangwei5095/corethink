@@ -17,19 +17,29 @@ return array(
         'description' => 'CMS门户模块',
         'developer'   => '南京科斯克网络科技有限公司',
         'website'     => 'http://www.opencmf.cn',
-        'version'     => '1.2.0',
+        'version'     => '1.3.0',
         'dependences' => array(
-            'Admin'   => '1.1.0',
+            'Admin'   => '1.3.0',
         )
     ),
 
     // 用户中心导航
     'user_nav' => array(
+        'title' => array(
+            'center' => '内容管理',
+        ),
         'center' => array(
             '0' => array(
                 'title' => '我的文档',
                 'icon'  => 'fa fa-list',
                 'url'   => 'Cms/Index/my',
+                'color' => '#F68A3A',
+            ),
+            '1' => array(
+                'title' => '收藏的文档',
+                'icon'  => 'fa fa-heart',
+                'url'   => 'Cms/Mark/my',
+                'color' => '#398CD2',
             ),
         ),
     ),
@@ -159,7 +169,7 @@ return array(
             'url'   => 'Cms/Category/setStatus',
         ),
         '16' => array(
-            'pid'   => '2',
+            'pid'   => '12',
             'title' => '文档管理',
             'icon'  => 'fa fa-edit',
             'url'   => 'Cms/Index/index',
@@ -179,90 +189,6 @@ return array(
             'title' => '新增',
             'url'   => 'Cms/Index/setStatus',
         ),
-        '20' => array(
-            'pid'   => '2',
-            'title' => '幻灯切换',
-            'icon'  => 'fa fa-image',
-            'url'   => 'Cms/Slider/index',
-        ),
-        '21' => array(
-            'pid'   => '20',
-            'title' => '新增',
-            'url'   => 'Cms/Slider/add',
-        ),
-        '22' => array(
-            'pid'   => '20',
-            'title' => '编辑',
-            'url'   => 'Cms/Slider/edit',
-        ),
-        '23' => array(
-            'pid'   => '20',
-            'title' => '设置状态',
-            'url'   => 'Cms/Slider/setStatus',
-        ),
-        '24' => array(
-            'pid'   => '2',
-            'title' => '通知公告',
-            'icon'  => 'fa fa-bullhorn',
-            'url'   => 'Cms/Notice/index',
-        ),
-        '25' => array(
-            'pid'   => '24',
-            'title' => '新增',
-            'url'   => 'Cms/Notice/add',
-        ),
-        '26' => array(
-            'pid'   => '24',
-            'title' => '编辑',
-            'url'   => 'Cms/Notice/edit',
-        ),
-        '27' => array(
-            'pid'   => '24',
-            'title' => '设置状态',
-            'url'   => 'Cms/Notice/setStatus',
-        ),
-        '28' => array(
-            'pid'   => '2',
-            'title' => '底部导航',
-            'icon'  => 'fa fa-map-signs',
-            'url'   => 'Cms/Footnav/index',
-        ),
-        '29' => array(
-            'pid'   => '28',
-            'title' => '新增',
-            'url'   => 'Cms/Footnav/add',
-        ),
-        '30' => array(
-            'pid'   => '28',
-            'title' => '编辑',
-            'url'   => 'Cms/Footnav/edit',
-        ),
-        '31' => array(
-            'pid'   => '28',
-            'title' => '设置状态',
-            'url'   => 'Cms/Footnav/setStatus',
-        ),
-        '32' => array(
-            'pid'   => '2',
-            'title' => '友情链接',
-            'icon'  => 'fa fa-link',
-            'url'   => 'Cms/FriendlyLink/index',
-        ),
-        '33' => array(
-            'pid'   => '32',
-            'title' => '新增',
-            'url'   => 'Cms/FriendlyLink/add',
-        ),
-        '34' => array(
-            'pid'   => '32',
-            'title' => '编辑',
-            'url'   => 'Cms/FriendlyLink/edit',
-        ),
-        '35' => array(
-            'pid'   => '32',
-            'title' => '设置状态',
-            'url'   => 'Cms/FriendlyLink/setStatus',
-        ),
         '36' => array(
             'pid'   => '2',
             'title' => '回收站',
@@ -273,6 +199,22 @@ return array(
             'pid'   => '36',
             'title' => '设置状态',
             'url'   => 'Cms/Notice/setStatus',
+        ),
+        '38' => array(
+            'pid'   => '2',
+            'title' => '举报列表',
+            'icon'  => 'fa fa-info-circle',
+            'url'   => 'Cms/Report/index',
+        ),
+        '39' => array(
+            'pid'   => '38',
+            'title' => '编辑',
+            'url'   => 'Cms/Report/edit',
+        ),
+        '40' => array(
+            'pid'   => '38',
+            'title' => '设置状态',
+            'url'   => 'Cms/Report/setStatus',
         ),
     )
 );

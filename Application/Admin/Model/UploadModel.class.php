@@ -55,7 +55,7 @@ class UploadModel extends Model {
             if (C('STATIC_DOMAIN')) {
                 $result['real_path'] = C('STATIC_DOMAIN').$result['path'];
             } else {
-                $result['real_path'] = __ROOT__.$result['path'];
+                $result['real_path'] = C('HOME_PAGE').$result['path'];
             }
         }
         if (in_array($result['ext'], array('jpg', 'jpeg', 'png', 'gif', 'bmp') )) {
@@ -184,7 +184,7 @@ class UploadModel extends Model {
             'image' => array('gif', 'jpg', 'jpeg', 'png', 'bmp'),
             'flash' => array('swf', 'flv'),
             'media' => array('swf', 'flv', 'mp3', 'wav', 'wma', 'wmv', 'mid', 'avi', 'mpg', 'asf', 'rm', 'rmvb', 'mp4'),
-            'file'  => array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'wps', 'txt', 'zip', 'rar', 'gz', 'bz2', '7z'),
+            'file'  => array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'wps', 'txt', 'zip', 'rar', 'gz', 'bz2', '7z', 'ipa', 'apk', 'dmg', 'iso'),
         );
 
         // 计算文件散列以查看是否已有相同文件上传过

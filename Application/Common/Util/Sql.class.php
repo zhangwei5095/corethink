@@ -18,12 +18,9 @@ class Sql {
      * @param string $tablepre  自己的前缀
      * @return multitype:string 返回最终需要的sql语句
      */
-     public function sql_split($sql, $tablepre) {
+     static public function sql_split($sql, $tablepre) {
         if ($tablepre != "oc_") {
-            $sql = str_replace("EXISTS `oc_", 'EXISTS `' . $tablepre, $sql);
-            $sql = str_replace("TABLE `oc_", 'TABLE `' . $tablepre, $sql);
-            $sql = str_replace("LOCK TABLES `oc_", 'LOCK TABLES `' . $tablepre, $sql);
-            $sql = str_replace("INSERT INTO `oc_", 'INSERT INTO `' . $tablepre, $sql);
+            $sql = str_replace("oc_", $tablepre, $sql);
         }
         $sql = preg_replace("/TYPE=(InnoDB|MyISAM|MEMORY)( DEFAULT CHARSET=[^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=utf8", $sql);
         if ($r_tablepre != $s_tablepre) {

@@ -17,9 +17,9 @@ return array(
         'description' => '用户中心模块',
         'developer'   => '南京科斯克网络科技有限公司',
         'website'     => 'http://www.opencmf.cn',
-        'version'     => '1.2.0',
+        'version'     => '1.3.0',
         'dependences' => array(
-            'Admin'   => '1.1.0',
+            'Admin'   => '1.3.0',
         )
     ),
 
@@ -33,18 +33,21 @@ return array(
                 'title' => '修改信息',
                 'icon'  => 'fa fa-edit',
                 'url'   => 'User/Center/profile',
+                'color' => '#F68A3A',
             ),
             '1' => array(
-                'title' => '修改密码',
-                'icon'  => 'fa fa-lock',
-                'url'   => 'User/Center/password',
-            ),
-            '2' => array(
                 'title' => '消息中心',
                 'icon'  => 'fa fa-envelope-o',
                 'url'   => 'User/Message/index',
                 'badge' => array('User/Message', 'newMessageCount'),
                 'badge_class' => 'badge-danger',
+                'color' => '#80C243',
+            ),
+            '2' => array(
+                'title' => '修改密码',
+                'icon'  => 'fa fa-lock',
+                'url'   => 'User/Center/password',
+                'color' => '#45BEC3',
             ),
         ),
         'main' => array(
@@ -96,7 +99,7 @@ return array(
         'user_protocol' => array(
             'title'   => '用户协议',
             'type'    =>'kindeditor',
-            'value'=>'',
+            'value'=>'请在“后台——用户——用户设置”中设置',
         ),
         'behavior' => array(
             'title'   => '行为扩展',
@@ -196,6 +199,6 @@ return array(
             'pid'   => '13',
             'title' => '设置状态',
             'url'   => 'User/Attribute/setStatus',
-        ),
+        )
     )
 );

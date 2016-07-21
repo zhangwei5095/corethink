@@ -33,9 +33,13 @@ class TypeAdmin extends AdminController {
                    ->select();
         $page = new Page(D('Type')->where($map)->count(), C('ADMIN_PAGE_ROWS'));
 
+        $attr['name']  = 'attribute';
         $attr['title'] = '字段管理';
         $attr['class'] = 'label label-success';
         $attr['href']  = U(D('Index')->moduleName.'/Attribute/index', array('doc_type' => '__data_id__'));
+
+        $right_button['no']['title'] = '系统模型无需操作';
+        $right_button['no']['attribute'] = 'class="label label-warning" href="#"';
 
         // 使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
@@ -60,7 +64,7 @@ class TypeAdmin extends AdminController {
                 ->addRightButton('delete')  // 添加删除按钮
                 ->alterTableData(  // 修改列表数据
                     array('key' => 'system', 'value' => '1'),
-                    array('right_button' => '<a class="label label-warning">系统模型无需操作</a>')
+                    array('right_button' => $right_button)
                 )
                 ->display();
     }

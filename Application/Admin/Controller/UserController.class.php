@@ -21,7 +21,14 @@ class UserController extends AdminController {
         // 搜索
         $keyword   = I('keyword', '', 'string');
         $condition = array('like','%'.$keyword.'%');
-        $map['id|username'] = array($condition, $condition, '_multi'=>true);
+        $map['id|username|nickname|email|mobile'] = array(
+            $condition,
+            $condition,
+            $condition,
+            $condition,
+            $condition,
+            '_multi'=>true
+        );
 
         // 获取所有用户
         $map['status'] = array('egt', '0'); // 禁用和正常状态
@@ -44,7 +51,7 @@ class UserController extends AdminController {
                 ->addTopButton('resume')  // 添加启用按钮
                 ->addTopButton('forbid')  // 添加禁用按钮
                 ->addTopButton('delete')  // 添加删除按钮
-                ->setSearch('请输入ID/用户名', U('index'))
+                ->setSearch('请输入ID/用户名／邮箱／手机号', U('index'))
                 ->addTableColumn('id', 'UID')
                 ->addTableColumn('avatar', '头像', 'picture')
                 ->addTableColumn('nickname', '昵称')
@@ -90,7 +97,9 @@ class UserController extends AdminController {
                     ->addFormItem('username', 'text', '用户名', '用户名')
                     ->addFormItem('password', 'password', '密码', '密码')
                     ->addFormItem('email', 'text', '邮箱', '邮箱')
+                    ->addFormItem('email_bind', 'radio', '邮箱绑定', '手机绑定', array('1' => '已绑定', '0' => '未绑定'))
                     ->addFormItem('mobile', 'text', '手机号', '手机号')
+                    ->addFormItem('mobile_bind', 'radio', '手机绑定', '手机绑定', array('1' => '已绑定', '0' => '未绑定'))
                     ->addFormItem('avatar', 'picture', '头像', '头像')
                     ->setFormData(array('reg_type' => 'admin'))
                     ->display();
@@ -113,7 +122,7 @@ class UserController extends AdminController {
             $data = $user_object->create();
             if ($data) {
                 $result = $user_object
-                        ->field('id,nickname,username,email,mobile,gender,avatar,update_time')
+                        ->field('id,nickname,username,password,email,email_bind,mobile,mobile_bind,gender,avatar,update_time')
                         ->save($data);
                 if ($result) {
                     $this->success('更新成功', U('index'));
@@ -137,7 +146,9 @@ class UserController extends AdminController {
                     ->addFormItem('username', 'text', '用户名', '用户名')
                     ->addFormItem('password', 'password', '密码', '密码')
                     ->addFormItem('email', 'text', '邮箱', '邮箱')
+                    ->addFormItem('email_bind', 'radio', '邮箱绑定', '手机绑定', array('1' => '已绑定', '0' => '未绑定'))
                     ->addFormItem('mobile', 'text', '手机号', '手机号')
+                    ->addFormItem('mobile_bind', 'radio', '手机绑定', '手机绑定', array('1' => '已绑定', '0' => '未绑定'))
                     ->addFormItem('avatar', 'picture', '头像', '头像')
                     ->setFormData($info)
                     ->display();

@@ -33,14 +33,24 @@ class MessageController extends HomeController{
         $map['status'] = array('eq', 1);
         $map['to_uid'] = array('eq', is_login());
         $message_object = D('User/Message');
-        $message_list = $message_object->where($map)->order('sort desc,id desc')->select();
+        $p = !empty($_GET["p"]) ? $_GET['p'] : 1;
+        $data_list = $message_object
+                   ->page($p, C('ADMIN_PAGE_ROWS'))
+                   ->where($map)
+                   ->order('sort desc,id desc')
+                   ->select();
+        $page = new Page(
+            $message_object->where($map)->count(),
+            C('ADMIN_PAGE_ROWS')
+        );
         $message_type = $message_object->message_type();
         foreach ($message_type as $key => $val) {
             if ($count = D('User/Message')->newMessageCount($key)) {
                 $new_message_type[$key] = $count;
             }
         }
-        $this->assign('message_list', $message_list);
+        $this->assign('message_list', $data_list);
+        $this->assign('page', $page->show());
         $this->assign('message_type', $message_type);
         $this->assign('new_message_type', $new_message_type);
         $this->assign('current_type', $type);
@@ -79,7 +89,7 @@ class MessageController extends HomeController{
     }
 
     /**
-     * 设置当前用户所有未读消息为已读
+     * 设置已读
      * @param $type 消息类型
      * @author jry <598821125@qq.com>
      */
@@ -87,15 +97,21 @@ class MessageController extends HomeController{
         $map['status']  = array('eq', 1);
         $map['to_uid']  = array('eq', is_login());
         $map['is_read'] = array('eq', 0);
-        if($ids !== null){
+        if ($ids !== null) {
             $map['id'] = array('in', $ids);
         }
-        if($type !== null){
+        if ($type !== null) {
             $map['type'] = array('eq', $type);
+        } else {
+            if ($ids === null) {
+                $this->error('请勾选消息');
+            }
         }
         $result = D('User/Message')->where($map)->setField('is_read', 1);
-        if($result){
+        if ($result) {
             $this->success('操作成功');
+        } else {
+            $this->error('操作失败');
         }
     }
 }

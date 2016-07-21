@@ -61,11 +61,23 @@ abstract class Addon {
      * 显示方法
      * @author jry <598821125@qq.com>
      */
-    final protected function display($template='') {
-        if ($template == '') {
-            $template = CONTROLLER_NAME;
+    final protected function display($file = '') {
+        if ($file == '') {
+            $file = CONTROLLER_NAME;
         }
-        echo ($this->fetch($template));
+        if (C('CURRENT_THEME') && MODULE_MARK === 'Home') {
+            $template = './Theme/' . C('CURRENT_THEME') . '/Addons/' . $this->getName() . '/' . $file . '.html';
+            if (is_file($template)) {
+                $file = $template;
+            }
+            if (is_wap()) {
+                $wap_template = './Theme/' . C('CURRENT_THEME') . '/Addons/Wap/' . $this->getName() . '/' . $file . '.html';
+                if (is_file($wap_template)) {
+                    $file = $wap_template;
+                }
+            }
+        }
+        echo ($this->fetch($file));
     }
 
     /**

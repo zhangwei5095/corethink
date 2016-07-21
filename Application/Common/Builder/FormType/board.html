@@ -1,9 +1,9 @@
 <case value="board">
-    <div class="form-group item_{$[type]form.name} {$[type]form.extra_class}">
+    <div class="form-group item_{$[type]form.name} {$[type]form.extra.class}">
         <label class="left control-label">{$[type]form.title}：</label>
         <div class="right">
             <input type="hidden" name="{$[type]form.name}" value='{$[type]form.value}'>
-            <div class="row board_list boards_{$[type]k}" {$[type]form.extra_attr}>
+            <div class="row board_list boards_{$[type]k}" {$[type]form.extra.attr}>
                 <div class="container-fluid">
                     <foreach name="form.options" item="option" key="option_key">
                         <div class="panel panel-default board col-xs-12 col-sm-3" data-id="{$option_key}">

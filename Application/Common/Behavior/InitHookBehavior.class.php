@@ -30,7 +30,7 @@ class InitHookBehavior extends Behavior {
         C($addon_config);
 
         $data = S('hooks');
-        if (!$data) {
+        if (!$data || APP_DEBUG === true) {
             $hooks = D('Admin/Hook')->getField('name,addons');
             foreach ($hooks as $key => $value) {
                 if ($value) {

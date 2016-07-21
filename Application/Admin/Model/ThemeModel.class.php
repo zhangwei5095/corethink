@@ -94,17 +94,22 @@ class ThemeModel extends Model {
             switch ($val['status']) {
                 case '-1': //未安装
                     $val['status'] = '<i class="fa fa-download" style="color:green"></i>';
-                    $val['right_button']  = '<a class="label label-success ajax-get" href="'.U('install', array('name' => $val['name'])).'">安装</a>';
+                    $val['right_button']['install']['title'] = '安装';
+                    $val['right_button']['install']['attribute'] = 'class="label label-success ajax-get" href="'.U('install', array('name' => $val['name'])).'"';
                     break;
                 default :
                     $val['status'] = '<i class="fa fa-check" style="color:green"></i>';
                     if ($val['current']) {
-                        $val['right_button'] .= '<span class="label label-success" href="#">我是当前主题</span> ';
+                        $val['right_button']['current']['title'] = '我是当前主题';
+                        $val['right_button']['current']['attribute'] = 'class="label label-success" href="#"';
                     } else {
-                        $val['right_button'] .= '<a class="label label-danger ajax-get" href="'.U('setCurrent', array('id' => $val['id'])).'">设为当前主题</a> ';
+                        $val['right_button']['set_current']['title'] = '设为当前主题';
+                        $val['right_button']['set_current']['attribute'] = 'class="label label-danger ajax-get" href="'.U('setCurrent', array('id' => $val['id'])).'"';
                     }
-                    $val['right_button'] .= '<a class="label label-info ajax-get" href="'.U('updateInfo', array('id' => $val['id'])).'">更新信息</a> ';
-                    $val['right_button'] .= '<a class="label label-danger ajax-get" href="'.U('uninstall', array('id' => $val['id'])).'">卸载</a> ';
+                    $val['right_button']['update_info']['title'] = '更新信息';
+                    $val['right_button']['update_info']['attribute'] = 'class="label label-info ajax-get" href="'.U('updateInfo', array('id' => $val['id'])).'"';
+                    $val['right_button']['uninstall']['title'] = '卸载';
+                    $val['right_button']['uninstall']['attribute'] = 'class="label label-danger ajax-get" href="'.U('uninstall', array('id' => $val['id'])).'"';
                     break;
             }
         }

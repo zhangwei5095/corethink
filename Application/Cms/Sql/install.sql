@@ -143,81 +143,42 @@ VALUES
 	(3,'article','文章','fa fa-file-word-o',11,'11','','{\"1\":[\"1\",\"11\",\"12\",\"13\",\"14\",\"15\",\"16\"],\"2\":[\"9\",\"7\"]}','1:基础\n2:扩展',0,1426580628,1426580628,0,1);
 UNLOCK TABLES;
 
-CREATE TABLE `oc_cms_slider` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '幻灯ID',
-  `title` char(80) NOT NULL DEFAULT '' COMMENT '标题',
-  `cover` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '封面ID',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '点击链接',
+CREATE TABLE `oc_cms_comment` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '评论ID',
+  `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '评论父ID',
+  `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `nickname` varchar(63) NOT NULL DEFAULT '' COMMENT '用户昵称',
+  `data_id` int(11) unsigned NOT NULL COMMENT '数据ID',
+  `content` text NOT NULL COMMENT '评论内容',
+  `good` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '赞数',
+  `bad` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '踩数',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `sort` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',
+  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `sort` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态',
+  `ip` varchar(15) NOT NULL COMMENT '来源IP',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='幻灯切换表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文档评论表';
 
-CREATE TABLE `oc_cms_notice` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '幻灯ID',
-  `title` char(80) NOT NULL DEFAULT '' COMMENT '标题',
-  `content` text NOT NULL COMMENT '内容',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `sort` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='通知公告表';
-
-CREATE TABLE `oc_cms_footnav` (
+CREATE TABLE `oc_cms_report` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上级',
-  `title` varchar(31) NOT NULL DEFAULT '' COMMENT '标题',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '地址',
-  `icon` varchar(31) NOT NULL DEFAULT '' COMMENT '图标',
+  `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'UID',
+  `data_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '举报项ID',
+  `reason` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '举报理由',
+  `abstract` text NOT NULL COMMENT '详情',
+  `mobile` varchar(20) NOT NULL DEFAULT '' COMMENT '电话',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '修改时间',
-  `sort` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='底部导航链接表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='举报信息表';
 
-INSERT INTO `oc_cms_footnav` (`id`, `pid`, `title`, `url`, `icon`, `create_time`, `update_time`, `sort`, `status`)
-VALUES
-	(1, 0, '关于', '', '', 1449742225, 1449742255, 0, 1),
-	(2, 1, '关于我们', 'http://www.opencmf.cn/cms/category/detail/id/8.html', '', 1449742312, 1449742312, 0, 1),
-	(4, 1, '服务产品', 'http://www.opencmf.cn/cms/category/detail/id/2.html', '', 1449742597, 1449742651, 0, 1),
-	(5, 1, '商务合作', 'http://www.opencmf.cn/cms/category/detail/id/11.html', '', 1449742664, 1449742664, 0, 1),
-	(6, 1, '加入我们', 'http://www.opencmf.cn/cms/category/detail/id/13.html', '', 1449742678, 1449742697, 0, 1),
-	(7, 0, '帮助', '', '', 1449742688, 1449742688, 0, 1),
-	(8, 7, '用户协议', 'http://www.opencmf.cn/cms/category/detail/id/9.html', '', 1449742706, 1449742706, 0, 1),
-	(9, 7, '意见反馈', 'http://www.opencmf.cn/forum/default/index.html', '', 1449742716, 1449742716, 0, 1),
-	(10, 7, '常见问题', 'http://www.opencmf.cn/forum/default/index.html', '', 1449742728, 1449742728, 0, 1),
-	(11, 0, '联系方式', '', '', 1449742742, 1449742742, 0, 1),
-	(12, 11, '联系我们', 'http://www.opencmf.cn/cms/category/detail/id/11.html', '', 1449742752, 1449742752, 0, 1),
-	(13, 11, '新浪微博', 'http://weibo.com/u/5667168319', '', 1449742802, 1449742802, 0, 1);
-
-CREATE TABLE `oc_cms_friendly_link` (
+CREATE TABLE IF NOT EXISTS `oc_cms_mark` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
-  `logo` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'logo',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '链接',
-  `type` int(3) unsigned NOT NULL DEFAULT '0' COMMENT '类型',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_timeCopy` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '修改时间',
-  `sort` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `data_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '数据ID',
+  `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '关注时间',
+  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='友情链接表';
-
-INSERT INTO `oc_cms_friendly_link` (`id`, `title`, `logo`, `url`, `type`, `create_time`, `update_timeCopy`, `sort`, `status`)
-VALUES
-	(1, 'OpenCMF', 1, 'http://www.opencmf.cn', 1, 1446449071, 1446449071, 0, 1),
-	(2, 'OpenCMF', 1, 'http://www.opencmf.cn', 1, 1446449071, 1446449071, 0, 1),
-	(3, 'OpenCMF', 1, 'http://www.opencmf.cn', 1, 1446449071, 1446449071, 0, 1),
-	(4, 'OpenCMF', 1, 'http://www.opencmf.cn', 1, 1446449071, 1446449071, 0, 1),
-	(5, 'OpenCMF', 1, 'http://www.opencmf.cn', 1, 1446449071, 1446449071, 0, 1),
-	(6, 'OpenCMF', 1, 'http://www.opencmf.cn', 1, 1446449071, 1446449071, 0, 1),
-	(7, 'OpenCMF', 1, 'http://www.opencmf.cn', 2, 1446449071, 1446449071, 0, 1),
-	(8, 'OpenCMF', 1, 'http://www.opencmf.cn', 2, 1446449071, 1446449071, 0, 1),
-	(9, 'OpenCMF', 1, 'http://www.opencmf.cn', 2, 1446449071, 1446449071, 0, 1),
-	(10, 'OpenCMF', 1, 'http://www.opencmf.cn', 2, 1446449071, 1446449071, 0, 1),
-	(11, 'OpenCMF', 1, 'http://www.opencmf.cn', 2, 1446449071, 1446449071, 0, 1),
-	(12, 'OpenCMF', 1, 'http://www.opencmf.cn', 2, 1446449071, 1446449071, 0, 1);
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='收藏表';

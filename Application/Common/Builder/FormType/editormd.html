@@ -1,8 +1,8 @@
 <case value="editormd">
-    <div class="form-group item_{$[type]form.name} {$[type]form.extra_class}">
+    <div class="form-group item_{$[type]form.name} {$[type]form.extra.class}">
         <label class="left control-label">{$[type]form.title}：</label>
         <div class="right">
-            <div name="{$[type]form.name}" id="[type]{$group_k}_markdown_{$[type]k}" class="form-control" {$[type]form.extra_attr}></div>
+            <div name="{$[type]form.name}" id="[type]{$group_k}_markdown_{$[type]k}" style="z-index: 1000;" class="form-control" {$[type]form.extra.attr}></div>
             <pre id="default_[type]{$group_k}_markdown_{$[type]k}" class="hidden">{$[type]form.value}</pre>
 
             <link rel="stylesheet" type="text/css" href="__PUBLIC__/libs/editormd/css/editormd.min.css">
@@ -23,14 +23,10 @@
                             placeholder     : 'CoreThink让开发更轻松！',
                             width           : '100%',
                             height          : 640,
-                            watch           : false,
+                            watch           : <?php if(MODULE_MARK === 'Admin'){ echo 'false';} else {echo 'true';} ?>,
                             codeFold        : true,
                             htmlDecode      : false,
-                            taskList        : true,
-                            emoji           : true,
-                            flowChart       : true,
-                            sequenceDiagram : true,
-                            tex             : true
+                            toolbarAutoFixed: false,
                         });
                 });
             </script>

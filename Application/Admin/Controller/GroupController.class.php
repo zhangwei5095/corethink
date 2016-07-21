@@ -38,6 +38,9 @@ class GroupController extends AdminController {
         $tree = new Tree();
         $data_list = $tree->toFormatTree($data_list);
 
+        $right_button['no']['title'] = '超级管理员无需操作';
+        $right_button['no']['attribute'] = 'class="label label-warning" href="#"';
+
         // 使用Builder快速建立列表页面。
         $builder = new \Common\Builder\ListBuilder();
         $builder->setMetaTitle('部门列表')  // 设置页面标题
@@ -58,7 +61,7 @@ class GroupController extends AdminController {
                 ->addRightButton('delete')      // 添加删除按钮
                 ->alterTableData(  // 修改列表数据
                     array('key' => 'id', 'value' => '1'),
-                    array('right_button' => '<a class="label label-warning">超级管理员无需操作</a>')
+                    array('right_button' => $right_button)
                 )
                 ->display();
     }

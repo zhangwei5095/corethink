@@ -66,15 +66,31 @@ class IndexController extends HomeController {
 
         // 获取用户基本信息
         $map['status']    = 1;
+
+        // 关键字搜索
+        $keyword = I('keyword', '', 'string');
+        if ($keyword) {
+            $condition = array('like','%'.$keyword.'%');
+            $map['id|nickname|username|email|mobile'] = array(
+                $condition,
+                $condition,
+                $condition,
+                $condition,
+                $condition,
+                '_multi'=>true
+            );
+        }
+
+        // 获取列表
         $map['user_type'] = $user_type;
         $p = !empty($_GET["p"]) ? $_GET['p'] : 1;
-        $user_object  = D('Admin/User');
+        $user_object  = D('User/User');
         $base_table   = C('DB_PREFIX').'admin_user';
         $extend_table = C('DB_PREFIX').'user_'.strtolower($user_type_info['name']);
         $user_list = $user_object
                    ->page($p, 16)
                    ->where($map)
-                   ->order('create_time desc')
+                   ->order('id desc')
                    ->join($extend_table.' ON '.$base_table.'.id = '.$extend_table.'.uid', 'LEFT')
                    ->select();
         $page = new Page(
@@ -84,6 +100,10 @@ class IndexController extends HomeController {
             ->count(),
             16
         );
+
+        foreach ($user_list as &$val) {
+            $val['gender_icon'] = $user_object->user_gender_icon($val['gender']);
+        }
 
         $this->assign('page', $page->show());
         $this->assign('query_attribute', $query_attribute);
@@ -97,8 +117,11 @@ class IndexController extends HomeController {
      * @author jry <598821125@qq.com>
      */
     public function home($uid) {
-        $user_id = is_login();
-        $user_info = D('User/User')->detail($uid);
+        $user_info = get_user_info($uid);
+
+        // 关注信息
+        $user_info['follow_status'] = D('User/Follow')->get_follow_status($uid);
+
         $user_type_info = D('User/Type')->find($user_info['user_type']);
         if ($user_info['status'] !== '1') {
             $this->error('该用户不存在或已禁用');
@@ -111,5 +134,14 @@ class IndexController extends HomeController {
         $this->assign('meta_title', $user_info['username'].'的主页');
         $this->assign('user_info', $user_info);
         $this->display($template);
+    }
+
+    /**
+     * 用户协议
+     * @author jry <598821125@qq.com>
+     */
+    public function agreement() {
+        $this->assign('meta_title', '用户协议');
+        $this->display();
     }
 }
