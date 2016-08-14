@@ -208,7 +208,7 @@ class ModuleModel extends Model {
                     $val['right_button']['forbid']['title'] = '启用';
                     $val['right_button']['forbid']['attribute'] = 'class="label label-success ajax-get" href="'.U('setStatus', array('status' => 'resume', 'ids' => $val['id'])).'"';
                     $val['right_button']['uninstall_before']['title'] = '卸载';
-                    $val['right_button']['uninstall_before']['attribute'] = 'class="label label-danger ajax-get" href="'.U('uninstall_before', array('id' => $val['id'])).'"';
+                    $val['right_button']['uninstall_before']['attribute'] = 'class="label label-danger" href="'.U('uninstall_before', array('id' => $val['id'])).'"';
                     break;
                 case '1':  // 正常
                     $val['status_icon'] = '<i class="fa fa-check text-success"></i>';
@@ -218,7 +218,7 @@ class ModuleModel extends Model {
                         $val['right_button']['forbid']['title'] = '禁用';
                         $val['right_button']['forbid']['attribute'] = 'class="label label-warning ajax-get" href="'.U('setStatus', array('status' => 'forbid', 'ids' => $val['id'])).'"';
                         $val['right_button']['uninstall_before']['title'] = '卸载';
-                        $val['right_button']['uninstall_before']['attribute'] = 'class="label label-danger ajax-get" href="'.U('uninstall_before', array('id' => $val['id'])).'"';
+                        $val['right_button']['uninstall_before']['attribute'] = 'class="label label-danger" href="'.U('uninstall_before', array('id' => $val['id'])).'"';
                     }
                     break;
             }
