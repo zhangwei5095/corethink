@@ -116,7 +116,7 @@ function parse_content($str) {
  * @return str
  */
 function cut_str($str, $start, $length, $charset='utf-8', $suffix = true) {
-    return \Common\Util\Think\String::cutStr(
+    return \Common\Util\Think\Str::cutStr(
         $str, $start, $length, $charset, $suffix
     );
 }
@@ -128,7 +128,7 @@ function cut_str($str, $start, $length, $charset='utf-8', $suffix = true) {
  * @author jry <598821125@qq.com>
  */
 function html2text($str) {
-   return \Common\Util\Think\String::html2text($str);
+   return \Common\Util\Think\Str::html2text($str);
 }
 
 /**

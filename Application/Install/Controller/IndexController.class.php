@@ -10,7 +10,7 @@ namespace Install\Controller;
 use Think\Controller;
 use Think\Db;
 use Think\Storage;
-use Common\Util\Think\String;
+use Common\Util\Think\Str;
 /**
  * 安装控制器
  */
@@ -118,7 +118,7 @@ class IndexController extends Controller{
             } else {
                 session('step', '3');
                 session('error', false);
-                $rand = String::randString(6,3); //生成随机数
+                $rand = Str::randString(6,3); //生成随机数
                 $this->assign('meta_title', "step3");
                 $this->display();
             }
@@ -144,7 +144,7 @@ class IndexController extends Controller{
 
         //生成加密字符串
         $add_chars .= '`~!@#$%^&*()_+-=[]{};:"|,.<>/?';
-        $auth = String::randString(64, '', $add_chars); //生成随机数
+        $auth = Str::randString(64, '', $add_chars); //生成随机数
 
         //创建配置文件
         $conf = write_config($db_config, $auth);
