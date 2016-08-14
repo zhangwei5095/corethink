@@ -1,4 +1,7 @@
 /* 布局 */
+body.admin_index_index {
+    overflow: hidden;
+}
 @media (min-width: 768px) {
     .main-nav .navbar-header {
         width: 220px;
@@ -9,7 +12,7 @@
     }
     #sidebar {
         padding: 0px;
-        position: fixed;
+        position: absolute;
         top:  50px;;
         bottom: 0;
         overflow: auto;
@@ -21,7 +24,7 @@
     }
     #main {
         padding: 0px;
-        position: fixed;
+        position: absolute;
         top:  51px;
         bottom: 0;
         right: 0;
@@ -47,6 +50,7 @@
         min-height: 20px;
         background: #fff;
         border-left: 0;
+        border-top: 0;
     }
     .ct-tab-nav .navbar-left {
         border-right: 1px solid #eee;
@@ -127,8 +131,8 @@
 
 /* 页面底部版权 */
 .footer {
-    position: fixed;
-    left: 219px;
+    position: absolute;
+    left: -1px;
     right: 0;
     bottom: 0;
 }
