@@ -43,7 +43,7 @@ $_config = array(
     // Session支持
     'SESSION_OPTIONS'=>array(
         'expire' => 8640000,
-        'type'   => 'Db',
+        'type'   => '',
     ),
 
     // 全局过滤配置
