@@ -119,9 +119,6 @@ class IndexController extends HomeController {
     public function home($uid) {
         $user_info = get_user_info($uid);
 
-        // 关注信息
-        $user_info['follow_status'] = D('User/Follow')->get_follow_status($uid);
-
         $user_type_info = D('User/Type')->find($user_info['user_type']);
         if ($user_info['status'] !== '1') {
             $this->error('该用户不存在或已禁用');

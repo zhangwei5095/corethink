@@ -89,9 +89,11 @@ class MessageModel extends Model {
                 hook('SendMessage', $data); //发送消息钩子，用于消息发送途径的扩展
             }
             if ($weixin) {
-                $data['from_username'] = get_user_info($data['from_uid'], 'nickname');
-                $data['to_openid']     = D('Weixin/UserBind')->getFieldByUid($data['to_uid'], 'openid');
-                D('Weixin/Index')->SendMessage($data);
+                if (D('Admin/Module')->where('name="Weixin" and status="1"')->count()) {
+                    $data['from_username'] = get_user_info($data['from_uid'], 'nickname');
+                    $data['to_openid']     = D('Weixin/UserBind')->getFieldByUid($data['to_uid'], 'openid');
+                    D('Weixin/Index')->SendMessage($data);
+                }
             }
             return $result;
         }
