@@ -1,0 +1,73 @@
+/* CoreThink默认样式 */
+body {
+    word-wrap: break-word; 
+    word-break:break-all;
+}
+.panel {
+    box-shadow: none;
+}
+.jumbotron {
+    margin-bottom: 20px;
+}
+.badge-vip {
+    font-weight: 300;
+    font-size: 12px;
+    padding: 2px 5px;
+    transform:scale(0.9);
+    margin-top: -2px;
+}
+@media (max-width: 768px) {
+    .panel {
+        margin: 0 -15px;
+    }
+    .jumbotron {
+        margin-bottom: 10px;
+    }
+}
+.main-jumbotron {
+    padding: 30px 0;
+}
+
+/* 主导航 */
+.main-nav {
+    margin-bottom: 0;
+    border-radius: 0;
+    background: #fff;
+    border-top: 0;
+}
+.full-header .navbar-nav>li>a:focus,
+.full-header .navbar-nav>li>a:hover{
+    color: #3fa9f5;
+}
+@media (min-width: 768px) {
+    .main-nav .navbar-brand {
+        padding: 30px 15px;
+        font-size: 30px;
+        color: #3fa9f5;
+    }
+    .main-nav .navbar-brand img {
+        height: 42px;
+        margin-top: -12px;
+    }
+    .main-nav ul.nav>li>a {
+        padding: 30px 20px;
+    }
+    .main-nav .navbar-btn {
+        margin-top: 23px;
+        margin-bottom: 23px
+    }
+}
+.module-nav {
+    border-top: 0;
+}
+
+/* 页面底部 */
+.footer {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+.footer .footer-bottom {
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+    margin-top: 15px;
+}

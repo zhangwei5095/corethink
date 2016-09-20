@@ -413,16 +413,6 @@
     width: 16px;
     height: 16px;
 }
-.ke-icon-downremoteimg {
-    background-position: 0px -1247px;
-    width: 16px;
-    height: 16px;
-}
-.ke-icon-poll {
-    background-position: 0px -1264px;
-    width: 16px;
-    height: 16px;
-}
 /* container */
 .ke-container {
     display: block;
@@ -435,7 +425,7 @@
 /* toolbar */
 .ke-toolbar {
     border-bottom: 1px solid #CCC;
-    background-color: #FFFFFF;
+    background-color: #F0F0EE;
     padding: 2px 5px;
     text-align: left;
     overflow: hidden;
@@ -452,7 +442,7 @@
     background-image: url(default.png);
 }
 .ke-toolbar .ke-outline {
-    border: 1px solid #FFFFFF;
+    border: 1px solid #F0F0EE;
     margin: 1px;
     padding: 1px 2px;
     font-size: 0;
@@ -491,17 +481,6 @@
     height: 1px;
     clear: both;
 }
-.ke-notice{
-    padding: 2px 10px;
-    background: #FEFEE9;
-    border-bottom: 1px solid #CDCDCD !important;
-    font-size: 12px;
-    position: relative;
-}
-.ke-notice a:hover{
-    border: none;
-    text-decoration: none;
-}
 /* edit */
 .ke-edit {
     padding: 0;
@@ -527,23 +506,12 @@
     position: relative;
     background-color: #F0F0EE;
     border-top: 1px solid #CCCCCC;
-    font-size: 12px;
-    line-height: 12px;
+    font-size: 0;
+    line-height: 0;
     *height: 12px;
     overflow: hidden;
     text-align: center;
     cursor: s-resize;
-}
-.ke-statusbar a{
-    color: #999;
-}
-.ke-statusbar .tips{
-    float: left;
-    margin-left: 5px;
-}
-.ke-statusbar .handle{
-    float: right;
-    margin-right: 10px;
 }
 .ke-statusbar-center-icon {
     background-position: -0px -754px;
@@ -723,7 +691,7 @@
     height: 16px;
     position: absolute;
     right: 6px;
-    top: 3px;
+    top: 6px;
     cursor: pointer;
 }
 .ke-dialog-body {
@@ -1178,3 +1146,4 @@
     width: 30%;
     text-align: center;
 }
+

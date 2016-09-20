@@ -1,14 +1,15 @@
 <?php
 // +----------------------------------------------------------------------
-// | CoreThink [ Simple Efficient Excellent ]
+// | OpenCMF [ Simple Efficient Excellent ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2014 http://www.corethink.cn All rights reserved.
+// | Copyright (c) 2014 http://www.opencmf.cn All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: jry <598821125@qq.com> <http://www.corethink.cn>
+// | Author: jry <598821125@qq.com>
 // +----------------------------------------------------------------------
 
 /**
  * 定时任务执行列表
  */
 return array(
+    'email' => array('email', 3, 0),
 );

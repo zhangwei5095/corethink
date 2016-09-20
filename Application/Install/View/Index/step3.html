@@ -1,4 +1,4 @@
-<extend name="_Layout/main"/>
+<extend name="Public/layout"/>
 
 <block name="header">
     <li class="active"><a href="javascript:;">安装协议</a></li>
@@ -34,7 +34,7 @@
                     <div class="form-group">
                         <label class="control-label">数据库名</label>
                         <div class="control-group">
-                            <input class="form-control" type="text" name="db[DB_NAME]" value="corethink">
+                            <input class="form-control" type="text" name="db[DB_NAME]" value="opencmf_{:C('PRODUCT_MODEL')}">
                         </div>
                     </div>
                     <div class="form-group">

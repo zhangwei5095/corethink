@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CoreThink [ Simple Efficient Excellent ]
+// | OpenCMF [ Simple Efficient Excellent ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2014 http://www.corethink.cn All rights reserved.
+// | Copyright (c) 2014 http://www.opencmf.cn All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: jry <598821125@qq.com> <http://www.corethink.cn>
+// | Author: jry <598821125@qq.com>
 // +----------------------------------------------------------------------
 namespace Common\Behavior;
 use Think\Behavior;
@@ -14,23 +14,30 @@ defined('THINK_PATH') or exit();
  * 初始化钩子信息
  * @author jry <598821125@qq.com>
  */
-class InitHookBehavior extends Behavior{
+class InitHookBehavior extends Behavior {
     /**
      * 行为扩展的执行入口必须是run
      * @author jry <598821125@qq.com>
      */
-    public function run(&$content){
-        //安装模式下直接返回
+    public function run(&$content) {
+        // 安装模式下直接返回
         if(defined('BIND_MODULE') && BIND_MODULE === 'Install') return;
+
+        // 添加插件配置
+        $addon_config['ADDON_PATH'] = './Addons/';
+        $addon_config['AUTOLOAD_NAMESPACE'] = C('AUTOLOAD_NAMESPACE');
+        $addon_config['AUTOLOAD_NAMESPACE']['Addons'] = $addon_config['ADDON_PATH'];
+        C($addon_config);
+
         $data = S('hooks');
-        if(!$data){
-            $hooks = D('AddonHook')->getField('name,addons');
-            foreach($hooks as $key => $value){
-                if($value){
-                    $map['status']  =   1;
-                    $names          =   explode(',',$value);
-                    $map['name']    =   array('IN',$names);
-                    $data = D('Addon')->where($map)->getField('id,name');
+        if (!$data || APP_DEBUG === true) {
+            $hooks = D('Admin/Hook')->getField('name,addons');
+            foreach ($hooks as $key => $value) {
+                if ($value) {
+                    $map['status'] = 1;
+                    $names         = explode(',',$value);
+                    $map['name']   = array('IN',$names);
+                    $data = D('Admin/Addon')->where($map)->getField('id,name');
                     if($data){
                         $addons = array_intersect($names, $data);
                         Hook::add($key, array_map('get_addon_class', $addons));
@@ -38,7 +45,7 @@ class InitHookBehavior extends Behavior{
                 }
             }
             S('hooks', Hook::get());
-        }else{
+        } else {
             Hook::import($data,false);
         }
     }
